@@ -1,0 +1,51 @@
+{
+  "login": {
+    "Narrowcasting": "Narrowcast",
+    "Narrowcasting Login": "Narrowcasting Login",
+    "Login via GEWIS": "Login via GEWIS",
+    "Login": "Login",
+    "Username": "Username",
+    "Enter username": "Enter username",
+    "Password": "Password",
+    "Enter password": "Enter password",
+    "Password reset": "Reset password (External accounts only)",
+    "Back to login": "Go back to login",
+    "Email": "Email",
+    "Enter email": "Enter email",
+    "Reset": "Reset password",
+    "Email sent": "If there exists an account on this email address, an email has been sent to {email} with instructions on how to reset your password.",
+    "Set new password": "Set new password",
+    "New password": "New password",
+    "Confirm password": "Confirm new password",
+    "Enter password again": "Enter password again",
+    "Reset the password for": "Reset the password for {email}",
+    "Passwords not equal": "Passwords are not equal",
+    "Password not strong": "Password needs to be longer than 8 characters and needs a lower- and uppercase letter, number and a special character",
+    "copyright": "© 2023 GEWIS",
+    "separator": " | "
+  },
+  "app": {
+    "Home": "home"
+  },
+  "formatters": {
+    "Monday": "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday",
+    "Saturday": "Saturday",
+    "Sunday": "Sunday"
+  },
+  "home": {
+    "Overview": "Overview"
+  },
+  "apiError": {
+    "message": "Error message",
+    "Something went wrong": "Something went wrong",
+    "400": "There is something wrong with the request you are trying to make",
+    "401": "You don't have the rights to access this data",
+    "403": "You cannot access this data",
+    "404": "This data does not seem to exist",
+    "500": "Something is going wrong, please contact the Narrowcast team"
+  }
+}
