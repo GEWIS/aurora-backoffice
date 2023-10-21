@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
-    <nav>
-      <Menubar :model="leftItems">
+  <div>
+    <nav class="w-100 d-flex flex-row red-bg justify-content-around">
+      <Menubar :model="leftItems" class="red-bg m-0">
         <template #start>
-          <router-link to="/" id="narrowcast">
+          <router-link to="/" class="text-white d-flex flex-row align-items-center pe-1 py-1">
             {{ $t("login.Narrowcast") }}
-            <img id="logo" src="../assets/img/gewis-branding.svg" alt="Narrowcast"/>
+            <img style="height: 65px" class="py-1" id="logo" src="@/assets/img/gewis-branding.svg" alt="Narrowcast"/>
           </router-link>
 
         </template>
       </Menubar>
-      <Menubar :model="rightItems">
+      <Menubar :model="rightItems" class="red-bg">
         <template #item="{ label, item, props, root, hasSubmenu }">
           <a :href="item.url" :target="item.target" v-bind="props.action">
             <span v-bind="props.icon" />
@@ -54,38 +54,11 @@ const rightItems = ref([
 </script>
 
 <style scoped lang="scss">
-
-.container {
-  background-color: #d40000;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  line-height: 1.5;
-  padding: 0.5rem 1rem;
+:deep(.p-menubar-root-list) {
+  margin: 0;
 }
 
-nav {
-  display: flex;
-  flex-direction: row;
-  max-width: 1180px;
-  width: 100%;
-  justify-content: space-between;
-
-
-  .p-menubar {
-    background-color: #d40000;
-  }
-}
-
-:deep(.p-menuitem-icon) {
-  color: white !important;
-}
-
-:deep(.p-menubar) {
-  padding: 0 1rem;
-}
-
-:deep(.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text) {
+:deep(.p-menuitem-text){
   color: white;
   font-family: Raleway, sans-serif;
   font-weight: 500;
@@ -93,91 +66,56 @@ nav {
   padding-right: 5px;
 }
 
-#logo {
-  height: 65px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+// Define normal top-level menu-items
+:deep(.p-menuitem) {
+  &.p-focus .p-menuitem-content {
+    background-color: transparent;
+  }
+
+  &.p-focus, &.p-focus, &.p-highlight > .p-menuitem-content {
+    background-color: transparent;
+    > a > * {
+      color: hsla(0, 0%, 100%, .75);
+    }
+  }
+
+  .p-menuitem-content {
+    > a {
+      padding: 0 0.5rem;
+      > * {
+        color: white;
+        transition: color .2s linear;
+      }
+    }
+    &:hover {
+      > a {
+        &:hover {
+          background-color: transparent;
+        }
+
+        > * {
+          color: hsla(0, 0%, 100%, .75);
+        }
+      }
+    }
+  }
 }
 
-#narrowcast {
-  color: white;
-  font-weight: 700;
-  font-family: Raleway, sans-serif;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0.3125rem 0;
+:deep(.p-submenu-list){
+  padding: 0.5rem 0;
+  width: fit-content;
+  height: fit-content;
 }
 
-:deep(svg) {
-  margin: 0 !important;
-}
+// Define an exception for submenu-items
+:deep(.p-submenu-list .p-menuitem){
 
-:deep(.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon) {
-  color: white;
-}
-
-:deep(a:hover) {
-  background-color: transparent;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled) >
- .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text) {
-  color: hsla(0, 0%, 100%, .5) !important;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled) >
- .p-menuitem-content .p-menuitem-link .p-menuitem-text) {
-  transition: color .2s linear;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled) >
- .p-menuitem-content:hover .p-menuitem-link svg) {
-  color: hsla(0, 0%, 100%, .5) !important;
-
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled) >
- .p-menuitem-content .p-menuitem-link svg) {
-  transition: color .2s linear;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content) {
-  background-color: transparent;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus >
- .p-menuitem-content .p-menuitem-link .p-menuitem-text) {
-  color: hsla(0, 0%, 100%, .5) !important;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link svg) {
-  color: hsla(0, 0%, 100%, .5) !important;
-}
-
-:deep(.p-menubar .p-menuitem.p-highlight > .p-menuitem-content) {
-  background-color: transparent !important;
-
-}
-
-:deep(.p-menubar .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-text) {
-  color: hsla(0, 0%, 100%, .5) !important;
-}
-
-:deep(.p-menubar .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover) {
-  background-color: lightgray;
-}
-
-:deep(.p-menubar .p-menubar-root-list .p-menuitem-active .p-submenu-list >
- .p-menuitem > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text) {
-  color: black !important;
-}
-
-:deep(.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link) {
-  padding: 0 0.5rem;
-}
-
-#bier {
-  height: 12px;
+  font-size: 1rem;
+  white-space: nowrap;
+  .p-menuitem-content > a > * {
+    padding: 0.5rem 1.5rem;
+    color: black;
+    font-weight: 400;
+  }
 }
 </style>

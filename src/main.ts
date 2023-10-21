@@ -1,5 +1,6 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
+import "bootstrap/dist/css/bootstrap.css";
 import './assets/main.css';
 
 import { createApp } from 'vue';
