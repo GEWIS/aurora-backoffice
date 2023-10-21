@@ -1,11 +1,9 @@
 <template>
   <footer>
   <span class="copyright">
-    <b>{{ $t('login.copyright') }}</b>
+    <b>{{ $t('navigation.copyright') }}</b>
   </span>
-    <span class="separator"> | </span>
-    <a id="tos" href="https://wieditleesttrekteenbak.com/">{{$t('termsOfService.termsOfService')}}</a>
-  </footer>
+</footer>
 </template>
 
 <script setup lang="ts">

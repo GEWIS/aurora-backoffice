@@ -1,17 +1,16 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import './assets/main.css';
+import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { createI18n } from 'vue-i18n';
-
 import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
 import Button from "primevue/button";
-import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
 import InputText from "primevue/inputtext";
 import Menubar from "primevue/menubar";
 import Panel from "primevue/panel";
@@ -31,6 +30,7 @@ const app = createApp(App);
 
 const messages = Object.assign(languages);
 const i18n = createI18n({
+    legacy: false,
     locale: 'en',
     fallbackLocale: 'en',
     messages,

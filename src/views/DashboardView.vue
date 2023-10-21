@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <div class="page-title">{{ $t('home.Dashboard') }}</div>
+    <div class="page-title">{{ $t('home.dashboard') }}</div>
     <div class="content-wrapper d-flex justify-content-start gap-4">
       <SubscribersOverview/>
       <SubscriberDetails/>
@@ -10,14 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import CopyrightBanner from "@/components/CopyrightBanner.vue";
-import SubscribersOverview from "@/components/SubscribersOverview.vue";
+import CopyrightBanner from "@/layout/CopyrightBanner.vue";
+import SubscribersOverview from "@/components/home/SubscribersOverview.vue";
 import { useSubscriberStore } from "@/stores/subscriber.store";
-import SubscriberDetails from "@/components/SubscriberDetails.vue";
+import SubscriberDetails from "@/components/home/SubscriberDetails.vue";
 
-const subscriberStore = useSubscriberStore()
+const subscriberStore = useSubscriberStore();
 subscriberStore.fetchSubscribers().then(() => {
-  subscriberStore.setSelected(subscriberStore.subscribers[0].id)
+  subscriberStore.setSelected(subscriberStore.subscribers[0].id);
 });
 
 </script>

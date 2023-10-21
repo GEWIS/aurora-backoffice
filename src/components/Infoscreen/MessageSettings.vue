@@ -1,0 +1,316 @@
+<template>
+  <div class="card">
+    <DataTable
+        v-model:filters="filters"
+        :value="messages"
+        dataKey="id"
+        :loading="loading"
+        :globalFilterFields="['message']"
+        v-model:selection="selectedMessages"
+    >
+      <template #header>
+        <div class="d-flex justify-content-between md-4">
+          <div>
+            <Button
+                :label="$t('infoscreen.message')"
+                icon="pi pi-plus"
+                severity="success"
+                class="me-2"
+                @click="newMessage"
+            />
+            <Button
+                :label="$t('infoscreen.delete')"
+                :disabled="selectedMessages.length === 0"
+                icon="pi pi-trash"
+                severity="danger"
+                @click="confirmDeleteSelectedMessages"
+            />
+          </div>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"/>
+            <InputText
+                v-model="filters['global'].value"
+                :placeholder="$t('Keyword Search')"
+            />
+          </span>
+        </div>
+      </template>
+      <Column selectionMode="multiple" style="width: 5%"></Column>
+      <Column field="user" :header="$t('infoscreen.addedBy')" style="width: 20%"></Column>
+      <Column field="createdAt" :header="$t('infoscreen.addedOn')" style="width: 15%">
+        <template #body="slotProps">
+          {{ slotProps.data.createdAt.toLocaleDateString() }}
+        </template>
+      </Column>
+      <Column field="message" :header="$t('infoscreen.message')" style="width: 50%"></Column>
+      <Column style="width: 10%">
+        <template #body="slotProps">
+          <Button
+              icon="pi pi-pencil"
+              text
+              rounded
+              severity="secondary"
+              class="mr-2"
+              @click="editMessage(slotProps.data)"
+          />
+          <Button
+              icon="pi pi-trash"
+              text
+              rounded
+              severity="danger"
+              @click="confirmDeleteMessage(slotProps.data)"
+          />
+        </template>
+      </Column>
+    </DataTable>
+
+    <Dialog
+        v-model:visible="showMessageDialog"
+        :style="{width: '450px'}"
+        :header="$t('infoscreen.message')"
+        :modal="true"
+        class="p-fluid"
+        :draggable="false"
+    >
+      <div class="field">
+        <InputText
+            v-model.trim="message!.message"
+            required="true"
+            autofocus
+            :class="{'p-invalid': isSubmitted && !message}"
+        />
+<!--    TODO MAKE THIS WORK    -->
+        <small class="p-error" v-if="isSubmitted && !message.message">{{$t('nameRequired')}}</small>
+      </div>
+
+      <template #footer>
+        <Button
+            :label="$t('infoscreen.cancel')"
+            icon="pi pi-times"
+            severity="secondary"
+            text
+            @click="hideDialog"
+        />
+        <Button
+            :label="$t('infoscreen.save')"
+            icon="pi pi-check"
+            severity="secondary"
+            text
+            @click="saveMessage"
+        />
+      </template>
+    </Dialog>
+
+    <Dialog
+        v-model:visible="showDeleteMessageDialog"
+        :style="{width: '450px'}"
+        header="Confirm"
+        :modal="true"
+        :draggable="false"
+    >
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle me-3" style="font-size: 2rem"/>
+        <span v-if="message">Are you sure you want to delete <br><b>"{{ message.message }}"</b>?</span>
+      </div>
+      <template #footer>
+        <Button
+            :label="$t('infoscreen.cancel')"
+            icon="pi pi-times"
+            severity="secondary"
+            text
+            @click="showDeleteMessageDialog = false"
+        />
+        <Button
+            :label="$t('infoscreen.confirm')"
+            icon="pi pi-check"
+            severity="secondary"
+            text
+            @click="deleteMessage"
+        />
+      </template>
+    </Dialog>
+
+    <Dialog
+        v-model:visible="showDeleteMessagesDialog"
+        :style="{width: '450px'}"
+        header="Confirm"
+        :modal="true"
+        :draggable="false"
+    >
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle me-3" style="font-size: 2rem"/>
+        <span v-if="message">Are you sure you want to delete the selected messages?</span>
+      </div>
+      <template #footer>
+        <Button
+            :label="$t('infoscreen.cancel')"
+            icon="pi pi-times"
+            severity="secondary"
+            text
+            @click="showDeleteMessagesDialog = false"/>
+        <Button
+            :label="$t('infoscreen.confirm')"
+            icon="pi pi-check"
+            severity="secondary"
+            text
+            @click="deleteSelectedMessages"/>
+      </template>
+    </Dialog>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, type Ref, ref } from "vue";
+import { Client, Message, MessageParams } from '@/api/Client';
+import Button from "primevue/button";
+
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import { FilterMatchMode } from 'primevue/api';
+
+const messages = ref<Message[]>([]);
+const message: Ref<Message> = ref(new Message());
+const selectedMessages: Ref<Message[]> = ref([]);
+const isSubmitted: Ref<boolean> = ref(false);
+const showMessageDialog: Ref<boolean> = ref(false);
+const showDeleteMessageDialog: Ref<boolean> = ref(false);
+const showDeleteMessagesDialog: Ref<boolean> = ref(false);
+const loading = ref(true);
+
+let client: Client;
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+onMounted(() => {
+  client = new Client('http://localhost:3001');
+  client.getAllMessages()
+      .then((response: Message[]) => {
+        messages.value = response;
+        loading.value = false;
+        console.log(messages);
+      });
+});
+
+const newMessage = () => {
+  // TODO get actual user
+  message.value = new Message({
+    id: "",
+    user: "currentUser",
+    message: "",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+
+  isSubmitted.value = false;
+  showMessageDialog.value = true;
+};
+
+const hideDialog = () => {
+  showMessageDialog.value = false;
+  isSubmitted.value = false;
+};
+
+const saveMessage = () => {
+  // Check if existing message is exited
+  if (message.value.id) {
+    client.updateMessage(message.value.id, {
+      user: message.value.user!,
+      message: message.value.message!
+    } as MessageParams)
+        .then((response) => {
+          const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
+          messages.value[index] = response;
+        });
+  } else {
+    client.createMessage({
+      user: message.value.user!,
+      message: message.value.message!
+    } as MessageParams)
+        .then((response) => {
+          messages.value.push(response);
+        });
+  }
+
+  isSubmitted.value = true;
+  showMessageDialog.value = false;
+};
+
+const editMessage = (editedMessage: Message) => {
+  // To ensure data is not changed before confirming
+  message.value = { ...editedMessage } as Message;
+  showMessageDialog.value = true;
+};
+
+const confirmDeleteMessage = (deleteMessage: Message) => {
+  message.value = deleteMessage;
+  showDeleteMessageDialog.value = true;
+};
+
+const deleteMessage = () => {
+  client.deleteMessage(message.value.id)
+      .then(() => {
+        messages.value = messages.value.filter((filterMessage: Message) => filterMessage.id !== message.value.id);
+      });
+
+  message.value = new Message();
+  showDeleteMessageDialog.value = false;
+};
+
+const confirmDeleteSelectedMessages = () => {
+  message.value.message = "";
+  showDeleteMessagesDialog.value = true;
+};
+
+const deleteSelectedMessages = () => {
+  for (let deletedMessage of selectedMessages.value) {
+    client.deleteMessage(deletedMessage.id);
+  }
+  messages.value = messages.value.filter((filterMessage: Message) => !selectedMessages.value.includes(filterMessage));
+
+  selectedMessages.value = [];
+  showDeleteMessagesDialog.value = false;
+};
+
+const findIndexById = (id: string) => {
+  let index = -1;
+  for (let i = 0; i < messages.value.length; i++) {
+    if (messages.value[i].id === id) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+};
+
+</script>
+
+<style scoped>
+@import '@/styles/BasePage.css';
+
+:deep(.p-datatable .p-datatable-thead > tr > th) {
+  background-color: #f8f8f8;
+  text-transform: uppercase;
+  font-family: Lato, Arial, sans-serif !important;
+}
+
+:deep(.p-datatable .p-datatable-tbody > tr.p-highlight) {
+  background: #fdf0f0;
+  color: #d40000;
+}
+
+:deep(.p-checkbox .p-checkbox-box.p-highlight) {
+  border-color: #d40000;
+  background: #d40000;
+}
+
+:deep(.p-datatable .p-datatable-tbody > tr > td) {
+  font-family: Lato, Arial, sans-serif !important;
+  padding-bottom: 0.2rem;
+  padding-top: 0.2rem;
+}
+
+:deep(.p-dropdown-panel .p-dropdown-items-wrapper > ul) {
+  margin-bottom: 0;
+}
+</style>

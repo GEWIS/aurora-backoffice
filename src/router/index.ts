@@ -4,7 +4,8 @@ import HomeView from "@/views/DashboardView.vue";
 import LoginView from "@/views/LoginView.vue";
 import PublicLayout from "@/layout/PublicLayout.vue";
 import DashboardView from "@/views/DashboardView.vue";
-import RoomresponsibleView from "@/views/RoomresponsibleView.vue";
+import RoomresponsibleView from "@/views/Infoscreen/RoomresponsibleView.vue";
+import SettingsView from "@/views/Infoscreen/SettingsView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,12 +35,12 @@ const router = createRouter({
           path: '/infoscreen',
           children: [
             {
-              path: '/settings',
-              component: RoomresponsibleView,
+              path: 'settings',
+              component: SettingsView,
               name: 'infoscreenSettings'
             },
             {
-              path: '/roomresponsibles',
+              path: 'roomresponsibles',
               component: RoomresponsibleView,
               name: 'infoscreenRoomresposibles'
             }

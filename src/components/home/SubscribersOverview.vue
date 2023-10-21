@@ -1,0 +1,35 @@
+<template>
+  <div>
+    <CardComponent :header="$t('subscriber.current')">
+      <SubscriberItemComponent
+          v-for="subscriber in active"
+          :key="subscriber.id"
+          :subscriber="subscriber"
+      />
+      <div class="text-center">
+        <span style="color: #d40000" class="m-auto">{{$t('subscriber.inactive').toUpperCase()}}</span>
+      </div>
+      <SubscriberItemComponent
+          v-for="subscriber in inactive"
+          :key="subscriber.id"
+          :subscriber="subscriber"
+      />
+    </CardComponent>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useSubscriberStore } from "@/stores/subscriber.store";
+import CardComponent from "@/layout/CardComponent.vue";
+import SubscriberItemComponent from "@/components/home/SubscriberItemComponent.vue";
+import { computed } from "vue";
+
+const { subscribers } = storeToRefs(useSubscriberStore());
+const active = computed(() => subscribers.value.filter((s) => s.active));
+const inactive = computed(() => subscribers.value.filter((s) => !s.active));
+</script>
+
+<style scoped lang="scss">
+@import "@/assets/main.css";
+</style>

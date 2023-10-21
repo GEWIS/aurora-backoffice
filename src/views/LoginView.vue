@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import CopyrightBanner from "@/components/CopyrightBanner.vue";
+import CopyrightBanner from "@/layout/CopyrightBanner.vue";
 import { onBeforeMount, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { v4 as uuid } from 'uuid';

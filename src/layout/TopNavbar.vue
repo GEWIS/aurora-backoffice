@@ -4,8 +4,8 @@
       <Menubar :model="leftItems" class="red-bg m-0">
         <template #start>
           <router-link to="/" class="text-white d-flex flex-row align-items-center pe-1 py-1">
-            {{ $t("login.Narrowcast") }}
-            <img style="height: 65px" class="py-1" id="logo" src="@/assets/img/gewis-branding.svg" alt="Narrowcast"/>
+            {{ $t("navigation.narrowcasting") }}
+            <img style="height: 65px" class="py-1" id="logo" src="../assets/img/gewis-branding.svg" alt="Narrowcast"/>
           </router-link>
 
         </template>
@@ -24,26 +24,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const leftItems = ref([
   {
-    label: 'Transactions'
-  },
-  {
-    label: 'Balance',
-    // to: '/balance',
-  },
-  {
-    label: () => "t('Infoscreen')",
+    label: () => t('navigation.infoscreen'),
     to: '/infoscreen',
     items: [
       {
-        label: () => "t('Settings')",
+        label: () => t('navigation.settings'),
         to: '/infoscreen/settings',
       },
       {
-        label: () => "t('Room Responsibles')",
+        label: () => t('navigation.responsibles'),
         to: '/infoscreen/roomresponsibles'
       }
     ]
