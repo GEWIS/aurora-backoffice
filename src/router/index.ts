@@ -3,6 +3,7 @@ import DashboardLayout from "@/layout/DashboardLayout.vue";
 import HomeView from "@/views/HomeView.vue";
 import LoginView from "@/views/LoginView.vue";
 import PublicLayout from "@/layout/PublicLayout.vue";
+import RoomresponsibleView from "@/views/RoomresponsibleView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,6 +29,21 @@ const router = createRouter({
           component: HomeView,
           name: 'home'
         },
+        {
+          path: '/infoscreen',
+          children: [
+            {
+              path: '/settings',
+              component: RoomresponsibleView,
+              name: 'infoscreenSettings'
+            },
+            {
+              path: '/roomresponsibles',
+              component: RoomresponsibleView,
+              name: 'infoscreenRoomresposibles'
+            }
+          ]
+        }
       ]
     }
   ]
@@ -35,7 +51,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // const isAuthenticated = apiService.isAuthenticated()
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   if (to.meta?.requiresAuth && !isAuthenticated) {
     // If the route requires authentication and the user is not authenticated, redirect to login
