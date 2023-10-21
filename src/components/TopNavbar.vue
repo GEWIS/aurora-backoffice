@@ -34,6 +34,20 @@ const leftItems = ref([
     label: 'Balance',
     // to: '/balance',
   },
+  {
+    label: () => "t('Infoscreen')",
+    to: '/infoscreen',
+    items: [
+      {
+        label: () => "t('Settings')",
+        to: '/infoscreen/settings',
+      },
+      {
+        label: () => "t('Room Responsibles')",
+        to: '/infoscreen/roomresponsibles'
+      }
+    ]
+  },
 ]);
 
 const rightItems = ref([

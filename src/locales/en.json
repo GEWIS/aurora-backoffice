@@ -47,5 +47,14 @@
     "403": "You cannot access this data",
     "404": "This data does not seem to exist",
     "500": "Something is going wrong, please contact the Narrowcast team"
+  },
+  "infoscreen": {
+    "Infoscreen": "Infoscherm",
+    "Settings": "Settings",
+    "Room Responsibles": "Room Responsibles",
+    "Name": "name",
+    "Since": "since",
+    "Expires": "expires",
+    "Keyword search": "Keyword search"
   }
 }
