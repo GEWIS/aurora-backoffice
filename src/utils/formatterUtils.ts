@@ -17,6 +17,25 @@ export function formatDateTime(date: Date): string {
     return `${day}-${monthIndex}-${year} (${dayOfWeek})`;
 }
 
+export function formatLastSeen(date: Date) {
+    const year = date.getFullYear().toString();
+    const months = date.getMonth() + 1;
+    const days = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    return [
+        days.toString().padStart(2, '0'),
+        months.toString().padStart(2, '0'),
+        year.toString(),
+    ].join('-') + ' at ' + [
+        hours.toString().padStart(2, '0'),
+        minutes.toString().padStart(2, '0'),
+        seconds.toString().padStart(2, '0'),
+    ].join(':');
+}
+
 function parseTime(value: number): string {
     return value.toString().padStart(2, '0');
 }

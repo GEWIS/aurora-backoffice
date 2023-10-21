@@ -1,13 +1,19 @@
 <template>
   <div>
     <CardComponent header="Current Subscribers">
-      <div v-for="subscriber in subscribers" role="button" class="d-flex flex-row align-items-center my-3">
-        <i class="pi pi-desktop fs-2 me-3" style="color: green"/>
-        <div class="d-flex flex-column">
-          <span class="fw-bold">{{ subscriber.name }}</span>
-          <span class="fs-6 opacity-25">{{ subscriber.id }}</span>
-        </div>
+      <SubscriberItemComponent
+          v-for="subscriber in active"
+          :key="subscriber.id"
+          :subscriber="subscriber"
+      />
+      <div class="text-center">
+        <span style="color: #d40000" class="m-auto">INACTIVE</span>
       </div>
+      <SubscriberItemComponent
+          v-for="subscriber in inactive"
+          :key="subscriber.id"
+          :subscriber="subscriber"
+      />
     </CardComponent>
   </div>
 </template>
@@ -16,8 +22,12 @@
 import {storeToRefs} from "pinia";
 import {useSubscriberStore} from "@/stores/subscriber.store";
 import CardComponent from "@/components/CardComponent.vue";
+import SubscriberItemComponent from "@/components/SubscriberItemComponent.vue";
+import {computed} from "vue";
 
 const {subscribers} = storeToRefs(useSubscriberStore())
+const active = computed(() => subscribers.value.filter((s) => s.active))
+const inactive = computed(() => subscribers.value.filter((s) => !s.active))
 </script>
 
 <style scoped lang="scss">

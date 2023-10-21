@@ -1,8 +1,9 @@
 <template>
   <div class="page-container">
     <div class="page-title">{{ $t('home.Dashboard') }}</div>
-    <div class="content-wrapper">
+    <div class="content-wrapper d-flex justify-content-start gap-4">
       <SubscribersOverview/>
+      <SubscriberDetails/>
     </div>
     <CopyrightBanner />
   </div>
@@ -12,9 +13,12 @@
 import CopyrightBanner from "@/components/CopyrightBanner.vue";
 import SubscribersOverview from "@/components/SubscribersOverview.vue";
 import { useSubscriberStore } from "@/stores/subscriber.store";
+import SubscriberDetails from "@/components/SubscriberDetails.vue";
 
 const subscriberStore = useSubscriberStore()
-subscriberStore.fetchSubscribers();
+subscriberStore.fetchSubscribers().then(() => {
+  subscriberStore.setSelected(subscriberStore.subscribers[0].id)
+});
 
 </script>
 
