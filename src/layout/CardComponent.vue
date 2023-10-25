@@ -45,9 +45,7 @@ const handleClick = () => {
 </script>
 
 <style scoped lang="scss">
-.card {
-  position: relative;
-}
+
 #bottom-left-button {
   width: 100%;
   color: #d40000!important;
@@ -78,6 +76,7 @@ const handleClick = () => {
 
 .card {
   color: #d40000!important;
+  position: relative;
 }
 
 :deep(.p-panel-header .p-panel-title){

@@ -1,7 +1,7 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
-import "bootstrap/dist/css/bootstrap.min.css";
 import './assets/main.css';
+import 'primeflex/primeflex.scss';
 import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
 
 import { createApp } from 'vue';

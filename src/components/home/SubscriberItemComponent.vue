@@ -1,10 +1,10 @@
 <template>
-  <div role="button" class="d-flex flex-row align-items-center my-3" @click="setSelected">
-    <i class="pi pi-desktop fs-2 me-3" :style="{'color': subscriber.active ? 'green' : 'gray'}" />
-    <div class="d-flex flex-column">
-      <span class="fw-bold">{{ subscriber.name }}</span>
+  <div role="button" class="flex flex-row align-items-center my-3" @click="setSelected">
+    <i class="pi pi-desktop text-4xl m-3" :style="{'color': subscriber.active ? 'green' : 'gray'}" />
+    <div class="flex flex-column">
+      <span class="font-bold">{{ subscriber.name }}</span>
       <span>{{$t('subscriber.lastSeen')}} {{ formatLastSeen(subscriber.lastSeen) }}</span>
-      <span class="fs-6 opacity-25">{{ subscriber.id }}</span>
+      <span class="text-sm opacity-30">{{ subscriber.id }}</span>
     </div>
   </div>
 </template>

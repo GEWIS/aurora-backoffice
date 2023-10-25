@@ -1,8 +1,8 @@
 <template>
   <div>
     <CardComponent :header="$t('infoscreen.ERO')">
-      <div class="d-flex flex-column">
-        <span class="fw-bold my-2">{{$t("infoscreen.firstERO")}}</span>
+      <div class="flex flex-column">
+        <span class="font-bold my-2">{{$t("infoscreen.firstERO")}}</span>
         <Dropdown
             v-model="selectedFirstERO"
             :options="EROs"
@@ -14,12 +14,12 @@
             filterMatchMode="contains"
         >
           <template #optiongroup="slotProps">
-            <div class="d-flex align-items-center">
+            <div class="flex align-items-center">
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>
         </Dropdown>
-        <span v-if="selectedFirstERO" class="fw-bold my-2">{{$t("infoscreen.secondERO")}}</span>
+        <span v-if="selectedFirstERO" class="font-bold my-2">{{$t("infoscreen.secondERO")}}</span>
         <Dropdown
             v-model="selectedSecondERO"
             :options="EROs"
@@ -32,7 +32,7 @@
             v-if="selectedFirstERO"
         >
           <template #optiongroup="slotProps">
-            <div class="d-flex align-items-center">
+            <div class="flex align-items-center">
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>

@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <nav class="w-100 d-flex flex-row red-bg justify-content-around">
+  <div class="m-0 p-0">
+    <nav class="w-full flex flex-row red-bg justify-content-around">
       <Menubar :model="leftItems" class="red-bg m-0">
         <template #start>
-          <router-link to="/" class="text-white d-flex flex-row align-items-center pe-1 py-1">
+          <router-link to="/" class="text-white flex flex-row align-items-center pr-1 py-1">
             {{ $t("navigation.narrowcasting") }}
             <img style="height: 65px" class="py-1" id="logo" src="../assets/img/gewis-branding.svg" alt="Narrowcast"/>
           </router-link>

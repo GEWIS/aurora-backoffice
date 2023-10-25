@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <div class="page-title">{{ $t('home.dashboard') }}</div>
-    <div class="content-wrapper d-flex justify-content-start gap-4">
+    <div class="content-wrapper flex justify-content-start gap-4">
       <SubscribersOverview/>
       <SubscriberDetails/>
     </div>

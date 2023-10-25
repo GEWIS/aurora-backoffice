@@ -1,8 +1,8 @@
 <template>
   <div>
     <CardComponent :header="$t('infoscreen.responsibles')">
-      <div class="d-flex flex-column">
-        <span class="fw-bold my-2">{{$t("infoscreen.firstResponsible")}}</span>
+      <div class="flex flex-column">
+        <span class="font-bold my-2">{{$t("infoscreen.firstResponsible")}}</span>
         <Dropdown
             v-model="selectedFirstReponsible"
             :options="roomResponsibles"
@@ -14,12 +14,12 @@
             filterMatchMode="contains"
         >
           <template #optiongroup="slotProps">
-            <div class="d-flex align-items-center">
+            <div class="flex align-items-center">
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>
         </Dropdown>
-        <span v-if="selectedFirstReponsible" class="fw-bold my-2">{{$t("infoscreen.secondResponsible")}}</span>
+        <span v-if="selectedFirstReponsible" class="font-bold my-2">{{$t("infoscreen.secondResponsible")}}</span>
         <Dropdown
             v-model="selectedSecondReponsible"
             :options="roomResponsibles"
@@ -32,7 +32,7 @@
             v-if="selectedFirstReponsible"
         >
           <template #optiongroup="slotProps">
-            <div class="d-flex align-items-center">
+            <div class="flex align-items-center">
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>

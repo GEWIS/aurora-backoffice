@@ -9,13 +9,13 @@
         v-model:selection="selectedMessages"
     >
       <template #header>
-        <div class="d-flex justify-content-between md-4">
+        <div class="flex justify-content-between">
           <div>
             <Button
                 :label="$t('infoscreen.message')"
                 icon="pi pi-plus"
                 severity="success"
-                class="me-2"
+                class="mr-2"
                 @click="newMessage"
             />
             <Button
@@ -30,13 +30,13 @@
             <i class="pi pi-search"/>
             <InputText
                 v-model="filters['global'].value"
-                :placeholder="$t('Keyword Search')"
+                :placeholder="$t('infoscreen.search')"
             />
           </span>
         </div>
       </template>
       <Column selectionMode="multiple" style="width: 5%"></Column>
-      <Column field="user" :header="$t('infoscreen.addedBy')" style="width: 20%"></Column>
+      <Column field="user" :header="$t('infoscreen.addedBy')" style="width: 15%"></Column>
       <Column field="createdAt" :header="$t('infoscreen.addedOn')" style="width: 15%">
         <template #body="slotProps">
           {{ slotProps.data.createdAt.toLocaleDateString() }}
@@ -109,7 +109,7 @@
         :draggable="false"
     >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle me-3" style="font-size: 2rem"/>
+        <i class="pi pi-exclamation-triangle m-3" style="font-size: 2rem"/>
         <span v-if="message">Are you sure you want to delete <br><b>"{{ message.message }}"</b>?</span>
       </div>
       <template #footer>
@@ -138,7 +138,7 @@
         :draggable="false"
     >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle me-3" style="font-size: 2rem"/>
+        <i class="pi pi-exclamation-triangle m-3" style="font-size: 2rem"/>
         <span v-if="message">Are you sure you want to delete the selected messages?</span>
       </div>
       <template #footer>
@@ -272,21 +272,24 @@ const deleteSelectedMessages = () => {
   showDeleteMessagesDialog.value = false;
 };
 
-const findIndexById = (id: string) => {
-  let index = -1;
-  for (let i = 0; i < messages.value.length; i++) {
-    if (messages.value[i].id === id) {
-      index = i;
-      break;
-    }
-  }
-  return index;
-};
-
 </script>
 
 <style scoped>
 @import '@/styles/BasePage.css';
+
+:deep(.p-datatable-header) {
+  border-top: solid #dee2e6 1px;
+  border-left: solid #dee2e6 1px;
+  border-right: solid #dee2e6 1px;
+  border-radius: 4px 4px 0 0;
+}
+
+:deep(.p-datatable-wrapper) {
+  border-bottom: solid #dee2e6 1px;
+  border-left: solid #dee2e6 1px;
+  border-right: solid #dee2e6 1px;
+  border-radius: 0 0  4px 4px;
+}
 
 :deep(.p-datatable .p-datatable-thead > tr > th) {
   background-color: #f8f8f8;
