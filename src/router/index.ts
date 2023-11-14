@@ -1,25 +1,46 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import DashboardLayout from "@/layout/DashboardLayout.vue";
-import HomeView from "@/views/DashboardView.vue";
-import LoginView from "@/views/LoginView.vue";
-import PublicLayout from "@/layout/PublicLayout.vue";
+import AuthView from "@/views/AuthView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import RoomresponsibleView from "@/views/Infoscreen/RoomresponsibleView.vue";
 import SettingsView from "@/views/Infoscreen/SettingsView.vue";
+import { isAuthenticated } from "@/utils/tokenUtil";
+import PageNotFoundView from "@/views/PageNotFoundView.vue";
+import { useAuthStore } from "@/stores/auth.store";
+import UnauthorizedView from "@/views/UnauthorizedView.vue";
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    // must be declared by every route
+    requiresAuth?: boolean
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '',
-      component: PublicLayout,
       children: [
         {
-          path: '',
-          component: LoginView,
-          name: 'login'
-        }
-      ]
+          path: '/auth',
+          name: 'auth',
+          component: AuthView,
+          children: [
+            {
+              path: 'callback',
+              component: AuthView,
+              name: 'authCallback'
+            },
+          ]
+        },
+        {
+          path: '/unauthorized',
+          component: UnauthorizedView,
+          name: 'unauthorized'
+        },
+      ],
+
     },
     {
       path: '',
@@ -27,7 +48,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/',
+          path: '',
           component: DashboardView,
           name: 'dashboard'
         },
@@ -47,22 +68,38 @@ const router = createRouter({
           ]
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      meta: { requiresAuth: true },
+      component: PageNotFoundView,
+      name: 'notFound'
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  // const isAuthenticated = apiService.isAuthenticated()
-  const isAuthenticated = true;
+  const authenticated = isAuthenticated();
 
-  if (to.meta?.requiresAuth && !isAuthenticated) {
-    // If the route requires authentication and the user is not authenticated, redirect to login
-    next({ name: 'login' });
-  } else if (!to.meta?.requiresAuth && isAuthenticated) {
+  const authStore = useAuthStore();
+  const hasRights = authStore.roles && authStore.roles.length > 0;
+  console.log(authStore.name);
+  console.log(authStore.roles);
+
+  if (to.meta?.requiresAuth && !authenticated) {
+    console.log("auth");
+    // If requires auth and not authenticated, redirect to login
+    next({ name: 'auth', query: { path: to.fullPath } });
+  } else if (to.meta?.requiresAuth && authenticated && !hasRights) {
+    console.log("unauth");
+    // If requires auth and is authenticated, but no rights
+    next({ name: 'unauthorized' });
+  } else if (!to.meta?.requiresAuth && authenticated && hasRights) {
+    console.log("dashboard");
     // If the route doesn't require authentication and the user is authenticated, redirect to home
     next({ name: 'dashboard' });
   } else {
-    // Allow navigation to proceed
+    console.log("next");
     next();
   }
 });

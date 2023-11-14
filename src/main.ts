@@ -25,6 +25,7 @@ import TabView from "primevue/tabview";
 import ScrollPanel from "primevue/scrollpanel";
 import FileUpload from "primevue/fileupload";
 import ProgressSpinner from "primevue/progressspinner";
+import { populateStoresFromToken } from "@/utils/tokenUtil";
 
 const app = createApp(App);
 
@@ -45,7 +46,6 @@ app.component('InputText', InputText);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);
 app.component('DataTable', DataTable);
-app.component('InputNumber', InputNumber);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('Checkbox', Checkbox);
@@ -55,4 +55,5 @@ app.component('FileUpload', FileUpload);
 app.component('InputNumber', InputNumber);
 app.component('Spinner', ProgressSpinner);
 
+populateStoresFromToken();
 app.mount('#app');

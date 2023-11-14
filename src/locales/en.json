@@ -6,6 +6,10 @@
     "settings": "Settings",
     "responsibles": "Room Responsibles"
   },
+  "errors": {
+    "unauthorized": "Unauthorized",
+    "notFound": "Not Found"
+  },
   "home": {
     "dashboard": "Dashboard"
   },

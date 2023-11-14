@@ -15,7 +15,209 @@ export class Client {
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
         this.http = http ? http : window as any;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "/";
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "/api";
+    }
+
+    /**
+     * @return No content
+     */
+    playAudio(): Promise<void> {
+        let url_ = this.baseUrl + "/audio/play";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processPlayAudio(_response);
+        });
+    }
+
+    protected processPlayAudio(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    stopAudio(): Promise<void> {
+        let url_ = this.baseUrl + "/audio/stop";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processStopAudio(_response);
+        });
+    }
+
+    protected processStopAudio(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    skipAudio(body: Body): Promise<void> {
+        let url_ = this.baseUrl + "/audio/skip";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSkipAudio(_response);
+        });
+    }
+
+    protected processSkipAudio(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return Ok
+     */
+    getInformation(): Promise<Information> {
+        let url_ = this.baseUrl + "/infoscreen/information";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetInformation(_response);
+        });
+    }
+
+    protected processGetInformation(response: Response): Promise<Information> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Information.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 500) {
+            return response.text().then((_responseText) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = InternalError.fromJS(resultData500);
+            return throwException("Internal Server Error", status, _responseText, _headers, result500);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Information>(null as any);
+    }
+
+    /**
+     * @return Ok
+     */
+    setInformation(body: InformationParams): Promise<Information> {
+        let url_ = this.baseUrl + "/infoscreen/information";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSetInformation(_response);
+        });
+    }
+
+    protected processSetInformation(response: Response): Promise<Information> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Information.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 422) {
+            return response.text().then((_responseText) => {
+            let result422: any = null;
+            let resultData422 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result422 = ValidateErrorJSON.fromJS(resultData422);
+            return throwException("Validation failed", status, _responseText, _headers, result422);
+            });
+        } else if (status === 500) {
+            return response.text().then((_responseText) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = InternalError.fromJS(resultData500);
+            return throwException("Internal Server Error", status, _responseText, _headers, result500);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Information>(null as any);
     }
 
     /**
@@ -226,9 +428,173 @@ export class Client {
     }
 
     /**
+     * @return Start commands sent
+     */
+    startCenturion(): Promise<Anonymous> {
+        let url_ = this.baseUrl + "/modes/centurion/start";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processStartCenturion(_response);
+        });
+    }
+
+    protected processStartCenturion(response: Response): Promise<Anonymous> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            let result204: any = null;
+            let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result204 = resultData204 !== undefined ? resultData204 : <any>null;
+    
+            return result204;
+            });
+        } else if (status === 411) {
+            return response.text().then((_responseText) => {
+            let result411: any = null;
+            let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result411 = resultData411 !== undefined ? resultData411 : <any>null;
+    
+            return throwException("Centurion not enabled", status, _responseText, _headers, result411);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Anonymous>(null as any);
+    }
+
+    /**
+     * @return Start commands sent
+     */
+    stopCenturion(): Promise<Anonymous2> {
+        let url_ = this.baseUrl + "/modes/centurion/stop";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processStopCenturion(_response);
+        });
+    }
+
+    protected processStopCenturion(response: Response): Promise<Anonymous2> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            let result204: any = null;
+            let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result204 = resultData204 !== undefined ? resultData204 : <any>null;
+    
+            return result204;
+            });
+        } else if (status === 411) {
+            return response.text().then((_responseText) => {
+            let result411: any = null;
+            let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result411 = resultData411 !== undefined ? resultData411 : <any>null;
+    
+            return throwException("Centurion not enabled", status, _responseText, _headers, result411);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Anonymous2>(null as any);
+    }
+
+    enableCenturion(body: CenturionParams): Promise<string> {
+        let url_ = this.baseUrl + "/modes/centurion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processEnableCenturion(_response);
+        });
+    }
+
+    protected processEnableCenturion(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            let result204: any = null;
+            let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result204 = resultData204 !== undefined ? resultData204 : <any>null;
+    
+            return result204;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    disableCenturion(): Promise<void> {
+        let url_ = this.baseUrl + "/modes/centurion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDisableCenturion(_response);
+        });
+    }
+
+    protected processDisableCenturion(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
      * @return Ok
      */
-    getAudioHandlers(): Promise<Anonymous[]> {
+    getAudioHandlers(): Promise<Anonymous3[]> {
         let url_ = this.baseUrl + "/handler/audio";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -244,7 +610,7 @@ export class Client {
         });
     }
 
-    protected processGetAudioHandlers(response: Response): Promise<Anonymous[]> {
+    protected processGetAudioHandlers(response: Response): Promise<Anonymous3[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -254,7 +620,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(Anonymous.fromJS(item));
+                    result200!.push(Anonymous3.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -266,13 +632,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous[]>(null as any);
+        return Promise.resolve<Anonymous3[]>(null as any);
     }
 
     /**
      * @return No content
      */
-    setAudioHandler(id: number, body: Body): Promise<void> {
+    setAudioHandler(id: number, body: Body2): Promise<void> {
         let url_ = this.baseUrl + "/handler/audio/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -312,7 +678,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getLightsHandlers(): Promise<Anonymous2[]> {
+    getLightsHandlers(): Promise<Anonymous4[]> {
         let url_ = this.baseUrl + "/handler/lights";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -328,7 +694,7 @@ export class Client {
         });
     }
 
-    protected processGetLightsHandlers(response: Response): Promise<Anonymous2[]> {
+    protected processGetLightsHandlers(response: Response): Promise<Anonymous4[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -338,7 +704,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(Anonymous2.fromJS(item));
+                    result200!.push(Anonymous4.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -350,13 +716,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous2[]>(null as any);
+        return Promise.resolve<Anonymous4[]>(null as any);
     }
 
     /**
      * @return No content
      */
-    setLightsHandler(id: number, body: Body2): Promise<void> {
+    setLightsHandler(id: number, body: Body3): Promise<void> {
         let url_ = this.baseUrl + "/handler/lights/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -987,6 +1353,91 @@ export class Client {
     }
 
     /**
+     * @return Ok
+     */
+    getScreens(): Promise<ScreenResponse[]> {
+        let url_ = this.baseUrl + "/screen";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetScreens(_response);
+        });
+    }
+
+    protected processGetScreens(response: Response): Promise<ScreenResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ScreenResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ScreenResponse[]>(null as any);
+    }
+
+    /**
+     * @return Ok
+     */
+    createScreen(body: ScreenCreateParams): Promise<ScreenResponse> {
+        let url_ = this.baseUrl + "/screen";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCreateScreen(_response);
+        });
+    }
+
+    protected processCreateScreen(response: Response): Promise<ScreenResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ScreenResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ScreenResponse>(null as any);
+    }
+
+    /**
      * @return No content
      */
     spotifyLogin(): Promise<void> {
@@ -1024,7 +1475,7 @@ export class Client {
      * @param error (optional) 
      * @return Ok
      */
-    spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous3> {
+    spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous5> {
         let url_ = this.baseUrl + "/spotify/callback?";
         if (state === undefined || state === null)
             throw new Error("The parameter 'state' must be defined and cannot be null.");
@@ -1052,7 +1503,7 @@ export class Client {
         });
     }
 
-    protected processSpotifyLoginCallback(response: Response): Promise<Anonymous3> {
+    protected processSpotifyLoginCallback(response: Response): Promise<Anonymous5> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1068,7 +1519,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous3>(null as any);
+        return Promise.resolve<Anonymous5>(null as any);
     }
 
     /**
@@ -1265,17 +1716,62 @@ export class Client {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    authOIDC(body: OIDCParameters): Promise<OIDCResponse> {
+        let url_ = this.baseUrl + "/auth/oidc";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAuthOIDC(_response);
+        });
+    }
+
+    protected processAuthOIDC(response: Response): Promise<OIDCResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OIDCResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<OIDCResponse>(null as any);
+    }
 }
 
-export class Message implements IMessage {
+export class Information implements IInformation {
     id!: string;
     createdAt!: Date;
     updatedAt!: Date;
     deletedAt?: Date;
-    user!: string;
-    message!: string;
+    roomStatus!: string;
+    alcoholTime!: string;
+    firstResponsible!: string;
+    secondResponsible?: string;
+    firstERO?: string;
+    secondERO?: string;
 
-    constructor(data?: IMessage) {
+    constructor(data?: IInformation) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1290,14 +1786,18 @@ export class Message implements IMessage {
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
-            this.user = _data["user"];
-            this.message = _data["message"];
+            this.roomStatus = _data["roomStatus"];
+            this.alcoholTime = _data["alcoholTime"];
+            this.firstResponsible = _data["firstResponsible"];
+            this.secondResponsible = _data["secondResponsible"];
+            this.firstERO = _data["firstERO"];
+            this.secondERO = _data["secondERO"];
         }
     }
 
-    static fromJS(data: any): Message {
+    static fromJS(data: any): Information {
         data = typeof data === 'object' ? data : {};
-        let result = new Message();
+        let result = new Information();
         result.init(data);
         return result;
     }
@@ -1308,19 +1808,27 @@ export class Message implements IMessage {
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
-        data["user"] = this.user;
-        data["message"] = this.message;
+        data["roomStatus"] = this.roomStatus;
+        data["alcoholTime"] = this.alcoholTime;
+        data["firstResponsible"] = this.firstResponsible;
+        data["secondResponsible"] = this.secondResponsible;
+        data["firstERO"] = this.firstERO;
+        data["secondERO"] = this.secondERO;
         return data;
     }
 }
 
-export interface IMessage {
+export interface IInformation {
     id: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt?: Date;
-    user: string;
-    message: string;
+    roomStatus: string;
+    alcoholTime: string;
+    firstResponsible: string;
+    secondResponsible?: string;
+    firstERO?: string;
+    secondERO?: string;
 }
 
 export class InternalError implements IInternalError {
@@ -1412,6 +1920,128 @@ export class ValidateErrorJSON implements IValidateErrorJSON {
 export interface IValidateErrorJSON {
     message: ValidateErrorJSONMessage;
     details: { [key: string]: any; };
+}
+
+export enum RoomStatus {
+    Open = "Open",
+    Closed = "Closed",
+}
+
+export enum AlcoholTime {
+    _1630 = "16:30",
+    _1400 = "14:00",
+}
+
+export class InformationParams implements IInformationParams {
+    roomStatus!: RoomStatus;
+    alcoholTime!: AlcoholTime;
+    firstResponsible!: string;
+    secondResponsible?: string;
+    firstERO?: string;
+    secondERO?: string;
+
+    constructor(data?: IInformationParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.roomStatus = _data["roomStatus"];
+            this.alcoholTime = _data["alcoholTime"];
+            this.firstResponsible = _data["firstResponsible"];
+            this.secondResponsible = _data["secondResponsible"];
+            this.firstERO = _data["firstERO"];
+            this.secondERO = _data["secondERO"];
+        }
+    }
+
+    static fromJS(data: any): InformationParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new InformationParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["roomStatus"] = this.roomStatus;
+        data["alcoholTime"] = this.alcoholTime;
+        data["firstResponsible"] = this.firstResponsible;
+        data["secondResponsible"] = this.secondResponsible;
+        data["firstERO"] = this.firstERO;
+        data["secondERO"] = this.secondERO;
+        return data;
+    }
+}
+
+export interface IInformationParams {
+    roomStatus: RoomStatus;
+    alcoholTime: AlcoholTime;
+    firstResponsible: string;
+    secondResponsible?: string;
+    firstERO?: string;
+    secondERO?: string;
+}
+
+export class Message implements IMessage {
+    id!: string;
+    createdAt!: Date;
+    updatedAt!: Date;
+    deletedAt?: Date;
+    user!: string;
+    message!: string;
+
+    constructor(data?: IMessage) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
+            this.user = _data["user"];
+            this.message = _data["message"];
+        }
+    }
+
+    static fromJS(data: any): Message {
+        data = typeof data === 'object' ? data : {};
+        let result = new Message();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
+        data["user"] = this.user;
+        data["message"] = this.message;
+        return data;
+    }
+}
+
+export interface IMessage {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
+    user: string;
+    message: string;
 }
 
 export class MessageParams implements IMessageParams {
@@ -1508,6 +2138,83 @@ export interface IPartial_MessageParams_ {
     [key: string]: any;
 }
 
+export class CenturionParams implements ICenturionParams {
+    lightsGroupIds!: number[];
+    screenIds!: number[];
+    audioIds!: number[];
+    centurionName!: string;
+
+    constructor(data?: ICenturionParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.lightsGroupIds = [];
+            this.screenIds = [];
+            this.audioIds = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["lightsGroupIds"])) {
+                this.lightsGroupIds = [] as any;
+                for (let item of _data["lightsGroupIds"])
+                    this.lightsGroupIds!.push(item);
+            }
+            if (Array.isArray(_data["screenIds"])) {
+                this.screenIds = [] as any;
+                for (let item of _data["screenIds"])
+                    this.screenIds!.push(item);
+            }
+            if (Array.isArray(_data["audioIds"])) {
+                this.audioIds = [] as any;
+                for (let item of _data["audioIds"])
+                    this.audioIds!.push(item);
+            }
+            this.centurionName = _data["centurionName"];
+        }
+    }
+
+    static fromJS(data: any): CenturionParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new CenturionParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.lightsGroupIds)) {
+            data["lightsGroupIds"] = [];
+            for (let item of this.lightsGroupIds)
+                data["lightsGroupIds"].push(item);
+        }
+        if (Array.isArray(this.screenIds)) {
+            data["screenIds"] = [];
+            for (let item of this.screenIds)
+                data["screenIds"].push(item);
+        }
+        if (Array.isArray(this.audioIds)) {
+            data["audioIds"] = [];
+            for (let item of this.audioIds)
+                data["audioIds"].push(item);
+        }
+        data["centurionName"] = this.centurionName;
+        return data;
+    }
+}
+
+export interface ICenturionParams {
+    lightsGroupIds: number[];
+    screenIds: number[];
+    audioIds: number[];
+    centurionName: string;
+}
+
 export class Audio implements IAudio {
     id!: string;
     createdAt!: Date;
@@ -1515,6 +2222,8 @@ export class Audio implements IAudio {
     deletedAt?: Date;
     currentHandler?: string;
     name!: string;
+    /** Whether this audio object is currently playing anything */
+    playing?: boolean;
 
     constructor(data?: IAudio) {
         if (data) {
@@ -1522,6 +2231,9 @@ export class Audio implements IAudio {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.playing = false;
         }
     }
 
@@ -1533,6 +2245,7 @@ export class Audio implements IAudio {
             this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.currentHandler = _data["currentHandler"];
             this.name = _data["name"];
+            this.playing = _data["playing"] !== undefined ? _data["playing"] : false;
         }
     }
 
@@ -1551,6 +2264,7 @@ export class Audio implements IAudio {
         data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["currentHandler"] = this.currentHandler;
         data["name"] = this.name;
+        data["playing"] = this.playing;
         return data;
     }
 }
@@ -1562,6 +2276,8 @@ export interface IAudio {
     deletedAt?: Date;
     currentHandler?: string;
     name: string;
+    /** Whether this audio object is currently playing anything */
+    playing?: boolean;
 }
 
 export class LightsGroup implements ILightsGroup {
@@ -1874,7 +2590,7 @@ export class LightsGroupPars implements ILightsGroupPars {
     updatedAt!: Date;
     deletedAt?: Date;
     group!: LightsGroup;
-    par!: LightsPar;
+    fixture!: LightsPar;
     firstChannel!: number;
 
     constructor(data?: ILightsGroupPars) {
@@ -1886,7 +2602,7 @@ export class LightsGroupPars implements ILightsGroupPars {
         }
         if (!data) {
             this.group = new LightsGroup();
-            this.par = new LightsPar();
+            this.fixture = new LightsPar();
         }
     }
 
@@ -1897,7 +2613,7 @@ export class LightsGroupPars implements ILightsGroupPars {
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.par = _data["par"] ? LightsPar.fromJS(_data["par"]) : new LightsPar();
+            this.fixture = _data["fixture"] ? LightsPar.fromJS(_data["fixture"]) : new LightsPar();
             this.firstChannel = _data["firstChannel"];
         }
     }
@@ -1916,7 +2632,7 @@ export class LightsGroupPars implements ILightsGroupPars {
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["par"] = this.par ? this.par.toJSON() : <any>undefined;
+        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
         data["firstChannel"] = this.firstChannel;
         return data;
     }
@@ -1928,7 +2644,7 @@ export interface ILightsGroupPars {
     updatedAt: Date;
     deletedAt?: Date;
     group: LightsGroup;
-    par: LightsPar;
+    fixture: LightsPar;
     firstChannel: number;
 }
 
@@ -2243,7 +2959,7 @@ export class LightsGroupMovingHeadWheels implements ILightsGroupMovingHeadWheels
     updatedAt!: Date;
     deletedAt?: Date;
     group!: LightsGroup;
-    movingHead!: LightsMovingHeadWheel;
+    fixture!: LightsMovingHeadWheel;
     firstChannel!: number;
 
     constructor(data?: ILightsGroupMovingHeadWheels) {
@@ -2255,7 +2971,7 @@ export class LightsGroupMovingHeadWheels implements ILightsGroupMovingHeadWheels
         }
         if (!data) {
             this.group = new LightsGroup();
-            this.movingHead = new LightsMovingHeadWheel();
+            this.fixture = new LightsMovingHeadWheel();
         }
     }
 
@@ -2266,7 +2982,7 @@ export class LightsGroupMovingHeadWheels implements ILightsGroupMovingHeadWheels
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.movingHead = _data["movingHead"] ? LightsMovingHeadWheel.fromJS(_data["movingHead"]) : new LightsMovingHeadWheel();
+            this.fixture = _data["fixture"] ? LightsMovingHeadWheel.fromJS(_data["fixture"]) : new LightsMovingHeadWheel();
             this.firstChannel = _data["firstChannel"];
         }
     }
@@ -2285,7 +3001,7 @@ export class LightsGroupMovingHeadWheels implements ILightsGroupMovingHeadWheels
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
+        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
         data["firstChannel"] = this.firstChannel;
         return data;
     }
@@ -2297,7 +3013,7 @@ export interface ILightsGroupMovingHeadWheels {
     updatedAt: Date;
     deletedAt?: Date;
     group: LightsGroup;
-    movingHead: LightsMovingHeadWheel;
+    fixture: LightsMovingHeadWheel;
     firstChannel: number;
 }
 
@@ -2427,7 +3143,7 @@ export class LightsGroupMovingHeadRgbs implements ILightsGroupMovingHeadRgbs {
     updatedAt!: Date;
     deletedAt?: Date;
     group!: LightsGroup;
-    movingHead!: LightsMovingHeadRgb;
+    fixture!: LightsMovingHeadRgb;
     firstChannel!: number;
 
     constructor(data?: ILightsGroupMovingHeadRgbs) {
@@ -2439,7 +3155,7 @@ export class LightsGroupMovingHeadRgbs implements ILightsGroupMovingHeadRgbs {
         }
         if (!data) {
             this.group = new LightsGroup();
-            this.movingHead = new LightsMovingHeadRgb();
+            this.fixture = new LightsMovingHeadRgb();
         }
     }
 
@@ -2450,7 +3166,7 @@ export class LightsGroupMovingHeadRgbs implements ILightsGroupMovingHeadRgbs {
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.movingHead = _data["movingHead"] ? LightsMovingHeadRgb.fromJS(_data["movingHead"]) : new LightsMovingHeadRgb();
+            this.fixture = _data["fixture"] ? LightsMovingHeadRgb.fromJS(_data["fixture"]) : new LightsMovingHeadRgb();
             this.firstChannel = _data["firstChannel"];
         }
     }
@@ -2469,7 +3185,7 @@ export class LightsGroupMovingHeadRgbs implements ILightsGroupMovingHeadRgbs {
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
+        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
         data["firstChannel"] = this.firstChannel;
         return data;
     }
@@ -2481,7 +3197,7 @@ export interface ILightsGroupMovingHeadRgbs {
     updatedAt: Date;
     deletedAt?: Date;
     group: LightsGroup;
-    movingHead: LightsMovingHeadRgb;
+    fixture: LightsMovingHeadRgb;
     firstChannel: number;
 }
 
@@ -3435,6 +4151,90 @@ export interface ILightsMovingHeadWheelCreateParams {
     goboRotateChannel?: number;
 }
 
+export class ScreenResponse implements IScreenResponse {
+    name!: string;
+    id!: number;
+    createdAt!: Date;
+    updatedAt!: Date;
+
+    constructor(data?: IScreenResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): ScreenResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IScreenResponse {
+    name: string;
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export class ScreenCreateParams implements IScreenCreateParams {
+    name!: string;
+
+    constructor(data?: IScreenCreateParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): ScreenCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IScreenCreateParams {
+    name: string;
+}
+
 export class ExternalUrls implements IExternalUrls {
     spotify!: string;
 
@@ -3705,8 +4505,88 @@ export interface ISpotifyUserResponse {
     active: boolean;
 }
 
+export class OIDCParameters implements IOIDCParameters {
+    state?: string;
+    session_state?: string;
+    code?: string;
+
+    constructor(data?: IOIDCParameters) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.state = _data["state"];
+            this.session_state = _data["session_state"];
+            this.code = _data["code"];
+        }
+    }
+
+    static fromJS(data: any): OIDCParameters {
+        data = typeof data === 'object' ? data : {};
+        let result = new OIDCParameters();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["state"] = this.state;
+        data["session_state"] = this.session_state;
+        data["code"] = this.code;
+        return data;
+    }
+}
+
+export interface IOIDCParameters {
+    state?: string;
+    session_state?: string;
+    code?: string;
+}
+
+export class OIDCResponse implements IOIDCResponse {
+    id_token?: string;
+
+    constructor(data?: IOIDCResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id_token = _data["id_token"];
+        }
+    }
+
+    static fromJS(data: any): OIDCResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new OIDCResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id_token"] = this.id_token;
+        return data;
+    }
+}
+
+export interface IOIDCResponse {
+    id_token?: string;
+}
+
 export class Body implements IBody {
-    name!: string;
+    seconds!: number;
 
     [key: string]: any;
 
@@ -3725,7 +4605,7 @@ export class Body implements IBody {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
-            this.name = _data["name"];
+            this.seconds = _data["seconds"];
         }
     }
 
@@ -3742,13 +4622,13 @@ export class Body implements IBody {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
-        data["name"] = this.name;
+        data["seconds"] = this.seconds;
         return data;
     }
 }
 
 export interface IBody {
-    name: string;
+    seconds: number;
 
     [key: string]: any;
 }
@@ -3801,14 +4681,73 @@ export interface IBody2 {
     [key: string]: any;
 }
 
-export class Anonymous implements IAnonymous {
+export class Body3 implements IBody3 {
+    name!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IBody3) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): Body3 {
+        data = typeof data === 'object' ? data : {};
+        let result = new Body3();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IBody3 {
+    name: string;
+
+    [key: string]: any;
+}
+
+export enum Anonymous {
+    Centurion_not_enabled = "Centurion not enabled",
+    Centurion_not_yet_fully_initialized__Please_wait_and_try_again_later = "Centurion not yet fully initialized. Please wait and try again later",
+    Empty = "",
+}
+
+export enum Anonymous2 {
+    Centurion_not_enabled = "Centurion not enabled",
+    Empty = "",
+}
+
+export class Anonymous3 implements IAnonymous3 {
     entities!: Audio[];
     id!: string;
     name!: string;
 
     [key: string]: any;
 
-    constructor(data?: IAnonymous) {
+    constructor(data?: IAnonymous3) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3836,9 +4775,9 @@ export class Anonymous implements IAnonymous {
         }
     }
 
-    static fromJS(data: any): Anonymous {
+    static fromJS(data: any): Anonymous3 {
         data = typeof data === 'object' ? data : {};
-        let result = new Anonymous();
+        let result = new Anonymous3();
         result.init(data);
         return result;
     }
@@ -3860,7 +4799,7 @@ export class Anonymous implements IAnonymous {
     }
 }
 
-export interface IAnonymous {
+export interface IAnonymous3 {
     entities: Audio[];
     id: string;
     name: string;
@@ -3868,14 +4807,14 @@ export interface IAnonymous {
     [key: string]: any;
 }
 
-export class Anonymous2 implements IAnonymous2 {
+export class Anonymous4 implements IAnonymous4 {
     entities!: LightsGroup[];
     id!: string;
     name!: string;
 
     [key: string]: any;
 
-    constructor(data?: IAnonymous2) {
+    constructor(data?: IAnonymous4) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3903,9 +4842,9 @@ export class Anonymous2 implements IAnonymous2 {
         }
     }
 
-    static fromJS(data: any): Anonymous2 {
+    static fromJS(data: any): Anonymous4 {
         data = typeof data === 'object' ? data : {};
-        let result = new Anonymous2();
+        let result = new Anonymous4();
         result.init(data);
         return result;
     }
@@ -3927,7 +4866,7 @@ export class Anonymous2 implements IAnonymous2 {
     }
 }
 
-export interface IAnonymous2 {
+export interface IAnonymous4 {
     entities: LightsGroup[];
     id: string;
     name: string;
@@ -3935,11 +4874,11 @@ export interface IAnonymous2 {
     [key: string]: any;
 }
 
-export class Anonymous3 implements IAnonymous3 {
+export class Anonymous5 implements IAnonymous5 {
 
     [key: string]: any;
 
-    constructor(data?: IAnonymous3) {
+    constructor(data?: IAnonymous5) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3957,9 +4896,9 @@ export class Anonymous3 implements IAnonymous3 {
         }
     }
 
-    static fromJS(data: any): Anonymous3 {
+    static fromJS(data: any): Anonymous5 {
         data = typeof data === 'object' ? data : {};
-        let result = new Anonymous3();
+        let result = new Anonymous5();
         result.init(data);
         return result;
     }
@@ -3974,7 +4913,7 @@ export class Anonymous3 implements IAnonymous3 {
     }
 }
 
-export interface IAnonymous3 {
+export interface IAnonymous5 {
 
     [key: string]: any;
 }
@@ -3997,11 +4936,14 @@ export enum LightsWheelChannelValue_ColorWheelColors_Channel {
     GoboWheelChannelValues = "goboWheelChannelValues",
     SetCurrentValues = "setCurrentValues",
     ChannelValues = "channelValues",
+    ToDmx = "toDmx",
     Movement = "movement",
     MasterDimChannel = "masterDimChannel",
     StrobeChannel = "strobeChannel",
     ValuesUpdatedAt = "valuesUpdatedAt",
     AfterLoad = "afterLoad",
+    EnableStrobe = "enableStrobe",
+    DisableStrobe = "disableStrobe",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
     HasId = "hasId",
@@ -4022,11 +4964,14 @@ export enum LightsWheelChannelValue_string_Channel {
     GoboWheelChannelValues = "goboWheelChannelValues",
     SetCurrentValues = "setCurrentValues",
     ChannelValues = "channelValues",
+    ToDmx = "toDmx",
     Movement = "movement",
     MasterDimChannel = "masterDimChannel",
     StrobeChannel = "strobeChannel",
     ValuesUpdatedAt = "valuesUpdatedAt",
     AfterLoad = "afterLoad",
+    EnableStrobe = "enableStrobe",
+    DisableStrobe = "disableStrobe",
     CreatedAt = "createdAt",
     UpdatedAt = "updatedAt",
     HasId = "hasId",

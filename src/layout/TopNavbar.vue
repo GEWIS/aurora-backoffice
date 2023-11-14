@@ -32,7 +32,6 @@ const { t } = useI18n();
 const leftItems = ref([
   {
     label: () => t('navigation.infoscreen'),
-    to: '/infoscreen',
     items: [
       {
         label: () => t('navigation.settings'),
