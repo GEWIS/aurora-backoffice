@@ -44,7 +44,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { Client } from '@/api/Client';
 
 import { FilterMatchMode } from 'primevue/api';
 import CardComponent from "@/layout/CardComponent.vue";

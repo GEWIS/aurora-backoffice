@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import CopyrightBanner from "@/layout/CopyrightBanner.vue";
-import Keycloak from 'keycloak-js';
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Client, OIDCParameters } from "@/api/Client";
@@ -50,8 +49,12 @@ onMounted(async () => {
     });
 
     await authStore.OIDCLogin(oidcParameters, new Client())
-        .then(() => router.push(url!))
-        .catch(() => router.push({ name: 'notFound' }));
+        .then(() => {
+          router.push(url!)
+        })
+        .catch(() => {
+          router.push({ name: 'notFound' })
+        });
   } else {
     // TODO replace with environment variables
     let state = uuidv4();

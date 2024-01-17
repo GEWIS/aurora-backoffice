@@ -183,12 +183,11 @@ const filters = ref({
 });
 
 onMounted(() => {
-  client = new Client('http://localhost:3001');
+  client = new Client();
   client.getAllMessages()
       .then((response: Message[]) => {
         messages.value = response;
         loading.value = false;
-        console.log(messages);
       });
 });
 

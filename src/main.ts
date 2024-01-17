@@ -25,7 +25,7 @@ import TabView from "primevue/tabview";
 import ScrollPanel from "primevue/scrollpanel";
 import FileUpload from "primevue/fileupload";
 import ProgressSpinner from "primevue/progressspinner";
-import { populateStoresFromToken } from "@/utils/tokenUtil";
+import { useAuthStore } from '@/stores/auth.store';
 
 const app = createApp(App);
 
@@ -55,5 +55,5 @@ app.component('FileUpload', FileUpload);
 app.component('InputNumber', InputNumber);
 app.component('Spinner', ProgressSpinner);
 
-populateStoresFromToken();
+useAuthStore().init();
 app.mount('#app');

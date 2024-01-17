@@ -4,7 +4,6 @@ import AuthView from "@/views/AuthView.vue";
 import DashboardView from "@/views/DashboardView.vue";
 import RoomresponsibleView from "@/views/Infoscreen/RoomresponsibleView.vue";
 import SettingsView from "@/views/Infoscreen/SettingsView.vue";
-import { isAuthenticated } from "@/utils/tokenUtil";
 import PageNotFoundView from "@/views/PageNotFoundView.vue";
 import { useAuthStore } from "@/stores/auth.store";
 import UnauthorizedView from "@/views/UnauthorizedView.vue";
@@ -79,12 +78,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authenticated = isAuthenticated();
 
   const authStore = useAuthStore();
+  const authenticated = authStore.isAuthenticated();
   const hasRights = authStore.roles && authStore.roles.length > 0;
-  console.log(authStore.name);
-  console.log(authStore.roles);
 
   if (to.meta?.requiresAuth && !authenticated) {
     console.log("auth");

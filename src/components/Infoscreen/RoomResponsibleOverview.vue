@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { Client } from '@/api/Client';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
