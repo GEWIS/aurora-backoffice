@@ -274,45 +274,5 @@ const deleteSelectedMessages = () => {
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.css';
-
-:deep(.p-datatable-header) {
-  border-top: solid #dee2e6 1px;
-  border-left: solid #dee2e6 1px;
-  border-right: solid #dee2e6 1px;
-  border-radius: 4px 4px 0 0;
-}
-
-:deep(.p-datatable-wrapper) {
-  border-bottom: solid #dee2e6 1px;
-  border-left: solid #dee2e6 1px;
-  border-right: solid #dee2e6 1px;
-  border-radius: 0 0  4px 4px;
-}
-
-:deep(.p-datatable .p-datatable-thead > tr > th) {
-  background-color: #f8f8f8;
-  text-transform: uppercase;
-  font-family: Lato, Arial, sans-serif !important;
-}
-
-:deep(.p-datatable .p-datatable-tbody > tr.p-highlight) {
-  background: #fdf0f0;
-  color: #d40000;
-}
-
-:deep(.p-checkbox .p-checkbox-box.p-highlight) {
-  border-color: #d40000;
-  background: #d40000;
-}
-
-:deep(.p-datatable .p-datatable-tbody > tr > td) {
-  font-family: Lato, Arial, sans-serif !important;
-  padding-bottom: 0.2rem;
-  padding-top: 0.2rem;
-}
-
-:deep(.p-dropdown-panel .p-dropdown-items-wrapper > ul) {
-  margin-bottom: 0;
-}
+@import '@/styles/BasePage.scss';
 </style>

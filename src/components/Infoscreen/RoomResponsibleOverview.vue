@@ -52,56 +52,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.css';
-
-:deep(.p-datatable .p-datatable-thead > tr > th) {
-  background-color: #f8f8f8;
-  border-top: none;
-  text-transform: uppercase;
-  font-family: Lato, Arial, sans-serif !important;
-  font-size: 1rem;
-  padding: 0.375rem 0;
-  line-height: 1.5;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-:deep(.p-datatable .p-datatable-tbody > tr) {
-  background-color: #f8f8f8;
-}
-
-:deep(.p-datatable .p-datatable-tbody > tr > td) {
-  border: none;
-  padding: 0.375rem 0;
-  font-size: 1rem;
-  font-family: Lato, Arial, sans-serif !important;
-}
-
-:deep(.p-datatable > .p-datatable-wrapper > .p-datatable-table) {
-  background-color: #f8f8f8;
-  border-top: none;
-  border-left: 1px solid #d9d9d9;
-  border-right: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-:deep(.p-datatable > .p-datatable-header) {
-  border-width: 1px 1px 0 1px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
+@import '@/styles/BasePage.scss';
 
 .roomresponsible-header {
   display: flex;
   justify-content: flex-end;
-}
-
-i {
-  margin-top: -0.5rem !important;
 }
 
 </style>

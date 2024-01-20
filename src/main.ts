@@ -2,7 +2,6 @@
 /* eslint vue/no-reserved-component-names: 0 */
 import './assets/main.css';
 import 'primeflex/primeflex.scss';
-import "primevue/resources/themes/bootstrap4-light-blue/theme.css";
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
@@ -26,6 +25,9 @@ import ScrollPanel from "primevue/scrollpanel";
 import FileUpload from "primevue/fileupload";
 import ProgressSpinner from "primevue/progressspinner";
 import { useAuthStore } from '@/stores/auth.store';
+import SelectButton from 'primevue/selectbutton';
+import ToggleButton from 'primevue/togglebutton';
+import "./styles/themes/sudosos-light/theme.scss";
 
 const app = createApp(App);
 
@@ -42,6 +44,8 @@ app.use(PrimeVue);
 app.use(i18n);
 
 app.component('Button', Button);
+app.component('SelectButton', SelectButton);
+app.component('ToggleButton', ToggleButton);
 app.component('InputText', InputText);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);

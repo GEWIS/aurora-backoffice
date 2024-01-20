@@ -40,9 +40,17 @@ const leftItems = ref([
       {
         label: () => t('navigation.responsibles'),
         to: '/infoscreen/roomresponsibles'
+      },
+    ],
+  }, {
+    label: () => t('navigation.lights'),
+    items: [
+      {
+        label: () => t('navigation.effectsController'),
+        to: '/lights/effectsController',
       }
     ]
-  },
+  }
 ]);
 
 const rightItems = ref([

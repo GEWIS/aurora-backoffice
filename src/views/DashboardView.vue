@@ -26,5 +26,5 @@ const authStore = useAuthStore();
 </script>
 
 <style scoped lang="scss">
-@import "../styles/BasePage.css";
+@import "../styles/BasePage.scss";
 </style>

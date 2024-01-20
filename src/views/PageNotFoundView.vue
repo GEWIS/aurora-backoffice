@@ -15,5 +15,5 @@ import TopNavbar from "@/layout/TopNavbar.vue";
 </script>
 
 <style scoped lang="scss">
-@import "../styles/BasePage.css";
+@import "../styles/BasePage.scss";
 </style>

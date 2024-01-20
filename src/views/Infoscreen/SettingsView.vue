@@ -28,5 +28,5 @@ import EROSettings from "@/components/Infoscreen/EROSettings.vue";
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.css';
+@import '@/styles/BasePage.scss';
 </style>

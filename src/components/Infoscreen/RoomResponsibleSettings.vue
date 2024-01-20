@@ -90,5 +90,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.css';
+@import '@/styles/BasePage.scss';
 </style>

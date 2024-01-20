@@ -50,10 +50,10 @@ onMounted(async () => {
 
     await authStore.OIDCLogin(oidcParameters, new Client())
         .then(() => {
-          router.push(url!)
+          router.push(url!);
         })
         .catch(() => {
-          router.push({ name: 'notFound' })
+          router.push({ name: 'notFound' });
         });
   } else {
     // TODO replace with environment variables

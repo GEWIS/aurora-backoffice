@@ -7,6 +7,7 @@ import SettingsView from "@/views/Infoscreen/SettingsView.vue";
 import PageNotFoundView from "@/views/PageNotFoundView.vue";
 import { useAuthStore } from "@/stores/auth.store";
 import UnauthorizedView from "@/views/UnauthorizedView.vue";
+import EffectsControllerWrapper from '@/views/Lights/EffectsControllerWrapper.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -63,10 +64,20 @@ const router = createRouter({
               path: 'roomresponsibles',
               component: RoomresponsibleView,
               name: 'infoscreenRoomresposibles'
-            }
-          ]
-        }
-      ]
+            },
+          ],
+        },
+        {
+          path: '/lights',
+          children: [
+            {
+              path: 'effectsController',
+              component: EffectsControllerWrapper,
+              name: 'lightsEffectsController',
+            },
+          ],
+        },
+      ],
     },
     {
       path: '/:pathMatch(.*)*',

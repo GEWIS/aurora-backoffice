@@ -12,5 +12,5 @@ import CopyrightBanner from "@/layout/CopyrightBanner.vue";
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.css';
+@import '@/styles/BasePage.scss';
 </style>
