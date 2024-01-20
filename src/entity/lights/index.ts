@@ -1,0 +1,1 @@
+export { SelectedLightsGroup } from './SelectedLightsGroup';

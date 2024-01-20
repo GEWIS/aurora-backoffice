@@ -4,7 +4,9 @@
     "copyright": "© 2023 GEWIS",
     "infoscreen": "Infoscreen",
     "settings": "Settings",
-    "responsibles": "Room Responsibles"
+    "responsibles": "Room Responsibles",
+    "lights": "Lights",
+    "effectsController": "Effects controller"
   },
   "errors": {
     "unauthorized": "Unauthorized",
