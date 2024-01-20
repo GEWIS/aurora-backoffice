@@ -28,6 +28,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
 import "./styles/themes/sudosos-light/theme.scss";
+import Card from 'primevue/card';
 
 const app = createApp(App);
 
@@ -44,6 +45,7 @@ app.use(PrimeVue);
 app.use(i18n);
 
 app.component('Button', Button);
+app.component('Card', Card);
 app.component('SelectButton', SelectButton);
 app.component('ToggleButton', ToggleButton);
 app.component('InputText', InputText);

@@ -1,0 +1,44 @@
+<script setup lang="ts">
+import type { SelectedLightsGroup } from '@/entity/lights';
+
+defineProps<{
+  lightsGroup: SelectedLightsGroup;
+  disabled?: boolean;
+}>();
+</script>
+
+<template>
+  <ToggleButton
+    :model-value="lightsGroup.selected"
+    on-label=""
+    off-label=""
+    class="flex flex-row w-auto"
+    :disabled="disabled"
+  >
+    <template #icon="">
+      <div class="flex flex-column button-content px-2">
+        <div>
+          {{ lightsGroup.name }}
+        </div>
+        <div>
+          <ul class="my-0" style="margin-left: -1.5rem">
+            <li>Pars: {{ lightsGroup.pars.length }}</li>
+            <li>MH's: {{ lightsGroup.movingHeadRgbs.length + lightsGroup.movingHeadWheels.length }}</li>
+          </ul>
+        </div>
+      </div>
+    </template>
+  </ToggleButton>
+</template>
+
+<style scoped>
+@import "../../../styles/BasePage.scss";
+
+.button-content > :nth-child(1) {
+  font-weight: bold;
+}
+
+.button-content li {
+  text-align: left;
+}
+</style>

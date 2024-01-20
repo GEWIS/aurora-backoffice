@@ -1,51 +1,31 @@
 <template>
   <div class="flex justify-content-start gap-4">
-    <div class="flex flex-column gap-2 w-100">
-      <div v-for="group in activeLightGroups" :key="group.id">
-        <ToggleButton
-          :model-value="group.selected"
-          on-label=""
-          off-label=""
-          class="flex flex-row w-auto"
-          v-on:change="(event: any) => group.selected = !group.selected"
-        >
-          <template #icon="slotProps">
-            <div class="flex flex-column button-content px-2">
-              <div>
-                {{ group.name }}
-              </div>
-              <div>
-                <ul class="my-0" style="margin-left: -1.5rem">
-                  <li>Pars: {{ group.pars.length }}</li>
-                  <li>MH's: {{ group.movingHeadRgbs.length + group.movingHeadWheels.length }}</li>
-                </ul>
-              </div>
-            </div>
-          </template>
-        </ToggleButton>
-      </div>
-      <div v-for="group in inactiveLightGroups" :key="group.id">
-        <ToggleButton
-          disabled
-          on-label=""
-          off-label=""
-          class="flex flex-row w-auto"
-        >
-          <template #icon="slotProps">
-            <div class="flex flex-column button-content">
-              <div>
-                {{ group.name }}
-              </div>
-              <div>
-                <ul class="my-0" style="margin-left: -1.5rem">
-                  <li>Pars: {{ group.pars.length }}</li>
-                  <li>MH's: {{ group.movingHeadRgbs.length + group.movingHeadWheels.length }}</li>
-                </ul>
-              </div>
-            </div>
-          </template>
-        </ToggleButton>
-      </div>
+    <Card>
+      <template #content>
+        <div class="flex flex-column gap-2 w-100">
+          <div class="flex flex-row gap-2">
+            <Button severity="secondary">Reset</Button>
+            <Button severity="secondary">Select all</Button>
+          </div>
+          <div v-for="group in activeLightGroups" :key="group.id">
+            <LightsGroupToggleButton
+              :lights-group="group"
+              @click="() => {group.selected = !group.selected; console.log(group.selected);}"
+            />
+          </div>
+          <div v-for="group in inactiveLightGroups" :key="group.id">
+            <LightsGroupToggleButton
+              :lights-group="group"
+              disabled
+            />
+          </div>
+        </div>
+      </template>
+    </Card>
+    <div>
+      <EffectSettingsDialog effect-name="Test">
+        <LightsColorSelector />
+      </EffectSettingsDialog>
     </div>
   </div>
 </template>
@@ -54,6 +34,9 @@
 import { Client, LightsGroup } from '@/api/Client';
 import type { SelectedLightsGroup } from '@/entity/lights';
 import { ref } from 'vue';
+import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupToggleButton.vue';
+import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
+import LightsColorSelector from '@/components/lights/effects/props/LightsColorSelector.vue';
 
 const client = new Client();
 const getLightsPromise = client.getLightsHandlers();
@@ -74,9 +57,4 @@ const inactiveLightGroups: LightsGroup[] = await getLightsPromise.then((handlers
 </script>
 
 <style scoped lang="scss">
-  @import "../../styles/BasePage.scss";
-
-  .button-content > :nth-child(1) {
-    font-weight: bold;
-  }
 </style>
