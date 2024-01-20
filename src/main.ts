@@ -40,6 +40,8 @@ const i18n = createI18n({
     messages,
 });
 app.use(createPinia());
+await useAuthStore().init();
+
 app.use(router);
 app.use(PrimeVue);
 app.use(i18n);
@@ -61,5 +63,4 @@ app.component('FileUpload', FileUpload);
 app.component('InputNumber', InputNumber);
 app.component('Spinner', ProgressSpinner);
 
-useAuthStore().init();
 app.mount('#app');

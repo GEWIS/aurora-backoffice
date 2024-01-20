@@ -1,18 +1,15 @@
 import { defineStore } from 'pinia';
-import { Client, OIDCParameters } from "@/api/Client";
-import jwtDecode from "jwt-decode";
+import { Client, OIDCParameters, User } from '@/api/Client';
 
 interface AuthStore {
   name: string | null,
   roles: string[],
-  token: string | null
 }
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     name: null,
     roles: [],
-    token: null
   }) as AuthStore,
   getters: {
     getName(): string | null {
@@ -23,25 +20,25 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
-    init(): void {
-      // if (document.cookie)
-      // this.name = 'mock';
-      // this.roles = ['PRIV - Narrowcasting Test Admin'];
+    async init(): Promise<void> {
+      await (new Client()).getInformation()
+        .then((res: User) => {
+          this.name = res.name;
+          this.roles = res.roles;
+        })
+        .catch(() => {
+          console.log("User not yet logged in. Redirecting.");
+        });
     },
     async OIDCLogin(oidcParameters: OIDCParameters, client: Client): Promise<void> {
       await client.authOIDC(oidcParameters)
-        .then(() => {
-          // console.log(document.cookie)
-          // const decoded = jwtDecode<AuthStoreToken>(oidcToken!);
-          // setTokenInStorage(oidcToken!);
-
-          // this.token = oidcToken!;
-          this.name = 'mock';
-          this.roles = ['PRIV - Narrowcasting Test Admin'];
+        .then((res: User) => {
+          this.name = res.name;
+          this.roles = res.roles;
         });
     },
     isAuthenticated(): boolean {
-      return this.name !== undefined && this.roles !== undefined;
+      return this.name !== undefined && this.roles.length > 0;
     }
   },
 });
