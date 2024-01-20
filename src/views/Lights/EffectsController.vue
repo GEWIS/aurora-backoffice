@@ -3,10 +3,11 @@
     <div class="flex flex-column gap-2 w-100">
       <div v-for="group in activeLightGroups" :key="group.id">
         <ToggleButton
-          v-model="group.selected"
+          :model-value="group.selected"
           on-label=""
           off-label=""
           class="flex flex-row w-auto"
+          v-on:change="(event: any) => group.selected = !group.selected"
         >
           <template #icon="slotProps">
             <div class="flex flex-column button-content px-2">
