@@ -5,6 +5,9 @@ import { type Ref, ref } from 'vue';
 const props = defineProps<{
   singleColor?: boolean;
 }>();
+const emit = defineEmits<{
+  colorsUpdated: [colors: RgbColor[]]
+}>();
 
 const colors: string[] = Object.values(RgbColor);
 const selectedColors: Ref<RgbColor[]> = ref([]);
@@ -18,6 +21,7 @@ const handleColorClick = (color: RgbColor) => {
   } else {
     selectedColors.value.splice(i, 1);
   }
+  emit('colorsUpdated', selectedColors.value);
 };
 </script>
 
@@ -25,11 +29,11 @@ const handleColorClick = (color: RgbColor) => {
   <h4>Color</h4>
   <div class="flex flex-row flex-wrap gap-1">
     <ToggleButton
-      :model-value="selectedColors.includes(color)"
+      :model-value="selectedColors.includes(color as RgbColor)"
       :on-label="color"
       :off-label="color"
       v-for="color in colors" :key="color"
-      @click="handleColorClick(color)"
+      @click="handleColorClick(color as RgbColor)"
     />
   </div>
 </template>

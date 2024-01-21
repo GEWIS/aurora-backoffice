@@ -3,8 +3,8 @@ import { ref } from 'vue';
 
 defineProps<{
   effectName: string;
-
 }>();
+defineEmits(['save']);
 
 const visible: boolean = ref(false);
 </script>
@@ -26,6 +26,15 @@ const visible: boolean = ref(false);
     dismissableMask
   >
     <slot></slot>
+    <template #footer>
+      <Button
+        severity="success"
+        @click="() => {
+          visible = false;
+          $emit('save');
+        }"
+      >Add</Button>
+    </template>
   </Dialog>
 </template>
 

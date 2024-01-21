@@ -1,11 +1,12 @@
 <template>
   <div class="flex justify-content-start gap-4">
     <Card>
+      <template #title>(1) Lights groups</template>
       <template #content>
         <div class="flex flex-column gap-2 w-100">
           <div class="flex flex-row gap-2">
-            <Button severity="secondary">Reset</Button>
-            <Button severity="secondary">Select all</Button>
+            <Button severity="secondary" @click="reset">Reset</Button>
+            <Button severity="secondary" @click="selectAll">Select all</Button>
           </div>
           <div v-for="group in activeLightGroups" :key="group.id">
             <LightsGroupToggleButton
@@ -23,20 +24,38 @@
       </template>
     </Card>
     <div>
-      <EffectSettingsDialog effect-name="Test">
-        <LightsColorSelector />
-      </EffectSettingsDialog>
+      <Card>
+        <template #title>
+          (2) Create effects
+        </template>
+        <template #content>
+          <BeatFadeOutEffect @add-effect="(effect) => {chosenEffects.push(effect); console.log('after event', effect)}" />
+        </template>
+      </Card>
+      <Card>
+        <template #title>(3) Saved effects</template>
+        <template #content>
+          <ul>
+            <li v-for="e in chosenEffects" :key="e.type">
+              {{ e.type }}
+            </li>
+          </ul>
+        </template>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Client, LightsGroup } from '@/api/Client';
+import {
+  Client,
+  LightsEffectsCreateParams,
+  LightsGroup
+} from '@/api/Client';
 import type { SelectedLightsGroup } from '@/entity/lights';
-import { ref } from 'vue';
+import { type Ref, ref } from 'vue';
 import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupToggleButton.vue';
-import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
-import LightsColorSelector from '@/components/lights/effects/props/LightsColorSelector.vue';
+import BeatFadeOutEffect from '@/components/lights/effects/BeatFadeOutEffect.vue';
 
 const client = new Client();
 const getLightsPromise = client.getLightsHandlers();
@@ -54,6 +73,15 @@ const inactiveLightGroups: LightsGroup[] = await getLightsPromise.then((handlers
   const otherHandlers = handlers.filter((h) => h.name !== 'SetEffectsHandler');
   return otherHandlers.map((h) => h.entities).flat();
 });
+
+const chosenEffects: Ref<LightsEffectsCreateParams[]> = ref([]);
+
+const selectAll = () => {
+  activeLightGroups.value.forEach((g) => g.selected = true);
+};
+const reset = () => {
+  activeLightGroups.value.forEach((g) => g.selected = false);
+};
 </script>
 
 <style scoped lang="scss">

@@ -9,7 +9,7 @@ import EffectsController from '@/views/Lights/EffectsController.vue';
     <Suspense>
       <EffectsController />
       <template #fallback>
-        <ProgressSpinner />
+        <Spinner />
       </template>
     </Suspense>
   </div>
