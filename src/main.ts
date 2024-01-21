@@ -30,6 +30,7 @@ import ToggleButton from 'primevue/togglebutton';
 import "./styles/themes/sudosos-light/theme.scss";
 import Card from 'primevue/card';
 import { useHandlersStore } from '@/stores/handlers.store';
+import { useColorStore } from '@/stores/color.store';
 
 const app = createApp(App);
 
@@ -43,6 +44,7 @@ const i18n = createI18n({
 app.use(createPinia());
 await useAuthStore().init();
 await useHandlersStore().init();
+await useColorStore().init();
 
 app.use(router);
 app.use(PrimeVue);

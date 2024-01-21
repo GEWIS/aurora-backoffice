@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 defineProps<{
   effectName: string;
+  canSave: boolean;
 }>();
 defineEmits(['save']);
 
@@ -25,10 +26,13 @@ const visible: boolean = ref(false);
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     dismissableMask
   >
-    <slot></slot>
+    <div class="flex flex-column w-100 gap-3">
+      <slot></slot>
+    </div>
     <template #footer>
       <Button
         severity="success"
+        :disabled="!canSave"
         @click="() => {
           visible = false;
           $emit('save');

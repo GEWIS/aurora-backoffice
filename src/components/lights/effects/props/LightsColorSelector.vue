@@ -1,6 +1,29 @@
+<template>
+  <div>
+    <h4 class="m-1">Color*</h4>
+    <div class="flex flex-row flex-wrap gap-1">
+      <ToggleButton
+        v-for="color in colors" :key="color"
+        :model-value="selectedColors.includes(color as RgbColor)"
+        :on-label="color"
+        :off-label="color"
+        class="p-button-secondary"
+        @click="handleColorClick(color as RgbColor)"
+      >
+        <template #icon>
+          <div class="color-box border-1 mr-1" :style="{'background-color': store.getHexColor(color)}"></div>
+        </template>
+      </ToggleButton>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { RgbColor } from '@/api/Client';
 import { type Ref, ref } from 'vue';
+import { useColorStore } from '@/stores/color.store';
+
+const store = useColorStore();
 
 const props = defineProps<{
   singleColor?: boolean;
@@ -25,19 +48,9 @@ const handleColorClick = (color: RgbColor) => {
 };
 </script>
 
-<template>
-  <h4>Color</h4>
-  <div class="flex flex-row flex-wrap gap-1">
-    <ToggleButton
-      :model-value="selectedColors.includes(color as RgbColor)"
-      :on-label="color"
-      :off-label="color"
-      v-for="color in colors" :key="color"
-      @click="handleColorClick(color as RgbColor)"
-    />
-  </div>
-</template>
-
 <style scoped>
-
+.color-box {
+  width: 1rem;
+  height: 1rem;
+}
 </style>

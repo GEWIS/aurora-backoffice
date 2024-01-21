@@ -368,7 +368,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -868,7 +868,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 411) {
@@ -876,7 +876,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -918,7 +918,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 400) {
@@ -926,7 +926,7 @@ export class Client {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+
             return throwException("Invalid timestamp provided", status, _responseText, _headers, result400);
             });
         } else if (status === 411) {
@@ -934,7 +934,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion nog enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -972,7 +972,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 411) {
@@ -980,7 +980,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1019,7 +1019,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1955,7 +1955,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getAllLightsColors(): Promise<RgbColorSet> {
+    getAllLightsColors(): Promise<LightsColorResponse[]> {
         let url_ = this.baseUrl + "/lights/colors";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1971,14 +1971,21 @@ export class Client {
         });
     }
 
-    protected processGetAllLightsColors(response: Response): Promise<RgbColorSet> {
+    protected processGetAllLightsColors(response: Response): Promise<LightsColorResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = RgbColorSet.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(LightsColorResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1986,7 +1993,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RgbColorSet>(null as any);
+        return Promise.resolve<LightsColorResponse[]>(null as any);
     }
 
     /**
@@ -2336,8 +2343,8 @@ export class Client {
     }
 
     /**
-     * @param code (optional) 
-     * @param error (optional) 
+     * @param code (optional)
+     * @param error (optional)
      * @return Ok
      */
     spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous6> {
@@ -2376,7 +2383,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2550,7 +2557,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional) 
+     * @param body (optional)
      * @return Success
      */
     authMock(body: User | undefined): Promise<User> {
@@ -7096,11 +7103,18 @@ export interface ILightsMovingHeadWheelCreateParams {
     goboRotateChannel?: number;
 }
 
-export class RgbColorSet implements IRgbColorSet {
+export class RgbColorDefinition implements IRgbColorDefinition {
+    redChannel?: number;
+    blueChannel?: number;
+    greenChannel?: number;
+    coldWhiteChannel?: number;
+    warmWhiteChannel?: number;
+    amberChannel?: number;
+    uvChannel?: number;
 
     [key: string]: any;
 
-    constructor(data?: IRgbColorSet) {
+    constructor(data?: IRgbColorDefinition) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -7115,12 +7129,19 @@ export class RgbColorSet implements IRgbColorSet {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
+            this.redChannel = _data["redChannel"];
+            this.blueChannel = _data["blueChannel"];
+            this.greenChannel = _data["greenChannel"];
+            this.coldWhiteChannel = _data["coldWhiteChannel"];
+            this.warmWhiteChannel = _data["warmWhiteChannel"];
+            this.amberChannel = _data["amberChannel"];
+            this.uvChannel = _data["uvChannel"];
         }
     }
 
-    static fromJS(data: any): RgbColorSet {
+    static fromJS(data: any): RgbColorDefinition {
         data = typeof data === 'object' ? data : {};
-        let result = new RgbColorSet();
+        let result = new RgbColorDefinition();
         result.init(data);
         return result;
     }
@@ -7131,13 +7152,153 @@ export class RgbColorSet implements IRgbColorSet {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
+        data["redChannel"] = this.redChannel;
+        data["blueChannel"] = this.blueChannel;
+        data["greenChannel"] = this.greenChannel;
+        data["coldWhiteChannel"] = this.coldWhiteChannel;
+        data["warmWhiteChannel"] = this.warmWhiteChannel;
+        data["amberChannel"] = this.amberChannel;
+        data["uvChannel"] = this.uvChannel;
         return data;
     }
 }
 
-export interface IRgbColorSet {
+export interface IRgbColorDefinition {
+    redChannel?: number;
+    blueChannel?: number;
+    greenChannel?: number;
+    coldWhiteChannel?: number;
+    warmWhiteChannel?: number;
+    amberChannel?: number;
+    uvChannel?: number;
 
     [key: string]: any;
+}
+
+export enum WheelColor {
+    White = "white",
+    Red = "red",
+    Green = "green",
+    Blue = "blue",
+    Yellow = "yellow",
+    Lightblue = "lightblue",
+    Orange = "orange",
+    Rosered = "rosered",
+}
+
+export class RgbColorSpecification implements IRgbColorSpecification {
+    hex!: string;
+    complementary!: RgbColor[];
+    alternative!: WheelColor;
+    definition!: RgbColorDefinition;
+
+    [key: string]: any;
+
+    constructor(data?: IRgbColorSpecification) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.complementary = [];
+            this.definition = new RgbColorDefinition();
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.hex = _data["hex"];
+            if (Array.isArray(_data["complementary"])) {
+                this.complementary = [] as any;
+                for (let item of _data["complementary"])
+                    this.complementary!.push(item);
+            }
+            this.alternative = _data["alternative"];
+            this.definition = _data["definition"] ? RgbColorDefinition.fromJS(_data["definition"]) : new RgbColorDefinition();
+        }
+    }
+
+    static fromJS(data: any): RgbColorSpecification {
+        data = typeof data === 'object' ? data : {};
+        let result = new RgbColorSpecification();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["hex"] = this.hex;
+        if (Array.isArray(this.complementary)) {
+            data["complementary"] = [];
+            for (let item of this.complementary)
+                data["complementary"].push(item);
+        }
+        data["alternative"] = this.alternative;
+        data["definition"] = this.definition ? this.definition.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IRgbColorSpecification {
+    hex: string;
+    complementary: RgbColor[];
+    alternative: WheelColor;
+    definition: RgbColorDefinition;
+
+    [key: string]: any;
+}
+
+export class LightsColorResponse implements ILightsColorResponse {
+    color!: RgbColor;
+    spec!: RgbColorSpecification;
+
+    constructor(data?: ILightsColorResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.spec = new RgbColorSpecification();
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.color = _data["color"];
+            this.spec = _data["spec"] ? RgbColorSpecification.fromJS(_data["spec"]) : new RgbColorSpecification();
+        }
+    }
+
+    static fromJS(data: any): LightsColorResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new LightsColorResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["color"] = this.color;
+        data["spec"] = this.spec ? this.spec.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ILightsColorResponse {
+    color: RgbColor;
+    spec: RgbColorSpecification;
 }
 
 export class GroupFixtureOverrideParams implements IGroupFixtureOverrideParams {
