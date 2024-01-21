@@ -5,7 +5,9 @@ defineProps<{
   effectName: string;
   canSave: boolean;
 }>();
-defineEmits(['save']);
+defineEmits<{
+  save: [],
+}>();
 
 const visible: boolean = ref(false);
 </script>

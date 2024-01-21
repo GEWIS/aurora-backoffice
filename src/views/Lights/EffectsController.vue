@@ -32,7 +32,10 @@
           (2) Create effects
         </template>
         <template #content>
-          <BeatFadeOutEffect @add-effect="(effect) => effectsControllerStore.addEffect(effect)" />
+          <div class="flex flex-row flex-wrap gap-2">
+            <EffectBeatFadeOut />
+            <EffectSearchLight />
+          </div>
         </template>
       </Card>
       <Card>
@@ -93,11 +96,12 @@
 
 <script setup lang="ts">
 import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupToggleButton.vue';
-import BeatFadeOutEffect from '@/components/lights/effects/BeatFadeOutEffect.vue';
+import EffectBeatFadeOut from '@/components/lights/effects/EffectBeatFadeOut.vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
 import SavedEffect from '@/components/lights/effects/SavedEffect.vue';
+import EffectSearchLight from '@/components/lights/effects/EffectSearchLight.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

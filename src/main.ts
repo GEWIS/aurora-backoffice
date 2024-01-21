@@ -32,6 +32,7 @@ import Card from 'primevue/card';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import Chip from 'primevue/chip';
+import Slider from 'primevue/slider';
 
 const app = createApp(App);
 
@@ -57,6 +58,7 @@ app.component('Chip', Chip);
 app.component('SelectButton', SelectButton);
 app.component('ToggleButton', ToggleButton);
 app.component('InputText', InputText);
+app.component('InputNumber', InputNumber);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);
 app.component('DataTable', DataTable);
@@ -68,5 +70,6 @@ app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('InputNumber', InputNumber);
 app.component('Spinner', ProgressSpinner);
+app.component('Slider', Slider);
 
 app.mount('#app');
