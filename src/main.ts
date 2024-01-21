@@ -33,6 +33,7 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
 
@@ -50,6 +51,7 @@ await useColorStore().init();
 
 app.use(router);
 app.use(PrimeVue);
+app.use(ToastService);
 app.use(i18n);
 
 app.component('Button', Button);
@@ -68,7 +70,6 @@ app.component('Checkbox', Checkbox);
 app.component('TabView', TabView);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
-app.component('InputNumber', InputNumber);
 app.component('Spinner', ProgressSpinner);
 app.component('Slider', Slider);
 

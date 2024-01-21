@@ -16,8 +16,6 @@
         border-width: $tableHeaderBorderWidth;
         padding: $tableHeaderPadding;
         font-weight: $tableHeaderFontWeight;
-        border-top-left-radius: $dataViewBorderRadius;
-        border-top-right-radius: $dataViewBorderRadius;
     }
 
     .p-datatable-footer {
@@ -166,18 +164,6 @@
         > .p-datatable-tfoot {
             background-color: $tableHeaderCellBg;
         }
-    }
-
-    & > .p-datatable-wrapper > .p-datatable-table {
-        background-color: $tableBodyRowBg;
-        border-top: none;
-        border-left: $dataViewListItemBorder;
-        border-right: $dataViewListItemBorder;
-        border-bottom: $dataViewListItemBorder;
-        border-bottom-left-radius: $dataViewBorderRadius;
-        border-bottom-right-radius: $dataViewBorderRadius;
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 
     .p-datatable-loading-icon {

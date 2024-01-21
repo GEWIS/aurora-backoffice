@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { Client, OIDCParameters, User } from '@/api/Client';
+import { handleError } from '@/utils/errorHandler';
 
 interface AuthStore {
   name: string | null,
@@ -26,16 +27,15 @@ export const useAuthStore = defineStore('auth', {
           this.name = res.name;
           this.roles = res.roles;
         })
-        .catch(() => {
-          console.log("User not yet logged in. Redirecting.");
-        });
+        .catch(handleError);
     },
     async OIDCLogin(oidcParameters: OIDCParameters, client: Client): Promise<void> {
       await client.authOIDC(oidcParameters)
         .then((res: User) => {
           this.name = res.name;
           this.roles = res.roles;
-        });
+        })
+        .catch(handleError);
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;

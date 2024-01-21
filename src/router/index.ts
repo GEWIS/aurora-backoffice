@@ -95,19 +95,15 @@ router.beforeEach((to, from, next) => {
   const hasRights = authStore.roles && authStore.roles.length > 0;
 
   if (to.meta?.requiresAuth && !authenticated) {
-    console.log("auth");
     // If requires auth and not authenticated, redirect to login
     next({ name: 'auth', query: { path: to.fullPath } });
   } else if (to.meta?.requiresAuth && authenticated && !hasRights) {
-    console.log("unauth");
     // If requires auth and is authenticated, but no rights
     next({ name: 'unauthorized' });
   } else if (!to.meta?.requiresAuth && authenticated && hasRights) {
-    console.log("dashboard");
     // If the route doesn't require authentication and the user is authenticated, redirect to home
     next({ name: 'dashboard' });
   } else {
-    console.log("next");
     next();
   }
 });

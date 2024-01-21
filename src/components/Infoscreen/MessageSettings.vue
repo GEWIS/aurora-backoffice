@@ -167,6 +167,7 @@ import Button from "primevue/button";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
+import { handleError } from '@/utils/errorHandler';
 
 const messages = ref<Message[]>([]);
 const message: Ref<Message> = ref(new Message());
@@ -188,7 +189,8 @@ onMounted(() => {
       .then((response: Message[]) => {
         messages.value = response;
         loading.value = false;
-      });
+      })
+    .catch(handleError);
 });
 
 const newMessage = () => {
@@ -220,7 +222,8 @@ const saveMessage = () => {
         .then((response) => {
           const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
           messages.value[index] = response;
-        });
+        })
+      .catch(handleError);
   } else {
     client.createMessage({
       user: message.value.user!,
@@ -228,7 +231,8 @@ const saveMessage = () => {
     } as MessageParams)
         .then((response) => {
           messages.value.push(response);
-        });
+        })
+      .catch(handleError);
   }
 
   isSubmitted.value = true;
@@ -250,7 +254,8 @@ const deleteMessage = () => {
   client.deleteMessage(message.value.id)
       .then(() => {
         messages.value = messages.value.filter((filterMessage: Message) => filterMessage.id !== message.value.id);
-      });
+      })
+    .catch(handleError);
 
   message.value = new Message();
   showDeleteMessageDialog.value = false;

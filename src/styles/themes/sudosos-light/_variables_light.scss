@@ -250,20 +250,20 @@ $colorPickerBorder:1px solid #212529 !default;
 $colorPickerHandleColor:$shade000 !default;
 
 //togglebutton
-$toggleButtonBg:none !default;
-$toggleButtonBorder:1px solid $primaryColor !default;
-$toggleButtonTextColor:$primaryColor !default;
-$toggleButtonIconColor:$primaryColor !default;
-$toggleButtonHoverBg:$primaryDarkerColor !default;
-$toggleButtonHoverBorderColor:$primaryDarkerColor !default;
+$toggleButtonBg:#6c757d !default;
+$toggleButtonBorder:1px solid #6c757d !default;
+$toggleButtonTextColor:#ffffff !default;
+$toggleButtonIconColor:#ffffff !default;
+$toggleButtonHoverBg:#5a6268 !default;
+$toggleButtonHoverBorderColor:#545b62 !default;
 $toggleButtonTextHoverColor:#ffffff !default;
 $toggleButtonIconHoverColor:#ffffff !default;
-$toggleButtonActiveBg:$primaryColor !default;
-$toggleButtonActiveBorderColor:$primaryColor !default;
+$toggleButtonActiveBg:#545b62 !default;
+$toggleButtonActiveBorderColor:#4e555b !default;
 $toggleButtonTextActiveColor:#ffffff !default;
 $toggleButtonIconActiveColor:#ffffff !default;
-$toggleButtonActiveHoverBg:$primaryDarkerColor !default;
-$toggleButtonActiveHoverBorderColor:$primaryDarkerColor !default;
+$toggleButtonActiveHoverBg:#545b62 !default;
+$toggleButtonActiveHoverBorderColor:#4e555b !default;
 $toggleButtonTextActiveHoverColor:#ffffff !default;
 $toggleButtonIconActiveHoverColor:#ffffff !default;
 
@@ -475,7 +475,7 @@ $paginatorElementPadding:0 !default;
 
 //table
 $tableHeaderBorder:solid #dee2e6 !default;
-$tableHeaderBorderWidth:1px 1px 0 1px !default;
+$tableHeaderBorderWidth:1px 0 0 0 !default;
 $tableHeaderBg:$shade100 !default;
 $tableHeaderTextColor:$shade900 !default;
 $tableHeaderFontWeight:600 !default;
@@ -529,7 +529,6 @@ $tableScaleSM:0.5 !default;
 $tableScaleLG:1.25 !default;
 
 //dataview
-$dataViewBorderRadius:$borderRadius !default;
 $dataViewContentPadding:0 !default;
 $dataViewContentBorder:0 none !default;
 $dataViewListItemBorder:1px solid $shade300 !default;
