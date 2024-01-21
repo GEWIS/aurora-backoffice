@@ -1,1 +1,1 @@
-export { SelectedLightsGroup } from './SelectedLightsGroup';
+export { type SelectedLightsGroup } from './SelectedLightsGroup';

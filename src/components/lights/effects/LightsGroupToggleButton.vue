@@ -18,13 +18,13 @@ defineProps<{
   >
     <template #icon="">
       <div class="flex flex-column button-content px-2">
-        <div>
-          {{ lightsGroup.name }} (ID: {{ lightsGroup.id}})
-        </div>
+        <div>{{ lightsGroup.name }} (ID: {{ lightsGroup.id }})</div>
         <div>
           <ul class="my-0" style="margin-left: -1.5rem">
             <li>Pars: {{ lightsGroup.pars.length }}</li>
-            <li>MH's: {{ lightsGroup.movingHeadRgbs.length + lightsGroup.movingHeadWheels.length }}</li>
+            <li>
+              MH's: {{ lightsGroup.movingHeadRgbs.length + lightsGroup.movingHeadWheels.length }}
+            </li>
           </ul>
         </div>
       </div>
@@ -33,7 +33,7 @@ defineProps<{
 </template>
 
 <style scoped>
-@import "../../../styles/BasePage.scss";
+@import '../../../styles/BasePage.scss';
 
 .button-content > :nth-child(1) {
   font-weight: bold;

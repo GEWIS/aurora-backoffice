@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DashboardLayout from "@/layout/DashboardLayout.vue";
-import AuthView from "@/views/AuthView.vue";
-import DashboardView from "@/views/DashboardView.vue";
-import RoomresponsibleView from "@/views/Infoscreen/RoomresponsibleView.vue";
-import SettingsView from "@/views/Infoscreen/SettingsView.vue";
-import PageNotFoundView from "@/views/PageNotFoundView.vue";
-import { useAuthStore } from "@/stores/auth.store";
-import UnauthorizedView from "@/views/UnauthorizedView.vue";
+import DashboardLayout from '@/layout/DashboardLayout.vue';
+import AuthView from '@/views/AuthView.vue';
+import DashboardView from '@/views/DashboardView.vue';
+import RoomresponsibleView from '@/views/Infoscreen/RoomresponsibleView.vue';
+import SettingsView from '@/views/Infoscreen/SettingsView.vue';
+import PageNotFoundView from '@/views/PageNotFoundView.vue';
+import { useAuthStore } from '@/stores/auth.store';
+import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsControllerWrapper from '@/views/Lights/EffectsControllerWrapper.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
     // must be declared by every route
-    requiresAuth?: boolean
+    requiresAuth?: boolean;
   }
 }
 
@@ -31,16 +31,15 @@ const router = createRouter({
               path: 'callback',
               component: AuthView,
               name: 'authCallback'
-            },
+            }
           ]
         },
         {
           path: '/unauthorized',
           component: UnauthorizedView,
           name: 'unauthorized'
-        },
-      ],
-
+        }
+      ]
     },
     {
       path: '',
@@ -64,8 +63,8 @@ const router = createRouter({
               path: 'roomresponsibles',
               component: RoomresponsibleView,
               name: 'infoscreenRoomresposibles'
-            },
-          ],
+            }
+          ]
         },
         {
           path: '/lights',
@@ -73,11 +72,11 @@ const router = createRouter({
             {
               path: 'effectsController',
               component: EffectsControllerWrapper,
-              name: 'lightsEffectsController',
-            },
-          ],
-        },
-      ],
+              name: 'lightsEffectsController'
+            }
+          ]
+        }
+      ]
     },
     {
       path: '/:pathMatch(.*)*',
@@ -89,7 +88,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-
   const authStore = useAuthStore();
   const authenticated = authStore.isAuthenticated();
   const hasRights = authStore.roles && authStore.roles.length > 0;

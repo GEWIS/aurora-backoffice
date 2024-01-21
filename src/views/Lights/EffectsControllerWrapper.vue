@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import EffectsController from '@/views/Lights/EffectsController.vue';
-
 </script>
 
 <template>
@@ -16,5 +15,5 @@ import EffectsController from '@/views/Lights/EffectsController.vue';
 </template>
 
 <style scoped>
-@import "../../styles/BasePage.scss";
+@import '../../styles/BasePage.scss';
 </style>

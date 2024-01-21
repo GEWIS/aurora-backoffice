@@ -5,7 +5,13 @@
         <template #start>
           <router-link to="/" class="text-white flex flex-row align-items-center pr-1 py-1">
             Narrowcasting
-            <img style="height: 65px" class="py-1" id="logo" src="../assets/img/gewis-branding.svg" alt="Narrowcast"/>
+            <img
+              style="height: 65px"
+              class="py-1"
+              id="logo"
+              src="../assets/img/gewis-branding.svg"
+              alt="Narrowcast"
+            />
           </router-link>
         </template>
         <template #item="{ item, props, hasSubmenu }">
@@ -27,34 +33,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const leftItems = ref([
   {
-    label: "Infoscreen",
+    label: 'Infoscreen',
     items: [
       {
-        label: "Settings",
-        route: '/infoscreen/settings',
+        label: 'Settings',
+        route: '/infoscreen/settings'
       },
       {
-        label: "Responsibles",
+        label: 'Responsibles',
         route: '/infoscreen/roomresponsibles'
-      },
-    ],
-  }, {
-    label: "Lights",
+      }
+    ]
+  },
+  {
+    label: 'Lights',
     items: [
       {
-        label: "Effects",
-        route: '/lights/effectsController',
+        label: 'Effects',
+        route: '/lights/effectsController'
       }
     ]
   }
 ]);
-
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -4,14 +4,14 @@
       <div class="flex flex-column">
         <span class="font-bold my-2">First ERO</span>
         <Dropdown
-            v-model="selectedFirstERO"
-            :options="EROs"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select a User"
-            :filter="true"
-            filterMatchMode="contains"
+          v-model="selectedFirstERO"
+          :options="EROs"
+          optionLabel="label"
+          optionGroupLabel="label"
+          optionGroupChildren="items"
+          placeholder="Select a User"
+          :filter="true"
+          filterMatchMode="contains"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -21,15 +21,15 @@
         </Dropdown>
         <span v-if="selectedFirstERO" class="font-bold my-2">Second ERO</span>
         <Dropdown
-            v-model="selectedSecondERO"
-            :options="EROs"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select a User"
-            :filter="true"
-            filterMatchMode="contains"
-            v-if="selectedFirstERO"
+          v-model="selectedSecondERO"
+          :options="EROs"
+          optionLabel="label"
+          optionGroupLabel="label"
+          optionGroupChildren="items"
+          placeholder="Select a User"
+          :filter="true"
+          filterMatchMode="contains"
+          v-if="selectedFirstERO"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -43,11 +43,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { Client } from '@/api/Client';
+import { onMounted, ref } from 'vue';
+// import { Client } from '@/api/Client';
 
-import { FilterMatchMode } from 'primevue/api';
-import CardComponent from "@/layout/CardComponent.vue";
+// import { FilterMatchMode } from 'primevue/api';
+import CardComponent from '@/layout/CardComponent.vue';
 import Dropdown from 'primevue/dropdown';
 
 const EROs = ref([
@@ -56,8 +56,8 @@ const EROs = ref([
     code: 'BOARD',
     items: [
       { label: 'Gijs de Man', value: 'GijsdeMan' },
-      { label: 'Samuel Oosterholt', value: "SamuelOosterholt" },
-      { label: 'Roy Kakkenberg', value: "RoyKakkenberg" }
+      { label: 'Samuel Oosterholt', value: 'SamuelOosterholt' },
+      { label: 'Roy Kakkenberg', value: 'RoyKakkenberg' }
     ]
   },
   {
@@ -65,10 +65,10 @@ const EROs = ref([
     code: 'OLDBOARD',
     items: [
       { label: 'Gijs de Man', value: 'GijsdeMan' },
-      { label: 'Samuel Oosterholt', value: "SamuelOosterholt" },
-      { label: 'Roy Kakkenberg', value: "RoyKakkenberg" }
+      { label: 'Samuel Oosterholt', value: 'SamuelOosterholt' },
+      { label: 'Roy Kakkenberg', value: 'RoyKakkenberg' }
     ]
-  },
+  }
 ]);
 
 // roomResponsibles.value.unshift(
@@ -87,7 +87,6 @@ onMounted(() => {
   //   roomResponsibles.value = data.users;
   // })
 });
-
 </script>
 
 <style scoped>

@@ -1,14 +1,14 @@
 <template>
   <div class="page-container">
-    <div class="page-title"> Room Responsibles</div>
-    <RoomResponsibleOverview/>
+    <div class="page-title">Room Responsibles</div>
+    <RoomResponsibleOverview />
   </div>
-  <CopyrightBanner/>
+  <CopyrightBanner />
 </template>
 
 <script setup lang="ts">
-import RoomResponsibleOverview from "@/components/Infoscreen/RoomResponsibleOverview.vue";
-import CopyrightBanner from "@/layout/CopyrightBanner.vue";
+import RoomResponsibleOverview from '@/components/Infoscreen/RoomResponsibleOverview.vue';
+import CopyrightBanner from '@/layout/CopyrightBanner.vue';
 </script>
 
 <style scoped>

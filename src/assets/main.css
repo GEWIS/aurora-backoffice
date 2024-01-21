@@ -24,7 +24,6 @@ a,
 }
 
 @media (min-width: 1024px) {
-
   #app {
     display: flex;
     flex-direction: column;
@@ -38,6 +37,6 @@ a,
   font-family: Raleway, sans-serif;
 }
 
-:deep(.p-button-label){
-  text-transform: uppercase!important;
+:deep(.p-button-label) {
+  text-transform: uppercase !important;
 }

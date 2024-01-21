@@ -3,15 +3,16 @@ import { Client, OIDCParameters, User } from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
 
 interface AuthStore {
-  name: string | null,
-  roles: string[],
+  name: string | null;
+  roles: string[];
 }
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    name: null,
-    roles: [],
-  }) as AuthStore,
+  state: () =>
+    ({
+      name: null,
+      roles: []
+    }) as AuthStore,
   getters: {
     getName(): string | null {
       return this.name;
@@ -22,7 +23,8 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async init(): Promise<void> {
-      await (new Client()).getInformation()
+      await new Client()
+        .getInformation()
         .then((res: User) => {
           this.name = res.name;
           this.roles = res.roles;
@@ -30,7 +32,8 @@ export const useAuthStore = defineStore('auth', {
         .catch(handleError);
     },
     async OIDCLogin(oidcParameters: OIDCParameters, client: Client): Promise<void> {
-      await client.authOIDC(oidcParameters)
+      await client
+        .authOIDC(oidcParameters)
         .then((res: User) => {
           this.name = res.name;
           this.roles = res.roles;
@@ -40,5 +43,5 @@ export const useAuthStore = defineStore('auth', {
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;
     }
-  },
+  }
 });

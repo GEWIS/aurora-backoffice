@@ -1,6 +1,9 @@
 <template>
   <div role="button" class="flex flex-row align-items-center my-3" @click="setSelected">
-    <i class="pi pi-desktop text-4xl m-3" :style="{'color': subscriber.active ? 'green' : 'gray'}" />
+    <i
+      class="pi pi-desktop text-4xl m-3"
+      :style="{ color: subscriber.active ? 'green' : 'gray' }"
+    />
     <div class="flex flex-column">
       <span class="font-bold">{{ subscriber.name }}</span>
       <span>Last seen {{ formatLastSeen(subscriber.lastSeen) }}</span>
@@ -10,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { formatLastSeen } from "@/utils/formatterUtils";
-import { useSubscriberStore } from "@/stores/subscriber.store";
+import { formatLastSeen } from '@/utils/formatterUtils';
+import { useSubscriberStore } from '@/stores/subscriber.store';
 
 const subscriberStore = useSubscriberStore();
 
@@ -30,5 +33,5 @@ const setSelected = () => {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/main.css";
+@import '@/assets/main.css';
 </style>

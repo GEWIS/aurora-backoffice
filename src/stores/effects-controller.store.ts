@@ -4,7 +4,7 @@ import { Client, LightsGroup } from '@/api/Client';
 
 interface PushedEffects {
   timestamp: Date;
-  lightGroupIds: number[],
+  lightGroupIds: number[];
   effects: LightsEffectsCreateParams[];
 }
 
@@ -18,10 +18,9 @@ export const useEffectsControllerStore = defineStore('effectsController', {
   state: (): EffectsControllerStore => ({
     selectedLightsGroupIds: [],
     chosenEffects: [],
-    pastPushedEffects: [],
+    pastPushedEffects: []
   }),
-  getters: {
-  },
+  getters: {},
   actions: {
     toggleLightsGroup(id: number) {
       const index = this.selectedLightsGroupIds.findIndex((g) => g === id);
@@ -48,27 +47,33 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     },
     async sendEffects() {
       const client = new Client();
-      await Promise.all(this.selectedLightsGroupIds.map((id) => {
-        return client.applyLightsEffect(id, this.chosenEffects);
-      }));
+      await Promise.all(
+        this.selectedLightsGroupIds.map((id) => {
+          return client.applyLightsEffect(id, this.chosenEffects);
+        })
+      );
       this.pastPushedEffects.unshift({
         effects: this.chosenEffects,
         lightGroupIds: this.selectedLightsGroupIds,
-        timestamp: new Date(),
+        timestamp: new Date()
       });
       this.chosenEffects = [];
     },
     async enableStrobe() {
       const client = new Client();
-      await Promise.all(this.selectedLightsGroupIds.map((id) => {
-        return client.enableStrobeOnLightsGroup(id, undefined);
-      }));
+      await Promise.all(
+        this.selectedLightsGroupIds.map((id) => {
+          return client.enableStrobeOnLightsGroup(id, undefined);
+        })
+      );
     },
     async disableStrobe() {
       const client = new Client();
-      await Promise.all(this.selectedLightsGroupIds.map((id) => {
-        return client.disableStrobeOnLightsGroup(id);
-      }));
+      await Promise.all(
+        this.selectedLightsGroupIds.map((id) => {
+          return client.disableStrobeOnLightsGroup(id);
+        })
+      );
     }
-  },
+  }
 });

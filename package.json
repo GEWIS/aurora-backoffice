@@ -8,10 +8,12 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "lint-fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --fix",
-    "format": "prettier --write src/",
-    "gen-client": "nswag openapi2tsclient /input:../narrowcasting-core/build/swagger.json /output:src/api/Client.ts"
+    "lint": "eslint . --ext .vue,.js,.jsx,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore --ignore-path .formatignore --max-warnings=0",
+    "lint-fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore --ignore-path .formatignore",
+    "format": "prettier --ignore-path .gitignore --ignore-path .formatignore --check src/",
+    "format-fix": "prettier --ignore-path .gitignore --ignore-path .formatignore --write src/",
+    "gen-client": "nswag openapi2tsclient /input:../narrowcasting-core/build/swagger.json /output:src/api/Client.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@vee-validate/yup": "^4.11.8",
@@ -42,6 +44,8 @@
     "eslint": "^8.52.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-vue": "^9.18.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "lodash": "^4.17.21",
     "npm-run-all": "^4.1.5",
     "nswag": "^14.0.2",

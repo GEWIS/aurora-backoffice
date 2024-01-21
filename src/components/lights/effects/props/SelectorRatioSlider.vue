@@ -54,6 +54,4 @@ const onChange = (newValue: number) => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

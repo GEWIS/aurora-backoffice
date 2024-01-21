@@ -3,7 +3,8 @@
     <h4 class="m-1">Color*</h4>
     <div class="flex flex-row flex-wrap gap-1">
       <ToggleButton
-        v-for="color in colors" :key="color"
+        v-for="color in colors"
+        :key="color"
         :model-value="selectedColors.includes(color as RgbColor)"
         :on-label="color"
         :off-label="color"
@@ -32,7 +33,7 @@ const props = defineProps<{
   singleColor?: boolean;
 }>();
 const emit = defineEmits<{
-  colorsUpdated: [colors: RgbColor[]]
+  colorsUpdated: [colors: RgbColor[]];
 }>();
 
 const colors: string[] = Object.values(RgbColor);
@@ -51,5 +52,4 @@ const handleColorClick = (color: RgbColor) => {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

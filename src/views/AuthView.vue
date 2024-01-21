@@ -1,20 +1,20 @@
 <template>
   <div>
     <main>
-      <img id="login-image" src="../assets/img/AVICO.svg" alt="logo"/>
-      <hr>
-      <Spinner id="login-image"/>
+      <img id="login-image" src="../assets/img/AVICO.svg" alt="logo" />
+      <hr />
+      <Spinner id="login-image" />
     </main>
-    <CopyrightBanner/>
+    <CopyrightBanner />
   </div>
 </template>
 
 <script setup lang="ts">
-import CopyrightBanner from "@/layout/CopyrightBanner.vue";
-import { onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { Client, OIDCParameters } from "@/api/Client";
-import { useAuthStore } from "@/stores/auth.store";
+import CopyrightBanner from '@/layout/CopyrightBanner.vue';
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { Client, OIDCParameters } from '@/api/Client';
+import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
 
 const route = useRoute();
@@ -28,7 +28,11 @@ onMounted(async () => {
     }
 
     let queryParameters = new URLSearchParams(route.hash.substring(1));
-    if (!queryParameters.get('code') || !queryParameters.get('state') || !queryParameters.get('session_state')) {
+    if (
+      !queryParameters.get('code') ||
+      !queryParameters.get('state') ||
+      !queryParameters.get('session_state')
+    ) {
       await router.push({ name: 'auth' });
     }
 
@@ -48,13 +52,14 @@ onMounted(async () => {
       session_state: queryParameters.get('session_state')!
     });
 
-    await authStore.OIDCLogin(oidcParameters, new Client())
-        .then(() => {
-          router.push(url!);
-        })
-        .catch(() => {
-          router.push({ name: 'notFound' });
-        });
+    await authStore
+      .OIDCLogin(oidcParameters, new Client())
+      .then(() => {
+        router.push(url!);
+      })
+      .catch(() => {
+        router.push({ name: 'notFound' });
+      });
   } else {
     // TODO replace with environment variables
     let state = uuidv4();
@@ -67,10 +72,12 @@ onMounted(async () => {
       state: state,
       response_mode: 'fragment',
       response_type: 'code',
-      scope: 'openid',
+      scope: 'openid'
     });
 
-    window.location.href = 'https://auth.gewis.nl/realms/GEWISWG/protocol/openid-connect/auth?' + queryParameters.toString();
+    window.location.href =
+      'https://auth.gewis.nl/realms/GEWISWG/protocol/openid-connect/auth?' +
+      queryParameters.toString();
   }
 });
 </script>

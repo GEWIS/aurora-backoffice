@@ -6,8 +6,18 @@
         <template #content>
           <div class="flex flex-column gap-2 w-100">
             <div class="flex flex-row gap-2 w-100">
-              <Button class="flex-1 text-center" severity="secondary" @click="effectsControllerStore.resetLightsGroupSelection()">Reset</Button>
-              <Button class="flex-1 text-center" severity="secondary" @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups);">Select all</Button>
+              <Button
+                class="flex-1 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.resetLightsGroupSelection()"
+                >Reset</Button
+              >
+              <Button
+                class="flex-1 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
+                >Select all</Button
+              >
             </div>
             <div v-for="group in activeLightGroups" :key="group.id">
               <LightsGroupToggleButton
@@ -17,10 +27,7 @@
               />
             </div>
             <div v-for="group in inactiveLightGroups" :key="group.id">
-              <LightsGroupToggleButton
-                :lights-group="group"
-                disabled
-              />
+              <LightsGroupToggleButton :lights-group="group" disabled />
             </div>
           </div>
         </template>
@@ -28,9 +35,7 @@
     </div>
     <div class="col-6 flex flex-column gap-3">
       <Card>
-        <template #title>
-          (2) Create effects
-        </template>
+        <template #title> (2) Create effects </template>
         <template #content>
           <div class="flex flex-row flex-wrap gap-2">
             <EffectBeatFadeOut />
@@ -41,13 +46,18 @@
       <Card>
         <template #title>(3) Saved effects</template>
         <template #content>
-          <div class="flex flex-row gap-2 flex-wrap" v-if="effectsControllerStore.chosenEffects.length > 0">
+          <div
+            class="flex flex-row gap-2 flex-wrap"
+            v-if="effectsControllerStore.chosenEffects.length > 0"
+          >
             <div v-for="(effect, index) in effectsControllerStore.chosenEffects" :key="effect.type">
               <SavedEffect :effect="effect" :index="index" removeable />
             </div>
           </div>
           <div v-else>
-            <span class="font-italic">There are no effects, meaning that sending will turn the selected groups off.</span>
+            <span class="font-italic"
+              >There are no effects, meaning that sending will turn the selected groups off.</span
+            >
           </div>
         </template>
         <template #footer>
@@ -71,9 +81,7 @@
     </div>
     <div class="col-3">
       <Card class="w-100">
-        <template #title>
-          Other effects & settings
-        </template>
+        <template #title> Other effects & settings </template>
         <template #content>
           <StrobeButton />
         </template>
@@ -81,11 +89,12 @@
     </div>
     <div class="col-12">
       <Card class="w-100">
-        <template #title>
-          Past effects
-        </template>
+        <template #title> Past effects </template>
         <template #content>
-          <div v-for="effect in effectsControllerStore.pastPushedEffects" :key="effect.timestamp.getTime()">
+          <div
+            v-for="effect in effectsControllerStore.pastPushedEffects"
+            :key="effect.timestamp.getTime()"
+          >
             {{ effect.timestamp }}
           </div>
         </template>
@@ -106,7 +115,8 @@ import EffectSearchLight from '@/components/lights/effects/EffectSearchLight.vue
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();
 const activeLightGroups = handlersStore.getRegisteredLights('SetEffectsHandler');
-const inactiveLightGroups = handlersStore.getRegisteredLights()
+const inactiveLightGroups = handlersStore
+  .getRegisteredLights()
   .filter((l1) => !activeLightGroups.find((l2) => l1.id === l2.id));
 </script>
 

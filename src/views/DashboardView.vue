@@ -17,14 +17,11 @@ import '@/styles/BasePage.scss';
 import { handleError } from '@/utils/errorHandler';
 
 const subscriberStore = useSubscriberStore();
-subscriberStore.fetchSubscribers()
-  .then(() => subscriberStore.setSelected(subscriberStore.subscribers[0].id)
-    .catch(handleError)
-  );
+subscriberStore
+  .fetchSubscribers()
+  .then(() => subscriberStore.setSelected(subscriberStore.subscribers[0].id).catch(handleError));
 
 const authStore = useAuthStore();
-
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

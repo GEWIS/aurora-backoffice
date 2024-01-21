@@ -4,14 +4,14 @@
       <div class="flex flex-column">
         <span class="font-bold my-2">First Responsible</span>
         <Dropdown
-            v-model="selectedFirstReponsible"
-            :options="roomResponsibles"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select User"
-            :filter="true"
-            filterMatchMode="contains"
+          v-model="selectedFirstReponsible"
+          :options="roomResponsibles"
+          optionLabel="label"
+          optionGroupLabel="label"
+          optionGroupChildren="items"
+          placeholder="Select User"
+          :filter="true"
+          filterMatchMode="contains"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -21,15 +21,15 @@
         </Dropdown>
         <span v-if="selectedFirstReponsible" class="font-bold my-2">Second Responsible</span>
         <Dropdown
-            v-model="selectedSecondReponsible"
-            :options="roomResponsibles"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select a User"
-            :filter="true"
-            filterMatchMode="contains"
-            v-if="selectedFirstReponsible"
+          v-model="selectedSecondReponsible"
+          :options="roomResponsibles"
+          optionLabel="label"
+          optionGroupLabel="label"
+          optionGroupChildren="items"
+          placeholder="Select a User"
+          :filter="true"
+          filterMatchMode="contains"
+          v-if="selectedFirstReponsible"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref } from 'vue';
 
-import { FilterMatchMode } from 'primevue/api';
-import CardComponent from "@/layout/CardComponent.vue";
+// import { FilterMatchMode } from 'primevue/api';
+import CardComponent from '@/layout/CardComponent.vue';
 import Dropdown from 'primevue/dropdown';
 
 const roomResponsibles = ref([
@@ -55,8 +55,8 @@ const roomResponsibles = ref([
     code: 'BOARD',
     items: [
       { label: 'Gijs de Man', value: 'GijsdeMan' },
-      { label: 'Samuel Oosterholt', value: "SamuelOosterholt" },
-      { label: 'Roy Kakkenberg', value: "RoyKakkenberg" }
+      { label: 'Samuel Oosterholt', value: 'SamuelOosterholt' },
+      { label: 'Roy Kakkenberg', value: 'RoyKakkenberg' }
     ]
   },
   {
@@ -64,10 +64,10 @@ const roomResponsibles = ref([
     code: 'OLDBOARD',
     items: [
       { label: 'Gijs de Man', value: 'GijsdeMan' },
-      { label: 'Samuel Oosterholt', value: "SamuelOosterholt" },
-      { label: 'Roy Kakkenberg', value: "RoyKakkenberg" }
+      { label: 'Samuel Oosterholt', value: 'SamuelOosterholt' },
+      { label: 'Roy Kakkenberg', value: 'RoyKakkenberg' }
     ]
-  },
+  }
 ]);
 
 // roomResponsibles.value.unshift(
@@ -86,7 +86,6 @@ onMounted(() => {
   //   roomResponsibles.value = data.users;
   // })
 });
-
 </script>
 
 <style scoped>

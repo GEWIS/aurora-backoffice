@@ -6,7 +6,7 @@ defineProps<{
   canSave: boolean;
 }>();
 defineEmits<{
-  save: [],
+  save: [];
 }>();
 
 const visible: boolean = ref(false);
@@ -16,7 +16,7 @@ const visible: boolean = ref(false);
   <Button
     :label="effectName"
     icon="pi pi-plus"
-    @click="() => visible = true"
+    @click="() => (visible = true)"
     severity="success"
   />
 
@@ -35,15 +35,16 @@ const visible: boolean = ref(false);
       <Button
         severity="success"
         :disabled="!canSave"
-        @click="() => {
-          visible = false;
-          $emit('save');
-        }"
-      >Add</Button>
+        @click="
+          () => {
+            visible = false;
+            $emit('save');
+          }
+        "
+        >Add</Button
+      >
     </template>
   </Dialog>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

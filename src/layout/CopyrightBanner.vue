@@ -1,13 +1,12 @@
 <template>
   <footer>
-  <span class="copyright">
-    <b> Copyright </b>
-  </span>
-</footer>
+    <span class="copyright">
+      <b> Copyright </b>
+    </span>
+  </footer>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 footer {

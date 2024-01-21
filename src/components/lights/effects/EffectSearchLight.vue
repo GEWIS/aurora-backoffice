@@ -5,7 +5,7 @@
       :max="2"
       :step="0.1"
       :value="radiusFactor"
-      @update="(newVal: number) => radiusFactor = newVal"
+      @update="(newVal: number) => (radiusFactor = newVal)"
       id="radiusFactor"
       name="Radius factor"
     />
@@ -14,7 +14,7 @@
       :max="20000"
       :step="1000"
       :value="cycleTime"
-      @update="(newVal: number) => cycleTime = newVal"
+      @update="(newVal: number) => (cycleTime = newVal)"
       id="cycleTime"
       name="Cycle time (in ms)"
     />
@@ -23,7 +23,7 @@
       :max="1"
       :step="0.05"
       :value="offsetFactor"
-      @update="(newVal: number) => offsetFactor = newVal"
+      @update="(newVal: number) => (offsetFactor = newVal)"
       id="offsetFactor"
       name="Offset factor"
     />
@@ -55,6 +55,4 @@ const handleAddEffect = () => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

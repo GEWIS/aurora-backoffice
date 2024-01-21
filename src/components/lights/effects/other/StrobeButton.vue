@@ -1,14 +1,14 @@
 <template>
-<Button
-  @touchstart="enableStrobe()"
-  @mousedown="enableStrobe()"
-  @mouseup="disableStrobe()"
-  @blur="disableStrobe()"
-  @mouseleave="disableStrobe()"
-  @touchend="disableStrobe()"
->
-  Strobe
-</Button>
+  <Button
+    @touchstart="enableStrobe()"
+    @mousedown="enableStrobe()"
+    @mouseup="disableStrobe()"
+    @blur="disableStrobe()"
+    @mouseleave="disableStrobe()"
+    @touchend="disableStrobe()"
+  >
+    Strobe
+  </Button>
 </template>
 
 <script setup lang="ts">
@@ -31,6 +31,4 @@ const disableStrobe = () => {
 const store = useEffectsControllerStore();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
