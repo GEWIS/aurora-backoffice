@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <div class="page-title">{{$t('infoscreen.settings')}}</div>
+    <div class="page-title"> Settings </div>
     <div class="flex flex-column gap-5">
       <div class="flex justify-content-between">
         <div style="width: 30%">

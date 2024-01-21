@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <div class="page-title">{{ $t('infoscreen.Room Responsibles') }}</div>
+    <div class="page-title"> Room Responsibles</div>
     <RoomResponsibleOverview/>
   </div>
   <CopyrightBanner/>

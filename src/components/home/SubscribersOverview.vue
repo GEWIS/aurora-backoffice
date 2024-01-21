@@ -1,13 +1,13 @@
 <template>
   <div>
-    <CardComponent :header="$t('subscriber.current')">
+    <CardComponent header="Current Subscribers">
       <SubscriberItemComponent
           v-for="subscriber in active"
           :key="subscriber.id"
           :subscriber="subscriber"
       />
       <div class="text-center">
-        <span style="color: #d40000" class="m-auto">{{$t('subscriber.inactive').toUpperCase()}}</span>
+        <span style="color: #d40000" class="m-auto">INACTIVE</span>
       </div>
       <SubscriberItemComponent
           v-for="subscriber in inactive"

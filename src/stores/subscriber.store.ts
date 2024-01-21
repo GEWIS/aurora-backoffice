@@ -44,7 +44,7 @@ export const useSubscriberStore = defineStore('subscriber', {
                    active: false,
                    lastSeen: new Date("2023-10-20T15:35:58.000Z"),
                 }
-            ]
+            ];
         }
     },
 });

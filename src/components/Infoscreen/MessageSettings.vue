@@ -12,14 +12,14 @@
         <div class="flex justify-content-between">
           <div>
             <Button
-                :label="$t('infoscreen.message')"
+                label="Message"
                 icon="pi pi-plus"
                 severity="success"
                 class="mr-2"
                 @click="newMessage"
             />
             <Button
-                :label="$t('infoscreen.delete')"
+                label="Delete"
                 :disabled="selectedMessages.length === 0"
                 icon="pi pi-trash"
                 severity="danger"
@@ -30,19 +30,19 @@
             <i class="pi pi-search"/>
             <InputText
                 v-model="filters['global'].value"
-                :placeholder="$t('infoscreen.search')"
+                placeholder="Search"
             />
           </span>
         </div>
       </template>
       <Column selectionMode="multiple" style="width: 5%"></Column>
-      <Column field="user" :header="$t('infoscreen.addedBy')" style="width: 15%"></Column>
-      <Column field="createdAt" :header="$t('infoscreen.addedOn')" style="width: 15%">
+      <Column field="user" header="Added by" style="width: 15%"></Column>
+      <Column field="createdAt" header="Added on" style="width: 15%">
         <template #body="slotProps">
           {{ slotProps.data.createdAt.toLocaleDateString() }}
         </template>
       </Column>
-      <Column field="message" :header="$t('infoscreen.message')" style="width: 50%"></Column>
+      <Column field="message" header="Message" style="width: 50%"></Column>
       <Column style="width: 10%">
         <template #body="slotProps">
           <Button
@@ -67,7 +67,7 @@
     <Dialog
         v-model:visible="showMessageDialog"
         :style="{width: '450px'}"
-        :header="$t('infoscreen.message')"
+        header="Message"
         :modal="true"
         class="p-fluid"
         :draggable="false"
@@ -80,19 +80,19 @@
             :class="{'p-invalid': isSubmitted && !message}"
         />
 <!--    TODO MAKE THIS WORK    -->
-        <small class="p-error" v-if="isSubmitted && !message.message">{{$t('nameRequired')}}</small>
+        <small class="p-error" v-if="isSubmitted && !message.message">Name Required</small>
       </div>
 
       <template #footer>
         <Button
-            :label="$t('infoscreen.cancel')"
+            label="Cancel"
             icon="pi pi-times"
             severity="secondary"
             text
             @click="hideDialog"
         />
         <Button
-            :label="$t('infoscreen.save')"
+            label="Save"
             icon="pi pi-check"
             severity="secondary"
             text
@@ -114,14 +114,14 @@
       </div>
       <template #footer>
         <Button
-            :label="$t('infoscreen.cancel')"
+            label="Cancel"
             icon="pi pi-times"
             severity="secondary"
             text
             @click="showDeleteMessageDialog = false"
         />
         <Button
-            :label="$t('infoscreen.confirm')"
+            label="Confirm"
             icon="pi pi-check"
             severity="secondary"
             text
@@ -143,13 +143,13 @@
       </div>
       <template #footer>
         <Button
-            :label="$t('infoscreen.cancel')"
+            label="Cancel"
             icon="pi pi-times"
             severity="secondary"
             text
             @click="showDeleteMessagesDialog = false"/>
         <Button
-            :label="$t('infoscreen.confirm')"
+            label="Confirm"
             icon="pi pi-check"
             severity="secondary"
             text

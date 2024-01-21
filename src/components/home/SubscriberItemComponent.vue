@@ -3,7 +3,7 @@
     <i class="pi pi-desktop text-4xl m-3" :style="{'color': subscriber.active ? 'green' : 'gray'}" />
     <div class="flex flex-column">
       <span class="font-bold">{{ subscriber.name }}</span>
-      <span>{{$t('subscriber.lastSeen')}} {{ formatLastSeen(subscriber.lastSeen) }}</span>
+      <span>Last seen {{ formatLastSeen(subscriber.lastSeen) }}</span>
       <span class="text-sm opacity-30">{{ subscriber.id }}</span>
     </div>
   </div>

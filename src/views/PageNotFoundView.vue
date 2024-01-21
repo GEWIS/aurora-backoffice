@@ -1,7 +1,7 @@
 <template>
   <TopNavbar />
   <div class="page-container">
-    <div class="page-title">{{ $t('errors.notFound') }}</div>
+    <div class="page-title">Not Found</div>
     <div class="content-wrapper flex justify-content-start gap-4">
       <p> We did not found what you are looking for. </p>
     </div>

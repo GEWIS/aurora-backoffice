@@ -5,7 +5,6 @@ import 'primeflex/primeflex.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { createI18n } from 'vue-i18n';
 import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
@@ -17,7 +16,6 @@ import DataTable from "primevue/datatable";
 import InputNumber from "primevue/inputnumber";
 import Dialog from "primevue/dialog";
 import 'primeicons/primeicons.css';
-import languages from "@/locales";
 import Dropdown from "primevue/dropdown";
 import Checkbox from "primevue/checkbox";
 import TabView from "primevue/tabview";
@@ -37,13 +35,6 @@ import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
 
-const messages = Object.assign(languages);
-const i18n = createI18n({
-    legacy: false,
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages,
-});
 app.use(createPinia());
 await useAuthStore().init();
 await useHandlersStore().init();
@@ -52,7 +43,6 @@ await useColorStore().init();
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
-app.use(i18n);
 
 app.component('Button', Button);
 app.component('Card', Card);

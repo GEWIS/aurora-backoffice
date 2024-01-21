@@ -1,7 +1,7 @@
 <template>
   <footer>
   <span class="copyright">
-    <b>{{ $t('navigation.copyright') }}</b>
+    <b> Copyright </b>
   </span>
 </footer>
 </template>

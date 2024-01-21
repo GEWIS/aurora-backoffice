@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CardComponent :header="$t('infoscreen.ERO')">
+    <CardComponent header="EROs">
       <div class="flex flex-column">
-        <span class="font-bold my-2">{{$t("infoscreen.firstERO")}}</span>
+        <span class="font-bold my-2">First ERO</span>
         <Dropdown
             v-model="selectedFirstERO"
             :options="EROs"
             optionLabel="label"
             optionGroupLabel="label"
             optionGroupChildren="items"
-            :placeholder="$t('infoscreen.selectUser')"
+            placeholder="Select a User"
             :filter="true"
             filterMatchMode="contains"
         >
@@ -19,14 +19,14 @@
             </div>
           </template>
         </Dropdown>
-        <span v-if="selectedFirstERO" class="font-bold my-2">{{$t("infoscreen.secondERO")}}</span>
+        <span v-if="selectedFirstERO" class="font-bold my-2">Second ERO</span>
         <Dropdown
             v-model="selectedSecondERO"
             :options="EROs"
             optionLabel="label"
             optionGroupLabel="label"
             optionGroupChildren="items"
-            :placeholder="$t('infoscreen.selectUser')"
+            placeholder="Select a User"
             :filter="true"
             filterMatchMode="contains"
             v-if="selectedFirstERO"

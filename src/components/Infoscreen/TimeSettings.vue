@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CardComponent :header="$t('infoscreen.times')">
+    <CardComponent header="Times">
       <div class="flex flex-column">
-        <span class="font-bold my-2">{{$t('infoscreen.roomOpen')}}</span>
+        <span class="font-bold my-2">Room Open</span>
         <Dropdown
             v-model="selectedRoomOpen"
             :options="roomOpenStatus"
             optionLabel="option"
             placeholder="Select an option"
         />
-        <span class="font-bold my-2">{{$t('infoscreen.alcoholTime')}}</span>
+        <span class="font-bold my-2">Alcohol Time</span>
         <Dropdown
             v-model="selectedAlcoholTime"
             :options="alcoholTime"

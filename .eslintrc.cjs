@@ -9,7 +9,6 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting',
-    'plugin:@intlify/vue-i18n/recommended'
   ],
 
   ignorePatterns: ["/src/components/icons/*.vue"],

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <CardComponent :header="$t('infoscreen.responsibles')">
+    <CardComponent label="Confirm">
       <div class="flex flex-column">
-        <span class="font-bold my-2">{{$t("infoscreen.firstResponsible")}}</span>
+        <span class="font-bold my-2">First Responsible</span>
         <Dropdown
             v-model="selectedFirstReponsible"
             :options="roomResponsibles"
             optionLabel="label"
             optionGroupLabel="label"
             optionGroupChildren="items"
-            :placeholder="$t('infoscreen.selectUser')"
+            placeholder="Select User"
             :filter="true"
             filterMatchMode="contains"
         >
@@ -19,7 +19,7 @@
             </div>
           </template>
         </Dropdown>
-        <span v-if="selectedFirstReponsible" class="font-bold my-2">{{$t("infoscreen.secondResponsible")}}</span>
+        <span v-if="selectedFirstReponsible" class="font-bold my-2">Second Responsible</span>
         <Dropdown
             v-model="selectedSecondReponsible"
             :options="roomResponsibles"

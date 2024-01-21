@@ -11,13 +11,13 @@
           <div class="roomresponsible-header">
           <span class="p-input-icon-left">
             <i class="pi pi-search"/>
-                <InputText v-model="filters['global'].value" :placeholder="$t('search')"/>
+                <InputText v-model="filters['global'].value" placeholder="Search"/>
             </span>
           </div>
         </template>
-        <Column field="fullName" :header="$t('Name')" style="width: 33%"></Column>
-        <Column field="startDate" :header="$t('Since')" style="width: 33%"></Column>
-        <Column field="expireDate" :header="$t('Expires')" style="width: 33%"></Column>
+        <Column field="fullName" header="Name" style="width: 33%"></Column>
+        <Column field="startDate" header="Since" style="width: 33%"></Column>
+        <Column field="expireDate" header="Expires" style="width: 33%"></Column>
       </DataTable>
     </div>
 </template>
