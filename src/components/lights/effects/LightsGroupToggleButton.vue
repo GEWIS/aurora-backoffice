@@ -4,12 +4,13 @@ import type { SelectedLightsGroup } from '@/entity/lights';
 defineProps<{
   lightsGroup: SelectedLightsGroup;
   disabled?: boolean;
+  enabled?: boolean;
 }>();
 </script>
 
 <template>
   <ToggleButton
-    :model-value="lightsGroup.selected"
+    :model-value="!!enabled"
     on-label=""
     off-label=""
     class="flex flex-row w-auto"

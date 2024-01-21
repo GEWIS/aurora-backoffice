@@ -10,7 +10,8 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "lint-fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "gen-client": "nswag openapi2tsclient /input:../narrowcasting-core/build/swagger.json /output:src/api/Client.ts"
   },
   "dependencies": {
     "@vee-validate/yup": "^4.11.8",
