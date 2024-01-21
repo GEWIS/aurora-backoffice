@@ -31,6 +31,7 @@ import "./styles/themes/sudosos-light/theme.scss";
 import Card from 'primevue/card';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
+import Chip from 'primevue/chip';
 
 const app = createApp(App);
 
@@ -52,6 +53,7 @@ app.use(i18n);
 
 app.component('Button', Button);
 app.component('Card', Card);
+app.component('Chip', Chip);
 app.component('SelectButton', SelectButton);
 app.component('ToggleButton', ToggleButton);
 app.component('InputText', InputText);

@@ -18,13 +18,11 @@ import { ref } from 'vue';
 const enabled = ref<boolean>(false);
 
 const enableStrobe = () => {
-  console.log('enable');
   enabled.value = true;
   store.enableStrobe();
 };
 
 const disableStrobe = () => {
-  console.log('disable');
   if (!enabled.value) return;
   store.disableStrobe();
   enabled.value = false;

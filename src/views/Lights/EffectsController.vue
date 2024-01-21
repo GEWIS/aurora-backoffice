@@ -5,9 +5,9 @@
         <template #title>(1) Lights groups</template>
         <template #content>
           <div class="flex flex-column gap-2 w-100">
-            <div class="flex flex-row gap-2">
-              <Button severity="secondary" @click="effectsControllerStore.resetLightsGroupSelection()">Reset</Button>
-              <Button severity="secondary" @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups);">Select all</Button>
+            <div class="flex flex-row gap-2 w-100">
+              <Button class="flex-1 text-center" severity="secondary" @click="effectsControllerStore.resetLightsGroupSelection()">Reset</Button>
+              <Button class="flex-1 text-center" severity="secondary" @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups);">Select all</Button>
             </div>
             <div v-for="group in activeLightGroups" :key="group.id">
               <LightsGroupToggleButton
@@ -38,14 +38,31 @@
       <Card>
         <template #title>(3) Saved effects</template>
         <template #content>
-          <ul>
-            <li v-for="e in effectsControllerStore.chosenEffects" :key="e['type']">
-              {{ e['type'] }}
-            </li>
-          </ul>
+          <div class="flex flex-row gap-2 flex-wrap" v-if="effectsControllerStore.chosenEffects.length > 0">
+            <div v-for="(effect, index) in effectsControllerStore.chosenEffects" :key="effect.type">
+              <SavedEffect :effect="effect" :index="index" removeable />
+            </div>
+          </div>
+          <div v-else>
+            <span class="font-italic">There are no effects, meaning that sending will turn the selected groups off.</span>
+          </div>
         </template>
         <template #footer>
-          <Button @click="() => effectsControllerStore.sendEffects()">Send</Button>
+          <div class="flex flex-row justify-content-end gap-2">
+            <Button
+              @click="() => effectsControllerStore.clearEffects()"
+              severity="secondary"
+              :disabled="effectsControllerStore.chosenEffects.length === 0"
+            >
+              Clear
+            </Button>
+            <Button
+              @click="() => effectsControllerStore.sendEffects()"
+              :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+            >
+              Send
+            </Button>
+          </div>
         </template>
       </Card>
     </div>
@@ -80,6 +97,7 @@ import BeatFadeOutEffect from '@/components/lights/effects/BeatFadeOutEffect.vue
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
+import SavedEffect from '@/components/lights/effects/SavedEffect.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

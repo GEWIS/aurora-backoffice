@@ -11,7 +11,9 @@
         @click="handleColorClick(color as RgbColor)"
       >
         <template #icon>
-          <div class="color-box border-1 mr-1" :style="{'background-color': store.getHexColor(color)}"></div>
+          <div class="mr-1">
+            <ColorBox :color="store.getHexColor(color as RgbColor)" />
+          </div>
         </template>
       </ToggleButton>
     </div>
@@ -22,6 +24,7 @@
 import { RgbColor } from '@/api/Client';
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
+import ColorBox from '@/components/ColorBox.vue';
 
 const store = useColorStore();
 
@@ -49,8 +52,4 @@ const handleColorClick = (color: RgbColor) => {
 </script>
 
 <style scoped>
-.color-box {
-  width: 1rem;
-  height: 1rem;
-}
 </style>

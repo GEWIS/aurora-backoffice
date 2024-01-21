@@ -40,6 +40,12 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     addEffect(effect: LightsEffectsCreateParams) {
       this.chosenEffects.push(effect);
     },
+    removeEffect(index: number) {
+      this.chosenEffects.splice(index, 1);
+    },
+    clearEffects() {
+      this.chosenEffects = [];
+    },
     async sendEffects() {
       const client = new Client();
       await Promise.all(this.selectedLightsGroupIds.map((id) => {
