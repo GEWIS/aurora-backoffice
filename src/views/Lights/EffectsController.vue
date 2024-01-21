@@ -55,7 +55,7 @@
           Other effects & settings
         </template>
         <template #content>
-          Hello!
+          <StrobeButton />
         </template>
       </Card>
     </div>
@@ -79,6 +79,7 @@ import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupTogg
 import BeatFadeOutEffect from '@/components/lights/effects/BeatFadeOutEffect.vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

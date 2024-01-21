@@ -52,5 +52,17 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       });
       this.chosenEffects = [];
     },
+    async enableStrobe() {
+      const client = new Client();
+      await Promise.all(this.selectedLightsGroupIds.map((id) => {
+        return client.enableStrobeOnLightsGroup(id, undefined);
+      }));
+    },
+    async disableStrobe() {
+      const client = new Client();
+      await Promise.all(this.selectedLightsGroupIds.map((id) => {
+        return client.disableStrobeOnLightsGroup(id);
+      }));
+    }
   },
 });
