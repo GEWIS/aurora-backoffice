@@ -19,7 +19,7 @@ defineProps<{
     <template #icon="">
       <div class="flex flex-column button-content px-2">
         <div>
-          {{ lightsGroup.name }}
+          {{ lightsGroup.name }} (ID: {{ lightsGroup.id}})
         </div>
         <div>
           <ul class="my-0" style="margin-left: -1.5rem">

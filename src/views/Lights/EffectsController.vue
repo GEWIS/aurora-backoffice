@@ -44,6 +44,9 @@
             </li>
           </ul>
         </template>
+        <template #footer>
+          <Button @click="() => effectsControllerStore.sendEffects()">Send</Button>
+        </template>
       </Card>
     </div>
     <div class="col-3">
@@ -60,6 +63,11 @@
       <Card class="w-100">
         <template #title>
           Past effects
+        </template>
+        <template #content>
+          <div v-for="effect in effectsControllerStore.pastPushedEffects" :key="effect.timestamp.getTime()">
+            {{ effect.timestamp }}
+          </div>
         </template>
       </Card>
     </div>

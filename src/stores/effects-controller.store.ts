@@ -1,9 +1,10 @@
 import type { LightsEffectsCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { LightsGroup } from '@/api/Client';
+import { Client, LightsGroup } from '@/api/Client';
 
 interface PushedEffects {
   timestamp: Date;
+  lightGroupIds: number[],
   effects: LightsEffectsCreateParams[];
 }
 
@@ -38,6 +39,18 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     },
     addEffect(effect: LightsEffectsCreateParams) {
       this.chosenEffects.push(effect);
+    },
+    async sendEffects() {
+      const client = new Client();
+      await Promise.all(this.selectedLightsGroupIds.map((id) => {
+        return client.applyLightsEffect(id, this.chosenEffects);
+      }));
+      this.pastPushedEffects.unshift({
+        effects: this.chosenEffects,
+        lightGroupIds: this.selectedLightsGroupIds,
+        timestamp: new Date(),
+      });
+      this.chosenEffects = [];
     },
   },
 });
