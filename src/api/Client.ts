@@ -5049,7 +5049,7 @@ export class SparkleProps implements ISparkleProps {
     /** What percentage (on average) of the lights should be turned on */
     ratio?: number;
     /** How many ticks the light should take to slowly turn off */
-    length?: number;
+    dimDuration?: number;
     /** After how many ms (approximately) a ratio of lights should be turned on */
     cycleTime?: number;
 
@@ -5073,7 +5073,7 @@ export class SparkleProps implements ISparkleProps {
                     this.colors!.push(item);
             }
             this.ratio = _data["ratio"];
-            this.length = _data["length"];
+            this.dimDuration = _data["length"];
             this.cycleTime = _data["cycleTime"];
         }
     }
@@ -5093,7 +5093,7 @@ export class SparkleProps implements ISparkleProps {
                 data["colors"].push(item);
         }
         data["ratio"] = this.ratio;
-        data["length"] = this.length;
+        data["length"] = this.dimDuration;
         data["cycleTime"] = this.cycleTime;
         return data;
     }
@@ -5105,7 +5105,7 @@ export interface ISparkleProps {
     /** What percentage (on average) of the lights should be turned on */
     ratio?: number;
     /** How many ticks the light should take to slowly turn off */
-    length?: number;
+    dimDuration?: number;
     /** After how many ms (approximately) a ratio of lights should be turned on */
     cycleTime?: number;
 }

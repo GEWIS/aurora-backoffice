@@ -47,9 +47,9 @@ import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 const handleAddEffect = () => {
   const createParams = new SearchLightCreateParams();
   createParams.type = SearchLightCreateParamsType.SearchLight;
-  createParams.props.cycleTime = cycleTime;
-  createParams.props.offsetFactor = offsetFactor;
-  createParams.props.radiusFactor = radiusFactor;
+  createParams.props.cycleTime = cycleTime.value;
+  createParams.props.offsetFactor = offsetFactor.value;
+  createParams.props.radiusFactor = radiusFactor.value;
 
   store.addEffect(createParams);
 };

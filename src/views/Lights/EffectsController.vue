@@ -40,6 +40,10 @@
           <div class="flex flex-row flex-wrap gap-2">
             <EffectBeatFadeOut />
             <EffectSearchLight />
+            <EffectSingleFlood />
+            <EffectSparkle />
+            <EffectStaticColor />
+            <EffectWave />
           </div>
         </template>
       </Card>
@@ -111,6 +115,10 @@ import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
 import SavedEffect from '@/components/lights/effects/SavedEffect.vue';
 import EffectSearchLight from '@/components/lights/effects/EffectSearchLight.vue';
+import EffectSingleFlood from '@/components/lights/effects/EffectSingleFlood.vue';
+import EffectSparkle from '@/components/lights/effects/EffectSparkle.vue';
+import EffectStaticColor from '@/components/lights/effects/EffectStaticColor.vue';
+import EffectWave from '@/components/lights/effects/EffectWave.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();
