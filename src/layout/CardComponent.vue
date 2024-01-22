@@ -49,7 +49,7 @@ const handleClick = () => {
 <style scoped lang="scss">
 #bottom-left-button {
   width: 100%;
-  color: #d40000 !important;
+  color: #c40000 !important;
   background-color: #f2f2f2;
   padding: 1rem 1.25rem;
   font-family: Lato, Arial, sans-serif !important;
@@ -58,7 +58,7 @@ const handleClick = () => {
 }
 
 :deep(.p-panel-header) {
-  color: #d40000 !important;
+  color: #c40000 !important;
   font-family: Lato, Arial, sans-serif !important;
   font-weight: 400;
   padding-top: 0 !important;

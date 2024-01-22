@@ -3,7 +3,7 @@ import EffectsController from '@/views/Lights/EffectsController.vue';
 </script>
 
 <template>
-  <div class="page-container my-0">
+  <div class="page-container">
     <div class="page-title">Effects controller</div>
     <Suspense>
       <EffectsController />

@@ -1,6 +1,3 @@
 {
-  "*.{ts,vue}": [
-    "npm run lint",
-    "npm run format"
-  ]
+  "*.{ts,vue}": ["npm run format", "npm run lint"]
 }

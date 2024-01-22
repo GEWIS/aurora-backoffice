@@ -2,15 +2,10 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-// import mkcert from 'vite-plugin-mkcert'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: '/',
-  plugins: [
-    // mkcert(),
-    vue()
-  ],
+  plugins: [vue()],
   server: {
     port: 8080,
     proxy: {
@@ -22,15 +17,12 @@ export default defineConfig({
       }
     }
   },
-  // define: {
-  //   'process.env': env
-  // },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   build: {
-    "target": "ESNext"
-  },
+    target: 'ESNext'
+  }
 });

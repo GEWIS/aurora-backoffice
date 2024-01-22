@@ -30,6 +30,4 @@ const active = computed(() => subscribers.value.filter((s) => s.active));
 const inactive = computed(() => subscribers.value.filter((s) => !s.active));
 </script>
 
-<style scoped lang="scss">
-@import '@/assets/main.css';
-</style>
+<style scoped lang="scss"></style>

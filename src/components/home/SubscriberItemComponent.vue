@@ -32,6 +32,4 @@ const setSelected = () => {
 };
 </script>
 
-<style scoped lang="scss">
-@import '@/assets/main.css';
-</style>
+<style scoped lang="scss"></style>

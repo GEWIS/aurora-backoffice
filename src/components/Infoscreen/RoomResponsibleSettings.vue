@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CardComponent label="Confirm">
+    <CardComponent label="Confirm" header="Responsibles">
       <div class="flex flex-column">
         <span class="font-bold my-2">First Responsible</span>
         <Dropdown

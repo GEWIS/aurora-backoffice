@@ -1,7 +1,9 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
-import './assets/main.css';
 import 'primeflex/primeflex.scss';
+import './styles/themes/theme.scss';
+// import './styles/themes/lara-light/theme.scss';
+import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
@@ -15,7 +17,6 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
-import 'primeicons/primeicons.css';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import TabView from 'primevue/tabview';
@@ -25,7 +26,6 @@ import ProgressSpinner from 'primevue/progressspinner';
 import { useAuthStore } from '@/stores/auth.store';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
-import './styles/themes/sudosos-light/theme.scss';
 import Card from 'primevue/card';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
