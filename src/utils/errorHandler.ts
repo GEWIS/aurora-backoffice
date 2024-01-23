@@ -10,19 +10,20 @@ export function isErrorResponse(data: any): data is ErrorResponse {
 }
 
 export function handleError(response: AxiosError) {
-  const toast = useToast();
-  if (response.response) {
-    const { data, status } = response.response;
-    const code = response.code;
-    let message = 'An error has occurred';
-    if (isErrorResponse(data)) {
-      message = data.message;
-    }
-    toast.add({
-      severity: 'error',
-      summary: `${status} - ${code}`,
-      detail: message,
-      life: 3000
-    });
-  }
+  console.log(response);
+  // const toast = useToast();
+  // if (response.response) {
+  //   const { data, status } = response.response;
+  //   const code = response.code;
+  //   let message = 'An error has occurred';
+  //   if (isErrorResponse(data)) {
+  //     message = data.message;
+  //   }
+  //   toast.add({
+  //     severity: 'error',
+  //     summary: `${status} - ${code}`,
+  //     detail: message,
+  //     life: 3000
+  //   });
+  // }
 }
