@@ -1,29 +1,19 @@
-import type { AxiosError } from 'axios';
-import { useToast } from 'primevue/usetoast';
+import { toastError } from '@/utils/toastHandler';
+import type { ApiException } from '@/api/Client';
 
 interface ErrorResponse {
   message: string;
+  details: string;
 }
 
-export function isErrorResponse(data: any): data is ErrorResponse {
-  return data && typeof data.message === 'string';
-}
+// TODO: possibly move this to interceptor and show toast whenever error is thrown
+// Are there any scenarios where you would want to explicitly still throw your own error?
+// How would this affect .catch()?
+export function handleError(response: ApiException) {
+  const { message, details } = JSON.parse(response.response) as ErrorResponse;
 
-export function handleError(response: AxiosError) {
-  console.log(response);
-  // const toast = useToast();
-  // if (response.response) {
-  //   const { data, status } = response.response;
-  //   const code = response.code;
-  //   let message = 'An error has occurred';
-  //   if (isErrorResponse(data)) {
-  //     message = data.message;
-  //   }
-  //   toast.add({
-  //     severity: 'error',
-  //     summary: `${status} - ${code}`,
-  //     detail: message,
-  //     life: 3000
-  //   });
-  // }
+  toastError({
+    title: `${response.status} - ${message}`,
+    body: details
+  });
 }

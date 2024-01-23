@@ -157,6 +157,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
 import { handleError } from '@/utils/errorHandler';
+import { toastInfo } from '@/utils/toastHandler';
 
 const messages = ref<Message[]>([]);
 const message: Ref<Message> = ref(new Message());

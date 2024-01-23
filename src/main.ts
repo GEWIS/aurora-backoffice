@@ -32,8 +32,9 @@ import { useColorStore } from '@/stores/color.store';
 import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
+import SetupInterceptors from '@/utils/fetchInterceptor';
 
-const app = createApp(App);
+export const app = createApp(App);
 
 app.use(createPinia());
 await useAuthStore().init();
@@ -43,6 +44,7 @@ await useColorStore().init();
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+SetupInterceptors();
 
 app.component('Button', Button);
 app.component('Card', Card);
