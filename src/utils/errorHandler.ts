@@ -10,10 +10,17 @@ interface ErrorResponse {
 // Are there any scenarios where you would want to explicitly still throw your own error?
 // How would this affect .catch()?
 export function handleError(response: ApiException) {
-  const { message, details } = JSON.parse(response.response) as ErrorResponse;
+  try {
+    const { message, details } = JSON.parse(response.response) as ErrorResponse;
 
-  toastError({
-    title: `${response.status} - ${message}`,
-    body: details
-  });
+    toastError({
+      title: `${response.status} - ${message}`,
+      body: details
+    });
+  } catch (e) {
+    toastError({
+      title: response.message,
+      body: ''
+    });
+  }
 }

@@ -38,8 +38,6 @@ export default function SetupInterceptors(): void {
       });
     }
 
-    console.log(await response.json());
-
     return response;
   };
 }
