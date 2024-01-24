@@ -187,7 +187,7 @@ onMounted(() => {
 const newMessage = () => {
   // TODO get actual user
   message.value = new Message({
-    id: '',
+    id: -1,
     user: 'currentUser',
     message: '',
     createdAt: new Date(),
@@ -207,7 +207,7 @@ const saveMessage = () => {
   // Check if existing message is exited
   if (message.value.id) {
     client
-      .updateMessage(message.value.id, {
+      .updateMessage(message.value.id.toString(), {
         user: message.value.user!,
         message: message.value.message!
       } as MessageParams)
@@ -245,7 +245,7 @@ const confirmDeleteMessage = (deleteMessage: Message) => {
 
 const deleteMessage = () => {
   client
-    .deleteMessage(message.value.id)
+    .deleteMessage(message.value.id.toString())
     .then(() => {
       messages.value = messages.value.filter(
         (filterMessage: Message) => filterMessage.id !== message.value.id
@@ -264,7 +264,7 @@ const confirmDeleteSelectedMessages = () => {
 
 const deleteSelectedMessages = () => {
   for (let deletedMessage of selectedMessages.value) {
-    client.deleteMessage(deletedMessage.id);
+    client.deleteMessage(deletedMessage.id.toString());
   }
   messages.value = messages.value.filter(
     (filterMessage: Message) => !selectedMessages.value.includes(filterMessage)

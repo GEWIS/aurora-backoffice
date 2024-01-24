@@ -8,15 +8,15 @@
 </template>
 
 <script setup lang="ts">
-// const props = defineProps<{
-//   checked: boolean;
-//   name: string;
-//   id: string;
-// }>();
-//
-// const emit = defineEmits<{
-//   click: [];
-// }>();
+const props = defineProps<{
+  checked: boolean;
+  name: string;
+  id: string;
+}>();
+
+const emit = defineEmits<{
+  click: [];
+}>();
 </script>
 
 <style scoped></style>

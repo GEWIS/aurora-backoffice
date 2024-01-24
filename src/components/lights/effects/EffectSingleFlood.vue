@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { SearchLightCreateParamsType, SingleFloodCreateParams } from '@/api/Client';
+import { SingleFloodCreateParams, SingleFloodCreateParamsType } from '@/api/Client';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 
@@ -29,7 +29,7 @@ const dimMilliseconds = ref<number>(500);
 
 const handleAddEffect = () => {
   const createParams = new SingleFloodCreateParams();
-  createParams.type = SearchLightCreateParamsType.SearchLight;
+  createParams.type = SingleFloodCreateParamsType.SingleFlood;
   createParams.props.dimMilliseconds = dimMilliseconds.value;
 
   store.addEffect(createParams);

@@ -9,7 +9,7 @@ defineEmits<{
   save: [];
 }>();
 
-const visible: boolean = ref(false);
+const visible = ref<boolean>(false);
 </script>
 
 <template>

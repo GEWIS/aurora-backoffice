@@ -1,8 +1,8 @@
-<script setup lang="ts">
-import type { SelectedLightsGroup } from '@/entity/lights';
+<script setup lang="ts">;
+import type { LightsGroup } from '@/api/Client';
 
 defineProps<{
-  lightsGroup: SelectedLightsGroup;
+  lightsGroup: LightsGroup;
   disabled?: boolean;
   enabled?: boolean;
 }>();
