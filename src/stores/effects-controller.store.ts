@@ -2,7 +2,7 @@ import type { LightsEffectsCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
 import { Client, LightsGroup } from '@/api/Client';
 
-interface PushedEffects {
+export interface PushedEffects {
   timestamp: Date;
   lightGroupIds: number[];
   effects: LightsEffectsCreateParams[];

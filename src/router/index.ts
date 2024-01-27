@@ -7,7 +7,7 @@ import SettingsView from '@/views/Infoscreen/SettingsView.vue';
 import PageNotFoundView from '@/views/PageNotFoundView.vue';
 import { useAuthStore } from '@/stores/auth.store';
 import UnauthorizedView from '@/views/UnauthorizedView.vue';
-import EffectsControllerWrapper from '@/views/Lights/EffectsControllerWrapper.vue';
+import EffectsController from '@/views/Lights/EffectsController.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -71,7 +71,7 @@ const router = createRouter({
           children: [
             {
               path: 'effectsController',
-              component: EffectsControllerWrapper,
+              component: EffectsController,
               name: 'lightsEffectsController'
             }
           ]

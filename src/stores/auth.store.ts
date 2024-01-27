@@ -3,6 +3,7 @@ import { Client, OIDCParameters, User } from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
+import { useSocketStore } from '@/stores/socket.store';
 
 interface AuthStore {
   name: string | null;
@@ -48,6 +49,7 @@ export const useAuthStore = defineStore('auth', {
 
       await useHandlersStore().init();
       await useColorStore().init();
+      await useSocketStore().connect();
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;
