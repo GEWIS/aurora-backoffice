@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { Client, OIDCParameters, User } from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
+import { useHandlersStore } from '@/stores/handlers.store';
+import { useColorStore } from '@/stores/color.store';
 
 interface AuthStore {
   name: string | null;
@@ -25,9 +27,12 @@ export const useAuthStore = defineStore('auth', {
     async init(): Promise<void> {
       await new Client()
         .getInformation()
-        .then((res: User) => {
+        .then(async (res: User) => {
           this.name = res.name;
           this.roles = res.roles;
+
+          await useHandlersStore().init();
+          await useColorStore().init();
         })
         .catch(handleError);
     },
@@ -37,8 +42,12 @@ export const useAuthStore = defineStore('auth', {
         .then((res: User) => {
           this.name = res.name;
           this.roles = res.roles;
+
         })
         .catch(handleError);
+
+      await useHandlersStore().init();
+      await useColorStore().init();
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;

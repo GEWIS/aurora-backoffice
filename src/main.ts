@@ -44,8 +44,6 @@ SetupInterceptors();
 
 app.use(createPinia());
 await useAuthStore().init();
-await useHandlersStore().init();
-await useColorStore().init();
 
 app.component('Button', Button);
 app.component('Card', Card);
