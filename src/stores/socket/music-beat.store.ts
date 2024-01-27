@@ -3,11 +3,13 @@ import { useSocketStore } from '@/stores/socket.store';
 
 interface MusicBeatStore {
   beat: boolean;
+  initialized: boolean;
 }
 
 export const useMusicBeatStore = defineStore('music-beat', {
   state: (): MusicBeatStore => ({
     beat: false,
+    initialized: false,
   }),
   getters: {},
   actions: {
@@ -16,10 +18,10 @@ export const useMusicBeatStore = defineStore('music-beat', {
       this.beat = !this.beat;
     },
     init() {
+      if (this.initialized) return;
+
       const store = useSocketStore();
-      console.log('init beats');
       if (!store.backofficeSocket) return;
-      console.log('init beats - socket exists');
 
       store.backofficeSocket.on('beat', this.handleBeat);
     },

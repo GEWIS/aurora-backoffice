@@ -92,7 +92,10 @@
         <Card class="w-100">
           <template #title> Other effects & settings </template>
           <template #content>
-            <StrobeButton />
+            <div class="flex flex-row gap-2 flex-wrap">
+              <StrobeButton />
+              <ArtificialBeatDialog />
+            </div>
           </template>
         </Card>
       </div>
@@ -129,6 +132,7 @@ import EffectStaticColor from '@/components/lights/effects/EffectStaticColor.vue
 import EffectWave from '@/components/lights/effects/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
 import BeatVisualizer from '@/components/BeatVisualizer.vue';
+import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();
