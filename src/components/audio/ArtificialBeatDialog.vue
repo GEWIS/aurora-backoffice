@@ -40,6 +40,7 @@
         severity="success"
         @click="setArtificialBeats"
         :loading="savingBpmLoading"
+        :disabled="taps.length < 4"
       />
       <Button
         label="Disable artificial beats"
@@ -54,7 +55,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { splitArrayIntoChunks } from '@/utils/arrayUtils';
-import { Client } from '@/api/Client';
+import { ArtificialBeatGeneratorParams, Client } from '@/api/Client';
 
 const visible = ref<boolean>(false);
 const taps = ref<Date[]>([]);
@@ -97,9 +98,10 @@ const onDialogShow = () => {
 };
 
 const setArtificialBeats = () => {
-  savingBpmLoading.value = true;
   const bpm = getBpm();
-  new Client().startArtificialBeatGenerator({ bpm })
+  if (bpm == null) return;
+  savingBpmLoading.value = true;
+  new Client().startArtificialBeatGenerator(new ArtificialBeatGeneratorParams({ bpm }))
     .then(() => visible.value = false)
     .finally(() => savingBpmLoading.value = false);
 };
