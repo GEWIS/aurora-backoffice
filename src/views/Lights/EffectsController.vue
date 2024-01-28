@@ -57,9 +57,9 @@
           <template #content>
             <div
               class="flex flex-row gap-2 flex-wrap"
-              v-if="effectsControllerStore.chosenEffects.length > 0"
+              v-if="effectsControllerStore.chosenColorEffects.length > 0"
             >
-              <div v-for="(effect, index) in effectsControllerStore.chosenEffects" :key="effect.type">
+              <div v-for="(effect, index) in effectsControllerStore.chosenColorEffects" :key="effect.type">
                 <SavedEffect :effect="effect" :index="index" removeable />
               </div>
             </div>
@@ -74,7 +74,7 @@
               <Button
                 @click="() => effectsControllerStore.clearEffects()"
                 severity="secondary"
-                :disabled="effectsControllerStore.chosenEffects.length === 0"
+                :disabled="effectsControllerStore.chosenColorEffects.length === 0"
               >
                 Clear
               </Button>

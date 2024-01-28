@@ -591,8 +591,8 @@ export class Client {
     /**
      * @return Ok
      */
-    applyLightsEffect(id: number, body: LightsEffectsCreateParams[]): Promise<Anonymous2> {
-        let url_ = this.baseUrl + "/handler/lights/set-effects/{id}";
+    applyLightsEffectColor(id: number, body: LightsEffectsColorCreateParams[]): Promise<Anonymous2> {
+        let url_ = this.baseUrl + "/handler/lights/set-effects/{id}/color";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
         url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -610,11 +610,11 @@ export class Client {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processApplyLightsEffect(_response);
+            return this.processApplyLightsEffectColor(_response);
         });
     }
 
-    protected processApplyLightsEffect(response: Response): Promise<Anonymous2> {
+    protected processApplyLightsEffectColor(response: Response): Promise<Anonymous2> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -630,6 +630,50 @@ export class Client {
             });
         }
         return Promise.resolve<Anonymous2>(null as any);
+    }
+
+    /**
+     * @return Ok
+     */
+    applyLightsEffectMovement(id: number, body: SearchLightCreateParams[]): Promise<Anonymous3> {
+        let url_ = this.baseUrl + "/handler/lights/set-effects/{id}/movement";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processApplyLightsEffectMovement(_response);
+        });
+    }
+
+    protected processApplyLightsEffectMovement(response: Response): Promise<Anonymous3> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = Anonymous3.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Anonymous3>(null as any);
     }
 
     getInformation2(): Promise<Information> {
@@ -881,7 +925,7 @@ export class Client {
     /**
      * @return Start commands sent
      */
-    startCenturion(): Promise<Anonymous3> {
+    startCenturion(): Promise<Anonymous4> {
         let url_ = this.baseUrl + "/modes/centurion/start";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -897,7 +941,7 @@ export class Client {
         });
     }
 
-    protected processStartCenturion(response: Response): Promise<Anonymous3> {
+    protected processStartCenturion(response: Response): Promise<Anonymous4> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 204) {
@@ -921,13 +965,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous3>(null as any);
+        return Promise.resolve<Anonymous4>(null as any);
     }
 
     /**
      * @return Skip commands sent
      */
-    skipCenturion(body: SkipCenturionRequest): Promise<Anonymous4> {
+    skipCenturion(body: SkipCenturionRequest): Promise<Anonymous5> {
         let url_ = this.baseUrl + "/modes/centurion/skip";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -947,7 +991,7 @@ export class Client {
         });
     }
 
-    protected processSkipCenturion(response: Response): Promise<Anonymous4> {
+    protected processSkipCenturion(response: Response): Promise<Anonymous5> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 204) {
@@ -979,13 +1023,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous4>(null as any);
+        return Promise.resolve<Anonymous5>(null as any);
     }
 
     /**
      * @return Start commands sent
      */
-    stopCenturion(): Promise<Anonymous5> {
+    stopCenturion(): Promise<Anonymous6> {
         let url_ = this.baseUrl + "/modes/centurion/stop";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1001,7 +1045,7 @@ export class Client {
         });
     }
 
-    protected processStopCenturion(response: Response): Promise<Anonymous5> {
+    protected processStopCenturion(response: Response): Promise<Anonymous6> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 204) {
@@ -1025,7 +1069,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous5>(null as any);
+        return Promise.resolve<Anonymous6>(null as any);
     }
 
     enableCenturion(body: CenturionParams): Promise<string> {
@@ -2458,7 +2502,7 @@ export class Client {
      * @param error (optional)
      * @return Ok
      */
-    spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous6> {
+    spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous7> {
         let url_ = this.baseUrl + "/spotify/callback?";
         if (state === undefined || state === null)
             throw new Error("The parameter 'state' must be defined and cannot be null.");
@@ -2486,7 +2530,7 @@ export class Client {
         });
     }
 
-    protected processSpotifyLoginCallback(response: Response): Promise<Anonymous6> {
+    protected processSpotifyLoginCallback(response: Response): Promise<Anonymous7> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2502,7 +2546,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<Anonymous6>(null as any);
+        return Promise.resolve<Anonymous7>(null as any);
     }
 
     /**
@@ -3683,7 +3727,7 @@ export class LightsMovingHeadWheel implements ILightsMovingHeadWheel {
     colorWheelChannel!: number;
     goboWheelChannel!: number;
     goboRotateChannel!: number | undefined;
-    colorWheelChannelValues!: LightsWheelChannelValue_ColorWheelColors_[];
+    colorWheelChannelValues!: LightsWheelChannelValue_WheelColor_[];
     goboWheelChannelValues!: LightsWheelChannelValue_string_[];
 
     constructor(data?: ILightsMovingHeadWheel) {
@@ -3721,7 +3765,7 @@ export class LightsMovingHeadWheel implements ILightsMovingHeadWheel {
             if (Array.isArray(_data["colorWheelChannelValues"])) {
                 this.colorWheelChannelValues = [] as any;
                 for (let item of _data["colorWheelChannelValues"])
-                    this.colorWheelChannelValues!.push(LightsWheelChannelValue_ColorWheelColors_.fromJS(item));
+                    this.colorWheelChannelValues!.push(LightsWheelChannelValue_WheelColor_.fromJS(item));
             }
             if (Array.isArray(_data["goboWheelChannelValues"])) {
                 this.goboWheelChannelValues = [] as any;
@@ -3783,30 +3827,30 @@ export interface ILightsMovingHeadWheel {
     colorWheelChannel: number;
     goboWheelChannel: number;
     goboRotateChannel: number | undefined;
-    colorWheelChannelValues: LightsWheelChannelValue_ColorWheelColors_[];
+    colorWheelChannelValues: LightsWheelChannelValue_WheelColor_[];
     goboWheelChannelValues: LightsWheelChannelValue_string_[];
 }
 
-export enum ColorWheelColors {
+export enum WheelColor {
+    White = "white",
     Red = "red",
     Green = "green",
     Blue = "blue",
     Yellow = "yellow",
-    LightBlue = "lightBlue",
+    Lightblue = "lightblue",
     Orange = "orange",
-    RoseRed = "roseRed",
+    Rosered = "rosered",
 }
 
-export class LightsWheelChannelValue_ColorWheelColors_ implements ILightsWheelChannelValue_ColorWheelColors_ {
+export class LightsWheelChannelValue_WheelColor_ implements ILightsWheelChannelValue_WheelColor_ {
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
     movingHead!: LightsMovingHeadWheel;
-    channel!: LightsWheelChannelValue_ColorWheelColors_Channel;
-    name!: ColorWheelColors;
+    name!: WheelColor;
     value!: number;
 
-    constructor(data?: ILightsWheelChannelValue_ColorWheelColors_) {
+    constructor(data?: ILightsWheelChannelValue_WheelColor_) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3824,15 +3868,14 @@ export class LightsWheelChannelValue_ColorWheelColors_ implements ILightsWheelCh
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.movingHead = _data["movingHead"] ? LightsMovingHeadWheel.fromJS(_data["movingHead"]) : new LightsMovingHeadWheel();
-            this.channel = _data["channel"];
             this.name = _data["name"];
             this.value = _data["value"];
         }
     }
 
-    static fromJS(data: any): LightsWheelChannelValue_ColorWheelColors_ {
+    static fromJS(data: any): LightsWheelChannelValue_WheelColor_ {
         data = typeof data === 'object' ? data : {};
-        let result = new LightsWheelChannelValue_ColorWheelColors_();
+        let result = new LightsWheelChannelValue_WheelColor_();
         result.init(data);
         return result;
     }
@@ -3843,20 +3886,18 @@ export class LightsWheelChannelValue_ColorWheelColors_ implements ILightsWheelCh
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
-        data["channel"] = this.channel;
         data["name"] = this.name;
         data["value"] = this.value;
         return data;
     }
 }
 
-export interface ILightsWheelChannelValue_ColorWheelColors_ {
+export interface ILightsWheelChannelValue_WheelColor_ {
     id: number;
     createdAt: Date;
     updatedAt: Date;
     movingHead: LightsMovingHeadWheel;
-    channel: LightsWheelChannelValue_ColorWheelColors_Channel;
-    name: ColorWheelColors;
+    name: WheelColor;
     value: number;
 }
 
@@ -3865,7 +3906,6 @@ export class LightsWheelChannelValue_string_ implements ILightsWheelChannelValue
     createdAt!: Date;
     updatedAt!: Date;
     movingHead!: LightsMovingHeadWheel;
-    channel!: LightsWheelChannelValue_string_Channel;
     name!: string;
     value!: number;
 
@@ -3887,7 +3927,6 @@ export class LightsWheelChannelValue_string_ implements ILightsWheelChannelValue
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.movingHead = _data["movingHead"] ? LightsMovingHeadWheel.fromJS(_data["movingHead"]) : new LightsMovingHeadWheel();
-            this.channel = _data["channel"];
             this.name = _data["name"];
             this.value = _data["value"];
         }
@@ -3906,7 +3945,6 @@ export class LightsWheelChannelValue_string_ implements ILightsWheelChannelValue
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
-        data["channel"] = this.channel;
         data["name"] = this.name;
         data["value"] = this.value;
         return data;
@@ -3918,7 +3956,6 @@ export interface ILightsWheelChannelValue_string_ {
     createdAt: Date;
     updatedAt: Date;
     movingHead: LightsMovingHeadWheel;
-    channel: LightsWheelChannelValue_string_Channel;
     name: string;
     value: number;
 }
@@ -4989,108 +5026,6 @@ export interface IBeatFadeOutCreateParams extends IBaseLightsEffectCreateParams 
     [key: string]: any;
 }
 
-export class SearchLightProps implements ISearchLightProps {
-    /** Radius of the search light */
-    radiusFactor?: number;
-    /** Time for the moving head to go around (in milliseconds) */
-    cycleTime?: number;
-    /** What phase the lights should move apart from each other. 0 for synchronous */
-    offsetFactor?: number;
-
-    constructor(data?: ISearchLightProps) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.radiusFactor = _data["radiusFactor"];
-            this.cycleTime = _data["cycleTime"];
-            this.offsetFactor = _data["offsetFactor"];
-        }
-    }
-
-    static fromJS(data: any): SearchLightProps {
-        data = typeof data === 'object' ? data : {};
-        let result = new SearchLightProps();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["radiusFactor"] = this.radiusFactor;
-        data["cycleTime"] = this.cycleTime;
-        data["offsetFactor"] = this.offsetFactor;
-        return data;
-    }
-}
-
-export interface ISearchLightProps {
-    /** Radius of the search light */
-    radiusFactor?: number;
-    /** Time for the moving head to go around (in milliseconds) */
-    cycleTime?: number;
-    /** What phase the lights should move apart from each other. 0 for synchronous */
-    offsetFactor?: number;
-}
-
-export class SearchLightCreateParams extends BaseLightsEffectCreateParams implements ISearchLightCreateParams {
-    props!: SearchLightProps;
-    type!: SearchLightCreateParamsType;
-
-    [key: string]: any;
-
-    constructor(data?: ISearchLightCreateParams) {
-        super(data);
-        if (!data) {
-            this.props = new SearchLightProps();
-        }
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.props = _data["props"] ? SearchLightProps.fromJS(_data["props"]) : new SearchLightProps();
-            this.type = _data["type"];
-        }
-    }
-
-    static fromJS(data: any): SearchLightCreateParams {
-        data = typeof data === 'object' ? data : {};
-        let result = new SearchLightCreateParams();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["props"] = this.props ? this.props.toJSON() : <any>undefined;
-        data["type"] = this.type;
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface ISearchLightCreateParams extends IBaseLightsEffectCreateParams {
-    props: SearchLightProps;
-    type: SearchLightCreateParamsType;
-
-    [key: string]: any;
-}
-
 export class SingleFloodProps implements ISingleFloodProps {
     /** In how many milliseconds the lights should turn off with a dim effect */
     dimMilliseconds?: number;
@@ -5303,6 +5238,8 @@ export interface ISparkleCreateParams extends IBaseLightsEffectCreateParams {
 export class StaticColorProps implements IStaticColorProps {
     /** Color that should be shown */
     color!: RgbColor;
+    /** Beat */
+    beatToggle?: boolean;
 
     constructor(data?: IStaticColorProps) {
         if (data) {
@@ -5316,6 +5253,7 @@ export class StaticColorProps implements IStaticColorProps {
     init(_data?: any) {
         if (_data) {
             this.color = _data["color"];
+            this.beatToggle = _data["beatToggle"];
         }
     }
 
@@ -5329,6 +5267,7 @@ export class StaticColorProps implements IStaticColorProps {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["color"] = this.color;
+        data["beatToggle"] = this.beatToggle;
         return data;
     }
 }
@@ -5336,6 +5275,8 @@ export class StaticColorProps implements IStaticColorProps {
 export interface IStaticColorProps {
     /** Color that should be shown */
     color: RgbColor;
+    /** Beat */
+    beatToggle?: boolean;
 }
 
 export class StaticColorCreateParams extends BaseLightsEffectCreateParams implements IStaticColorCreateParams {
@@ -5582,11 +5523,11 @@ export interface IWaveCreateParams extends IBaseLightsEffectCreateParams {
     [key: string]: any;
 }
 
-export class LightsEffectsCreateParams implements ILightsEffectsCreateParams {
+export class LightsEffectsColorCreateParams implements ILightsEffectsColorCreateParams {
 
     [key: string]: any;
 
-    constructor(data?: ILightsEffectsCreateParams) {
+    constructor(data?: ILightsEffectsColorCreateParams) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -5604,9 +5545,9 @@ export class LightsEffectsCreateParams implements ILightsEffectsCreateParams {
         }
     }
 
-    static fromJS(data: any): LightsEffectsCreateParams {
+    static fromJS(data: any): LightsEffectsColorCreateParams {
         data = typeof data === 'object' ? data : {};
-        let result = new LightsEffectsCreateParams();
+        let result = new LightsEffectsColorCreateParams();
         result.init(data);
         return result;
     }
@@ -5621,7 +5562,109 @@ export class LightsEffectsCreateParams implements ILightsEffectsCreateParams {
     }
 }
 
-export interface ILightsEffectsCreateParams {
+export interface ILightsEffectsColorCreateParams {
+
+    [key: string]: any;
+}
+
+export class SearchLightProps implements ISearchLightProps {
+    /** Radius of the search light */
+    radiusFactor?: number;
+    /** Time for the moving head to go around (in milliseconds) */
+    cycleTime?: number;
+    /** What phase the lights should move apart from each other. 0 for synchronous */
+    offsetFactor?: number;
+
+    constructor(data?: ISearchLightProps) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.radiusFactor = _data["radiusFactor"];
+            this.cycleTime = _data["cycleTime"];
+            this.offsetFactor = _data["offsetFactor"];
+        }
+    }
+
+    static fromJS(data: any): SearchLightProps {
+        data = typeof data === 'object' ? data : {};
+        let result = new SearchLightProps();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["radiusFactor"] = this.radiusFactor;
+        data["cycleTime"] = this.cycleTime;
+        data["offsetFactor"] = this.offsetFactor;
+        return data;
+    }
+}
+
+export interface ISearchLightProps {
+    /** Radius of the search light */
+    radiusFactor?: number;
+    /** Time for the moving head to go around (in milliseconds) */
+    cycleTime?: number;
+    /** What phase the lights should move apart from each other. 0 for synchronous */
+    offsetFactor?: number;
+}
+
+export class SearchLightCreateParams extends BaseLightsEffectCreateParams implements ISearchLightCreateParams {
+    props!: SearchLightProps;
+    type!: SearchLightCreateParamsType;
+
+    [key: string]: any;
+
+    constructor(data?: ISearchLightCreateParams) {
+        super(data);
+        if (!data) {
+            this.props = new SearchLightProps();
+        }
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.props = _data["props"] ? SearchLightProps.fromJS(_data["props"]) : new SearchLightProps();
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): SearchLightCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new SearchLightCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["props"] = this.props ? this.props.toJSON() : <any>undefined;
+        data["type"] = this.type;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ISearchLightCreateParams extends IBaseLightsEffectCreateParams {
+    props: SearchLightProps;
+    type: SearchLightCreateParamsType;
 
     [key: string]: any;
 }
@@ -5696,7 +5739,7 @@ export interface IInformation {
 
 export class FieldErrors implements IFieldErrors {
 
-    [key: string]: Anonymous7 | any;
+    [key: string]: Anonymous8 | any;
 
     constructor(data?: IFieldErrors) {
         if (data) {
@@ -5735,7 +5778,7 @@ export class FieldErrors implements IFieldErrors {
 
 export interface IFieldErrors {
 
-    [key: string]: Anonymous7 | any;
+    [key: string]: Anonymous8 | any;
 }
 
 export class ValidateError implements IValidateError {
@@ -6413,10 +6456,10 @@ export interface IHandlerResponse_Screen_ {
 }
 
 export class AudioResponse implements IAudioResponse {
-    name!: string;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
 
     constructor(data?: IAudioResponse) {
         if (data) {
@@ -6429,10 +6472,10 @@ export class AudioResponse implements IAudioResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
         }
     }
 
@@ -6445,19 +6488,19 @@ export class AudioResponse implements IAudioResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface IAudioResponse {
-    name: string;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
 }
 
 export class AudioCreateParams implements IAudioCreateParams {
@@ -6497,10 +6540,10 @@ export interface IAudioCreateParams {
 }
 
 export class LightsControllerResponse implements ILightsControllerResponse {
-    name!: string;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
 
     constructor(data?: ILightsControllerResponse) {
         if (data) {
@@ -6513,10 +6556,10 @@ export class LightsControllerResponse implements ILightsControllerResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
         }
     }
 
@@ -6529,19 +6572,19 @@ export class LightsControllerResponse implements ILightsControllerResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface ILightsControllerResponse {
-    name: string;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
 }
 
 export class LightsControllerCreateParams implements ILightsControllerCreateParams {
@@ -6581,10 +6624,10 @@ export interface ILightsControllerCreateParams {
 }
 
 export class BaseLightsGroupResponse implements IBaseLightsGroupResponse {
-    name!: string;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
 
     constructor(data?: IBaseLightsGroupResponse) {
         if (data) {
@@ -6597,10 +6640,10 @@ export class BaseLightsGroupResponse implements IBaseLightsGroupResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
         }
     }
 
@@ -6613,28 +6656,28 @@ export class BaseLightsGroupResponse implements IBaseLightsGroupResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface IBaseLightsGroupResponse {
-    name: string;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
 }
 
 export class LightsFixtureResponse implements ILightsFixtureResponse {
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
+    masterDimChannel!: number;
+    strobeChannel!: number;
 
     constructor(data?: ILightsFixtureResponse) {
         if (data) {
@@ -6647,12 +6690,12 @@ export class LightsFixtureResponse implements ILightsFixtureResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.masterDimChannel = _data["masterDimChannel"];
+            this.strobeChannel = _data["strobeChannel"];
         }
     }
 
@@ -6665,23 +6708,23 @@ export class LightsFixtureResponse implements ILightsFixtureResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["masterDimChannel"] = this.masterDimChannel;
+        data["strobeChannel"] = this.strobeChannel;
         return data;
     }
 }
 
 export interface ILightsFixtureResponse {
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
+    masterDimChannel: number;
+    strobeChannel: number;
 }
 
 export class ColorResponse implements IColorResponse {
@@ -6745,12 +6788,12 @@ export interface IColorResponse {
 }
 
 export class MovingHeadResponse implements IMovingHeadResponse {
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
+    masterDimChannel!: number;
+    strobeChannel!: number;
     panChannel!: number;
     finePanChannel?: number | undefined;
     tiltChannel!: number;
@@ -6768,12 +6811,12 @@ export class MovingHeadResponse implements IMovingHeadResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.masterDimChannel = _data["masterDimChannel"];
+            this.strobeChannel = _data["strobeChannel"];
             this.panChannel = _data["panChannel"];
             this.finePanChannel = _data["finePanChannel"];
             this.tiltChannel = _data["tiltChannel"];
@@ -6791,12 +6834,12 @@ export class MovingHeadResponse implements IMovingHeadResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["masterDimChannel"] = this.masterDimChannel;
+        data["strobeChannel"] = this.strobeChannel;
         data["panChannel"] = this.panChannel;
         data["finePanChannel"] = this.finePanChannel;
         data["tiltChannel"] = this.tiltChannel;
@@ -6807,12 +6850,12 @@ export class MovingHeadResponse implements IMovingHeadResponse {
 }
 
 export interface IMovingHeadResponse {
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
+    masterDimChannel: number;
+    strobeChannel: number;
     panChannel: number;
     finePanChannel?: number | undefined;
     tiltChannel: number;
@@ -6821,12 +6864,12 @@ export interface IMovingHeadResponse {
 }
 
 export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
+    masterDimChannel!: number;
+    strobeChannel!: number;
     colorWheelChannel!: number;
     goboWheelChannel!: number;
     goboRotateChannel!: number | undefined;
@@ -6842,12 +6885,12 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.masterDimChannel = _data["masterDimChannel"];
+            this.strobeChannel = _data["strobeChannel"];
             this.colorWheelChannel = _data["colorWheelChannel"];
             this.goboWheelChannel = _data["goboWheelChannel"];
             this.goboRotateChannel = _data["goboRotateChannel"];
@@ -6863,12 +6906,12 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["masterDimChannel"] = this.masterDimChannel;
+        data["strobeChannel"] = this.strobeChannel;
         data["colorWheelChannel"] = this.colorWheelChannel;
         data["goboWheelChannel"] = this.goboWheelChannel;
         data["goboRotateChannel"] = this.goboRotateChannel;
@@ -6877,22 +6920,22 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
 }
 
 export interface IMovingHeadWheelResponse {
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
+    masterDimChannel: number;
+    strobeChannel: number;
     colorWheelChannel: number;
     goboWheelChannel: number;
     goboRotateChannel: number | undefined;
 }
 
 export class LightsGroupResponse implements ILightsGroupResponse {
-    name!: string;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
     pars!: Pars[];
     movingHeadRgbs!: MovingHeadRgbs[];
     movingHeadWheels!: MovingHeadWheelResponse[];
@@ -6913,10 +6956,10 @@ export class LightsGroupResponse implements ILightsGroupResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
             if (Array.isArray(_data["pars"])) {
                 this.pars = [] as any;
                 for (let item of _data["pars"])
@@ -6944,10 +6987,10 @@ export class LightsGroupResponse implements ILightsGroupResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
         if (Array.isArray(this.pars)) {
             data["pars"] = [];
             for (let item of this.pars)
@@ -6968,10 +7011,10 @@ export class LightsGroupResponse implements ILightsGroupResponse {
 }
 
 export interface ILightsGroupResponse {
-    name: string;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
     pars: Pars[];
     movingHeadRgbs: MovingHeadRgbs[];
     movingHeadWheels: MovingHeadWheelResponse[];
@@ -7434,17 +7477,6 @@ export interface IRgbColorDefinition {
     [key: string]: any;
 }
 
-export enum WheelColor {
-    White = "white",
-    Red = "red",
-    Green = "green",
-    Blue = "blue",
-    Yellow = "yellow",
-    Lightblue = "lightblue",
-    Orange = "orange",
-    Rosered = "rosered",
-}
-
 export class RgbColorSpecification implements IRgbColorSpecification {
     hex!: string;
     complementary!: RgbColor[];
@@ -7608,10 +7640,10 @@ export interface IGroupFixtureOverrideParams {
 }
 
 export class ScreenResponse implements IScreenResponse {
-    name!: string;
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
+    name!: string;
 
     constructor(data?: IScreenResponse) {
         if (data) {
@@ -7624,10 +7656,10 @@ export class ScreenResponse implements IScreenResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.name = _data["name"];
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
         }
     }
 
@@ -7640,19 +7672,19 @@ export class ScreenResponse implements IScreenResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface IScreenResponse {
-    name: string;
     id: number;
     createdAt: Date;
     updatedAt: Date;
+    name: string;
 }
 
 export class ScreenCreateParams implements IScreenCreateParams {
@@ -8187,14 +8219,57 @@ export interface IAnonymous2 {
     [key: string]: any;
 }
 
-export enum Anonymous3 {
-    Centurion_not_enabled = "Centurion not enabled",
-    Centurion_not_yet_fully_initialized__Please_wait_and_try_again_later = "Centurion not yet fully initialized. Please wait and try again later",
-    Empty = "",
+export class Anonymous3 implements IAnonymous3 {
+    message!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IAnonymous3) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.message = _data["message"];
+        }
+    }
+
+    static fromJS(data: any): Anonymous3 {
+        data = typeof data === 'object' ? data : {};
+        let result = new Anonymous3();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["message"] = this.message;
+        return data;
+    }
+}
+
+export interface IAnonymous3 {
+    message: string;
+
+    [key: string]: any;
 }
 
 export enum Anonymous4 {
     Centurion_not_enabled = "Centurion not enabled",
+    Centurion_not_yet_fully_initialized__Please_wait_and_try_again_later = "Centurion not yet fully initialized. Please wait and try again later",
     Empty = "",
 }
 
@@ -8203,11 +8278,16 @@ export enum Anonymous5 {
     Empty = "",
 }
 
-export class Anonymous6 implements IAnonymous6 {
+export enum Anonymous6 {
+    Centurion_not_enabled = "Centurion not enabled",
+    Empty = "",
+}
+
+export class Anonymous7 implements IAnonymous7 {
 
     [key: string]: any;
 
-    constructor(data?: IAnonymous6) {
+    constructor(data?: IAnonymous7) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -8225,9 +8305,9 @@ export class Anonymous6 implements IAnonymous6 {
         }
     }
 
-    static fromJS(data: any): Anonymous6 {
+    static fromJS(data: any): Anonymous7 {
         data = typeof data === 'object' ? data : {};
-        let result = new Anonymous6();
+        let result = new Anonymous7();
         result.init(data);
         return result;
     }
@@ -8242,7 +8322,7 @@ export class Anonymous6 implements IAnonymous6 {
     }
 }
 
-export interface IAnonymous6 {
+export interface IAnonymous7 {
 
     [key: string]: any;
 }
@@ -8343,72 +8423,6 @@ export interface IMessages {
     [key: string]: any;
 }
 
-export enum LightsWheelChannelValue_ColorWheelColors_Channel {
-    ColorWheelChannel = "colorWheelChannel",
-    GoboWheelChannel = "goboWheelChannel",
-    GoboRotateChannel = "goboRotateChannel",
-    ColorWheelChannelValues = "colorWheelChannelValues",
-    GoboWheelChannelValues = "goboWheelChannelValues",
-    Blackout = "blackout",
-    SetCurrentValues = "setCurrentValues",
-    ChannelValues = "channelValues",
-    ToDmx = "toDmx",
-    Movement = "movement",
-    Name = "name",
-    MasterDimChannel = "masterDimChannel",
-    StrobeChannel = "strobeChannel",
-    ResetChannelAndValue = "resetChannelAndValue",
-    ValuesUpdatedAt = "valuesUpdatedAt",
-    AfterLoad = "afterLoad",
-    Reset = "reset",
-    EnableStrobe = "enableStrobe",
-    DisableStrobe = "disableStrobe",
-    SetOverrideDmx = "setOverrideDmx",
-    ClearOverrideDmx = "clearOverrideDmx",
-    Id = "id",
-    CreatedAt = "createdAt",
-    UpdatedAt = "updatedAt",
-    HasId = "hasId",
-    Save = "save",
-    Remove = "remove",
-    SoftRemove = "softRemove",
-    Recover = "recover",
-    Reload = "reload",
-}
-
-export enum LightsWheelChannelValue_string_Channel {
-    ColorWheelChannel = "colorWheelChannel",
-    GoboWheelChannel = "goboWheelChannel",
-    GoboRotateChannel = "goboRotateChannel",
-    ColorWheelChannelValues = "colorWheelChannelValues",
-    GoboWheelChannelValues = "goboWheelChannelValues",
-    Blackout = "blackout",
-    SetCurrentValues = "setCurrentValues",
-    ChannelValues = "channelValues",
-    ToDmx = "toDmx",
-    Movement = "movement",
-    Name = "name",
-    MasterDimChannel = "masterDimChannel",
-    StrobeChannel = "strobeChannel",
-    ResetChannelAndValue = "resetChannelAndValue",
-    ValuesUpdatedAt = "valuesUpdatedAt",
-    AfterLoad = "afterLoad",
-    Reset = "reset",
-    EnableStrobe = "enableStrobe",
-    DisableStrobe = "disableStrobe",
-    SetOverrideDmx = "setOverrideDmx",
-    ClearOverrideDmx = "clearOverrideDmx",
-    Id = "id",
-    CreatedAt = "createdAt",
-    UpdatedAt = "updatedAt",
-    HasId = "hasId",
-    Save = "save",
-    Remove = "remove",
-    SoftRemove = "softRemove",
-    Recover = "recover",
-    Reload = "reload",
-}
-
 export class CurrentValues extends Colors implements ICurrentValues {
     panChannel!: number;
     finePanChannel?: number | undefined;
@@ -8482,10 +8496,6 @@ export enum BeatFadeOutCreateParamsType {
     BeatFadeOut = "BeatFadeOut",
 }
 
-export enum SearchLightCreateParamsType {
-    SearchLight = "SearchLight",
-}
-
 export enum SingleFloodCreateParamsType {
     SingleFlood = "SingleFlood",
 }
@@ -8506,13 +8516,17 @@ export enum WaveCreateParamsType {
     Wave = "Wave",
 }
 
-export class Anonymous7 implements IAnonymous7 {
+export enum SearchLightCreateParamsType {
+    SearchLight = "SearchLight",
+}
+
+export class Anonymous8 implements IAnonymous8 {
     value?: any;
     message!: string;
 
     [key: string]: any;
 
-    constructor(data?: IAnonymous7) {
+    constructor(data?: IAnonymous8) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -8532,9 +8546,9 @@ export class Anonymous7 implements IAnonymous7 {
         }
     }
 
-    static fromJS(data: any): Anonymous7 {
+    static fromJS(data: any): Anonymous8 {
         data = typeof data === 'object' ? data : {};
-        let result = new Anonymous7();
+        let result = new Anonymous8();
         result.init(data);
         return result;
     }
@@ -8551,7 +8565,7 @@ export class Anonymous7 implements IAnonymous7 {
     }
 }
 
-export interface IAnonymous7 {
+export interface IAnonymous8 {
     value?: any;
     message: string;
 

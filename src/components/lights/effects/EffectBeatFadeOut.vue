@@ -19,7 +19,7 @@ const handleAddEffect = () => {
   createParams.props.enableFade = enableFade.value;
   createParams.props.addBlacks = addBlacks.value;
 
-  store.addEffect(createParams);
+  store.addColorEffect(createParams);
 };
 </script>
 

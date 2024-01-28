@@ -32,7 +32,7 @@ const handleAddEffect = () => {
   createParams.type = SingleFloodCreateParamsType.SingleFlood;
   createParams.props.dimMilliseconds = dimMilliseconds.value;
 
-  store.addEffect(createParams);
+  store.addColorEffect(createParams);
 };
 </script>
 

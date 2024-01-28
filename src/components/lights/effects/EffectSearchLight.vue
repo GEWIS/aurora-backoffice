@@ -51,7 +51,7 @@ const handleAddEffect = () => {
   createParams.props.offsetFactor = offsetFactor.value;
   createParams.props.radiusFactor = radiusFactor.value;
 
-  store.addEffect(createParams);
+  store.addMovementEffect(createParams);
 };
 </script>
 

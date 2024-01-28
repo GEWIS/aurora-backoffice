@@ -24,7 +24,7 @@ const handleAddEffect = () => {
   createParams.type = StaticColorCreateParamsType.StaticColor;
   createParams.props.color = colors.value[0];
 
-  store.addEffect(createParams);
+  store.addColorEffect(createParams);
 };
 </script>
 

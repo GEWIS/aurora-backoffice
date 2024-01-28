@@ -1,24 +1,28 @@
-import type { LightsEffectsCreateParams } from '@/api/Client';
+import type { LightsEffectsColorCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { Client, LightsGroup } from '@/api/Client';
+import { Client, LightsGroup, SearchLightCreateParams } from '@/api/Client';
+
+type LightsEffectsMovementCreateParams = SearchLightCreateParams;
 
 export interface PushedEffects {
   timestamp: Date;
   lightGroupIds: number[];
-  effects: LightsEffectsCreateParams[];
+  effects: LightsEffectsColorCreateParams[];
 }
 
 interface EffectsControllerStore {
   selectedLightsGroupIds: number[];
-  chosenEffects: LightsEffectsCreateParams[];
+  chosenColorEffects: LightsEffectsColorCreateParams[];
+  chosenMovementEffects: LightsEffectsMovementCreateParams[];
   pastPushedEffects: PushedEffects[];
 }
 
 export const useEffectsControllerStore = defineStore('effectsController', {
   state: (): EffectsControllerStore => ({
     selectedLightsGroupIds: [],
-    chosenEffects: [],
-    pastPushedEffects: []
+    chosenColorEffects: [],
+    chosenMovementEffects: [],
+    pastPushedEffects: [],
   }),
   getters: {},
   actions: {
@@ -36,28 +40,37 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     resetLightsGroupSelection() {
       this.selectedLightsGroupIds = [];
     },
-    addEffect(effect: LightsEffectsCreateParams) {
-      this.chosenEffects.push(effect);
+    addColorEffect(effect: LightsEffectsColorCreateParams) {
+      this.chosenColorEffects.push(effect);
     },
-    removeEffect(index: number) {
-      this.chosenEffects.splice(index, 1);
+    addMovementEffect(effect: LightsEffectsMovementCreateParams) {
+      this.chosenColorEffects.push(effect);
     },
+    removeColorEffect(index: number) {
+      this.chosenColorEffects.splice(index, 1);
+    },
+    removeMovementEffect(index: number) {
+      this.chosenMovementEffects.splice(index, 1);
+    },
+
     clearEffects() {
-      this.chosenEffects = [];
+      this.chosenColorEffects = [];
+      this.chosenMovementEffects = [];
     },
     async sendEffects() {
       const client = new Client();
       await Promise.all(
-        this.selectedLightsGroupIds.map((id) => {
-          return client.applyLightsEffect(id, this.chosenEffects);
+        this.selectedLightsGroupIds.map(async (id) => {
+          await client.applyLightsEffectColor(id, this.chosenColorEffects);
+          await client.applyLightsEffectMovement(id, this.chosenMovementEffects);
         })
       );
       this.pastPushedEffects.unshift({
-        effects: this.chosenEffects,
+        effects: this.chosenColorEffects,
         lightGroupIds: this.selectedLightsGroupIds,
         timestamp: new Date()
       });
-      this.chosenEffects = [];
+      this.chosenColorEffects = [];
     },
     async enableStrobe() {
       const client = new Client();

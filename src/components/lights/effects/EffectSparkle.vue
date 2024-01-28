@@ -58,7 +58,7 @@ const handleAddEffect = () => {
   createParams.props.dimDuration = dimDuration.value;
   createParams.props.cycleTime = cycleTime.value;
 
-  store.addEffect(createParams);
+  store.addColorEffect(createParams);
 };
 </script>
 

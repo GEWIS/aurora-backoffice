@@ -47,7 +47,7 @@ const handleAddEffect = () => {
   createParams.props.size = size.value;
   createParams.props.cycleTime = cycleTime.value;
 
-  store.addEffect(createParams);
+  store.addColorEffect(createParams);
 };
 </script>
 
