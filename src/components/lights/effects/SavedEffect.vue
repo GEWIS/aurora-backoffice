@@ -1,5 +1,5 @@
 <template>
-  <Chip :removable="removeable" @remove="store.removeColorEffect(index)">
+  <Chip :removable="removeable" @remove="$emit('remove')">
     <template #default>
       <div class="flex flex-row gap-1 align-items-center">
         <div>
@@ -16,18 +16,19 @@
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { type LightsEffectsColorCreateParams, RgbColor, SearchLightCreateParams } from '@/api/Client';
 import ColorBox from '@/components/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
 
-const store = useEffectsControllerStore();
 const colorStore = useColorStore();
 
 const props = defineProps<{
   effect: LightsEffectsColorCreateParams | SearchLightCreateParams;
-  index: number;
   removeable?: boolean;
+}>();
+
+defineEmits<{
+  remove: [],
 }>();
 
 const colors =

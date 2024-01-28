@@ -44,7 +44,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       this.chosenColorEffects.push(effect);
     },
     addMovementEffect(effect: LightsEffectsMovementCreateParams) {
-      this.chosenColorEffects.push(effect);
+      this.chosenMovementEffects.push(effect);
     },
     removeColorEffect(index: number) {
       this.chosenColorEffects.splice(index, 1);
@@ -61,8 +61,12 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map(async (id) => {
-          await client.applyLightsEffectColor(id, this.chosenColorEffects);
-          await client.applyLightsEffectMovement(id, this.chosenMovementEffects);
+          if (this.chosenColorEffects.length > 0) {
+            await client.applyLightsEffectColor(id, this.chosenColorEffects);
+          }
+          if (this.chosenMovementEffects.length > 0) {
+            await client.applyLightsEffectMovement(id, this.chosenMovementEffects);
+          }
         })
       );
       this.pastPushedEffects.unshift({
@@ -87,6 +91,22 @@ export const useEffectsControllerStore = defineStore('effectsController', {
           return client.disableStrobeOnLightsGroup(id);
         })
       );
-    }
+    },
+    async disableLightsColors() {
+      const client = new Client();
+      await Promise.all(
+        this.selectedLightsGroupIds.map((id) => {
+          return client.applyLightsEffectColor(id, []);
+        }),
+      );
+    },
+    async disableLightsMovement() {
+      const client = new Client();
+      await Promise.all(
+        this.selectedLightsGroupIds.map((id) => {
+          return client.applyLightsEffectMovement(id, []);
+        }),
+      );
+    },
   }
 });

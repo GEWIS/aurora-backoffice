@@ -2593,7 +2593,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getAllSpotifyUsers(): Promise<SpotifyUserResponse[]> {
+    getAllSpotifyUsers(): Promise<any[]> {
         let url_ = this.baseUrl + "/spotify/users";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2609,7 +2609,7 @@ export class Client {
         });
     }
 
-    protected processGetAllSpotifyUsers(response: Response): Promise<SpotifyUserResponse[]> {
+    protected processGetAllSpotifyUsers(response: Response): Promise<any[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2619,7 +2619,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(SpotifyUserResponse.fromJS(item));
+                    result200!.push(item);
             }
             else {
                 result200 = <any>null;
@@ -2631,7 +2631,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<SpotifyUserResponse[]>(null as any);
+        return Promise.resolve<any[]>(null as any);
     }
 
     /**
@@ -5240,6 +5240,8 @@ export class StaticColorProps implements IStaticColorProps {
     color!: RgbColor;
     /** Beat */
     beatToggle?: boolean;
+    /** Brightness */
+    relativeBrightness?: number;
 
     constructor(data?: IStaticColorProps) {
         if (data) {
@@ -5254,6 +5256,7 @@ export class StaticColorProps implements IStaticColorProps {
         if (_data) {
             this.color = _data["color"];
             this.beatToggle = _data["beatToggle"];
+            this.relativeBrightness = _data["relativeBrightness"];
         }
     }
 
@@ -5268,6 +5271,7 @@ export class StaticColorProps implements IStaticColorProps {
         data = typeof data === 'object' ? data : {};
         data["color"] = this.color;
         data["beatToggle"] = this.beatToggle;
+        data["relativeBrightness"] = this.relativeBrightness;
         return data;
     }
 }
@@ -5277,6 +5281,8 @@ export interface IStaticColorProps {
     color: RgbColor;
     /** Beat */
     beatToggle?: boolean;
+    /** Brightness */
+    relativeBrightness?: number;
 }
 
 export class StaticColorCreateParams extends BaseLightsEffectCreateParams implements IStaticColorCreateParams {

@@ -42,35 +42,68 @@
         <Card>
           <template #title> (2) Create effects </template>
           <template #content>
-            <div class="flex flex-row flex-wrap gap-2">
+            <h4 class="mt-0 mb-1">Colors</h4>
+            <div class="flex flex-row flex-wrap gap-2 mb-3">
               <EffectBeatFadeOut />
-              <EffectSearchLight />
-              <EffectSingleFlood />
+<!--              <EffectSingleFlood />-->
               <EffectSparkle />
               <EffectStaticColor />
               <EffectWave />
+            </div>
+            <h4 class="mt-2 mb-1">Movement</h4>
+            <div class="flex flex-row flex-wrap gap-2">
+              <EffectSearchLight />
             </div>
           </template>
         </Card>
         <Card>
           <template #title>(3) Saved effects</template>
           <template #content>
-            <div
-              class="flex flex-row gap-2 flex-wrap"
-              v-if="effectsControllerStore.chosenColorEffects.length > 0"
-            >
-              <div v-for="(effect, index) in effectsControllerStore.chosenColorEffects" :key="effect.type">
-                <SavedEffect :effect="effect" :index="index" removeable />
+            <div class="flex flex-column gap-3">
+              <div>
+                <h4 class="mt-0 mb-1">Colors</h4>
+                <div class="flex flex-row gap-2 flex-wrap">
+                  <div v-for="(effect, index) in effectsControllerStore.chosenColorEffects" :key="effect.type">
+                    <SavedEffect
+                      :effect="effect"
+                      @remove="effectsControllerStore.removeColorEffect(index)"
+                      removeable
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div v-else>
-              <span class="font-italic"
-                >There are no effects, meaning that sending will turn the selected groups off.</span
-              >
+              <div>
+                <h4 class="mt-0 mb-1">Movement</h4>
+                <div>
+                  <div class="flex flex-row gap-2 flex-wrap">
+                    <div v-for="(effect, index) in effectsControllerStore.chosenMovementEffects" :key="effect.type">
+                      <SavedEffect
+                        :effect="effect"
+                        removeable
+                        @remove="effectsControllerStore.removeMovementEffect(index)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </template>
           <template #footer>
             <div class="flex flex-row justify-content-end gap-2">
+              <Button
+                @click="() => effectsControllerStore.disableLightsColors()"
+                severity="danger"
+                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              >
+                Disable colors
+              </Button>
+              <Button
+                @click="() => effectsControllerStore.disableLightsMovement()"
+                severity="danger"
+                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              >
+                Disable movement
+              </Button>
               <Button
                 @click="() => effectsControllerStore.clearEffects()"
                 severity="secondary"
@@ -82,7 +115,7 @@
                 @click="() => effectsControllerStore.sendEffects()"
                 :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
               >
-                Send
+                Start effects
               </Button>
             </div>
           </template>
