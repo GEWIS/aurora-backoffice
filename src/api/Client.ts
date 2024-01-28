@@ -635,7 +635,7 @@ export class Client {
     /**
      * @return Ok
      */
-    applyLightsEffectMovement(id: number, body: SearchLightCreateParams[]): Promise<Anonymous3> {
+    applyLightsEffectMovement(id: number, body: LightsEffectsMovementCreateParams[]): Promise<Anonymous3> {
         let url_ = this.baseUrl + "/handler/lights/set-effects/{id}/movement";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -5675,6 +5675,236 @@ export interface ISearchLightCreateParams extends IBaseLightsEffectCreateParams 
     [key: string]: any;
 }
 
+export class RandomPositionProps implements IRandomPositionProps {
+    /** After how many beats the light will move to a new position */
+    beatsToMove?: number;
+
+    constructor(data?: IRandomPositionProps) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.beatsToMove = _data["beatsToMove"];
+        }
+    }
+
+    static fromJS(data: any): RandomPositionProps {
+        data = typeof data === 'object' ? data : {};
+        let result = new RandomPositionProps();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["beatsToMove"] = this.beatsToMove;
+        return data;
+    }
+}
+
+export interface IRandomPositionProps {
+    /** After how many beats the light will move to a new position */
+    beatsToMove?: number;
+}
+
+export class RandomPositionCreateParams extends BaseLightsEffectCreateParams implements IRandomPositionCreateParams {
+    props!: RandomPositionProps;
+    type!: RandomPositionCreateParamsType;
+
+    [key: string]: any;
+
+    constructor(data?: IRandomPositionCreateParams) {
+        super(data);
+        if (!data) {
+            this.props = new RandomPositionProps();
+        }
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.props = _data["props"] ? RandomPositionProps.fromJS(_data["props"]) : new RandomPositionProps();
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): RandomPositionCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new RandomPositionCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["props"] = this.props ? this.props.toJSON() : <any>undefined;
+        data["type"] = this.type;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IRandomPositionCreateParams extends IBaseLightsEffectCreateParams {
+    props: RandomPositionProps;
+    type: RandomPositionCreateParamsType;
+
+    [key: string]: any;
+}
+
+export class TableRotateProps implements ITableRotateProps {
+    /** Time for the moving head to go around (in milliseconds) */
+    cycleTime?: number;
+    /** What phase the lights should move apart from each other. 0 for synchronous */
+    offsetFactor?: number;
+
+    constructor(data?: ITableRotateProps) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.cycleTime = _data["cycleTime"];
+            this.offsetFactor = _data["offsetFactor"];
+        }
+    }
+
+    static fromJS(data: any): TableRotateProps {
+        data = typeof data === 'object' ? data : {};
+        let result = new TableRotateProps();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cycleTime"] = this.cycleTime;
+        data["offsetFactor"] = this.offsetFactor;
+        return data;
+    }
+}
+
+export interface ITableRotateProps {
+    /** Time for the moving head to go around (in milliseconds) */
+    cycleTime?: number;
+    /** What phase the lights should move apart from each other. 0 for synchronous */
+    offsetFactor?: number;
+}
+
+export class TableRotateCreateParams extends BaseLightsEffectCreateParams implements ITableRotateCreateParams {
+    props!: TableRotateProps;
+    type!: TableRotateCreateParamsType;
+
+    [key: string]: any;
+
+    constructor(data?: ITableRotateCreateParams) {
+        super(data);
+        if (!data) {
+            this.props = new TableRotateProps();
+        }
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.props = _data["props"] ? TableRotateProps.fromJS(_data["props"]) : new TableRotateProps();
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): TableRotateCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new TableRotateCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["props"] = this.props ? this.props.toJSON() : <any>undefined;
+        data["type"] = this.type;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ITableRotateCreateParams extends IBaseLightsEffectCreateParams {
+    props: TableRotateProps;
+    type: TableRotateCreateParamsType;
+
+    [key: string]: any;
+}
+
+export class LightsEffectsMovementCreateParams implements ILightsEffectsMovementCreateParams {
+
+    [key: string]: any;
+
+    constructor(data?: ILightsEffectsMovementCreateParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): LightsEffectsMovementCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new LightsEffectsMovementCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface ILightsEffectsMovementCreateParams {
+
+    [key: string]: any;
+}
+
 export class Information implements IInformation {
     id!: number;
     createdAt!: Date;
@@ -8524,6 +8754,14 @@ export enum WaveCreateParamsType {
 
 export enum SearchLightCreateParamsType {
     SearchLight = "SearchLight",
+}
+
+export enum RandomPositionCreateParamsType {
+    RandomPosition = "RandomPosition",
+}
+
+export enum TableRotateCreateParamsType {
+    TableRotate = "TableRotate",
 }
 
 export class Anonymous8 implements IAnonymous8 {

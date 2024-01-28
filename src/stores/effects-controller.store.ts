@@ -1,13 +1,13 @@
 import type { LightsEffectsColorCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { Client, LightsGroup, SearchLightCreateParams } from '@/api/Client';
+import { Client, LightsEffectsMovementCreateParams, LightsGroup } from "@/api/Client";
 
-type LightsEffectsMovementCreateParams = SearchLightCreateParams;
 
 export interface PushedEffects {
   timestamp: Date;
   lightGroupIds: number[];
-  effects: LightsEffectsColorCreateParams[];
+  colorEffects: LightsEffectsColorCreateParams[];
+  movementEffects: LightsEffectsMovementCreateParams[];
 }
 
 interface EffectsControllerStore {
@@ -70,11 +70,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         })
       );
       this.pastPushedEffects.unshift({
-        effects: this.chosenColorEffects,
+        colorEffects: this.chosenColorEffects,
+        movementEffects: this.chosenMovementEffects,
         lightGroupIds: this.selectedLightsGroupIds,
         timestamp: new Date()
       });
       this.chosenColorEffects = [];
+      this.chosenMovementEffects = [];
     },
     async enableStrobe() {
       const client = new Client();

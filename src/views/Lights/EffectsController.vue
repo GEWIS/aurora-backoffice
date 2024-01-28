@@ -45,7 +45,6 @@
             <h4 class="mt-0 mb-1">Colors</h4>
             <div class="flex flex-row flex-wrap gap-2 mb-3">
               <EffectBeatFadeOut />
-<!--              <EffectSingleFlood />-->
               <EffectSparkle />
               <EffectStaticColor />
               <EffectWave />
@@ -53,6 +52,8 @@
             <h4 class="mt-2 mb-1">Movement</h4>
             <div class="flex flex-row flex-wrap gap-2">
               <EffectSearchLight />
+              <EffectRandomPosition />
+              <EffectTableRotate />
             </div>
           </template>
         </Card>
@@ -153,19 +154,20 @@
 
 <script setup lang="ts">
 import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupToggleButton.vue';
-import EffectBeatFadeOut from '@/components/lights/effects/EffectBeatFadeOut.vue';
+import EffectBeatFadeOut from '@/components/lights/effects/color/EffectBeatFadeOut.vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
 import SavedEffect from '@/components/lights/effects/SavedEffect.vue';
-import EffectSearchLight from '@/components/lights/effects/EffectSearchLight.vue';
-import EffectSingleFlood from '@/components/lights/effects/EffectSingleFlood.vue';
-import EffectSparkle from '@/components/lights/effects/EffectSparkle.vue';
-import EffectStaticColor from '@/components/lights/effects/EffectStaticColor.vue';
-import EffectWave from '@/components/lights/effects/EffectWave.vue';
+import EffectSearchLight from '@/components/lights/effects/movement/EffectSearchLight.vue';
+import EffectSparkle from '@/components/lights/effects/color/EffectSparkle.vue';
+import EffectStaticColor from '@/components/lights/effects/color/EffectStaticColor.vue';
+import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
 import BeatVisualizer from '@/components/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
+import EffectRandomPosition from "@/components/lights/effects/movement/EffectRandomPosition.vue";
+import EffectTableRotate from "@/components/lights/effects/movement/EffectTableRotate.vue";
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();
