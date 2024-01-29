@@ -6,6 +6,11 @@
 }
 
 @layer primevue {
+  body {
+    font-family: $fontFamily;
+    background-color: black;
+  }
+
   .p-button-label {
     font-weight: 700;
   }

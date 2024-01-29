@@ -9,6 +9,5 @@ $highlightTextColor: rgba(255, 255, 255, 0.87) !default;
 $highlightFocusBg: rgba($primaryColor, 0.24) !default;
 
 @import 'variables';
-@import '../fonts';
 @import '../../theme-base/components';
 @import 'extensions';

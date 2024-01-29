@@ -34,6 +34,7 @@ import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
 import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
+import Menu from 'primevue/menu';
 
 export const app = createApp(App);
 
@@ -52,6 +53,7 @@ app.component('SelectButton', SelectButton);
 app.component('ToggleButton', ToggleButton);
 app.component('InputText', InputText);
 app.component('InputNumber', InputNumber);
+app.component('Menu', Menu);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);
 app.component('DataTable', DataTable);

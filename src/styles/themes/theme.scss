@@ -1,9 +1,11 @@
-//[data-theme="dark"] {
-//  @import "lara-dark/theme";
-//}
-//
-//[data-theme="light"] {
-//  @import "lara-light/theme";
-//}
+:root[data-theme="dark"] {
+  @import "lara-dark/theme";
+}
 
-@import 'lara-light/theme';
+:root:not([data-theme="dark"]) {
+  @import "lara-light/theme";
+}
+
+//@import "lara-light/theme";
+
+@import './fonts';

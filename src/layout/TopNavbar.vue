@@ -24,11 +24,15 @@
         <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
       </a>
     </template>
+    <template #end>
+      <ThemeSelector />
+    </template>
   </Menubar>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import ThemeSelector from '@/layout/ThemeSelector.vue';
 
 const leftItems = ref([
   {
@@ -56,4 +60,8 @@ const leftItems = ref([
 ]);
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:root[data-theme="dark"] #logo {
+  filter: invert(0.9);
+}
+</style>

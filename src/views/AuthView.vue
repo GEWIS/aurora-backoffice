@@ -104,6 +104,10 @@ h1 {
   margin: 0 auto;
 }
 
+:root[data-theme="dark"] #login-image {
+  filter: invert(0.9);
+}
+
 main {
   display: flex;
   flex-direction: column;

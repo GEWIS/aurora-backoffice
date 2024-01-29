@@ -1,9 +1,9 @@
 <template>
-  <footer>
-    <span class="copyright">
-      <b> Copyright </b>
-    </span>
-  </footer>
+<!--  <footer>-->
+<!--    <span class="copyright">-->
+<!--      <b> Copyright </b>-->
+<!--    </span>-->
+<!--  </footer>-->
 </template>
 
 <script setup lang="ts"></script>
