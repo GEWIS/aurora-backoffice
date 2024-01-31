@@ -543,7 +543,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1027,7 +1027,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 411) {
@@ -1035,7 +1035,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1077,7 +1077,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 400) {
@@ -1085,7 +1085,7 @@ export class Client {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result400 = resultData400 !== undefined ? resultData400 : <any>null;
-    
+
             return throwException("Invalid timestamp provided", status, _responseText, _headers, result400);
             });
         } else if (status === 411) {
@@ -1093,7 +1093,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion nog enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1131,7 +1131,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status === 411) {
@@ -1139,7 +1139,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-    
+
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1178,7 +1178,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
+
             return result204;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2153,7 +2153,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional) 
+     * @param body (optional)
      * @return No content
      */
     enableStrobeOnLightsGroup(id: number, body: StrobeProps | undefined): Promise<void> {
@@ -2215,6 +2215,78 @@ export class Client {
     }
 
     protected processDisableStrobeOnLightsGroup(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    freezeLightsGroup(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/{id}/freeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFreezeLightsGroup(_response);
+        });
+    }
+
+    protected processFreezeLightsGroup(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    unfreezeLightsGroup(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/{id}/unfreeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnfreezeLightsGroup(_response);
+        });
+    }
+
+    protected processUnfreezeLightsGroup(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 204) {
@@ -2308,6 +2380,78 @@ export class Client {
     /**
      * @return No content
      */
+    freezeGroupPar(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/par/{id}/freeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFreezeGroupPar(_response);
+        });
+    }
+
+    protected processFreezeGroupPar(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    unfreezeGroupPar(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/par/{id}/unfreeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnfreezeGroupPar(_response);
+        });
+    }
+
+    protected processUnfreezeGroupPar(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
     setGroupMovingHeadRgbOverride(id: number, body: GroupFixtureOverrideParams): Promise<void> {
         let url_ = this.baseUrl + "/lights/group/moving-head-rgb/{id}/override";
         if (id === undefined || id === null)
@@ -2384,6 +2528,78 @@ export class Client {
     /**
      * @return No content
      */
+    freezeGroupMovingHeadRgb(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/moving-head-rgb/{id}/freeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFreezeGroupMovingHeadRgb(_response);
+        });
+    }
+
+    protected processFreezeGroupMovingHeadRgb(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    unfreezeMovingHeadRgb(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/moving-head-rgb/{id}/unfreeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnfreezeMovingHeadRgb(_response);
+        });
+    }
+
+    protected processUnfreezeMovingHeadRgb(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
     setGroupMovingHeadWheelOverride(id: number, body: GroupFixtureOverrideParams): Promise<void> {
         let url_ = this.baseUrl + "/lights/group/moving-head-wheel/{id}/override";
         if (id === undefined || id === null)
@@ -2443,6 +2659,78 @@ export class Client {
     }
 
     protected processResetGroupMovingHeadWheel(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    freezeGroupMovingHeadWheel(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/moving-head-wheel/{id}/freeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFreezeGroupMovingHeadWheel(_response);
+        });
+    }
+
+    protected processFreezeGroupMovingHeadWheel(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    unfreezeMovingHeadWheel(id: number): Promise<void> {
+        let url_ = this.baseUrl + "/lights/group/moving-head-wheel/{id}/unfreeze";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUnfreezeMovingHeadWheel(_response);
+        });
+    }
+
+    protected processUnfreezeMovingHeadWheel(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 204) {
@@ -2576,8 +2864,8 @@ export class Client {
     }
 
     /**
-     * @param code (optional) 
-     * @param error (optional) 
+     * @param code (optional)
+     * @param error (optional)
      * @return Ok
      */
     spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous7> {
@@ -2616,7 +2904,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2790,7 +3078,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional) 
+     * @param body (optional)
      * @return Success
      */
     authMock(body: User | undefined): Promise<User> {
@@ -2832,7 +3120,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional) 
+     * @param body (optional)
      * @return Success
      */
     authKey(body: ApiKeyParameters | undefined): Promise<User> {
@@ -4998,8 +5286,11 @@ export class BeatFadeOutProps implements IBeatFadeOutProps {
     /** Whether the lights should be turned off using a fade effect
 on each beat */
     enableFade?: boolean;
-    /** If a "black" color should be added */
-    addBlacks?: boolean;
+    /** How many "black" fixtures should be added. Zero for no blacks */
+    nrBlacks?: number;
+    /** Amount of time it takes before the lights switch to the next state (in ms). If undefined,
+beats will be used for switching states */
+    customCycleTime?: number;
 
     constructor(data?: IBeatFadeOutProps) {
         if (data) {
@@ -5021,7 +5312,8 @@ on each beat */
                     this.colors!.push(item);
             }
             this.enableFade = _data["enableFade"];
-            this.addBlacks = _data["addBlacks"];
+            this.nrBlacks = _data["nrBlacks"];
+            this.customCycleTime = _data["customCycleTime"];
         }
     }
 
@@ -5040,7 +5332,8 @@ on each beat */
                 data["colors"].push(item);
         }
         data["enableFade"] = this.enableFade;
-        data["addBlacks"] = this.addBlacks;
+        data["nrBlacks"] = this.nrBlacks;
+        data["customCycleTime"] = this.customCycleTime;
         return data;
     }
 }
@@ -5051,8 +5344,11 @@ export interface IBeatFadeOutProps {
     /** Whether the lights should be turned off using a fade effect
 on each beat */
     enableFade?: boolean;
-    /** If a "black" color should be added */
-    addBlacks?: boolean;
+    /** How many "black" fixtures should be added. Zero for no blacks */
+    nrBlacks?: number;
+    /** Amount of time it takes before the lights switch to the next state (in ms). If undefined,
+beats will be used for switching states */
+    customCycleTime?: number;
 }
 
 export class BeatFadeOutCreateParams extends BaseLightsEffectCreateParams implements IBeatFadeOutCreateParams {

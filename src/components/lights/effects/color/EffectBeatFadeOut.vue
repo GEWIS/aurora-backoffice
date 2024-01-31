@@ -17,7 +17,7 @@ const handleAddEffect = () => {
   createParams.type = BeatFadeOutCreateParamsType.BeatFadeOut;
   createParams.props.colors = colors.value;
   createParams.props.enableFade = enableFade.value;
-  createParams.props.addBlacks = addBlacks.value;
+  createParams.props.nrBlacks = addBlacks.value ? 1 : 0;
 
   store.addColorEffect(createParams);
 };

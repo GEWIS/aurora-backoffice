@@ -2,7 +2,7 @@
   <Button
     type="button"
     icon="pi pi-sun"
-    @click="toggle"
+    @click="(event) => menu.toggle(event)"
     aria-haspopup="true"
     aria-controls="theme_selector_menu"
     severity="primary"
@@ -34,11 +34,6 @@ const items = ref([
   }
 ]);
 
-const toggle = (event) => {
-  console.log(menu.value);
-  menu.value.toggle(event);
-};
-
 const enableDarkMode = (darkEnabled: boolean) => {
   darkMode.value = darkEnabled;
   if (darkEnabled) {
@@ -46,7 +41,7 @@ const enableDarkMode = (darkEnabled: boolean) => {
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
   }
-}
+};
 </script>
 
 <style scoped>
