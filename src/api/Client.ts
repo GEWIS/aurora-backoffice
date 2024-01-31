@@ -18,6 +18,84 @@ export class Client {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "/api";
     }
 
+    /**
+     * @return Ok
+     */
+    getOidcParameters(): Promise<OidcParameters> {
+        let url_ = this.baseUrl + "/auth/oidc";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetOidcParameters(_response);
+        });
+    }
+
+    protected processGetOidcParameters(response: Response): Promise<OidcParameters> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OidcParameters.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<OidcParameters>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    authOIDC(body: OIDCParameters): Promise<User> {
+        let url_ = this.baseUrl + "/auth/oidc";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAuthOIDC(_response);
+        });
+    }
+
+    protected processAuthOIDC(response: Response): Promise<User> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = User.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<User>(null as any);
+    }
+
     getInformation(): Promise<User> {
         let url_ = this.baseUrl + "/user/me";
         url_ = url_.replace(/[?&]$/, "");
@@ -465,7 +543,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -949,7 +1027,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 411) {
@@ -957,7 +1035,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -999,7 +1077,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 400) {
@@ -1007,7 +1085,7 @@ export class Client {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result400 = resultData400 !== undefined ? resultData400 : <any>null;
-
+    
             return throwException("Invalid timestamp provided", status, _responseText, _headers, result400);
             });
         } else if (status === 411) {
@@ -1015,7 +1093,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion nog enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1053,7 +1131,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 411) {
@@ -1061,7 +1139,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1100,7 +1178,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2075,7 +2153,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return No content
      */
     enableStrobeOnLightsGroup(id: number, body: StrobeProps | undefined): Promise<void> {
@@ -2498,8 +2576,8 @@ export class Client {
     }
 
     /**
-     * @param code (optional)
-     * @param error (optional)
+     * @param code (optional) 
+     * @param error (optional) 
      * @return Ok
      */
     spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous7> {
@@ -2538,7 +2616,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2712,7 +2790,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authMock(body: User | undefined): Promise<User> {
@@ -2754,48 +2832,7 @@ export class Client {
     }
 
     /**
-     * @return Success
-     */
-    authOIDC(body: OIDCParameters): Promise<User> {
-        let url_ = this.baseUrl + "/auth/oidc";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processAuthOIDC(_response);
-        });
-    }
-
-    protected processAuthOIDC(response: Response): Promise<User> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = User.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<User>(null as any);
-    }
-
-    /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authKey(body: ApiKeyParameters | undefined): Promise<User> {
@@ -2835,6 +2872,50 @@ export class Client {
         }
         return Promise.resolve<User>(null as any);
     }
+}
+
+export class OidcParameters implements IOidcParameters {
+    clientId!: string;
+    redirectUri!: string;
+    authUrl!: string;
+
+    constructor(data?: IOidcParameters) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.clientId = _data["clientId"];
+            this.redirectUri = _data["redirectUri"];
+            this.authUrl = _data["authUrl"];
+        }
+    }
+
+    static fromJS(data: any): OidcParameters {
+        data = typeof data === 'object' ? data : {};
+        let result = new OidcParameters();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["clientId"] = this.clientId;
+        data["redirectUri"] = this.redirectUri;
+        data["authUrl"] = this.authUrl;
+        return data;
+    }
+}
+
+export interface IOidcParameters {
+    clientId: string;
+    redirectUri: string;
+    authUrl: string;
 }
 
 export class User implements IUser {
@@ -7382,7 +7463,7 @@ export class LightsParCreateParams implements ILightsParCreateParams {
     colorBlueChannel!: number;
     colorColdWhiteChannel?: number;
     colorWarmWhiteChannel?: number;
-    colorAmberWhiteChannel?: number;
+    colorAmberChannel?: number;
     colorUvChannel?: number;
 
     constructor(data?: ILightsParCreateParams) {
@@ -7404,7 +7485,7 @@ export class LightsParCreateParams implements ILightsParCreateParams {
             this.colorBlueChannel = _data["colorBlueChannel"];
             this.colorColdWhiteChannel = _data["colorColdWhiteChannel"];
             this.colorWarmWhiteChannel = _data["colorWarmWhiteChannel"];
-            this.colorAmberWhiteChannel = _data["colorAmberWhiteChannel"];
+            this.colorAmberChannel = _data["colorAmberChannel"];
             this.colorUvChannel = _data["colorUvChannel"];
         }
     }
@@ -7426,7 +7507,7 @@ export class LightsParCreateParams implements ILightsParCreateParams {
         data["colorBlueChannel"] = this.colorBlueChannel;
         data["colorColdWhiteChannel"] = this.colorColdWhiteChannel;
         data["colorWarmWhiteChannel"] = this.colorWarmWhiteChannel;
-        data["colorAmberWhiteChannel"] = this.colorAmberWhiteChannel;
+        data["colorAmberChannel"] = this.colorAmberChannel;
         data["colorUvChannel"] = this.colorUvChannel;
         return data;
     }
@@ -7441,7 +7522,7 @@ export interface ILightsParCreateParams {
     colorBlueChannel: number;
     colorColdWhiteChannel?: number;
     colorWarmWhiteChannel?: number;
-    colorAmberWhiteChannel?: number;
+    colorAmberChannel?: number;
     colorUvChannel?: number;
 }
 
@@ -7459,7 +7540,7 @@ export class LightsMovingHeadRgbCreateParams implements ILightsMovingHeadRgbCrea
     colorBlueChannel!: number;
     colorColdWhiteChannel?: number;
     colorWarmWhiteChannel?: number;
-    colorAmberWhiteChannel?: number;
+    colorAmberChannel?: number;
     colorUvChannel?: number;
 
     constructor(data?: ILightsMovingHeadRgbCreateParams) {
@@ -7486,7 +7567,7 @@ export class LightsMovingHeadRgbCreateParams implements ILightsMovingHeadRgbCrea
             this.colorBlueChannel = _data["colorBlueChannel"];
             this.colorColdWhiteChannel = _data["colorColdWhiteChannel"];
             this.colorWarmWhiteChannel = _data["colorWarmWhiteChannel"];
-            this.colorAmberWhiteChannel = _data["colorAmberWhiteChannel"];
+            this.colorAmberChannel = _data["colorAmberChannel"];
             this.colorUvChannel = _data["colorUvChannel"];
         }
     }
@@ -7513,7 +7594,7 @@ export class LightsMovingHeadRgbCreateParams implements ILightsMovingHeadRgbCrea
         data["colorBlueChannel"] = this.colorBlueChannel;
         data["colorColdWhiteChannel"] = this.colorColdWhiteChannel;
         data["colorWarmWhiteChannel"] = this.colorWarmWhiteChannel;
-        data["colorAmberWhiteChannel"] = this.colorAmberWhiteChannel;
+        data["colorAmberChannel"] = this.colorAmberChannel;
         data["colorUvChannel"] = this.colorUvChannel;
         return data;
     }
@@ -7533,7 +7614,7 @@ export interface ILightsMovingHeadRgbCreateParams {
     colorBlueChannel: number;
     colorColdWhiteChannel?: number;
     colorWarmWhiteChannel?: number;
-    colorAmberWhiteChannel?: number;
+    colorAmberChannel?: number;
     colorUvChannel?: number;
 }
 

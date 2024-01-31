@@ -66,9 +66,11 @@ onMounted(async () => {
     sessionStorage.setItem('state', state);
     sessionStorage.setItem('url', route.query.path as string);
 
+    const oidcParameters = await new Client().getOidcParameters();
+
     let queryParameters = new URLSearchParams({
-      client_id: 'narrowcasting-test',
-      redirect_uri: 'http://localhost:8080/auth/callback',
+      client_id: oidcParameters.clientId,
+      redirect_uri: oidcParameters.redirectUri,
       state: state,
       response_mode: 'fragment',
       response_type: 'code',
@@ -76,8 +78,7 @@ onMounted(async () => {
     });
 
     window.location.href =
-      'https://auth.gewis.nl/realms/GEWISWG/protocol/openid-connect/auth?' +
-      queryParameters.toString();
+      oidcParameters.authUrl + '?' + queryParameters.toString();
   }
 });
 </script>
