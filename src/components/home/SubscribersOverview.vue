@@ -25,9 +25,9 @@ import CardComponent from '@/layout/CardComponent.vue';
 import SubscriberItemComponent from '@/components/home/SubscriberItemComponent.vue';
 import { computed } from 'vue';
 
-const { subscribers } = storeToRefs(useSubscriberStore());
-const active = computed(() => subscribers.value.filter((s) => s.active));
-const inactive = computed(() => subscribers.value.filter((s) => !s.active));
+const subscribers = storeToRefs(useSubscriberStore());
+const active = computed(() => subscribers.screens.value.filter((s) => s.socketId != null));
+const inactive = computed(() => subscribers.screens.value.filter((s) => s.socketId == null));
 </script>
 
 <style scoped lang="scss"></style>

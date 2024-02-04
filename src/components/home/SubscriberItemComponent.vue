@@ -1,35 +1,24 @@
 <template>
-  <div role="button" class="flex flex-row align-items-center my-3" @click="setSelected">
+  <div role="button" class="flex flex-row align-items-center my-3">
     <i
       class="pi pi-desktop text-4xl m-3"
-      :style="{ color: subscriber.active ? 'green' : 'gray' }"
+      :style="{ color: subscriber.socketId ? 'green' : 'gray' }"
     />
     <div class="flex flex-column">
       <span class="font-bold">{{ subscriber.name }}</span>
-      <span>Last seen {{ formatLastSeen(subscriber.lastSeen) }}</span>
+      <span>Socket ID {{ subscriber.socketId }}</span>
       <span class="text-sm opacity-30">{{ subscriber.id }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { formatLastSeen } from '@/utils/formatterUtils';
-import { useSubscriberStore } from '@/stores/subscriber.store';
+import { AudioResponse, type ScreenResponse } from '@/api/Client';
 
-const subscriberStore = useSubscriberStore();
 
-const props = defineProps<{
-  subscriber: {
-    active: boolean;
-    name: string;
-    lastSeen: Date;
-    id: string;
-  };
+defineProps<{
+  subscriber: AudioResponse | ScreenResponse;
 }>();
-
-const setSelected = () => {
-  subscriberStore.setSelected(props.subscriber.id);
-};
 </script>
 
 <style scoped lang="scss"></style>

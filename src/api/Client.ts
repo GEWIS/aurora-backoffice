@@ -5669,6 +5669,9 @@ export class AudioResponse implements IAudioResponse {
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 
     constructor(data?: IAudioResponse) {
         if (data) {
@@ -5685,6 +5688,7 @@ export class AudioResponse implements IAudioResponse {
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
+            this.socketId = _data["socketId"];
         }
     }
 
@@ -5701,6 +5705,7 @@ export class AudioResponse implements IAudioResponse {
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
+        data["socketId"] = this.socketId;
         return data;
     }
 }
@@ -5710,6 +5715,9 @@ export interface IAudioResponse {
     createdAt: Date;
     updatedAt: Date;
     name: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 }
 
 export class HandlerResponse_AudioResponse_ implements IHandlerResponse_AudioResponse_ {
@@ -5772,6 +5780,9 @@ export class LightsControllerResponse implements ILightsControllerResponse {
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 
     constructor(data?: ILightsControllerResponse) {
         if (data) {
@@ -5788,6 +5799,7 @@ export class LightsControllerResponse implements ILightsControllerResponse {
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
+            this.socketId = _data["socketId"];
         }
     }
 
@@ -5804,6 +5816,7 @@ export class LightsControllerResponse implements ILightsControllerResponse {
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
+        data["socketId"] = this.socketId;
         return data;
     }
 }
@@ -5813,6 +5826,9 @@ export interface ILightsControllerResponse {
     createdAt: Date;
     updatedAt: Date;
     name: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 }
 
 export class ParResponse implements IParResponse {
@@ -6225,6 +6241,9 @@ export class ScreenResponse implements IScreenResponse {
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 
     constructor(data?: IScreenResponse) {
         if (data) {
@@ -6241,6 +6260,7 @@ export class ScreenResponse implements IScreenResponse {
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
+            this.socketId = _data["socketId"];
         }
     }
 
@@ -6257,6 +6277,7 @@ export class ScreenResponse implements IScreenResponse {
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
+        data["socketId"] = this.socketId;
         return data;
     }
 }
@@ -6266,6 +6287,9 @@ export interface IScreenResponse {
     createdAt: Date;
     updatedAt: Date;
     name: string;
+    /** ID of the socket connection if present.
+Required to send events specifically and only to this entity */
+    socketId?: string;
 }
 
 export class HandlerResponse_ScreenResponse_ implements IHandlerResponse_ScreenResponse_ {
