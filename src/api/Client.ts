@@ -15,7 +15,7 @@ export class Client {
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
         this.http = http ? http : window as any;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "/api";
+        this.baseUrl = baseUrl ?? "/api";
     }
 
     /**
@@ -471,7 +471,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getAllScenes(): Promise<LightsScene[]> {
+    getAllScenes(): Promise<LightsSceneResponse[]> {
         let url_ = this.baseUrl + "/handler/lights/scenes";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -487,7 +487,7 @@ export class Client {
         });
     }
 
-    protected processGetAllScenes(response: Response): Promise<LightsScene[]> {
+    protected processGetAllScenes(response: Response): Promise<LightsSceneResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -497,7 +497,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(LightsScene.fromJS(item));
+                    result200!.push(LightsSceneResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -509,7 +509,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsScene[]>(null as any);
+        return Promise.resolve<LightsSceneResponse[]>(null as any);
     }
 
     /**
@@ -543,7 +543,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -557,7 +557,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getSingleScene(id: number): Promise<LightsScene> {
+    getSingleScene(id: number): Promise<LightsSceneResponse> {
         let url_ = this.baseUrl + "/handler/lights/scenes/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -576,14 +576,14 @@ export class Client {
         });
     }
 
-    protected processGetSingleScene(response: Response): Promise<LightsScene> {
+    protected processGetSingleScene(response: Response): Promise<LightsSceneResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LightsScene.fromJS(resultData200);
+            result200 = LightsSceneResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -591,7 +591,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsScene>(null as any);
+        return Promise.resolve<LightsSceneResponse>(null as any);
     }
 
     /**
@@ -1027,7 +1027,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 411) {
@@ -1035,7 +1035,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1077,7 +1077,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 400) {
@@ -1085,7 +1085,7 @@ export class Client {
             let result400: any = null;
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result400 = resultData400 !== undefined ? resultData400 : <any>null;
-
+    
             return throwException("Invalid timestamp provided", status, _responseText, _headers, result400);
             });
         } else if (status === 411) {
@@ -1093,7 +1093,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion nog enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1131,7 +1131,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status === 411) {
@@ -1139,7 +1139,7 @@ export class Client {
             let result411: any = null;
             let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result411 = resultData411 !== undefined ? resultData411 : <any>null;
-
+    
             return throwException("Centurion not enabled", status, _responseText, _headers, result411);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1178,7 +1178,7 @@ export class Client {
             let result204: any = null;
             let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result204 = resultData204 !== undefined ? resultData204 : <any>null;
-
+    
             return result204;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1222,7 +1222,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getAudioHandlers(): Promise<HandlerResponse_Audio_[]> {
+    getAudioHandlers(): Promise<HandlerResponse_AudioResponse_[]> {
         let url_ = this.baseUrl + "/handler/audio";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1238,7 +1238,7 @@ export class Client {
         });
     }
 
-    protected processGetAudioHandlers(response: Response): Promise<HandlerResponse_Audio_[]> {
+    protected processGetAudioHandlers(response: Response): Promise<HandlerResponse_AudioResponse_[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1248,7 +1248,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(HandlerResponse_Audio_.fromJS(item));
+                    result200!.push(HandlerResponse_AudioResponse_.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1260,7 +1260,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<HandlerResponse_Audio_[]>(null as any);
+        return Promise.resolve<HandlerResponse_AudioResponse_[]>(null as any);
     }
 
     /**
@@ -1306,7 +1306,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getLightsHandlers(): Promise<HandlerResponse_LightsGroup_[]> {
+    getLightsHandlers(): Promise<HandlerResponse_LightsGroupResponse_[]> {
         let url_ = this.baseUrl + "/handler/lights";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1322,7 +1322,7 @@ export class Client {
         });
     }
 
-    protected processGetLightsHandlers(response: Response): Promise<HandlerResponse_LightsGroup_[]> {
+    protected processGetLightsHandlers(response: Response): Promise<HandlerResponse_LightsGroupResponse_[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1332,7 +1332,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(HandlerResponse_LightsGroup_.fromJS(item));
+                    result200!.push(HandlerResponse_LightsGroupResponse_.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1344,7 +1344,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<HandlerResponse_LightsGroup_[]>(null as any);
+        return Promise.resolve<HandlerResponse_LightsGroupResponse_[]>(null as any);
     }
 
     /**
@@ -1390,7 +1390,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getScreenHandlers(): Promise<HandlerResponse_Screen_[]> {
+    getScreenHandlers(): Promise<HandlerResponse_ScreenResponse_[]> {
         let url_ = this.baseUrl + "/handler/screen";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1406,7 +1406,7 @@ export class Client {
         });
     }
 
-    protected processGetScreenHandlers(response: Response): Promise<HandlerResponse_Screen_[]> {
+    protected processGetScreenHandlers(response: Response): Promise<HandlerResponse_ScreenResponse_[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1416,7 +1416,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(HandlerResponse_Screen_.fromJS(item));
+                    result200!.push(HandlerResponse_ScreenResponse_.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1428,7 +1428,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<HandlerResponse_Screen_[]>(null as any);
+        return Promise.resolve<HandlerResponse_ScreenResponse_[]>(null as any);
     }
 
     /**
@@ -1644,7 +1644,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getSingleLightsController(id: number): Promise<LightsController> {
+    getSingleLightsController(id: number): Promise<LightsControllerResponse> {
         let url_ = this.baseUrl + "/lights/controller/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1663,14 +1663,14 @@ export class Client {
         });
     }
 
-    protected processGetSingleLightsController(response: Response): Promise<LightsController> {
+    protected processGetSingleLightsController(response: Response): Promise<LightsControllerResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LightsController.fromJS(resultData200);
+            result200 = LightsControllerResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1678,13 +1678,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsController>(null as any);
+        return Promise.resolve<LightsControllerResponse>(null as any);
     }
 
     /**
      * @return Ok
      */
-    getLightsGroups(): Promise<BaseLightsGroupResponse[]> {
+    getLightsGroups(): Promise<LightsGroupResponse[]> {
         let url_ = this.baseUrl + "/lights/group";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1700,7 +1700,7 @@ export class Client {
         });
     }
 
-    protected processGetLightsGroups(response: Response): Promise<BaseLightsGroupResponse[]> {
+    protected processGetLightsGroups(response: Response): Promise<LightsGroupResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1710,7 +1710,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(BaseLightsGroupResponse.fromJS(item));
+                    result200!.push(LightsGroupResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1722,7 +1722,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<BaseLightsGroupResponse[]>(null as any);
+        return Promise.resolve<LightsGroupResponse[]>(null as any);
     }
 
     /**
@@ -1812,7 +1812,7 @@ export class Client {
     /**
      * @return Ok
      */
-    getAllLightsPars(): Promise<LightsPar[]> {
+    getAllLightsPars(): Promise<ParResponse[]> {
         let url_ = this.baseUrl + "/lights/fixture/par";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1828,7 +1828,7 @@ export class Client {
         });
     }
 
-    protected processGetAllLightsPars(response: Response): Promise<LightsPar[]> {
+    protected processGetAllLightsPars(response: Response): Promise<ParResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1838,7 +1838,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(LightsPar.fromJS(item));
+                    result200!.push(ParResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1850,13 +1850,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsPar[]>(null as any);
+        return Promise.resolve<ParResponse[]>(null as any);
     }
 
     /**
      * @return Ok
      */
-    createLightsPar(body: LightsParCreateParams): Promise<LightsPar> {
+    createLightsPar(body: LightsParCreateParams): Promise<ParResponse> {
         let url_ = this.baseUrl + "/lights/fixture/par";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1876,14 +1876,14 @@ export class Client {
         });
     }
 
-    protected processCreateLightsPar(response: Response): Promise<LightsPar> {
+    protected processCreateLightsPar(response: Response): Promise<ParResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LightsPar.fromJS(resultData200);
+            result200 = ParResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1891,13 +1891,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsPar>(null as any);
+        return Promise.resolve<ParResponse>(null as any);
     }
 
     /**
      * @return Ok
      */
-    getAllLightsMovingHeadsRgb(): Promise<LightsMovingHeadRgb[]> {
+    getAllLightsMovingHeadsRgb(): Promise<MovingHeadRgbResponse[]> {
         let url_ = this.baseUrl + "/lights/fixture/moving-head/rgb";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1913,7 +1913,7 @@ export class Client {
         });
     }
 
-    protected processGetAllLightsMovingHeadsRgb(response: Response): Promise<LightsMovingHeadRgb[]> {
+    protected processGetAllLightsMovingHeadsRgb(response: Response): Promise<MovingHeadRgbResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1923,7 +1923,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(LightsMovingHeadRgb.fromJS(item));
+                    result200!.push(MovingHeadRgbResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1935,13 +1935,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsMovingHeadRgb[]>(null as any);
+        return Promise.resolve<MovingHeadRgbResponse[]>(null as any);
     }
 
     /**
      * @return Ok
      */
-    createLightsMovingHeadRgb(body: LightsMovingHeadRgbCreateParams): Promise<LightsMovingHeadRgb> {
+    createLightsMovingHeadRgb(body: LightsMovingHeadRgbCreateParams): Promise<MovingHeadRgbResponse> {
         let url_ = this.baseUrl + "/lights/fixture/moving-head/rgb";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1961,14 +1961,14 @@ export class Client {
         });
     }
 
-    protected processCreateLightsMovingHeadRgb(response: Response): Promise<LightsMovingHeadRgb> {
+    protected processCreateLightsMovingHeadRgb(response: Response): Promise<MovingHeadRgbResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LightsMovingHeadRgb.fromJS(resultData200);
+            result200 = MovingHeadRgbResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1976,13 +1976,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsMovingHeadRgb>(null as any);
+        return Promise.resolve<MovingHeadRgbResponse>(null as any);
     }
 
     /**
      * @return Ok
      */
-    getAllLightsMovingHeadsWheel(): Promise<LightsMovingHeadWheel[]> {
+    getAllLightsMovingHeadsWheel(): Promise<MovingHeadWheelResponse[]> {
         let url_ = this.baseUrl + "/lights/fixture/moving-head/wheel";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1998,7 +1998,7 @@ export class Client {
         });
     }
 
-    protected processGetAllLightsMovingHeadsWheel(response: Response): Promise<LightsMovingHeadWheel[]> {
+    protected processGetAllLightsMovingHeadsWheel(response: Response): Promise<MovingHeadWheelResponse[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -2008,7 +2008,7 @@ export class Client {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(LightsMovingHeadWheel.fromJS(item));
+                    result200!.push(MovingHeadWheelResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -2020,13 +2020,13 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsMovingHeadWheel[]>(null as any);
+        return Promise.resolve<MovingHeadWheelResponse[]>(null as any);
     }
 
     /**
      * @return Ok
      */
-    createLightsMovingHeadWheel(body: LightsMovingHeadWheelCreateParams): Promise<LightsMovingHeadWheel> {
+    createLightsMovingHeadWheel(body: LightsMovingHeadWheelCreateParams): Promise<MovingHeadWheelResponse> {
         let url_ = this.baseUrl + "/lights/fixture/moving-head/wheel";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2046,14 +2046,14 @@ export class Client {
         });
     }
 
-    protected processCreateLightsMovingHeadWheel(response: Response): Promise<LightsMovingHeadWheel> {
+    protected processCreateLightsMovingHeadWheel(response: Response): Promise<MovingHeadWheelResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LightsMovingHeadWheel.fromJS(resultData200);
+            result200 = MovingHeadWheelResponse.fromJS(resultData200);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2061,7 +2061,7 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<LightsMovingHeadWheel>(null as any);
+        return Promise.resolve<MovingHeadWheelResponse>(null as any);
     }
 
     /**
@@ -2153,7 +2153,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return No content
      */
     enableStrobeOnLightsGroup(id: number, body: StrobeProps | undefined): Promise<void> {
@@ -2864,8 +2864,8 @@ export class Client {
     }
 
     /**
-     * @param code (optional)
-     * @param error (optional)
+     * @param code (optional) 
+     * @param error (optional) 
      * @return Ok
      */
     spotifyLoginCallback(state: string, code: string | undefined, error: string | undefined): Promise<Anonymous7> {
@@ -2904,7 +2904,7 @@ export class Client {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -3078,7 +3078,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authMock(body: User | undefined): Promise<User> {
@@ -3120,7 +3120,7 @@ export class Client {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authKey(body: ApiKeyParameters | undefined): Promise<User> {
@@ -3842,942 +3842,64 @@ export interface ITrainResponse {
     messages: Messages[];
 }
 
-export class LightsGroup implements ILightsGroup {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    currentHandler?: string;
+export class LightsSceneFixtureResponse implements ILightsSceneFixtureResponse {
+    fixtureId!: number;
+    dmxValues!: number[];
+
+    constructor(data?: ILightsSceneFixtureResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.dmxValues = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.fixtureId = _data["fixtureId"];
+            if (Array.isArray(_data["dmxValues"])) {
+                this.dmxValues = [] as any;
+                for (let item of _data["dmxValues"])
+                    this.dmxValues!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): LightsSceneFixtureResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new LightsSceneFixtureResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fixtureId"] = this.fixtureId;
+        if (Array.isArray(this.dmxValues)) {
+            data["dmxValues"] = [];
+            for (let item of this.dmxValues)
+                data["dmxValues"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface ILightsSceneFixtureResponse {
+    fixtureId: number;
+    dmxValues: number[];
+}
+
+export class LightsSceneResponse implements ILightsSceneResponse {
     name!: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    controller!: LightsController;
-    pars!: LightsGroupPars[];
-    movingHeadWheels!: LightsGroupMovingHeadWheels[];
-    movingHeadRgbs!: LightsGroupMovingHeadRgbs[];
-
-    constructor(data?: ILightsGroup) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.controller = new LightsController();
-            this.pars = [];
-            this.movingHeadWheels = [];
-            this.movingHeadRgbs = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.currentHandler = _data["currentHandler"];
-            this.name = _data["name"];
-            this.socketId = _data["socketId"];
-            this.controller = _data["controller"] ? LightsController.fromJS(_data["controller"]) : new LightsController();
-            if (Array.isArray(_data["pars"])) {
-                this.pars = [] as any;
-                for (let item of _data["pars"])
-                    this.pars!.push(LightsGroupPars.fromJS(item));
-            }
-            if (Array.isArray(_data["movingHeadWheels"])) {
-                this.movingHeadWheels = [] as any;
-                for (let item of _data["movingHeadWheels"])
-                    this.movingHeadWheels!.push(LightsGroupMovingHeadWheels.fromJS(item));
-            }
-            if (Array.isArray(_data["movingHeadRgbs"])) {
-                this.movingHeadRgbs = [] as any;
-                for (let item of _data["movingHeadRgbs"])
-                    this.movingHeadRgbs!.push(LightsGroupMovingHeadRgbs.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): LightsGroup {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsGroup();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["currentHandler"] = this.currentHandler;
-        data["name"] = this.name;
-        data["socketId"] = this.socketId;
-        data["controller"] = this.controller ? this.controller.toJSON() : <any>undefined;
-        if (Array.isArray(this.pars)) {
-            data["pars"] = [];
-            for (let item of this.pars)
-                data["pars"].push(item.toJSON());
-        }
-        if (Array.isArray(this.movingHeadWheels)) {
-            data["movingHeadWheels"] = [];
-            for (let item of this.movingHeadWheels)
-                data["movingHeadWheels"].push(item.toJSON());
-        }
-        if (Array.isArray(this.movingHeadRgbs)) {
-            data["movingHeadRgbs"] = [];
-            for (let item of this.movingHeadRgbs)
-                data["movingHeadRgbs"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface ILightsGroup {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    currentHandler?: string;
-    name: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    controller: LightsController;
-    pars: LightsGroupPars[];
-    movingHeadWheels: LightsGroupMovingHeadWheels[];
-    movingHeadRgbs: LightsGroupMovingHeadRgbs[];
-}
-
-export class LightsController implements ILightsController {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    currentHandler?: string;
-    name!: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    lightsGroups!: LightsGroup[];
-
-    constructor(data?: ILightsController) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.lightsGroups = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.currentHandler = _data["currentHandler"];
-            this.name = _data["name"];
-            this.socketId = _data["socketId"];
-            if (Array.isArray(_data["lightsGroups"])) {
-                this.lightsGroups = [] as any;
-                for (let item of _data["lightsGroups"])
-                    this.lightsGroups!.push(LightsGroup.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): LightsController {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsController();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["currentHandler"] = this.currentHandler;
-        data["name"] = this.name;
-        data["socketId"] = this.socketId;
-        if (Array.isArray(this.lightsGroups)) {
-            data["lightsGroups"] = [];
-            for (let item of this.lightsGroups)
-                data["lightsGroups"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface ILightsController {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    currentHandler?: string;
-    name: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    lightsGroups: LightsGroup[];
-}
-
-export class LightsGroupPars implements ILightsGroupPars {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    group!: LightsGroup;
-    fixture!: LightsPar;
-    firstChannel!: number;
-
-    constructor(data?: ILightsGroupPars) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.group = new LightsGroup();
-            this.fixture = new LightsPar();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.fixture = _data["fixture"] ? LightsPar.fromJS(_data["fixture"]) : new LightsPar();
-            this.firstChannel = _data["firstChannel"];
-        }
-    }
-
-    static fromJS(data: any): LightsGroupPars {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsGroupPars();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
-        data["firstChannel"] = this.firstChannel;
-        return data;
-    }
-}
-
-export interface ILightsGroupPars {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    group: LightsGroup;
-    fixture: LightsPar;
-    firstChannel: number;
-}
-
-export class LightsMovingHeadWheel implements ILightsMovingHeadWheel {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt!: Date;
-    movement!: Movement;
-    colorWheelChannel!: number;
-    goboWheelChannel!: number;
-    goboRotateChannel!: number | undefined;
-    colorWheelChannelValues!: LightsWheelChannelValue_WheelColor_[];
-    goboWheelChannelValues!: LightsWheelChannelValue_string_[];
-
-    constructor(data?: ILightsMovingHeadWheel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.movement = new Movement();
-            this.colorWheelChannelValues = [];
-            this.goboWheelChannelValues = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
-            if (Array.isArray(_data["resetChannelAndValue"])) {
-                this.resetChannelAndValue = [] as any;
-                for (let item of _data["resetChannelAndValue"])
-                    this.resetChannelAndValue!.push(item);
-            }
-            this.valuesUpdatedAt = _data["valuesUpdatedAt"] ? new Date(_data["valuesUpdatedAt"].toString()) : <any>undefined;
-            this.movement = _data["movement"] ? Movement.fromJS(_data["movement"]) : new Movement();
-            this.colorWheelChannel = _data["colorWheelChannel"];
-            this.goboWheelChannel = _data["goboWheelChannel"];
-            this.goboRotateChannel = _data["goboRotateChannel"];
-            if (Array.isArray(_data["colorWheelChannelValues"])) {
-                this.colorWheelChannelValues = [] as any;
-                for (let item of _data["colorWheelChannelValues"])
-                    this.colorWheelChannelValues!.push(LightsWheelChannelValue_WheelColor_.fromJS(item));
-            }
-            if (Array.isArray(_data["goboWheelChannelValues"])) {
-                this.goboWheelChannelValues = [] as any;
-                for (let item of _data["goboWheelChannelValues"])
-                    this.goboWheelChannelValues!.push(LightsWheelChannelValue_string_.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): LightsMovingHeadWheel {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsMovingHeadWheel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
-        if (Array.isArray(this.resetChannelAndValue)) {
-            data["resetChannelAndValue"] = [];
-            for (let item of this.resetChannelAndValue)
-                data["resetChannelAndValue"].push(item);
-        }
-        data["valuesUpdatedAt"] = this.valuesUpdatedAt ? this.valuesUpdatedAt.toISOString() : <any>undefined;
-        data["movement"] = this.movement ? this.movement.toJSON() : <any>undefined;
-        data["colorWheelChannel"] = this.colorWheelChannel;
-        data["goboWheelChannel"] = this.goboWheelChannel;
-        data["goboRotateChannel"] = this.goboRotateChannel;
-        if (Array.isArray(this.colorWheelChannelValues)) {
-            data["colorWheelChannelValues"] = [];
-            for (let item of this.colorWheelChannelValues)
-                data["colorWheelChannelValues"].push(item.toJSON());
-        }
-        if (Array.isArray(this.goboWheelChannelValues)) {
-            data["goboWheelChannelValues"] = [];
-            for (let item of this.goboWheelChannelValues)
-                data["goboWheelChannelValues"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface ILightsMovingHeadWheel {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt: Date;
-    movement: Movement;
-    colorWheelChannel: number;
-    goboWheelChannel: number;
-    goboRotateChannel: number | undefined;
-    colorWheelChannelValues: LightsWheelChannelValue_WheelColor_[];
-    goboWheelChannelValues: LightsWheelChannelValue_string_[];
-}
-
-export enum WheelColor {
-    White = "white",
-    Red = "red",
-    Green = "green",
-    Blue = "blue",
-    Yellow = "yellow",
-    Lightblue = "lightblue",
-    Orange = "orange",
-    Rosered = "rosered",
-}
-
-export class LightsWheelChannelValue_WheelColor_ implements ILightsWheelChannelValue_WheelColor_ {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    movingHead!: LightsMovingHeadWheel;
-    name!: WheelColor;
-    value!: number;
-
-    constructor(data?: ILightsWheelChannelValue_WheelColor_) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.movingHead = new LightsMovingHeadWheel();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.movingHead = _data["movingHead"] ? LightsMovingHeadWheel.fromJS(_data["movingHead"]) : new LightsMovingHeadWheel();
-            this.name = _data["name"];
-            this.value = _data["value"];
-        }
-    }
-
-    static fromJS(data: any): LightsWheelChannelValue_WheelColor_ {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsWheelChannelValue_WheelColor_();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
-        data["name"] = this.name;
-        data["value"] = this.value;
-        return data;
-    }
-}
-
-export interface ILightsWheelChannelValue_WheelColor_ {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    movingHead: LightsMovingHeadWheel;
-    name: WheelColor;
-    value: number;
-}
-
-export class LightsWheelChannelValue_string_ implements ILightsWheelChannelValue_string_ {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    movingHead!: LightsMovingHeadWheel;
-    name!: string;
-    value!: number;
-
-    constructor(data?: ILightsWheelChannelValue_string_) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.movingHead = new LightsMovingHeadWheel();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.movingHead = _data["movingHead"] ? LightsMovingHeadWheel.fromJS(_data["movingHead"]) : new LightsMovingHeadWheel();
-            this.name = _data["name"];
-            this.value = _data["value"];
-        }
-    }
-
-    static fromJS(data: any): LightsWheelChannelValue_string_ {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsWheelChannelValue_string_();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["movingHead"] = this.movingHead ? this.movingHead.toJSON() : <any>undefined;
-        data["name"] = this.name;
-        data["value"] = this.value;
-        return data;
-    }
-}
-
-export interface ILightsWheelChannelValue_string_ {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    movingHead: LightsMovingHeadWheel;
-    name: string;
-    value: number;
-}
-
-export class Movement implements IMovement {
-    panChannel!: number;
-    finePanChannel?: number | undefined;
-    tiltChannel!: number;
-    fineTiltChannel?: number | undefined;
-    movingSpeedChannel?: number | undefined;
-
-    constructor(data?: IMovement) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.panChannel = _data["panChannel"];
-            this.finePanChannel = _data["finePanChannel"];
-            this.tiltChannel = _data["tiltChannel"];
-            this.fineTiltChannel = _data["fineTiltChannel"];
-            this.movingSpeedChannel = _data["movingSpeedChannel"];
-        }
-    }
-
-    static fromJS(data: any): Movement {
-        data = typeof data === 'object' ? data : {};
-        let result = new Movement();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["panChannel"] = this.panChannel;
-        data["finePanChannel"] = this.finePanChannel;
-        data["tiltChannel"] = this.tiltChannel;
-        data["fineTiltChannel"] = this.fineTiltChannel;
-        data["movingSpeedChannel"] = this.movingSpeedChannel;
-        return data;
-    }
-}
-
-export interface IMovement {
-    panChannel: number;
-    finePanChannel?: number | undefined;
-    tiltChannel: number;
-    fineTiltChannel?: number | undefined;
-    movingSpeedChannel?: number | undefined;
-}
-
-export class LightsGroupMovingHeadWheels implements ILightsGroupMovingHeadWheels {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    group!: LightsGroup;
-    fixture!: LightsMovingHeadWheel;
-    firstChannel!: number;
-
-    constructor(data?: ILightsGroupMovingHeadWheels) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.group = new LightsGroup();
-            this.fixture = new LightsMovingHeadWheel();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.fixture = _data["fixture"] ? LightsMovingHeadWheel.fromJS(_data["fixture"]) : new LightsMovingHeadWheel();
-            this.firstChannel = _data["firstChannel"];
-        }
-    }
-
-    static fromJS(data: any): LightsGroupMovingHeadWheels {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsGroupMovingHeadWheels();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
-        data["firstChannel"] = this.firstChannel;
-        return data;
-    }
-}
-
-export interface ILightsGroupMovingHeadWheels {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    group: LightsGroup;
-    fixture: LightsMovingHeadWheel;
-    firstChannel: number;
-}
-
-export class Colors implements IColors {
-    redChannel!: number;
-    greenChannel!: number;
-    blueChannel!: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-
-    constructor(data?: IColors) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.redChannel = _data["redChannel"];
-            this.greenChannel = _data["greenChannel"];
-            this.blueChannel = _data["blueChannel"];
-            this.coldWhiteChannel = _data["coldWhiteChannel"];
-            this.warmWhiteChannel = _data["warmWhiteChannel"];
-            this.amberChannel = _data["amberChannel"];
-            this.uvChannel = _data["uvChannel"];
-        }
-    }
-
-    static fromJS(data: any): Colors {
-        data = typeof data === 'object' ? data : {};
-        let result = new Colors();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["redChannel"] = this.redChannel;
-        data["greenChannel"] = this.greenChannel;
-        data["blueChannel"] = this.blueChannel;
-        data["coldWhiteChannel"] = this.coldWhiteChannel;
-        data["warmWhiteChannel"] = this.warmWhiteChannel;
-        data["amberChannel"] = this.amberChannel;
-        data["uvChannel"] = this.uvChannel;
-        return data;
-    }
-}
-
-export interface IColors {
-    redChannel: number;
-    greenChannel: number;
-    blueChannel: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-}
-
-export class LightsFixtureCurrentValues implements ILightsFixtureCurrentValues {
-    masterDimChannel!: number;
-    strobeChannel!: number;
-
-    constructor(data?: ILightsFixtureCurrentValues) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
-        }
-    }
-
-    static fromJS(data: any): LightsFixtureCurrentValues {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsFixtureCurrentValues();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
-        return data;
-    }
-}
-
-export interface ILightsFixtureCurrentValues {
-    masterDimChannel: number;
-    strobeChannel: number;
-}
-
-export class LightsMovingHeadRgb implements ILightsMovingHeadRgb {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt!: Date;
-    movement!: Movement;
-    color!: Colors;
-    currentValues?: CurrentValues;
-
-    constructor(data?: ILightsMovingHeadRgb) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.movement = new Movement();
-            this.color = new Colors();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
-            if (Array.isArray(_data["resetChannelAndValue"])) {
-                this.resetChannelAndValue = [] as any;
-                for (let item of _data["resetChannelAndValue"])
-                    this.resetChannelAndValue!.push(item);
-            }
-            this.valuesUpdatedAt = _data["valuesUpdatedAt"] ? new Date(_data["valuesUpdatedAt"].toString()) : <any>undefined;
-            this.movement = _data["movement"] ? Movement.fromJS(_data["movement"]) : new Movement();
-            this.color = _data["color"] ? Colors.fromJS(_data["color"]) : new Colors();
-            this.currentValues = _data["currentValues"];
-        }
-    }
-
-    static fromJS(data: any): LightsMovingHeadRgb {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsMovingHeadRgb();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
-        if (Array.isArray(this.resetChannelAndValue)) {
-            data["resetChannelAndValue"] = [];
-            for (let item of this.resetChannelAndValue)
-                data["resetChannelAndValue"].push(item);
-        }
-        data["valuesUpdatedAt"] = this.valuesUpdatedAt ? this.valuesUpdatedAt.toISOString() : <any>undefined;
-        data["movement"] = this.movement ? this.movement.toJSON() : <any>undefined;
-        data["color"] = this.color ? this.color.toJSON() : <any>undefined;
-        data["currentValues"] = this.currentValues;
-        return data;
-    }
-}
-
-export interface ILightsMovingHeadRgb {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt: Date;
-    movement: Movement;
-    color: Colors;
-    currentValues?: CurrentValues;
-}
-
-export class LightsGroupMovingHeadRgbs implements ILightsGroupMovingHeadRgbs {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    group!: LightsGroup;
-    fixture!: LightsMovingHeadRgb;
-    firstChannel!: number;
-
-    constructor(data?: ILightsGroupMovingHeadRgbs) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.group = new LightsGroup();
-            this.fixture = new LightsMovingHeadRgb();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.group = _data["group"] ? LightsGroup.fromJS(_data["group"]) : new LightsGroup();
-            this.fixture = _data["fixture"] ? LightsMovingHeadRgb.fromJS(_data["fixture"]) : new LightsMovingHeadRgb();
-            this.firstChannel = _data["firstChannel"];
-        }
-    }
-
-    static fromJS(data: any): LightsGroupMovingHeadRgbs {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsGroupMovingHeadRgbs();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["group"] = this.group ? this.group.toJSON() : <any>undefined;
-        data["fixture"] = this.fixture ? this.fixture.toJSON() : <any>undefined;
-        data["firstChannel"] = this.firstChannel;
-        return data;
-    }
-}
-
-export interface ILightsGroupMovingHeadRgbs {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    group: LightsGroup;
-    fixture: LightsMovingHeadRgb;
-    firstChannel: number;
-}
-
-export class LightsPar implements ILightsPar {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-    masterDimChannel!: number;
-    strobeChannel!: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt!: Date;
-    color!: Colors;
-
-    constructor(data?: ILightsPar) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.color = new Colors();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
-            if (Array.isArray(_data["resetChannelAndValue"])) {
-                this.resetChannelAndValue = [] as any;
-                for (let item of _data["resetChannelAndValue"])
-                    this.resetChannelAndValue!.push(item);
-            }
-            this.valuesUpdatedAt = _data["valuesUpdatedAt"] ? new Date(_data["valuesUpdatedAt"].toString()) : <any>undefined;
-            this.color = _data["color"] ? Colors.fromJS(_data["color"]) : new Colors();
-        }
-    }
-
-    static fromJS(data: any): LightsPar {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsPar();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
-        if (Array.isArray(this.resetChannelAndValue)) {
-            data["resetChannelAndValue"] = [];
-            for (let item of this.resetChannelAndValue)
-                data["resetChannelAndValue"].push(item);
-        }
-        data["valuesUpdatedAt"] = this.valuesUpdatedAt ? this.valuesUpdatedAt.toISOString() : <any>undefined;
-        data["color"] = this.color ? this.color.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface ILightsPar {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
-    resetChannelAndValue?: number[] | undefined;
-    valuesUpdatedAt: Date;
-    color: Colors;
-}
-
-export class LightsScene implements ILightsScene {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-    pars!: LightsScenePars[];
-    movingHeadRgbs!: LightsSceneMovingHeadRgb[];
-    movingHeadWheels!: LightsSceneMovingHeadWheel[];
-
-    constructor(data?: ILightsScene) {
+    pars!: LightsSceneFixtureResponse[];
+    movingHeadRgbs!: LightsSceneFixtureResponse[];
+    movingHeadWheels!: LightsSceneFixtureResponse[];
+
+    constructor(data?: ILightsSceneResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -4793,40 +3915,34 @@ export class LightsScene implements ILightsScene {
 
     init(_data?: any) {
         if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
             if (Array.isArray(_data["pars"])) {
                 this.pars = [] as any;
                 for (let item of _data["pars"])
-                    this.pars!.push(LightsScenePars.fromJS(item));
+                    this.pars!.push(LightsSceneFixtureResponse.fromJS(item));
             }
             if (Array.isArray(_data["movingHeadRgbs"])) {
                 this.movingHeadRgbs = [] as any;
                 for (let item of _data["movingHeadRgbs"])
-                    this.movingHeadRgbs!.push(LightsSceneMovingHeadRgb.fromJS(item));
+                    this.movingHeadRgbs!.push(LightsSceneFixtureResponse.fromJS(item));
             }
             if (Array.isArray(_data["movingHeadWheels"])) {
                 this.movingHeadWheels = [] as any;
                 for (let item of _data["movingHeadWheels"])
-                    this.movingHeadWheels!.push(LightsSceneMovingHeadWheel.fromJS(item));
+                    this.movingHeadWheels!.push(LightsSceneFixtureResponse.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): LightsScene {
+    static fromJS(data: any): LightsSceneResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new LightsScene();
+        let result = new LightsSceneResponse();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
         if (Array.isArray(this.pars)) {
             data["pars"] = [];
@@ -4847,245 +3963,11 @@ export class LightsScene implements ILightsScene {
     }
 }
 
-export interface ILightsScene {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
+export interface ILightsSceneResponse {
     name: string;
-    pars: LightsScenePars[];
-    movingHeadRgbs: LightsSceneMovingHeadRgb[];
-    movingHeadWheels: LightsSceneMovingHeadWheel[];
-}
-
-export class LightsScenePars implements ILightsScenePars {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    sceneId!: number;
-    scene!: LightsScene;
-    dmxValues!: number[];
-    groupParId!: number;
-    par!: LightsGroupPars;
-
-    constructor(data?: ILightsScenePars) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.scene = new LightsScene();
-            this.dmxValues = [];
-            this.par = new LightsGroupPars();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.sceneId = _data["sceneId"];
-            this.scene = _data["scene"] ? LightsScene.fromJS(_data["scene"]) : new LightsScene();
-            if (Array.isArray(_data["dmxValues"])) {
-                this.dmxValues = [] as any;
-                for (let item of _data["dmxValues"])
-                    this.dmxValues!.push(item);
-            }
-            this.groupParId = _data["groupParId"];
-            this.par = _data["par"] ? LightsGroupPars.fromJS(_data["par"]) : new LightsGroupPars();
-        }
-    }
-
-    static fromJS(data: any): LightsScenePars {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsScenePars();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["sceneId"] = this.sceneId;
-        data["scene"] = this.scene ? this.scene.toJSON() : <any>undefined;
-        if (Array.isArray(this.dmxValues)) {
-            data["dmxValues"] = [];
-            for (let item of this.dmxValues)
-                data["dmxValues"].push(item);
-        }
-        data["groupParId"] = this.groupParId;
-        data["par"] = this.par ? this.par.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface ILightsScenePars {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    sceneId: number;
-    scene: LightsScene;
-    dmxValues: number[];
-    groupParId: number;
-    par: LightsGroupPars;
-}
-
-export class LightsSceneMovingHeadRgb implements ILightsSceneMovingHeadRgb {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    sceneId!: number;
-    scene!: LightsScene;
-    dmxValues!: number[];
-    groupMovingHeadRgbId!: number;
-    movingHeadRgb!: LightsGroupMovingHeadRgbs;
-
-    constructor(data?: ILightsSceneMovingHeadRgb) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.scene = new LightsScene();
-            this.dmxValues = [];
-            this.movingHeadRgb = new LightsGroupMovingHeadRgbs();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.sceneId = _data["sceneId"];
-            this.scene = _data["scene"] ? LightsScene.fromJS(_data["scene"]) : new LightsScene();
-            if (Array.isArray(_data["dmxValues"])) {
-                this.dmxValues = [] as any;
-                for (let item of _data["dmxValues"])
-                    this.dmxValues!.push(item);
-            }
-            this.groupMovingHeadRgbId = _data["groupMovingHeadRgbId"];
-            this.movingHeadRgb = _data["movingHeadRgb"] ? LightsGroupMovingHeadRgbs.fromJS(_data["movingHeadRgb"]) : new LightsGroupMovingHeadRgbs();
-        }
-    }
-
-    static fromJS(data: any): LightsSceneMovingHeadRgb {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsSceneMovingHeadRgb();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["sceneId"] = this.sceneId;
-        data["scene"] = this.scene ? this.scene.toJSON() : <any>undefined;
-        if (Array.isArray(this.dmxValues)) {
-            data["dmxValues"] = [];
-            for (let item of this.dmxValues)
-                data["dmxValues"].push(item);
-        }
-        data["groupMovingHeadRgbId"] = this.groupMovingHeadRgbId;
-        data["movingHeadRgb"] = this.movingHeadRgb ? this.movingHeadRgb.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface ILightsSceneMovingHeadRgb {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    sceneId: number;
-    scene: LightsScene;
-    dmxValues: number[];
-    groupMovingHeadRgbId: number;
-    movingHeadRgb: LightsGroupMovingHeadRgbs;
-}
-
-export class LightsSceneMovingHeadWheel implements ILightsSceneMovingHeadWheel {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    sceneId!: number;
-    scene!: LightsScene;
-    dmxValues!: number[];
-    groupMovingHeadWheelId!: number;
-    movingHeadWheel!: LightsGroupMovingHeadWheels;
-
-    constructor(data?: ILightsSceneMovingHeadWheel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.scene = new LightsScene();
-            this.dmxValues = [];
-            this.movingHeadWheel = new LightsGroupMovingHeadWheels();
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.sceneId = _data["sceneId"];
-            this.scene = _data["scene"] ? LightsScene.fromJS(_data["scene"]) : new LightsScene();
-            if (Array.isArray(_data["dmxValues"])) {
-                this.dmxValues = [] as any;
-                for (let item of _data["dmxValues"])
-                    this.dmxValues!.push(item);
-            }
-            this.groupMovingHeadWheelId = _data["groupMovingHeadWheelId"];
-            this.movingHeadWheel = _data["movingHeadWheel"] ? LightsGroupMovingHeadWheels.fromJS(_data["movingHeadWheel"]) : new LightsGroupMovingHeadWheels();
-        }
-    }
-
-    static fromJS(data: any): LightsSceneMovingHeadWheel {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsSceneMovingHeadWheel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["sceneId"] = this.sceneId;
-        data["scene"] = this.scene ? this.scene.toJSON() : <any>undefined;
-        if (Array.isArray(this.dmxValues)) {
-            data["dmxValues"] = [];
-            for (let item of this.dmxValues)
-                data["dmxValues"].push(item);
-        }
-        data["groupMovingHeadWheelId"] = this.groupMovingHeadWheelId;
-        data["movingHeadWheel"] = this.movingHeadWheel ? this.movingHeadWheel.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface ILightsSceneMovingHeadWheel {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    sceneId: number;
-    scene: LightsScene;
-    dmxValues: number[];
-    groupMovingHeadWheelId: number;
-    movingHeadWheel: LightsGroupMovingHeadWheels;
+    pars: LightsSceneFixtureResponse[];
+    movingHeadRgbs: LightsSceneFixtureResponse[];
+    movingHeadWheels: LightsSceneFixtureResponse[];
 }
 
 export class SceneFixtureParams implements ISceneFixtureParams {
@@ -6282,12 +5164,23 @@ export interface ILightsEffectsMovementCreateParams {
     [key: string]: any;
 }
 
+export enum RoomStatus {
+    Open = "Open",
+    Closed = "Closed",
+}
+
+export enum AlcoholTime {
+    _1630 = "16:30",
+    _1400 = "14:00",
+}
+
 export class Information implements IInformation {
-    id!: number;
+    id!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    roomStatus!: string;
-    alcoholTime!: string;
+    deletedAt?: Date;
+    roomStatus!: RoomStatus;
+    alcoholTime!: AlcoholTime;
     firstResponsible!: string;
     secondResponsible?: string;
     firstERO?: string;
@@ -6307,6 +5200,7 @@ export class Information implements IInformation {
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.roomStatus = _data["roomStatus"];
             this.alcoholTime = _data["alcoholTime"];
             this.firstResponsible = _data["firstResponsible"];
@@ -6328,6 +5222,7 @@ export class Information implements IInformation {
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["roomStatus"] = this.roomStatus;
         data["alcoholTime"] = this.alcoholTime;
         data["firstResponsible"] = this.firstResponsible;
@@ -6339,11 +5234,12 @@ export class Information implements IInformation {
 }
 
 export interface IInformation {
-    id: number;
+    id: string;
     createdAt: Date;
     updatedAt: Date;
-    roomStatus: string;
-    alcoholTime: string;
+    deletedAt?: Date;
+    roomStatus: RoomStatus;
+    alcoholTime: AlcoholTime;
     firstResponsible: string;
     secondResponsible?: string;
     firstERO?: string;
@@ -6449,16 +5345,6 @@ export interface IValidateError {
     fields: FieldErrors;
 }
 
-export enum RoomStatus {
-    Open = "Open",
-    Closed = "Closed",
-}
-
-export enum AlcoholTime {
-    _1630 = "16:30",
-    _1400 = "14:00",
-}
-
 export class InformationParams implements IInformationParams {
     roomStatus!: RoomStatus;
     alcoholTime!: AlcoholTime;
@@ -6516,9 +5402,10 @@ export interface IInformationParams {
 }
 
 export class Message implements IMessage {
-    id!: number;
+    id!: string;
     createdAt!: Date;
     updatedAt!: Date;
+    deletedAt?: Date;
     user!: string;
     message!: string;
 
@@ -6536,6 +5423,7 @@ export class Message implements IMessage {
             this.id = _data["id"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
             this.user = _data["user"];
             this.message = _data["message"];
         }
@@ -6553,6 +5441,7 @@ export class Message implements IMessage {
         data["id"] = this.id;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
         data["user"] = this.user;
         data["message"] = this.message;
         return data;
@@ -6560,9 +5449,10 @@ export class Message implements IMessage {
 }
 
 export interface IMessage {
-    id: number;
+    id: string;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt?: Date;
     user: string;
     message: string;
 }
@@ -6774,300 +5664,6 @@ export interface ICenturionParams {
     centurionName: string;
 }
 
-export class Audio implements IAudio {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    currentHandler?: string;
-    name!: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    /** Whether this audio object is currently playing anything */
-    playing?: boolean;
-
-    constructor(data?: IAudio) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.playing = false;
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.currentHandler = _data["currentHandler"];
-            this.name = _data["name"];
-            this.socketId = _data["socketId"];
-            this.playing = _data["playing"] !== undefined ? _data["playing"] : false;
-        }
-    }
-
-    static fromJS(data: any): Audio {
-        data = typeof data === 'object' ? data : {};
-        let result = new Audio();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["currentHandler"] = this.currentHandler;
-        data["name"] = this.name;
-        data["socketId"] = this.socketId;
-        data["playing"] = this.playing;
-        return data;
-    }
-}
-
-export interface IAudio {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    currentHandler?: string;
-    name: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-    /** Whether this audio object is currently playing anything */
-    playing?: boolean;
-}
-
-export class HandlerResponse_Audio_ implements IHandlerResponse_Audio_ {
-    entities!: Audio[];
-    id!: string;
-    name!: string;
-
-    constructor(data?: IHandlerResponse_Audio_) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.entities = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["entities"])) {
-                this.entities = [] as any;
-                for (let item of _data["entities"])
-                    this.entities!.push(Audio.fromJS(item));
-            }
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): HandlerResponse_Audio_ {
-        data = typeof data === 'object' ? data : {};
-        let result = new HandlerResponse_Audio_();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.entities)) {
-            data["entities"] = [];
-            for (let item of this.entities)
-                data["entities"].push(item.toJSON());
-        }
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IHandlerResponse_Audio_ {
-    entities: Audio[];
-    id: string;
-    name: string;
-}
-
-export class HandlerResponse_LightsGroup_ implements IHandlerResponse_LightsGroup_ {
-    entities!: LightsGroup[];
-    id!: string;
-    name!: string;
-
-    constructor(data?: IHandlerResponse_LightsGroup_) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.entities = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["entities"])) {
-                this.entities = [] as any;
-                for (let item of _data["entities"])
-                    this.entities!.push(LightsGroup.fromJS(item));
-            }
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): HandlerResponse_LightsGroup_ {
-        data = typeof data === 'object' ? data : {};
-        let result = new HandlerResponse_LightsGroup_();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.entities)) {
-            data["entities"] = [];
-            for (let item of this.entities)
-                data["entities"].push(item.toJSON());
-        }
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IHandlerResponse_LightsGroup_ {
-    entities: LightsGroup[];
-    id: string;
-    name: string;
-}
-
-export class Screen implements IScreen {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    currentHandler?: string;
-    name!: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-
-    constructor(data?: IScreen) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.currentHandler = _data["currentHandler"];
-            this.name = _data["name"];
-            this.socketId = _data["socketId"];
-        }
-    }
-
-    static fromJS(data: any): Screen {
-        data = typeof data === 'object' ? data : {};
-        let result = new Screen();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["currentHandler"] = this.currentHandler;
-        data["name"] = this.name;
-        data["socketId"] = this.socketId;
-        return data;
-    }
-}
-
-export interface IScreen {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    currentHandler?: string;
-    name: string;
-    /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
-}
-
-export class HandlerResponse_Screen_ implements IHandlerResponse_Screen_ {
-    entities!: Screen[];
-    id!: string;
-    name!: string;
-
-    constructor(data?: IHandlerResponse_Screen_) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-        if (!data) {
-            this.entities = [];
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["entities"])) {
-                this.entities = [] as any;
-                for (let item of _data["entities"])
-                    this.entities!.push(Screen.fromJS(item));
-            }
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): HandlerResponse_Screen_ {
-        data = typeof data === 'object' ? data : {};
-        let result = new HandlerResponse_Screen_();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.entities)) {
-            data["entities"] = [];
-            for (let item of this.entities)
-                data["entities"].push(item.toJSON());
-        }
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IHandlerResponse_Screen_ {
-    entities: Screen[];
-    id: string;
-    name: string;
-}
-
 export class AudioResponse implements IAudioResponse {
     id!: number;
     createdAt!: Date;
@@ -7116,39 +5712,58 @@ export interface IAudioResponse {
     name: string;
 }
 
-export class AudioCreateParams implements IAudioCreateParams {
+export class HandlerResponse_AudioResponse_ implements IHandlerResponse_AudioResponse_ {
+    entities!: AudioResponse[];
+    id!: string;
     name!: string;
 
-    constructor(data?: IAudioCreateParams) {
+    constructor(data?: IHandlerResponse_AudioResponse_) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.entities = [];
+        }
     }
 
     init(_data?: any) {
         if (_data) {
+            if (Array.isArray(_data["entities"])) {
+                this.entities = [] as any;
+                for (let item of _data["entities"])
+                    this.entities!.push(AudioResponse.fromJS(item));
+            }
+            this.id = _data["id"];
             this.name = _data["name"];
         }
     }
 
-    static fromJS(data: any): AudioCreateParams {
+    static fromJS(data: any): HandlerResponse_AudioResponse_ {
         data = typeof data === 'object' ? data : {};
-        let result = new AudioCreateParams();
+        let result = new HandlerResponse_AudioResponse_();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.entities)) {
+            data["entities"] = [];
+            for (let item of this.entities)
+                data["entities"].push(item.toJSON());
+        }
+        data["id"] = this.id;
         data["name"] = this.name;
         return data;
     }
 }
 
-export interface IAudioCreateParams {
+export interface IHandlerResponse_AudioResponse_ {
+    entities: AudioResponse[];
+    id: string;
     name: string;
 }
 
@@ -7200,99 +5815,22 @@ export interface ILightsControllerResponse {
     name: string;
 }
 
-export class LightsControllerCreateParams implements ILightsControllerCreateParams {
-    name!: string;
-
-    constructor(data?: ILightsControllerCreateParams) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): LightsControllerCreateParams {
-        data = typeof data === 'object' ? data : {};
-        let result = new LightsControllerCreateParams();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface ILightsControllerCreateParams {
-    name: string;
-}
-
-export class BaseLightsGroupResponse implements IBaseLightsGroupResponse {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-
-    constructor(data?: IBaseLightsGroupResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): BaseLightsGroupResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new BaseLightsGroupResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IBaseLightsGroupResponse {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-}
-
-export class LightsFixtureResponse implements ILightsFixtureResponse {
+export class ParResponse implements IParResponse {
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
     masterDimChannel!: number;
     strobeChannel!: number;
+    redChannel!: number;
+    blueChannel!: number;
+    greenChannel!: number;
+    coldWhiteChannel?: number | undefined;
+    warmWhiteChannel?: number | undefined;
+    amberChannel?: number | undefined;
+    uvChannel?: number | undefined;
 
-    constructor(data?: ILightsFixtureResponse) {
+    constructor(data?: IParResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -7309,12 +5847,19 @@ export class LightsFixtureResponse implements ILightsFixtureResponse {
             this.name = _data["name"];
             this.masterDimChannel = _data["masterDimChannel"];
             this.strobeChannel = _data["strobeChannel"];
+            this.redChannel = _data["redChannel"];
+            this.blueChannel = _data["blueChannel"];
+            this.greenChannel = _data["greenChannel"];
+            this.coldWhiteChannel = _data["coldWhiteChannel"];
+            this.warmWhiteChannel = _data["warmWhiteChannel"];
+            this.amberChannel = _data["amberChannel"];
+            this.uvChannel = _data["uvChannel"];
         }
     }
 
-    static fromJS(data: any): LightsFixtureResponse {
+    static fromJS(data: any): ParResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new LightsFixtureResponse();
+        let result = new ParResponse();
         result.init(data);
         return result;
     }
@@ -7327,58 +5872,6 @@ export class LightsFixtureResponse implements ILightsFixtureResponse {
         data["name"] = this.name;
         data["masterDimChannel"] = this.masterDimChannel;
         data["strobeChannel"] = this.strobeChannel;
-        return data;
-    }
-}
-
-export interface ILightsFixtureResponse {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-    masterDimChannel: number;
-    strobeChannel: number;
-}
-
-export class ColorResponse implements IColorResponse {
-    redChannel!: number;
-    blueChannel!: number;
-    greenChannel!: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-
-    constructor(data?: IColorResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.redChannel = _data["redChannel"];
-            this.blueChannel = _data["blueChannel"];
-            this.greenChannel = _data["greenChannel"];
-            this.coldWhiteChannel = _data["coldWhiteChannel"];
-            this.warmWhiteChannel = _data["warmWhiteChannel"];
-            this.amberChannel = _data["amberChannel"];
-            this.uvChannel = _data["uvChannel"];
-        }
-    }
-
-    static fromJS(data: any): ColorResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new ColorResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
         data["redChannel"] = this.redChannel;
         data["blueChannel"] = this.blueChannel;
         data["greenChannel"] = this.greenChannel;
@@ -7390,7 +5883,13 @@ export class ColorResponse implements IColorResponse {
     }
 }
 
-export interface IColorResponse {
+export interface IParResponse {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    name: string;
+    masterDimChannel: number;
+    strobeChannel: number;
     redChannel: number;
     blueChannel: number;
     greenChannel: number;
@@ -7400,7 +5899,7 @@ export interface IColorResponse {
     uvChannel?: number | undefined;
 }
 
-export class MovingHeadResponse implements IMovingHeadResponse {
+export class MovingHeadRgbResponse implements IMovingHeadRgbResponse {
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
@@ -7412,8 +5911,15 @@ export class MovingHeadResponse implements IMovingHeadResponse {
     tiltChannel!: number;
     fineTiltChannel?: number | undefined;
     movingSpeedChannel?: number | undefined;
+    redChannel!: number;
+    blueChannel!: number;
+    greenChannel!: number;
+    coldWhiteChannel?: number | undefined;
+    warmWhiteChannel?: number | undefined;
+    amberChannel?: number | undefined;
+    uvChannel?: number | undefined;
 
-    constructor(data?: IMovingHeadResponse) {
+    constructor(data?: IMovingHeadRgbResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -7435,12 +5941,19 @@ export class MovingHeadResponse implements IMovingHeadResponse {
             this.tiltChannel = _data["tiltChannel"];
             this.fineTiltChannel = _data["fineTiltChannel"];
             this.movingSpeedChannel = _data["movingSpeedChannel"];
+            this.redChannel = _data["redChannel"];
+            this.blueChannel = _data["blueChannel"];
+            this.greenChannel = _data["greenChannel"];
+            this.coldWhiteChannel = _data["coldWhiteChannel"];
+            this.warmWhiteChannel = _data["warmWhiteChannel"];
+            this.amberChannel = _data["amberChannel"];
+            this.uvChannel = _data["uvChannel"];
         }
     }
 
-    static fromJS(data: any): MovingHeadResponse {
+    static fromJS(data: any): MovingHeadRgbResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new MovingHeadResponse();
+        let result = new MovingHeadRgbResponse();
         result.init(data);
         return result;
     }
@@ -7458,11 +5971,18 @@ export class MovingHeadResponse implements IMovingHeadResponse {
         data["tiltChannel"] = this.tiltChannel;
         data["fineTiltChannel"] = this.fineTiltChannel;
         data["movingSpeedChannel"] = this.movingSpeedChannel;
+        data["redChannel"] = this.redChannel;
+        data["blueChannel"] = this.blueChannel;
+        data["greenChannel"] = this.greenChannel;
+        data["coldWhiteChannel"] = this.coldWhiteChannel;
+        data["warmWhiteChannel"] = this.warmWhiteChannel;
+        data["amberChannel"] = this.amberChannel;
+        data["uvChannel"] = this.uvChannel;
         return data;
     }
 }
 
-export interface IMovingHeadResponse {
+export interface IMovingHeadRgbResponse {
     id: number;
     createdAt: Date;
     updatedAt: Date;
@@ -7474,6 +5994,13 @@ export interface IMovingHeadResponse {
     tiltChannel: number;
     fineTiltChannel?: number | undefined;
     movingSpeedChannel?: number | undefined;
+    redChannel: number;
+    blueChannel: number;
+    greenChannel: number;
+    coldWhiteChannel?: number | undefined;
+    warmWhiteChannel?: number | undefined;
+    amberChannel?: number | undefined;
+    uvChannel?: number | undefined;
 }
 
 export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
@@ -7549,8 +6076,9 @@ export class LightsGroupResponse implements ILightsGroupResponse {
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
-    pars!: Pars[];
-    movingHeadRgbs!: MovingHeadRgbs[];
+    controller!: LightsControllerResponse;
+    pars!: ParResponse[];
+    movingHeadRgbs!: MovingHeadRgbResponse[];
     movingHeadWheels!: MovingHeadWheelResponse[];
 
     constructor(data?: ILightsGroupResponse) {
@@ -7561,6 +6089,7 @@ export class LightsGroupResponse implements ILightsGroupResponse {
             }
         }
         if (!data) {
+            this.controller = new LightsControllerResponse();
             this.pars = [];
             this.movingHeadRgbs = [];
             this.movingHeadWheels = [];
@@ -7573,15 +6102,16 @@ export class LightsGroupResponse implements ILightsGroupResponse {
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
+            this.controller = _data["controller"] ? LightsControllerResponse.fromJS(_data["controller"]) : new LightsControllerResponse();
             if (Array.isArray(_data["pars"])) {
                 this.pars = [] as any;
                 for (let item of _data["pars"])
-                    this.pars!.push(item);
+                    this.pars!.push(ParResponse.fromJS(item));
             }
             if (Array.isArray(_data["movingHeadRgbs"])) {
                 this.movingHeadRgbs = [] as any;
                 for (let item of _data["movingHeadRgbs"])
-                    this.movingHeadRgbs!.push(item);
+                    this.movingHeadRgbs!.push(MovingHeadRgbResponse.fromJS(item));
             }
             if (Array.isArray(_data["movingHeadWheels"])) {
                 this.movingHeadWheels = [] as any;
@@ -7604,15 +6134,16 @@ export class LightsGroupResponse implements ILightsGroupResponse {
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
+        data["controller"] = this.controller ? this.controller.toJSON() : <any>undefined;
         if (Array.isArray(this.pars)) {
             data["pars"] = [];
             for (let item of this.pars)
-                data["pars"].push(item);
+                data["pars"].push(item.toJSON());
         }
         if (Array.isArray(this.movingHeadRgbs)) {
             data["movingHeadRgbs"] = [];
             for (let item of this.movingHeadRgbs)
-                data["movingHeadRgbs"].push(item);
+                data["movingHeadRgbs"].push(item.toJSON());
         }
         if (Array.isArray(this.movingHeadWheels)) {
             data["movingHeadWheels"] = [];
@@ -7628,9 +6159,240 @@ export interface ILightsGroupResponse {
     createdAt: Date;
     updatedAt: Date;
     name: string;
-    pars: Pars[];
-    movingHeadRgbs: MovingHeadRgbs[];
+    controller: LightsControllerResponse;
+    pars: ParResponse[];
+    movingHeadRgbs: MovingHeadRgbResponse[];
     movingHeadWheels: MovingHeadWheelResponse[];
+}
+
+export class HandlerResponse_LightsGroupResponse_ implements IHandlerResponse_LightsGroupResponse_ {
+    entities!: LightsGroupResponse[];
+    id!: string;
+    name!: string;
+
+    constructor(data?: IHandlerResponse_LightsGroupResponse_) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.entities = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["entities"])) {
+                this.entities = [] as any;
+                for (let item of _data["entities"])
+                    this.entities!.push(LightsGroupResponse.fromJS(item));
+            }
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): HandlerResponse_LightsGroupResponse_ {
+        data = typeof data === 'object' ? data : {};
+        let result = new HandlerResponse_LightsGroupResponse_();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.entities)) {
+            data["entities"] = [];
+            for (let item of this.entities)
+                data["entities"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IHandlerResponse_LightsGroupResponse_ {
+    entities: LightsGroupResponse[];
+    id: string;
+    name: string;
+}
+
+export class ScreenResponse implements IScreenResponse {
+    id!: number;
+    createdAt!: Date;
+    updatedAt!: Date;
+    name!: string;
+
+    constructor(data?: IScreenResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): ScreenResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScreenResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IScreenResponse {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    name: string;
+}
+
+export class HandlerResponse_ScreenResponse_ implements IHandlerResponse_ScreenResponse_ {
+    entities!: ScreenResponse[];
+    id!: string;
+    name!: string;
+
+    constructor(data?: IHandlerResponse_ScreenResponse_) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.entities = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["entities"])) {
+                this.entities = [] as any;
+                for (let item of _data["entities"])
+                    this.entities!.push(ScreenResponse.fromJS(item));
+            }
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): HandlerResponse_ScreenResponse_ {
+        data = typeof data === 'object' ? data : {};
+        let result = new HandlerResponse_ScreenResponse_();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.entities)) {
+            data["entities"] = [];
+            for (let item of this.entities)
+                data["entities"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IHandlerResponse_ScreenResponse_ {
+    entities: ScreenResponse[];
+    id: string;
+    name: string;
+}
+
+export class AudioCreateParams implements IAudioCreateParams {
+    name!: string;
+
+    constructor(data?: IAudioCreateParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): AudioCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new AudioCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface IAudioCreateParams {
+    name: string;
+}
+
+export class LightsControllerCreateParams implements ILightsControllerCreateParams {
+    name!: string;
+
+    constructor(data?: ILightsControllerCreateParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): LightsControllerCreateParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new LightsControllerCreateParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ILightsControllerCreateParams {
+    name: string;
 }
 
 export class LightsInGroup implements ILightsInGroup {
@@ -8090,6 +6852,17 @@ export interface IRgbColorDefinition {
     [key: string]: any;
 }
 
+export enum WheelColor {
+    White = "white",
+    Red = "red",
+    Green = "green",
+    Blue = "blue",
+    Yellow = "yellow",
+    Lightblue = "lightblue",
+    Orange = "orange",
+    Rosered = "rosered",
+}
+
 export class RgbColorSpecification implements IRgbColorSpecification {
     hex!: string;
     complementary!: RgbColor[];
@@ -8250,54 +7023,6 @@ export class GroupFixtureOverrideParams implements IGroupFixtureOverrideParams {
 
 export interface IGroupFixtureOverrideParams {
     dmxValues: (number | undefined)[];
-}
-
-export class ScreenResponse implements IScreenResponse {
-    id!: number;
-    createdAt!: Date;
-    updatedAt!: Date;
-    name!: string;
-
-    constructor(data?: IScreenResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): ScreenResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new ScreenResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IScreenResponse {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
 }
 
 export class ScreenCreateParams implements IScreenCreateParams {
@@ -9036,75 +7761,6 @@ export interface IMessages {
     [key: string]: any;
 }
 
-export class CurrentValues extends Colors implements ICurrentValues {
-    panChannel!: number;
-    finePanChannel?: number | undefined;
-    tiltChannel!: number;
-    fineTiltChannel?: number | undefined;
-    movingSpeedChannel?: number | undefined;
-    masterDimChannel!: number;
-    strobeChannel!: number;
-
-    [key: string]: any;
-
-    constructor(data?: ICurrentValues) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.panChannel = _data["panChannel"];
-            this.finePanChannel = _data["finePanChannel"];
-            this.tiltChannel = _data["tiltChannel"];
-            this.fineTiltChannel = _data["fineTiltChannel"];
-            this.movingSpeedChannel = _data["movingSpeedChannel"];
-            this.masterDimChannel = _data["masterDimChannel"];
-            this.strobeChannel = _data["strobeChannel"];
-        }
-    }
-
-    static fromJS(data: any): CurrentValues {
-        data = typeof data === 'object' ? data : {};
-        let result = new CurrentValues();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["panChannel"] = this.panChannel;
-        data["finePanChannel"] = this.finePanChannel;
-        data["tiltChannel"] = this.tiltChannel;
-        data["fineTiltChannel"] = this.fineTiltChannel;
-        data["movingSpeedChannel"] = this.movingSpeedChannel;
-        data["masterDimChannel"] = this.masterDimChannel;
-        data["strobeChannel"] = this.strobeChannel;
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface ICurrentValues extends IColors {
-    panChannel: number;
-    finePanChannel?: number | undefined;
-    tiltChannel: number;
-    fineTiltChannel?: number | undefined;
-    movingSpeedChannel?: number | undefined;
-    masterDimChannel: number;
-    strobeChannel: number;
-
-    [key: string]: any;
-}
-
 export enum BeatFadeOutCreateParamsType {
     BeatFadeOut = "BeatFadeOut",
 }
@@ -9189,144 +7845,6 @@ export class Anonymous8 implements IAnonymous8 {
 export interface IAnonymous8 {
     value?: any;
     message: string;
-
-    [key: string]: any;
-}
-
-export class Pars extends LightsFixtureResponse implements IPars {
-    redChannel!: number;
-    blueChannel!: number;
-    greenChannel!: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-
-    [key: string]: any;
-
-    constructor(data?: IPars) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.redChannel = _data["redChannel"];
-            this.blueChannel = _data["blueChannel"];
-            this.greenChannel = _data["greenChannel"];
-            this.coldWhiteChannel = _data["coldWhiteChannel"];
-            this.warmWhiteChannel = _data["warmWhiteChannel"];
-            this.amberChannel = _data["amberChannel"];
-            this.uvChannel = _data["uvChannel"];
-        }
-    }
-
-    static fromJS(data: any): Pars {
-        data = typeof data === 'object' ? data : {};
-        let result = new Pars();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["redChannel"] = this.redChannel;
-        data["blueChannel"] = this.blueChannel;
-        data["greenChannel"] = this.greenChannel;
-        data["coldWhiteChannel"] = this.coldWhiteChannel;
-        data["warmWhiteChannel"] = this.warmWhiteChannel;
-        data["amberChannel"] = this.amberChannel;
-        data["uvChannel"] = this.uvChannel;
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface IPars extends ILightsFixtureResponse {
-    redChannel: number;
-    blueChannel: number;
-    greenChannel: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-
-    [key: string]: any;
-}
-
-export class MovingHeadRgbs extends MovingHeadResponse implements IMovingHeadRgbs {
-    redChannel!: number;
-    blueChannel!: number;
-    greenChannel!: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
-
-    [key: string]: any;
-
-    constructor(data?: IMovingHeadRgbs) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.redChannel = _data["redChannel"];
-            this.blueChannel = _data["blueChannel"];
-            this.greenChannel = _data["greenChannel"];
-            this.coldWhiteChannel = _data["coldWhiteChannel"];
-            this.warmWhiteChannel = _data["warmWhiteChannel"];
-            this.amberChannel = _data["amberChannel"];
-            this.uvChannel = _data["uvChannel"];
-        }
-    }
-
-    static fromJS(data: any): MovingHeadRgbs {
-        data = typeof data === 'object' ? data : {};
-        let result = new MovingHeadRgbs();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["redChannel"] = this.redChannel;
-        data["blueChannel"] = this.blueChannel;
-        data["greenChannel"] = this.greenChannel;
-        data["coldWhiteChannel"] = this.coldWhiteChannel;
-        data["warmWhiteChannel"] = this.warmWhiteChannel;
-        data["amberChannel"] = this.amberChannel;
-        data["uvChannel"] = this.uvChannel;
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface IMovingHeadRgbs extends IMovingHeadResponse {
-    redChannel: number;
-    blueChannel: number;
-    greenChannel: number;
-    coldWhiteChannel?: number | undefined;
-    warmWhiteChannel?: number | undefined;
-    amberChannel?: number | undefined;
-    uvChannel?: number | undefined;
 
     [key: string]: any;
 }

@@ -1,6 +1,6 @@
 import type { LightsEffectsColorCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { Client, LightsEffectsMovementCreateParams, LightsGroup } from "@/api/Client";
+import { Client, LightsEffectsMovementCreateParams, LightsGroupResponse } from "@/api/Client";
 
 
 export interface PushedEffects {
@@ -34,7 +34,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         this.selectedLightsGroupIds.splice(index, 1);
       }
     },
-    selectAllLightsGroups(groups: LightsGroup[]) {
+    selectAllLightsGroups(groups: LightsGroupResponse[]) {
       this.selectedLightsGroupIds = groups.map((g) => g.id);
     },
     resetLightsGroupSelection() {

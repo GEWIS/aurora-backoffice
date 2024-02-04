@@ -1,8 +1,8 @@
 <script setup lang="ts">;
-import type { LightsGroup } from '@/api/Client';
+import type { LightsGroupResponse } from '@/api/Client';
 
 defineProps<{
-  lightsGroup: LightsGroup;
+  lightsGroup: LightsGroupResponse;
   disabled?: boolean;
   enabled?: boolean;
 }>();

@@ -187,7 +187,7 @@ onMounted(() => {
 const newMessage = () => {
   // TODO get actual user
   message.value = new Message({
-    id: -1,
+    id: '-1',
     user: 'currentUser',
     message: '',
     createdAt: new Date(),

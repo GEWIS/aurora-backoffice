@@ -1,19 +1,18 @@
 import { defineStore } from 'pinia';
 import {
-  Audio,
+  AudioResponse,
   Client,
-  HandlerResponse_Audio_,
-  HandlerResponse_LightsGroup_,
-  HandlerResponse_Screen_,
-  LightsGroup,
-  Screen
+  HandlerResponse_AudioResponse_,
+  HandlerResponse_LightsGroupResponse_,
+  HandlerResponse_ScreenResponse_,
+  LightsGroupResponse, ScreenResponse
 } from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
 
 interface HandlersStore {
-  audioHandlers: HandlerResponse_Audio_[];
-  lightsHandlers: HandlerResponse_LightsGroup_[];
-  screenHandlers: HandlerResponse_Screen_[];
+  audioHandlers: HandlerResponse_AudioResponse_[];
+  lightsHandlers: HandlerResponse_LightsGroupResponse_[];
+  screenHandlers: HandlerResponse_ScreenResponse_[];
 }
 
 export const useHandlersStore = defineStore('handlers', {
@@ -40,19 +39,19 @@ export const useHandlersStore = defineStore('handlers', {
         .then((handlers) => (this.screenHandlers = handlers))
         .catch(handleError);
     },
-    getRegisteredAudios(handlerName?: string): Audio[] {
+    getRegisteredAudios(handlerName?: string): AudioResponse[] {
       if (!handlerName) return this.audioHandlers.map((h) => h.entities).flat();
       const handler = this.audioHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
     },
-    getRegisteredLights(handlerName?: string): LightsGroup[] {
+    getRegisteredLights(handlerName?: string): LightsGroupResponse[] {
       if (!handlerName) return this.lightsHandlers.map((h) => h.entities).flat();
       const handler = this.lightsHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
     },
-    getRegisteredScreens(handlerName?: string): Screen[] {
+    getRegisteredScreens(handlerName?: string): ScreenResponse[] {
       if (!handlerName) return this.screenHandlers.map((h) => h.entities).flat();
       const handler = this.screenHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
