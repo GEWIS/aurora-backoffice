@@ -1,0 +1,32 @@
+<template>
+  <span class="font-bold">{{ subscriber.name }}</span>
+  <span v-if="!!subscriber.socketId" class="text-sm">Connected</span>
+  <span v-if="!subscriber.socketId" class="font-italic text-sm opacity-30">Disconnected</span>
+  <subscriber-handler-change-dropdown
+    :current-handler="currentHandler"
+    :possible-handlers="possibleHandlers"
+    :loading="loading"
+    @change="(newHandler: string | null) => $emit('change', newHandler)"
+  />
+</template>
+
+<script setup lang="ts">
+import { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api/Client';
+import SubscriberHandlerChangeDropdown from '@/components/home/SubscriberHandlerChangeDropdown.vue';
+import type { Handler } from '@/stores/handlers.store';
+
+defineProps<{
+  subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;
+  currentHandler: Handler | undefined;
+  possibleHandlers: Handler[];
+  loading?: boolean;
+}>();
+
+defineEmits<{
+  change: [handler: string | null],
+}>();
+</script>
+
+<style lang="scss">
+
+</style>

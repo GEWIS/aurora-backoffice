@@ -1266,7 +1266,7 @@ export class Client {
     /**
      * @return No content
      */
-    setAudioHandler(id: number, body: Body2): Promise<void> {
+    setAudioHandler(id: number, body: NewHandlerParams): Promise<void> {
         let url_ = this.baseUrl + "/handler/audio/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1350,7 +1350,7 @@ export class Client {
     /**
      * @return No content
      */
-    setLightsHandler(id: number, body: Body3): Promise<void> {
+    setLightsHandler(id: number, body: NewHandlerParams): Promise<void> {
         let url_ = this.baseUrl + "/handler/lights/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1434,7 +1434,7 @@ export class Client {
     /**
      * @return No content
      */
-    setScreenHandler(id: number, body: Body4): Promise<void> {
+    setScreenHandler(id: number, body: NewHandlerParams): Promise<void> {
         let url_ = this.baseUrl + "/handler/screen/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -5775,6 +5775,42 @@ export interface IHandlerResponse_AudioResponse_ {
     name: string;
 }
 
+export class NewHandlerParams implements INewHandlerParams {
+    name!: string;
+
+    constructor(data?: INewHandlerParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): NewHandlerParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewHandlerParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface INewHandlerParams {
+    name: string;
+}
+
 export class LightsControllerResponse implements ILightsControllerResponse {
     id!: number;
     createdAt!: Date;
@@ -7341,150 +7377,6 @@ export class Body implements IBody {
 
 export interface IBody {
     seconds: number;
-
-    [key: string]: any;
-}
-
-export class Body2 implements IBody2 {
-    name!: string;
-
-    [key: string]: any;
-
-    constructor(data?: IBody2) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): Body2 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body2();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IBody2 {
-    name: string;
-
-    [key: string]: any;
-}
-
-export class Body3 implements IBody3 {
-    name!: string;
-
-    [key: string]: any;
-
-    constructor(data?: IBody3) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): Body3 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body3();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IBody3 {
-    name: string;
-
-    [key: string]: any;
-}
-
-export class Body4 implements IBody4 {
-    name!: string;
-
-    [key: string]: any;
-
-    constructor(data?: IBody4) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): Body4 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body4();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["name"] = this.name;
-        return data;
-    }
-}
-
-export interface IBody4 {
-    name: string;
 
     [key: string]: any;
 }

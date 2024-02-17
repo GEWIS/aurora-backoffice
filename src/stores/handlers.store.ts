@@ -5,14 +5,19 @@ import {
   HandlerResponse_AudioResponse_,
   HandlerResponse_LightsGroupResponse_,
   HandlerResponse_ScreenResponse_,
-  LightsGroupResponse, ScreenResponse
+  LightsGroupResponse, NewHandlerParams, ScreenResponse
 } from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
+
+export type Handler = HandlerResponse_ScreenResponse_
+  | HandlerResponse_AudioResponse_
+  | HandlerResponse_LightsGroupResponse_;
 
 interface HandlersStore {
   audioHandlers: HandlerResponse_AudioResponse_[];
   lightsHandlers: HandlerResponse_LightsGroupResponse_[];
   screenHandlers: HandlerResponse_ScreenResponse_[];
+  loading: boolean;
 }
 
 export const useHandlersStore = defineStore('handlers', {
@@ -20,7 +25,8 @@ export const useHandlersStore = defineStore('handlers', {
     ({
       audioHandlers: [],
       lightsHandlers: [],
-      screenHandlers: []
+      screenHandlers: [],
+      loading: true,
     }) as HandlersStore,
   getters: {},
   actions: {
@@ -38,6 +44,52 @@ export const useHandlersStore = defineStore('handlers', {
         .getScreenHandlers()
         .then((handlers) => (this.screenHandlers = handlers))
         .catch(handleError);
+      this.loading = false;
+    },
+    async setAudioHandler(id: number, newHandler: string | null): Promise<void> {
+      try {
+        this.loading = true;
+
+        const client = new Client();
+        const params = new NewHandlerParams();
+        params.name = newHandler != null ? newHandler : '';
+        await client.setAudioHandler(id, params);
+
+        this.audioHandlers = await client.getAudioHandlers();
+      } catch (e: any) {
+        handleError(e);
+      }
+      this.loading = false;
+    },
+    async setLightsHandler(id: number, newHandler: string | null): Promise<void> {
+      try {
+        this.loading = true;
+
+        const client = new Client();
+        const params = new NewHandlerParams();
+        params.name = newHandler != null ? newHandler : '';
+        await client.setLightsHandler(id, params);
+
+        this.lightsHandlers = await client.getLightsHandlers();
+      } catch (e: any) {
+        handleError(e);
+      }
+      this.loading = false;
+    },
+    async setScreenHandler(id: number, newHandler: string | null): Promise<void> {
+      try {
+        this.loading = true;
+
+        const client = new Client();
+        const params = new NewHandlerParams();
+        params.name = newHandler != null ? newHandler : '';
+        await client.setScreenHandler(id, params);
+
+        this.screenHandlers = await client.getScreenHandlers();
+      } catch (e: any) {
+        handleError(e);
+      }
+      this.loading = false;
     },
     getRegisteredAudios(handlerName?: string): AudioResponse[] {
       if (!handlerName) return this.audioHandlers.map((h) => h.entities).flat();
