@@ -1,7 +1,7 @@
 <template>
   <span class="font-bold">{{ subscriber.name }}</span>
-  <span v-if="!!subscriber.socketId" class="text-sm">Connected</span>
-  <span v-if="!subscriber.socketId" class="font-italic text-sm opacity-30">Disconnected</span>
+  <span v-if="connected" class="text-sm">Connected</span>
+  <span v-if="!connected" class="font-italic text-sm opacity-30">Disconnected</span>
   <subscriber-handler-change-dropdown
     :current-handler="currentHandler"
     :possible-handlers="possibleHandlers"
@@ -14,8 +14,9 @@
 import { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api/Client';
 import SubscriberHandlerChangeDropdown from '@/components/home/SubscriberHandlerChangeDropdown.vue';
 import type { Handler } from '@/stores/handlers.store';
+import { computed, type ComputedRef } from 'vue';
 
-defineProps<{
+const props = defineProps<{
   subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;
   currentHandler: Handler | undefined;
   possibleHandlers: Handler[];
@@ -25,6 +26,13 @@ defineProps<{
 defineEmits<{
   change: [handler: string | null],
 }>();
+
+const connected: ComputedRef<boolean> = computed(
+  () => {
+    const socketIds = props.subscriber.socketIds as any | undefined;
+    console.log(socketIds);
+    return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+  });
 </script>
 
 <style lang="scss">

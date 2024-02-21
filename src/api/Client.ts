@@ -5664,14 +5664,78 @@ export interface ICenturionParams {
     centurionName: string;
 }
 
+/** Make all properties in T optional */
+export class String__ implements IString__ {
+    _?: string;
+    _audio?: string;
+    _screen?: string;
+    _lights?: string;
+
+    [key: string]: any;
+
+    constructor(data?: IString__) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this._ = _data["/"];
+            this._audio = _data["/audio"];
+            this._screen = _data["/screen"];
+            this._lights = _data["/lights"];
+        }
+    }
+
+    static fromJS(data: any): String__ {
+        data = typeof data === 'object' ? data : {};
+        let result = new String__();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["/"] = this._;
+        data["/audio"] = this._audio;
+        data["/screen"] = this._screen;
+        data["/lights"] = this._lights;
+        return data;
+    }
+}
+
+/** Make all properties in T optional */
+export interface IString__ {
+    _?: string;
+    _audio?: string;
+    _screen?: string;
+    _lights?: string;
+
+    [key: string]: any;
+}
+
 export class AudioResponse implements IAudioResponse {
     id!: number;
     createdAt!: Date;
     updatedAt!: Date;
     name!: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 
     constructor(data?: IAudioResponse) {
         if (data) {
@@ -5688,7 +5752,7 @@ Required to send events specifically and only to this entity */
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
-            this.socketId = _data["socketId"];
+            this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
 
@@ -5705,7 +5769,7 @@ Required to send events specifically and only to this entity */
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
-        data["socketId"] = this.socketId;
+        data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -5716,8 +5780,10 @@ export interface IAudioResponse {
     updatedAt: Date;
     name: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 }
 
 export class HandlerResponse_AudioResponse_ implements IHandlerResponse_AudioResponse_ {
@@ -5817,8 +5883,10 @@ export class LightsControllerResponse implements ILightsControllerResponse {
     updatedAt!: Date;
     name!: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 
     constructor(data?: ILightsControllerResponse) {
         if (data) {
@@ -5835,7 +5903,7 @@ Required to send events specifically and only to this entity */
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
-            this.socketId = _data["socketId"];
+            this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
 
@@ -5852,7 +5920,7 @@ Required to send events specifically and only to this entity */
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
-        data["socketId"] = this.socketId;
+        data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -5863,8 +5931,10 @@ export interface ILightsControllerResponse {
     updatedAt: Date;
     name: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 }
 
 export class ParResponse implements IParResponse {
@@ -6278,8 +6348,10 @@ export class ScreenResponse implements IScreenResponse {
     updatedAt!: Date;
     name!: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 
     constructor(data?: IScreenResponse) {
         if (data) {
@@ -6296,7 +6368,7 @@ Required to send events specifically and only to this entity */
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
             this.name = _data["name"];
-            this.socketId = _data["socketId"];
+            this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
 
@@ -6313,7 +6385,7 @@ Required to send events specifically and only to this entity */
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
         data["name"] = this.name;
-        data["socketId"] = this.socketId;
+        data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -6324,8 +6396,10 @@ export interface IScreenResponse {
     updatedAt: Date;
     name: string;
     /** ID of the socket connection if present.
-Required to send events specifically and only to this entity */
-    socketId?: string;
+Required to send events specifically and only to this entity.
+Mapping from namespace to ID, as a websocket has a different ID
+for each namespace its in. */
+    socketIds?: String__;
 }
 
 export class HandlerResponse_ScreenResponse_ implements IHandlerResponse_ScreenResponse_ {
