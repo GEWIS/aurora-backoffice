@@ -1150,6 +1150,50 @@ export class Client {
         return Promise.resolve<Anonymous6>(null as any);
     }
 
+    /**
+     * @return Ok
+     */
+    getCenturionTapes(): Promise<MixTapeResponse[]> {
+        let url_ = this.baseUrl + "/modes/centurion/tapes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetCenturionTapes(_response);
+        });
+    }
+
+    protected processGetCenturionTapes(response: Response): Promise<MixTapeResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MixTapeResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<MixTapeResponse[]>(null as any);
+    }
+
     enableCenturion(body: CenturionParams): Promise<string> {
         let url_ = this.baseUrl + "/modes/centurion";
         url_ = url_.replace(/[?&]$/, "");
@@ -3075,6 +3119,43 @@ export class Client {
             });
         }
         return Promise.resolve<UserProfile>(null as any);
+    }
+
+    /**
+     * @return Ok
+     */
+    getSpotifyCurrentlyPlaying(): Promise<TrackChangeEvent> {
+        let url_ = this.baseUrl + "/spotify/currently-playing";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetSpotifyCurrentlyPlaying(_response);
+        });
+    }
+
+    protected processGetSpotifyCurrentlyPlaying(response: Response): Promise<TrackChangeEvent> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TrackChangeEvent.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<TrackChangeEvent>(null as any);
     }
 
     /**
@@ -5587,6 +5668,119 @@ export interface ISkipCenturionRequest {
     seconds: number;
 }
 
+export class SongData implements ISongData {
+    title!: string;
+    artist!: string;
+
+    [key: string]: any;
+
+    constructor(data?: ISongData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.title = _data["title"];
+            this.artist = _data["artist"];
+        }
+    }
+
+    static fromJS(data: any): SongData {
+        data = typeof data === 'object' ? data : {};
+        let result = new SongData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["title"] = this.title;
+        data["artist"] = this.artist;
+        return data;
+    }
+}
+
+export interface ISongData {
+    title: string;
+    artist: string;
+
+    [key: string]: any;
+}
+
+export class MixTapeResponse implements IMixTapeResponse {
+    name!: string;
+    coverUrl!: string;
+    songs!: SongData[];
+    /** Seconds till the last horn */
+    duration!: number;
+
+    constructor(data?: IMixTapeResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.songs = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.coverUrl = _data["coverUrl"];
+            if (Array.isArray(_data["songs"])) {
+                this.songs = [] as any;
+                for (let item of _data["songs"])
+                    this.songs!.push(SongData.fromJS(item));
+            }
+            this.duration = _data["duration"];
+        }
+    }
+
+    static fromJS(data: any): MixTapeResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new MixTapeResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["coverUrl"] = this.coverUrl;
+        if (Array.isArray(this.songs)) {
+            data["songs"] = [];
+            for (let item of this.songs)
+                data["songs"].push(item.toJSON());
+        }
+        data["duration"] = this.duration;
+        return data;
+    }
+}
+
+export interface IMixTapeResponse {
+    name: string;
+    coverUrl: string;
+    songs: SongData[];
+    /** Seconds till the last horn */
+    duration: number;
+}
+
 export class CenturionParams implements ICenturionParams {
     lightsGroupIds!: number[];
     screenIds!: number[];
@@ -5728,14 +5922,14 @@ export interface IString__ {
 
 export class AudioResponse implements IAudioResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 
     constructor(data?: IAudioResponse) {
         if (data) {
@@ -5749,9 +5943,9 @@ for each namespace its in. */
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
@@ -5766,9 +5960,9 @@ for each namespace its in. */
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
@@ -5776,14 +5970,14 @@ for each namespace its in. */
 
 export interface IAudioResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 }
 
 export class HandlerResponse_AudioResponse_ implements IHandlerResponse_AudioResponse_ {
@@ -5879,14 +6073,14 @@ export interface INewHandlerParams {
 
 export class LightsControllerResponse implements ILightsControllerResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 
     constructor(data?: ILightsControllerResponse) {
         if (data) {
@@ -5900,9 +6094,9 @@ for each namespace its in. */
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
@@ -5917,9 +6111,9 @@ for each namespace its in. */
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
@@ -5927,21 +6121,21 @@ for each namespace its in. */
 
 export interface ILightsControllerResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 }
 
 export class ParResponse implements IParResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     masterDimChannel!: number;
     strobeChannel!: number;
     redChannel!: number;
@@ -5964,9 +6158,9 @@ export class ParResponse implements IParResponse {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.masterDimChannel = _data["masterDimChannel"];
             this.strobeChannel = _data["strobeChannel"];
             this.redChannel = _data["redChannel"];
@@ -5989,9 +6183,9 @@ export class ParResponse implements IParResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["masterDimChannel"] = this.masterDimChannel;
         data["strobeChannel"] = this.strobeChannel;
         data["redChannel"] = this.redChannel;
@@ -6007,9 +6201,9 @@ export class ParResponse implements IParResponse {
 
 export interface IParResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     masterDimChannel: number;
     strobeChannel: number;
     redChannel: number;
@@ -6023,9 +6217,9 @@ export interface IParResponse {
 
 export class MovingHeadRgbResponse implements IMovingHeadRgbResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     masterDimChannel!: number;
     strobeChannel!: number;
     panChannel!: number;
@@ -6053,9 +6247,9 @@ export class MovingHeadRgbResponse implements IMovingHeadRgbResponse {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.masterDimChannel = _data["masterDimChannel"];
             this.strobeChannel = _data["strobeChannel"];
             this.panChannel = _data["panChannel"];
@@ -6083,9 +6277,9 @@ export class MovingHeadRgbResponse implements IMovingHeadRgbResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["masterDimChannel"] = this.masterDimChannel;
         data["strobeChannel"] = this.strobeChannel;
         data["panChannel"] = this.panChannel;
@@ -6106,9 +6300,9 @@ export class MovingHeadRgbResponse implements IMovingHeadRgbResponse {
 
 export interface IMovingHeadRgbResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     masterDimChannel: number;
     strobeChannel: number;
     panChannel: number;
@@ -6127,9 +6321,9 @@ export interface IMovingHeadRgbResponse {
 
 export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     masterDimChannel!: number;
     strobeChannel!: number;
     colorWheelChannel!: number;
@@ -6148,9 +6342,9 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.masterDimChannel = _data["masterDimChannel"];
             this.strobeChannel = _data["strobeChannel"];
             this.colorWheelChannel = _data["colorWheelChannel"];
@@ -6169,9 +6363,9 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["masterDimChannel"] = this.masterDimChannel;
         data["strobeChannel"] = this.strobeChannel;
         data["colorWheelChannel"] = this.colorWheelChannel;
@@ -6183,9 +6377,9 @@ export class MovingHeadWheelResponse implements IMovingHeadWheelResponse {
 
 export interface IMovingHeadWheelResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     masterDimChannel: number;
     strobeChannel: number;
     colorWheelChannel: number;
@@ -6195,9 +6389,9 @@ export interface IMovingHeadWheelResponse {
 
 export class LightsGroupResponse implements ILightsGroupResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     controller!: LightsControllerResponse;
     pars!: ParResponse[];
     movingHeadRgbs!: MovingHeadRgbResponse[];
@@ -6221,9 +6415,9 @@ export class LightsGroupResponse implements ILightsGroupResponse {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.controller = _data["controller"] ? LightsControllerResponse.fromJS(_data["controller"]) : new LightsControllerResponse();
             if (Array.isArray(_data["pars"])) {
                 this.pars = [] as any;
@@ -6253,9 +6447,9 @@ export class LightsGroupResponse implements ILightsGroupResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["controller"] = this.controller ? this.controller.toJSON() : <any>undefined;
         if (Array.isArray(this.pars)) {
             data["pars"] = [];
@@ -6278,9 +6472,9 @@ export class LightsGroupResponse implements ILightsGroupResponse {
 
 export interface ILightsGroupResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     controller: LightsControllerResponse;
     pars: ParResponse[];
     movingHeadRgbs: MovingHeadRgbResponse[];
@@ -6344,14 +6538,14 @@ export interface IHandlerResponse_LightsGroupResponse_ {
 
 export class ScreenResponse implements IScreenResponse {
     id!: number;
+    name!: string;
     createdAt!: Date;
     updatedAt!: Date;
-    name!: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 
     constructor(data?: IScreenResponse) {
         if (data) {
@@ -6365,9 +6559,9 @@ for each namespace its in. */
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.name = _data["name"];
             this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.name = _data["name"];
             this.socketIds = _data["socketIds"] ? String__.fromJS(_data["socketIds"]) : <any>undefined;
         }
     }
@@ -6382,9 +6576,9 @@ for each namespace its in. */
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["name"] = this.name;
         data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["name"] = this.name;
         data["socketIds"] = this.socketIds ? this.socketIds.toJSON() : <any>undefined;
         return data;
     }
@@ -6392,14 +6586,14 @@ for each namespace its in. */
 
 export interface IScreenResponse {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
-    name: string;
     /** ID of the socket connection if present.
 Required to send events specifically and only to this entity.
 Mapping from namespace to ID, as a websocket has a different ID
 for each namespace its in. */
-    socketIds?: String__;
+    socketIds?: String__ | undefined;
 }
 
 export class HandlerResponse_ScreenResponse_ implements IHandlerResponse_ScreenResponse_ {
@@ -7325,6 +7519,69 @@ export interface ISpotifyUserResponse {
     name: string;
     spotifyId: string;
     active: boolean;
+}
+
+export class TrackChangeEvent implements ITrackChangeEvent {
+    title!: string;
+    artists!: string[];
+    startTime!: Date;
+    cover?: string;
+    trackURI!: string;
+
+    constructor(data?: ITrackChangeEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.artists = [];
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            if (Array.isArray(_data["artists"])) {
+                this.artists = [] as any;
+                for (let item of _data["artists"])
+                    this.artists!.push(item);
+            }
+            this.startTime = _data["startTime"] ? new Date(_data["startTime"].toString()) : <any>undefined;
+            this.cover = _data["cover"];
+            this.trackURI = _data["trackURI"];
+        }
+    }
+
+    static fromJS(data: any): TrackChangeEvent {
+        data = typeof data === 'object' ? data : {};
+        let result = new TrackChangeEvent();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        if (Array.isArray(this.artists)) {
+            data["artists"] = [];
+            for (let item of this.artists)
+                data["artists"].push(item);
+        }
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["cover"] = this.cover;
+        data["trackURI"] = this.trackURI;
+        return data;
+    }
+}
+
+export interface ITrackChangeEvent {
+    title: string;
+    artists: string[];
+    startTime: Date;
+    cover?: string;
+    trackURI: string;
 }
 
 export class OIDCParameters implements IOIDCParameters {

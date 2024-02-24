@@ -3,7 +3,10 @@
     <template #icons>
       <slot name="topAction" />
     </template>
-    <slot />
+    <template v-if="$slots.header" #header>
+      <slot name="header"/>
+    </template>
+    <slot name="default" />
     <template v-if="action" #footer>
       <Button severity="secondary" id="bottom-left-button" @click="handleClick">{{
         action.toUpperCase()
@@ -14,6 +17,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { defineSlots } from 'vue';
 
 const props = defineProps({
   header: {
@@ -33,6 +37,12 @@ const props = defineProps({
     required: false
   }
 });
+
+defineSlots<{
+  topAction?: any,
+  header?: any,
+  default: any,
+}>();
 
 const router = useRouter();
 const handleClick = () => {

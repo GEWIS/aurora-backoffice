@@ -1,8 +1,13 @@
 <template>
   <div class="page-container">
     <div class="page-title">Hello, {{ authStore.name }}.</div>
-    <div class="content-wrapper flex justify-content-start gap-4">
-      <SubscribersOverview />
+    <div class="grid">
+      <div class="sm:col-12 md:col-6 lg:col-4">
+        <SubscribersOverview />
+      </div>
+      <div class="sm:col-12 md:col-6 lg:col-4">
+        <SpotifyCurrentlyPlaying />
+      </div>
     </div>
   </div>
 </template>
@@ -12,6 +17,7 @@ import SubscribersOverview from '@/components/home/SubscribersOverview.vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useAuthStore } from '@/stores/auth.store';
 import '@/styles/BasePage.scss';
+import SpotifyCurrentlyPlaying from '@/components/home/SpotifyCurrentlyPlaying.vue';
 
 const subscriberStore = useSubscriberStore();
 subscriberStore.init();
