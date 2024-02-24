@@ -1,5 +1,5 @@
 <template>
-  <CardComponent header="Currently Playing">
+  <Panel>
     <template #header>
       <div class="p-panel-title uppercase">
         <FontAwesomeIcon
@@ -27,7 +27,7 @@
         <span class="font-italic">Nothing playing on Spotify at the moment</span>
       </div>
     </template>
-  </CardComponent>
+  </Panel>
 </template>
 
 <script setup lang="ts">

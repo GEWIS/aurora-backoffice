@@ -19,9 +19,6 @@ import { useAuthStore } from '@/stores/auth.store';
 import '@/styles/BasePage.scss';
 import SpotifyCurrentlyPlaying from '@/components/home/SpotifyCurrentlyPlaying.vue';
 
-const subscriberStore = useSubscriberStore();
-subscriberStore.init();
-
 const authStore = useAuthStore();
 </script>
 

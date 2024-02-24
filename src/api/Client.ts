@@ -1001,6 +1001,128 @@ export class Client {
     }
 
     /**
+     * @return Ok
+     */
+    getCenturion(): Promise<CenturionResponse> {
+        let url_ = this.baseUrl + "/modes/centurion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetCenturion(_response);
+        });
+    }
+
+    protected processGetCenturion(response: Response): Promise<CenturionResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CenturionResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result404 = resultData404 !== undefined ? resultData404 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 411) {
+            return response.text().then((_responseText) => {
+            let result411: any = null;
+            let resultData411 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result411 = resultData411 !== undefined ? resultData411 : <any>null;
+    
+            return throwException("Centurion not enabled", status, _responseText, _headers, result411);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<CenturionResponse>(null as any);
+    }
+
+    enableCenturion(body: CenturionParams): Promise<string> {
+        let url_ = this.baseUrl + "/modes/centurion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processEnableCenturion(_response);
+        });
+    }
+
+    protected processEnableCenturion(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            let result204: any = null;
+            let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result204 = resultData204 !== undefined ? resultData204 : <any>null;
+    
+            return result204;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    disableCenturion(): Promise<void> {
+        let url_ = this.baseUrl + "/modes/centurion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDisableCenturion(_response);
+        });
+    }
+
+    protected processDisableCenturion(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
      * @return Start commands sent
      */
     startCenturion(): Promise<Anonymous4> {
@@ -1192,75 +1314,6 @@ export class Client {
             });
         }
         return Promise.resolve<MixTapeResponse[]>(null as any);
-    }
-
-    enableCenturion(body: CenturionParams): Promise<string> {
-        let url_ = this.baseUrl + "/modes/centurion";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processEnableCenturion(_response);
-        });
-    }
-
-    protected processEnableCenturion(response: Response): Promise<string> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 204) {
-            return response.text().then((_responseText) => {
-            let result204: any = null;
-            let resultData204 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result204 = resultData204 !== undefined ? resultData204 : <any>null;
-    
-            return result204;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<string>(null as any);
-    }
-
-    disableCenturion(): Promise<void> {
-        let url_ = this.baseUrl + "/modes/centurion";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "DELETE",
-            headers: {
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDisableCenturion(_response);
-        });
-    }
-
-    protected processDisableCenturion(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
     }
 
     /**
@@ -5632,6 +5685,42 @@ export interface IPartial_MessageParams_ {
     [key: string]: any;
 }
 
+export class CenturionResponse implements ICenturionResponse {
+    name!: string;
+
+    constructor(data?: ICenturionResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): CenturionResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new CenturionResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        return data;
+    }
+}
+
+export interface ICenturionResponse {
+    name: string;
+}
+
 export class SkipCenturionRequest implements ISkipCenturionRequest {
     seconds!: number;
 
@@ -5720,10 +5809,66 @@ export interface ISongData {
     [key: string]: any;
 }
 
+export class Horn implements IHorn {
+    data!: Data;
+    type!: HornType;
+
+    [key: string]: any;
+
+    constructor(data?: IHorn) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.data = new Data();
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.data = _data["data"] ? Data.fromJS(_data["data"]) : new Data();
+            this.type = _data["type"];
+        }
+    }
+
+    static fromJS(data: any): Horn {
+        data = typeof data === 'object' ? data : {};
+        let result = new Horn();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["data"] = this.data ? this.data.toJSON() : <any>undefined;
+        data["type"] = this.type;
+        return data;
+    }
+}
+
+export interface IHorn {
+    data: Data;
+    type: HornType;
+
+    [key: string]: any;
+}
+
 export class MixTapeResponse implements IMixTapeResponse {
     name!: string;
     coverUrl!: string;
     songs!: SongData[];
+    horns!: Horn[];
     /** Seconds till the last horn */
     duration!: number;
 
@@ -5736,6 +5881,7 @@ export class MixTapeResponse implements IMixTapeResponse {
         }
         if (!data) {
             this.songs = [];
+            this.horns = [];
         }
     }
 
@@ -5747,6 +5893,11 @@ export class MixTapeResponse implements IMixTapeResponse {
                 this.songs = [] as any;
                 for (let item of _data["songs"])
                     this.songs!.push(SongData.fromJS(item));
+            }
+            if (Array.isArray(_data["horns"])) {
+                this.horns = [] as any;
+                for (let item of _data["horns"])
+                    this.horns!.push(Horn.fromJS(item));
             }
             this.duration = _data["duration"];
         }
@@ -5768,6 +5919,11 @@ export class MixTapeResponse implements IMixTapeResponse {
             for (let item of this.songs)
                 data["songs"].push(item.toJSON());
         }
+        if (Array.isArray(this.horns)) {
+            data["horns"] = [];
+            for (let item of this.horns)
+                data["horns"].push(item.toJSON());
+        }
         data["duration"] = this.duration;
         return data;
     }
@@ -5777,6 +5933,7 @@ export interface IMixTapeResponse {
     name: string;
     coverUrl: string;
     songs: SongData[];
+    horns: Horn[];
     /** Seconds till the last horn */
     duration: number;
 }
@@ -8094,6 +8251,58 @@ export interface IAnonymous8 {
     message: string;
 
     [key: string]: any;
+}
+
+export class Data implements IData {
+    counter!: number;
+
+    [key: string]: any;
+
+    constructor(data?: IData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.counter = _data["counter"];
+        }
+    }
+
+    static fromJS(data: any): Data {
+        data = typeof data === 'object' ? data : {};
+        let result = new Data();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["counter"] = this.counter;
+        return data;
+    }
+}
+
+export interface IData {
+    counter: number;
+
+    [key: string]: any;
+}
+
+export enum HornType {
+    Horn = "horn",
 }
 
 export class ColorWheelChannelValues implements IColorWheelChannelValues {

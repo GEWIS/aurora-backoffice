@@ -8,6 +8,7 @@ import PageNotFoundView from '@/views/PageNotFoundView.vue';
 import { useAuthStore } from '@/stores/auth.store';
 import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsController from '@/views/Lights/EffectsController.vue';
+import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -65,6 +66,16 @@ const router = createRouter({
               name: 'infoscreenRoomresposibles'
             }
           ]
+        },
+        {
+          path: '/modes',
+          children: [
+            {
+              path: 'centurion',
+              component: CenturionModeView,
+              name: 'centurionMode'
+            }
+          ],
         },
         {
           path: '/lights',

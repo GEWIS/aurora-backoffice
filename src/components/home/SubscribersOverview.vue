@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CardComponent header="Current Subscribers">
+    <Panel header="Current Subscribers">
       <table>
         <tbody>
           <tr>
@@ -64,7 +64,7 @@
           </SubscriberItemComponent>
         </tbody>
       </table>
-    </CardComponent>
+    </Panel>
   </div>
 </template>
 

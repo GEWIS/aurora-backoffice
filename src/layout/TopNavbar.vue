@@ -49,6 +49,15 @@ const leftItems = ref([
     ]
   },
   {
+    label: 'Modes',
+    items: [
+      {
+        label: 'Centurion',
+        route: '/modes/centurion'
+      }
+    ]
+  },
+  {
     label: 'Lights',
     items: [
       {

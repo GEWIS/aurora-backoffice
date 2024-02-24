@@ -35,6 +35,7 @@ import ToastService from 'primevue/toastservice';
 import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
 import Menu from 'primevue/menu';
+import MultiSelect from 'primevue/multiselect';
 
 export const app = createApp(App);
 
@@ -66,5 +67,6 @@ app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
 app.component('Slider', Slider);
 app.component('Toast', Toast);
+app.component('MultiSelect', MultiSelect);
 
 app.mount('#app');

@@ -4,6 +4,7 @@ import { handleError } from '@/utils/errorHandler';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import { useSocketStore } from '@/stores/socket.store';
+import { useSubscriberStore } from '@/stores/subscriber.store';
 
 interface AuthStore {
   name: string | null;
@@ -47,9 +48,10 @@ export const useAuthStore = defineStore('auth', {
         })
         .catch(handleError);
 
+      await useSocketStore().connect();
       await useHandlersStore().init();
       await useColorStore().init();
-      await useSocketStore().connect();
+      await useSubscriberStore().init();
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;
