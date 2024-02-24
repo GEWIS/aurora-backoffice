@@ -30,18 +30,21 @@ import Card from 'primevue/card';
 import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
 import Menu from 'primevue/menu';
 import MultiSelect from 'primevue/multiselect';
 import Divider from 'primevue/divider';
 import Skeleton from 'primevue/skeleton';
+import ConfirmDialog from 'primevue/confirmdialog';
 
 export const app = createApp(App);
 
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+app.use(ConfirmationService);
 SetupInterceptors();
 
 app.use(createPinia());
@@ -70,5 +73,6 @@ app.component('Toast', Toast);
 app.component('MultiSelect', MultiSelect);
 app.component('Divider', Divider);
 app.component('Skeleton', Skeleton);
+app.component('ConfirmDialog', ConfirmDialog);
 
 app.mount('#app');

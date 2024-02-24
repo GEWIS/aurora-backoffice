@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faTrash } from '@fortawesome/free-solid-svg-icons';
 import type { MixTapeResponse } from '@/api/Client';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { ref } from 'vue';

@@ -1,13 +1,18 @@
 <template>
   <Panel header="Currently active tape">
-    <div v-if="store.loading || (!!store.currentTape && !!currentTape)" class="flex flex-column gap-3">
-      <CenturionTapeOperations :tape="currentTape" />
-      <Divider />
-      <CenturionTapeTimeline :tape="currentTape" />
-    </div>
-    <div v-else>
-      <span class="font-italic">Centurion is currently not active.</span>
-    </div>
+    <template #default>
+      <div v-if="store.loading || (!!store.currentTape && !!currentTape)" class="flex flex-column gap-3">
+        <CenturionTapeOperations :tape="currentTape" />
+        <Divider />
+        <CenturionTapeTimeline :tape="currentTape" />
+      </div>
+      <div v-else>
+        <span class="font-italic">Centurion is currently not active.</span>
+      </div>
+    </template>
+    <template #icons>
+      <CenturionQuitButton />
+    </template>
   </Panel>
 </template>
 
@@ -17,6 +22,9 @@ import CenturionTapeTimeline from '@/components/modes/centurion/CenturionTapeTim
 import CenturionTapeOperations from '@/components/modes/centurion/CenturionTapeOperations.vue';
 import { computed, type ComputedRef } from 'vue';
 import { MixTapeResponse } from '@/api/Client';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import CenturionQuitButton from '@/components/modes/centurion/CenturionQuitButton.vue';
 
 const store = useCenturionStore();
 
