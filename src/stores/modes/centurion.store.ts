@@ -20,19 +20,22 @@ export const useCenturionStore = defineStore('centurion', {
   actions: {
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
-      this.currentTape = await new Client().getCenturion()
+      await new Client().getCenturion()
+        .then((tape) => this.currentTape = tape)
         .catch((e: ApiException | string) => {
-          if (e.status === 404 || e === "Centurion not enabled") {
+          if ((typeof e !== 'string' && e.status === 404) || e === "Centurion not enabled") {
             this.currentTape = null;
           } else {
-            handleError(e);
+            handleError(e as ApiException);
           }
         });
       if (handleLoading) this.loading = false;
     },
     async init() {
       const client = new Client();
-      this.tapes = await client.getCenturionTapes().catch(handleError);
+      await client.getCenturionTapes()
+        .then((t) => this.tapes = t)
+        .catch(handleError);
       await this.getCurrentCenturion(false);
       this.loading = false;
 
@@ -43,13 +46,18 @@ export const useCenturionStore = defineStore('centurion', {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener('mode_centurion_update', this.getCurrentCenturion.bind(this));
     },
-    async initializeCenturion(tapeName: string) {
+    async initializeCenturion(tapeName: string, audioIds: number[], screenIds: number[], lightsGroupIds: number[]) {
       this.loading = true;
+
       const body = new CenturionParams();
       body.centurionName = tapeName;
+      body.audioIds = audioIds;
+      body.screenIds = screenIds;
+      body.lightsGroupIds = lightsGroupIds;
+
       const client = new Client();
       await client.enableCenturion(body).catch(handleError);
-      this.currentTape = await client.getCenturion().catch(handleError);
+      await this.getCurrentCenturion(false);
       this.loading = false;
     },
     async quitCenturion() {

@@ -5757,6 +5757,101 @@ export interface ISkipCenturionRequest {
     seconds: number;
 }
 
+export class HornData implements IHornData {
+    counter!: number;
+
+    [key: string]: any;
+
+    constructor(data?: IHornData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.counter = _data["counter"];
+        }
+    }
+
+    static fromJS(data: any): HornData {
+        data = typeof data === 'object' ? data : {};
+        let result = new HornData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["counter"] = this.counter;
+        return data;
+    }
+}
+
+export interface IHornData {
+    counter: number;
+
+    [key: string]: any;
+}
+
+export class HornEvent implements IHornEvent {
+    type!: HornEventType;
+    timestamp!: number;
+    data!: HornData;
+
+    constructor(data?: IHornEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.data = new HornData();
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.type = _data["type"];
+            this.timestamp = _data["timestamp"];
+            this.data = _data["data"] ? HornData.fromJS(_data["data"]) : new HornData();
+        }
+    }
+
+    static fromJS(data: any): HornEvent {
+        data = typeof data === 'object' ? data : {};
+        let result = new HornEvent();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["type"] = this.type;
+        data["timestamp"] = this.timestamp;
+        data["data"] = this.data ? this.data.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IHornEvent {
+    type: HornEventType;
+    timestamp: number;
+    data: HornData;
+}
+
 export class SongData implements ISongData {
     title!: string;
     artist!: string;
@@ -5809,66 +5904,56 @@ export interface ISongData {
     [key: string]: any;
 }
 
-export class Horn implements IHorn {
+export class SongEvent implements ISongEvent {
+    type!: SongEventType;
+    timestamp!: number;
     data!: Data;
-    type!: HornType;
 
-    [key: string]: any;
-
-    constructor(data?: IHorn) {
+    constructor(data?: ISongEvent) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
         }
-        if (!data) {
-            this.data = new Data();
-        }
     }
 
     init(_data?: any) {
         if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.data = _data["data"] ? Data.fromJS(_data["data"]) : new Data();
             this.type = _data["type"];
+            this.timestamp = _data["timestamp"];
+            this.data = _data["data"];
         }
     }
 
-    static fromJS(data: any): Horn {
+    static fromJS(data: any): SongEvent {
         data = typeof data === 'object' ? data : {};
-        let result = new Horn();
+        let result = new SongEvent();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["data"] = this.data ? this.data.toJSON() : <any>undefined;
         data["type"] = this.type;
+        data["timestamp"] = this.timestamp;
+        data["data"] = this.data;
         return data;
     }
 }
 
-export interface IHorn {
+export interface ISongEvent {
+    type: SongEventType;
+    timestamp: number;
     data: Data;
-    type: HornType;
-
-    [key: string]: any;
 }
 
 export class MixTapeResponse implements IMixTapeResponse {
     name!: string;
     coverUrl!: string;
-    songs!: SongData[];
-    horns!: Horn[];
+    events!: Events[];
+    /** Amount of horns */
+    horns!: number;
     /** Seconds till the last horn */
     duration!: number;
 
@@ -5880,8 +5965,7 @@ export class MixTapeResponse implements IMixTapeResponse {
             }
         }
         if (!data) {
-            this.songs = [];
-            this.horns = [];
+            this.events = [];
         }
     }
 
@@ -5889,16 +5973,12 @@ export class MixTapeResponse implements IMixTapeResponse {
         if (_data) {
             this.name = _data["name"];
             this.coverUrl = _data["coverUrl"];
-            if (Array.isArray(_data["songs"])) {
-                this.songs = [] as any;
-                for (let item of _data["songs"])
-                    this.songs!.push(SongData.fromJS(item));
+            if (Array.isArray(_data["events"])) {
+                this.events = [] as any;
+                for (let item of _data["events"])
+                    this.events!.push(item);
             }
-            if (Array.isArray(_data["horns"])) {
-                this.horns = [] as any;
-                for (let item of _data["horns"])
-                    this.horns!.push(Horn.fromJS(item));
-            }
+            this.horns = _data["horns"];
             this.duration = _data["duration"];
         }
     }
@@ -5914,16 +5994,12 @@ export class MixTapeResponse implements IMixTapeResponse {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["coverUrl"] = this.coverUrl;
-        if (Array.isArray(this.songs)) {
-            data["songs"] = [];
-            for (let item of this.songs)
-                data["songs"].push(item.toJSON());
+        if (Array.isArray(this.events)) {
+            data["events"] = [];
+            for (let item of this.events)
+                data["events"].push(item);
         }
-        if (Array.isArray(this.horns)) {
-            data["horns"] = [];
-            for (let item of this.horns)
-                data["horns"].push(item.toJSON());
-        }
+        data["horns"] = this.horns;
         data["duration"] = this.duration;
         return data;
     }
@@ -5932,8 +6008,9 @@ export class MixTapeResponse implements IMixTapeResponse {
 export interface IMixTapeResponse {
     name: string;
     coverUrl: string;
-    songs: SongData[];
-    horns: Horn[];
+    events: Events[];
+    /** Amount of horns */
+    horns: number;
     /** Seconds till the last horn */
     duration: number;
 }
@@ -8253,8 +8330,15 @@ export interface IAnonymous8 {
     [key: string]: any;
 }
 
+export enum HornEventType {
+    Horn = "horn",
+}
+
+export enum SongEventType {
+    Song = "song",
+}
+
 export class Data implements IData {
-    counter!: number;
 
     [key: string]: any;
 
@@ -8273,7 +8357,6 @@ export class Data implements IData {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
-            this.counter = _data["counter"];
         }
     }
 
@@ -8290,19 +8373,57 @@ export class Data implements IData {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
-        data["counter"] = this.counter;
         return data;
     }
 }
 
 export interface IData {
-    counter: number;
 
     [key: string]: any;
 }
 
-export enum HornType {
-    Horn = "horn",
+export class Events implements IEvents {
+
+    [key: string]: any;
+
+    constructor(data?: IEvents) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+        }
+    }
+
+    static fromJS(data: any): Events {
+        data = typeof data === 'object' ? data : {};
+        let result = new Events();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        return data;
+    }
+}
+
+export interface IEvents {
+
+    [key: string]: any;
 }
 
 export class ColorWheelChannelValues implements IColorWheelChannelValues {

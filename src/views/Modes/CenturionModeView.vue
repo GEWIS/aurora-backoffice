@@ -2,8 +2,11 @@
   <div class="page-container">
     <div class="page-title">Centurion Mode</div>
     <div class="grid">
-      <div class="sm:col-12 md:col-6 lg:col-4">
+      <div class="sm:col-12 md:col-6 lg:col-5">
         <CenturionTapeSelect />
+      </div>
+      <div class="sm:col-12 md:col-6 lg:col-7">
+        <CenturionTapeActive />
       </div>
     </div>
   </div>
@@ -14,6 +17,7 @@
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { onUnmounted } from 'vue';
 import CenturionTapeSelect from '@/components/modes/centurion/CenturionTapeSelect.vue';
+import CenturionTapeActive from '@/components/modes/centurion/CenturionTapeActive.vue';
 
 const store = useCenturionStore();
 store.init();

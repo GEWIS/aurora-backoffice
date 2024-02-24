@@ -9,7 +9,7 @@
         </tr>
         <tr>
           <td>Nr of horns:</td>
-          <td>{{ $props.tape.horns.length }}</td>
+          <td>{{ $props.tape.horns }}</td>
         </tr>
         <tr>
           <td>Seconds per horn:</td>
@@ -29,7 +29,7 @@ const props = defineProps<{
   tape: MixTapeResponse,
 }>();
 
-const timePerHorn = computed(() => Math.round(props.tape.duration / props.tape.horns.length * 1000) / 1000);
+const timePerHorn = computed(() => Math.round(props.tape.duration / props.tape.horns * 1000) / 1000);
 </script>
 
 <style scoped lang="scss">

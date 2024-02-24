@@ -27,8 +27,6 @@ import { useAuthStore } from '@/stores/auth.store';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
 import Card from 'primevue/card';
-import { useHandlersStore } from '@/stores/handlers.store';
-import { useColorStore } from '@/stores/color.store';
 import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
@@ -36,6 +34,8 @@ import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
 import Menu from 'primevue/menu';
 import MultiSelect from 'primevue/multiselect';
+import Divider from 'primevue/divider';
+import Skeleton from 'primevue/skeleton';
 
 export const app = createApp(App);
 
@@ -68,5 +68,7 @@ app.component('Spinner', ProgressSpinner);
 app.component('Slider', Slider);
 app.component('Toast', Toast);
 app.component('MultiSelect', MultiSelect);
+app.component('Divider', Divider);
+app.component('Skeleton', Skeleton);
 
 app.mount('#app');

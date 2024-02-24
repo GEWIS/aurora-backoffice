@@ -48,11 +48,13 @@
 }
 
 .p-component-overlay-enter {
-  animation: p-component-overlay-enter-animation 150ms forwards;
+  animation-name: p-component-overlay-enter-animation;
+  animation-duration: 150ms;
 }
 
 .p-component-overlay-leave {
-  animation: p-component-overlay-leave-animation 150ms forwards;
+  animation-name: p-component-overlay-leave-animation;
+  animation-duration: 150ms;
 }
 
 .p-component-overlay {
@@ -61,13 +63,13 @@
       background-color: transparent;
     }
     to {
-      background-color: var(--maskbg);
+      background-color: rgba(0,0,0,0.4);
     }
   }
 
   @keyframes p-component-overlay-leave-animation {
     from {
-      background-color: var(--maskbg);
+      background-color: rgba(0,0,0,0.4);
     }
     to {
       background-color: transparent;

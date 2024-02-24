@@ -1,6 +1,6 @@
 <template>
   <Panel header="Tapes" action="Start">
-    <template #default>
+    <template v-if="!store.loading" #default>
       <div class="flex flex-column gap-4">
         <div>
           <Dropdown
@@ -35,9 +35,30 @@
         </div>
       </div>
     </template>
+    <template v-else #default>
+      <div class="flex flex-column gap-4">
+        <Skeleton class="w-full" />
+        <Skeleton class="w-full" />
+        <Skeleton class="w-full" />
+        <Skeleton class="w-full" />
+      </div>
+    </template>
     <template #footer>
       <div class="text-right">
-        <Button size="small">Initialize</Button>
+        <Button
+          size="small"
+          :disabled="!canOpenConfirmModal"
+          @click="confirmModalOpen = true"
+        >Initialize</Button>
+        <CenturionInitializeDialog
+          v-if="canOpenConfirmModal"
+          :visible="confirmModalOpen"
+          :selected-tape="selectedTape"
+          :selected-audios="selectedAudios"
+          :selected-light-groups="selectedLightGroups"
+          :selected-screens="selectedScreens"
+          @close="confirmModalOpen = false"
+        />
       </div>
     </template>
   </Panel>
@@ -48,6 +69,7 @@ import { useCenturionStore } from '@/stores/modes/centurion.store';
 import CenturionTapeDetails from '@/components/modes/centurion/CenturionTapeDetails.vue';
 import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 import { computed, ref } from 'vue';
+import CenturionInitializeDialog from '@/components/modes/centurion/CenturionInitializeDialog.vue';
 
 const store = useCenturionStore();
 
@@ -59,6 +81,11 @@ const selectedTape = computed(() => {
 const selectedAudios = ref<number[]>([]);
 const selectedScreens = ref<number[]>([]);
 const selectedLightGroups = ref<number[]>([]);
+
+const confirmModalOpen = ref<boolean>(false);
+const canOpenConfirmModal = computed(() => {
+  return selectedTapeName.value !== undefined && selectedAudios.value.length > 0;
+});
 
 </script>
 
