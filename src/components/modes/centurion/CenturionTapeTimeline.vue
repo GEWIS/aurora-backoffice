@@ -19,8 +19,8 @@
             </Button>
           </td>
           <td>
-            <CenturionTapeTimelineHorn v-if="event.type === 'horn'" :horn="event" />
-            <CenturionTapeTimelineSong v-if="event.type === 'song'" :song="event" />
+            <CenturionTapeTimelineHorn v-if="event.type === 'horn'" :horn="event as HornEvent" />
+            <CenturionTapeTimelineSong v-if="event.type === 'song'" :song="event as SongEvent" />
           </td>
         </tr>
       </tbody>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import type { MixTapeResponse } from '@/api/Client';
+import { HornEvent, type MixTapeResponse, SongEvent } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import CenturionTapeTimelineHorn from '@/components/modes/centurion/CenturionTapeTimelineHorn.vue';

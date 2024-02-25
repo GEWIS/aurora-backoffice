@@ -7,7 +7,7 @@
             :modelValue="selectedTapeName"
             optionLabel="name"
             optionValue="name"
-            :options="store.tapes"
+            :options="store.tapes != null ? store.tapes : undefined"
             class="text-overflow-ellipsis full-width"
             placeholder="Choose a tape..."
             @update:modelValue="(value: string) => {
@@ -51,7 +51,7 @@
           @click="confirmModalOpen = true"
         >Initialize</Button>
         <CenturionInitializeDialog
-          v-if="canOpenConfirmModal"
+          v-if="canOpenConfirmModal && selectedTape !== undefined"
           :visible="confirmModalOpen"
           :selected-tape="selectedTape"
           :selected-audios="selectedAudios"

@@ -366,109 +366,6 @@ export class Client {
     }
 
     /**
-     * @return No content
-     */
-    playAudio(): Promise<void> {
-        let url_ = this.baseUrl + "/audio/play";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "POST",
-            headers: {
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPlayAudio(_response);
-        });
-    }
-
-    protected processPlayAudio(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 204) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
-    }
-
-    /**
-     * @return No content
-     */
-    stopAudio(): Promise<void> {
-        let url_ = this.baseUrl + "/audio/stop";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "POST",
-            headers: {
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processStopAudio(_response);
-        });
-    }
-
-    protected processStopAudio(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 204) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
-    }
-
-    /**
-     * @return No content
-     */
-    skipAudio(body: Body): Promise<void> {
-        let url_ = this.baseUrl + "/audio/skip";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processSkipAudio(_response);
-        });
-    }
-
-    protected processSkipAudio(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 204) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
-    }
-
-    /**
      * @return Ok
      */
     getAllScenes(): Promise<LightsSceneResponse[]> {
@@ -1651,6 +1548,54 @@ export class Client {
             });
         }
         return Promise.resolve<AudioResponse>(null as any);
+    }
+
+    /**
+     * @return No content
+     */
+    setAudioPlaying(id: number, body: SetAudioPlayingParams): Promise<void> {
+        let url_ = this.baseUrl + "/audio/{id}/playing";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSetAudioPlaying(_response);
+        });
+    }
+
+    protected processSetAudioPlaying(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 204) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status === 403) {
+            return response.text().then((_responseText) => {
+            let result403: any = null;
+            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result403 = resultData403 !== undefined ? resultData403 : <any>null;
+    
+            return throwException("A server side error occurred.", status, _responseText, _headers, result403);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 
     /**
@@ -5687,6 +5632,8 @@ export interface IPartial_MessageParams_ {
 
 export class CenturionResponse implements ICenturionResponse {
     name!: string;
+    startTime!: Date;
+    playing!: boolean;
 
     constructor(data?: ICenturionResponse) {
         if (data) {
@@ -5700,6 +5647,8 @@ export class CenturionResponse implements ICenturionResponse {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
+            this.startTime = _data["startTime"] ? new Date(_data["startTime"].toString()) : <any>undefined;
+            this.playing = _data["playing"];
         }
     }
 
@@ -5713,12 +5662,16 @@ export class CenturionResponse implements ICenturionResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["playing"] = this.playing;
         return data;
     }
 }
 
 export interface ICenturionResponse {
     name: string;
+    startTime: Date;
+    playing: boolean;
 }
 
 export class SkipCenturionRequest implements ISkipCenturionRequest {
@@ -5853,7 +5806,10 @@ export interface IHornEvent {
 }
 
 export class SongData implements ISongData {
+    /** Tempo of the song. Defaults to 130 beats per minute */
+    bpm?: number;
     title!: string;
+    /** Performing artists, comma-separated if multiple */
     artist!: string;
 
     [key: string]: any;
@@ -5873,6 +5829,7 @@ export class SongData implements ISongData {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
+            this.bpm = _data["bpm"];
             this.title = _data["title"];
             this.artist = _data["artist"];
         }
@@ -5891,6 +5848,7 @@ export class SongData implements ISongData {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
+        data["bpm"] = this.bpm;
         data["title"] = this.title;
         data["artist"] = this.artist;
         return data;
@@ -5898,7 +5856,10 @@ export class SongData implements ISongData {
 }
 
 export interface ISongData {
+    /** Tempo of the song. Defaults to 130 beats per minute */
+    bpm?: number;
     title: string;
+    /** Performing artists, comma-separated if multiple */
     artist: string;
 
     [key: string]: any;
@@ -5949,12 +5910,14 @@ export interface ISongEvent {
 }
 
 export class MixTapeResponse implements IMixTapeResponse {
+    /** Unique name of the tape */
     name!: string;
+    /** Relative or absolute HTTP path to the cover image */
     coverUrl!: string;
     events!: Events[];
     /** Amount of horns */
     horns!: number;
-    /** Seconds till the last horn */
+    /** Duration of the mix tape */
     duration!: number;
 
     constructor(data?: IMixTapeResponse) {
@@ -6006,12 +5969,14 @@ export class MixTapeResponse implements IMixTapeResponse {
 }
 
 export interface IMixTapeResponse {
+    /** Unique name of the tape */
     name: string;
+    /** Relative or absolute HTTP path to the cover image */
     coverUrl: string;
     events: Events[];
     /** Amount of horns */
     horns: number;
-    /** Seconds till the last horn */
+    /** Duration of the mix tape */
     duration: number;
 }
 
@@ -6919,6 +6884,42 @@ export class AudioCreateParams implements IAudioCreateParams {
 
 export interface IAudioCreateParams {
     name: string;
+}
+
+export class SetAudioPlayingParams implements ISetAudioPlayingParams {
+    playing!: boolean;
+
+    constructor(data?: ISetAudioPlayingParams) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.playing = _data["playing"];
+        }
+    }
+
+    static fromJS(data: any): SetAudioPlayingParams {
+        data = typeof data === 'object' ? data : {};
+        let result = new SetAudioPlayingParams();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["playing"] = this.playing;
+        return data;
+    }
+}
+
+export interface ISetAudioPlayingParams {
+    playing: boolean;
 }
 
 export class LightsControllerCreateParams implements ILightsControllerCreateParams {
@@ -7896,54 +7897,6 @@ export class ApiKeyParameters implements IApiKeyParameters {
 
 export interface IApiKeyParameters {
     key: string;
-}
-
-export class Body implements IBody {
-    seconds!: number;
-
-    [key: string]: any;
-
-    constructor(data?: IBody) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            for (var property in _data) {
-                if (_data.hasOwnProperty(property))
-                    this[property] = _data[property];
-            }
-            this.seconds = _data["seconds"];
-        }
-    }
-
-    static fromJS(data: any): Body {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        for (var property in this) {
-            if (this.hasOwnProperty(property))
-                data[property] = this[property];
-        }
-        data["seconds"] = this.seconds;
-        return data;
-    }
-}
-
-export interface IBody {
-    seconds: number;
-
-    [key: string]: any;
 }
 
 export class Anonymous implements IAnonymous {
