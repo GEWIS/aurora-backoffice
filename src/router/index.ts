@@ -9,6 +9,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsController from '@/views/Lights/EffectsController.vue';
 import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
+import PosterList from '@/views/Poster/PosterList.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -66,6 +67,16 @@ const router = createRouter({
               name: 'infoscreenRoomresposibles'
             }
           ]
+        },
+        {
+          path: '/poster',
+          children: [
+            {
+              path: 'list',
+              component: PosterList,
+              name: 'posterList',
+            },
+          ],
         },
         {
           path: '/modes',

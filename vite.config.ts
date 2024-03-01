@@ -18,7 +18,17 @@ export default defineConfig({
       '/socket.io': {
         target: 'ws://localhost:3000',
         ws: true,
-      }
+      },
+      '/static/audio': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/static/posters': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
     }
   },
   resolve: {

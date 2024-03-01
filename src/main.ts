@@ -38,6 +38,8 @@ import MultiSelect from 'primevue/multiselect';
 import Divider from 'primevue/divider';
 import Skeleton from 'primevue/skeleton';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Image from 'primevue/image';
+import Carousel from 'primevue/carousel';
 
 export const app = createApp(App);
 
@@ -74,5 +76,7 @@ app.component('MultiSelect', MultiSelect);
 app.component('Divider', Divider);
 app.component('Skeleton', Skeleton);
 app.component('ConfirmDialog', ConfirmDialog);
+app.component('Image', Image);
+app.component('Carousel', Carousel);
 
 app.mount('#app');

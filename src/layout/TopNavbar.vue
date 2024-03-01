@@ -49,6 +49,15 @@ const leftItems = ref([
     ]
   },
   {
+    label: 'Posterscreen',
+    items: [
+      {
+        label: 'Posters',
+        route: '/poster/list'
+      }
+    ],
+  },
+  {
     label: 'Modes',
     items: [
       {
