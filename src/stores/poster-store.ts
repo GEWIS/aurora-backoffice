@@ -1,8 +1,8 @@
-import { Client, ErrorPoster, LocalPoster, MediaPoster, PhotoPoster } from '@/api/Client';
+import { Client, ErrorPoster, LocalPoster, MediaPoster, PhotoPoster, Poster } from '@/api/Client';
 import { defineStore } from 'pinia';
 
 interface PosterStore {
-  posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster)[];
+  posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster | Poster)[];
   loading: boolean;
 }
 

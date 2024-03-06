@@ -17,7 +17,7 @@
       </div>
       <div class="flex flex-column gap-1">
         <div
-          class="w-full h-8rem border-round border-1 p-2 flex flex-column flex-wrap justify-content-center align-items-center"
+          class="h-8rem border-1 flex flex-column flex-wrap justify-content-center align-items-center"
         >
           <p v-if="getBpm() != null">{{ getBpm() }} BPM</p>
           <p v-else>Tap to set BPM</p>

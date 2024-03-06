@@ -1,9 +1,5 @@
-import { toastError } from '@/utils/toastHandler';
+import { type ErrorResponse, handleErrorMessage } from '@/utils/errorHandler';
 
-interface ErrorResponse {
-  message: string;
-  details: string;
-}
 export default function SetupInterceptors(): void {
   const { fetch: originalFetch } = window;
   window.fetch = async (...args) => {
@@ -16,10 +12,7 @@ export default function SetupInterceptors(): void {
         .clone()
         .json()
         .then((res: ErrorResponse) => {
-          toastError({
-            title: res.message,
-            body: res.details
-          });
+          handleErrorMessage(res);
         });
     }
 

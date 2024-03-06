@@ -9,6 +9,7 @@ import {
 } from '@/api/Client';
 
 import { useSocketStore } from '@/stores/socket.store';
+import { handleError } from '@/utils/errorHandler';
 
 interface CenturionStore {
   currentTape: CenturionResponse | null;

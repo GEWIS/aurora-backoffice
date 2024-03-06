@@ -9,6 +9,7 @@ import {
   NewHandlerParams,
   ScreenResponse
 } from '@/api/Client';
+import { handleError } from '@/utils/errorHandler';
 
 import { useSocketStore } from '@/stores/socket.store';
 

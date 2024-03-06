@@ -84,12 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { ErrorPoster, LocalPoster, MediaPoster, PhotoPoster } from '@/api/Client';
+import { ErrorPoster, LocalPoster, MediaPoster, PhotoPoster, Poster } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 defineProps<{
-  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster;
+  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster | Poster;
 }>();
 </script>
 
