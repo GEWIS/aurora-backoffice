@@ -10,6 +10,7 @@ import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsController from '@/views/Lights/EffectsController.vue';
 import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
 import PosterList from '@/views/Poster/PosterList.vue';
+import { Client } from '@/api/Client';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -74,9 +75,9 @@ const router = createRouter({
             {
               path: 'list',
               component: PosterList,
-              name: 'posterList',
-            },
-          ],
+              name: 'posterList'
+            }
+          ]
         },
         {
           path: '/modes',
@@ -86,7 +87,7 @@ const router = createRouter({
               component: CenturionModeView,
               name: 'centurionMode'
             }
-          ],
+          ]
         },
         {
           path: '/lights',
@@ -109,8 +110,12 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
+  // Automatically login using mock when in development mode
+  if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
+    await authStore.MockLogin(new Client());
+  }
   const authenticated = authStore.isAuthenticated();
   const hasRights = authStore.roles && authStore.roles.length > 0;
 
