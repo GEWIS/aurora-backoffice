@@ -1,11 +1,27 @@
-import { toastSuccess } from '@/utils/toastHandler';
+import { toastError, toastSuccess } from '@/utils/toastHandler';
 
+interface ErrorResponse {
+  message: string;
+  details: string;
+}
 export default function SetupInterceptors(): void {
   const { fetch: originalFetch } = window;
   window.fetch = async (...args) => {
     const [resource, config] = args;
-
     const response = await originalFetch(resource, config);
+
+    // On any error; automatically throw toast message
+    if (!response.ok) {
+      response
+        .clone()
+        .json()
+        .then((res: ErrorResponse) => {
+          toastError({
+            title: res.message,
+            body: res.details
+          });
+        });
+    }
 
     // TODO how to differentiate between
     // PUT / POST / DELETE (un)successful?
@@ -17,26 +33,26 @@ export default function SetupInterceptors(): void {
     // If anything else >= 400, then throw error from backend
     // Is possible, but a bit slower as .clone().json() is required
 
-    if (config!.method == 'POST' && response.status === 201) {
-      toastSuccess({
-        title: 'Success',
-        body: 'Successfully created ...'
-      });
-    }
+    // if (config!.method == 'POST' && response.ok) {
+    //   toastSuccess({
+    //     title: 'Success',
+    //     body: 'Successfully created ...'
+    //   });
+    // }
 
-    if (config!.method == 'PUT' && response.status === 200) {
-      toastSuccess({
-        title: 'Success',
-        body: 'Successfully updated ...'
-      });
-    }
+    // if (config!.method == 'PUT' && response.ok) {
+    //   toastSuccess({
+    //     title: 'Success',
+    //     body: 'Successfully updated ...'
+    //   });
+    // }
 
-    if (config!.method == 'DELETE' && response.status === 200) {
-      toastSuccess({
-        title: 'Success',
-        body: 'Successfully deleted ...'
-      });
-    }
+    // if (config!.method == 'DELETE' && response.ok) {
+    //   toastSuccess({
+    //     title: 'Success',
+    //     body: 'Successfully deleted ...'
+    //   });
+    // }
 
     return response;
   };

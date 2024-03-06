@@ -5,12 +5,15 @@ import {
   HandlerResponse_AudioResponse_,
   HandlerResponse_LightsGroupResponse_,
   HandlerResponse_ScreenResponse_,
-  LightsGroupResponse, NewHandlerParams, ScreenResponse
+  LightsGroupResponse,
+  NewHandlerParams,
+  ScreenResponse
 } from '@/api/Client';
-import { handleError } from '@/utils/errorHandler';
+
 import { useSocketStore } from '@/stores/socket.store';
 
-export type Handler = HandlerResponse_ScreenResponse_
+export type Handler =
+  | HandlerResponse_ScreenResponse_
   | HandlerResponse_AudioResponse_
   | HandlerResponse_LightsGroupResponse_;
 
@@ -27,32 +30,26 @@ export const useHandlersStore = defineStore('handlers', {
       audioHandlers: [],
       lightsHandlers: [],
       screenHandlers: [],
-      loading: true,
+      loading: true
     }) as HandlersStore,
   getters: {},
   actions: {
     async getAudioHandlers() {
       this.loading = true;
-      await new Client()
-        .getAudioHandlers()
-        .then((handlers) => (this.audioHandlers = handlers))
-        .catch(handleError);
+      await new Client().getAudioHandlers().then((handlers) => (this.audioHandlers = handlers));
+
       this.loading = false;
     },
     async getLightsHandlers() {
       this.loading = true;
-      await new Client()
-        .getLightsHandlers()
-        .then((handlers) => (this.lightsHandlers = handlers))
-        .catch(handleError);
+      await new Client().getLightsHandlers().then((handlers) => (this.lightsHandlers = handlers));
+
       this.loading = false;
     },
     async getScreenHandlers() {
       this.loading = true;
-      await new Client()
-        .getScreenHandlers()
-        .then((handlers) => (this.screenHandlers = handlers))
-        .catch(handleError);
+      await new Client().getScreenHandlers().then((handlers) => (this.screenHandlers = handlers));
+
       this.loading = false;
     },
     async init(): Promise<void> {
@@ -63,7 +60,10 @@ export const useHandlersStore = defineStore('handlers', {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('handler_audio_update', this.getAudioHandlers.bind(this));
       socketStore.backofficeSocket?.on('handler_screen_update', this.getScreenHandlers.bind(this));
-      socketStore.backofficeSocket?.on('handler_lightsgroup_update', this.getLightsHandlers.bind(this));
+      socketStore.backofficeSocket?.on(
+        'handler_lightsgroup_update',
+        this.getLightsHandlers.bind(this)
+      );
 
       this.loading = false;
     },

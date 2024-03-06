@@ -152,12 +152,9 @@
 import { onMounted, type Ref, ref } from 'vue';
 import { Client, Message, MessageParams } from '@/api/Client';
 import Button from 'primevue/button';
-
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
-import { handleError } from '@/utils/errorHandler';
-import { toastInfo } from '@/utils/toastHandler';
 
 const messages = ref<Message[]>([]);
 const message: Ref<Message> = ref(new Message());
@@ -175,13 +172,10 @@ const filters = ref({
 
 onMounted(() => {
   client = new Client();
-  client
-    .getAllMessages()
-    .then((response: Message[]) => {
-      messages.value = response;
-      loading.value = false;
-    })
-    .catch(handleError);
+  client.getAllMessages().then((response: Message[]) => {
+    messages.value = response;
+    loading.value = false;
+  });
 });
 
 const newMessage = () => {
@@ -214,8 +208,7 @@ const saveMessage = () => {
       .then((response) => {
         const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
         messages.value[index] = response;
-      })
-      .catch(handleError);
+      });
   } else {
     client
       .createMessage({
@@ -224,8 +217,7 @@ const saveMessage = () => {
       } as MessageParams)
       .then((response) => {
         messages.value.push(response);
-      })
-      .catch(handleError);
+      });
   }
 
   isSubmitted.value = true;
@@ -244,14 +236,11 @@ const confirmDeleteMessage = (deleteMessage: Message) => {
 };
 
 const deleteMessage = () => {
-  client
-    .deleteMessage(message.value.id.toString())
-    .then(() => {
-      messages.value = messages.value.filter(
-        (filterMessage: Message) => filterMessage.id !== message.value.id
-      );
-    })
-    .catch(handleError);
+  client.deleteMessage(message.value.id.toString()).then(() => {
+    messages.value = messages.value.filter(
+      (filterMessage: Message) => filterMessage.id !== message.value.id
+    );
+  });
 
   message.value = new Message();
   showDeleteMessageDialog.value = false;

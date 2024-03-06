@@ -1,6 +1,5 @@
 import { Client, ErrorPoster, LocalPoster, MediaPoster, PhotoPoster } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { handleError } from '@/utils/errorHandler';
 
 interface PosterStore {
   posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster)[];
@@ -10,15 +9,13 @@ interface PosterStore {
 export const usePosterStore = defineStore('poster', {
   state: (): PosterStore => ({
     posters: [],
-    loading: true,
+    loading: true
   }),
   getters: {},
   actions: {
     async getPosters() {
       const client = new Client();
-      await client.getPosters()
-        .then((p) => this.posters = p)
-        .catch(handleError);
+      await client.getPosters().then((p) => (this.posters = p));
     },
     async init() {
       this.loading = true;
@@ -27,8 +24,8 @@ export const usePosterStore = defineStore('poster', {
     },
     async reloadPosters() {
       this.loading = true;
-      await new Client().forceUpdatePosters()
-        .catch(handleError);
+      await new Client().forceUpdatePosters();
+
       await this.getPosters();
       this.loading = false;
     }

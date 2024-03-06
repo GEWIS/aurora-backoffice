@@ -1,29 +1,36 @@
 import type { MixTapeResponse } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { ApiException, CenturionParams, CenturionResponse, Client, SkipCenturionRequest } from '@/api/Client';
-import { handleError } from '@/utils/errorHandler';
+import {
+  ApiException,
+  CenturionParams,
+  CenturionResponse,
+  Client,
+  SkipCenturionRequest
+} from '@/api/Client';
+
 import { useSocketStore } from '@/stores/socket.store';
 
 interface CenturionStore {
   currentTape: CenturionResponse | null;
   tapes: MixTapeResponse[] | null;
-  loading: boolean,
+  loading: boolean;
 }
 
 export const useCenturionStore = defineStore('centurion', {
   state: (): CenturionStore => ({
     currentTape: null,
     tapes: null,
-    loading: true,
+    loading: true
   }),
   getters: {},
   actions: {
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
-      await new Client().getCenturion()
-        .then((tape) => this.currentTape = tape)
+      await new Client()
+        .getCenturion()
+        .then((tape) => (this.currentTape = tape))
         .catch((e: ApiException | string) => {
-          if ((typeof e !== 'string' && e.status === 404) || e === "Centurion not enabled") {
+          if ((typeof e !== 'string' && e.status === 404) || e === 'Centurion not enabled') {
             this.currentTape = null;
           } else {
             handleError(e as ApiException);
@@ -33,20 +40,30 @@ export const useCenturionStore = defineStore('centurion', {
     },
     async init() {
       const client = new Client();
-      await client.getCenturionTapes()
-        .then((t) => this.tapes = t)
-        .catch(handleError);
+      await client.getCenturionTapes().then((t) => (this.tapes = t));
+
       await this.getCurrentCenturion(false);
       this.loading = false;
 
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.on('mode_centurion_update', this.getCurrentCenturion.bind(this));
+      socketStore.backofficeSocket?.on(
+        'mode_centurion_update',
+        this.getCurrentCenturion.bind(this)
+      );
     },
     async destroy() {
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.removeListener('mode_centurion_update', this.getCurrentCenturion.bind(this));
+      socketStore.backofficeSocket?.removeListener(
+        'mode_centurion_update',
+        this.getCurrentCenturion.bind(this)
+      );
     },
-    async initializeCenturion(tapeName: string, audioIds: number[], screenIds: number[], lightsGroupIds: number[]) {
+    async initializeCenturion(
+      tapeName: string,
+      audioIds: number[],
+      screenIds: number[],
+      lightsGroupIds: number[]
+    ) {
       this.loading = true;
 
       const body = new CenturionParams();
@@ -56,21 +73,21 @@ export const useCenturionStore = defineStore('centurion', {
       body.lightsGroupIds = lightsGroupIds;
 
       const client = new Client();
-      await client.enableCenturion(body).catch(handleError);
+      await client.enableCenturion(body);
       await this.getCurrentCenturion(false);
       this.loading = false;
     },
     async quitCenturion() {
       this.loading = true;
-      await new Client().disableCenturion().catch(handleError);
+      await new Client().disableCenturion();
       this.currentTape = null;
       this.loading = false;
     },
     async startCenturion() {
-      await new Client().startCenturion().catch(handleError);
+      await new Client().startCenturion();
     },
     async pauseCenturion() {
-      await new Client().stopCenturion().catch(handleError);
+      await new Client().stopCenturion();
     },
     async skipCenturion(seconds: number) {
       const body = new SkipCenturionRequest();

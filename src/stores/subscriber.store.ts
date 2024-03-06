@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import type { AudioResponse } from '@/api/Client';
 import { Client, LightsGroupResponse, ScreenResponse } from '@/api/Client';
-import { handleError } from '@/utils/errorHandler';
+
 import { useSocketStore } from '@/stores/socket.store';
 
 interface SubscriberStore {
@@ -14,31 +14,21 @@ export const useSubscriberStore = defineStore('subscribers', {
   state: (): SubscriberStore => ({
     audios: [],
     screens: [],
-    lightsGroups: [],
+    lightsGroups: []
   }),
   getters: {},
   actions: {
     async getAudios() {
-      await new Client().getAudios()
-          .then((a) => this.audios = a)
-          .catch(handleError);
+      await new Client().getAudios().then((a) => (this.audios = a));
     },
     async getScreens() {
-      await new Client().getScreens()
-        .then((s) => this.screens = s)
-        .catch(handleError);
+      await new Client().getScreens().then((s) => (this.screens = s));
     },
     async getLightGroups() {
-      await new Client().getLightsGroups()
-        .then((g) => this.lightsGroups = g)
-        .catch(handleError);
+      await new Client().getLightsGroups().then((g) => (this.lightsGroups = g));
     },
     async init(): Promise<void> {
-      await Promise.all([
-        this.getAudios(),
-        this.getScreens(),
-        this.getLightGroups(),
-      ]);
+      await Promise.all([this.getAudios(), this.getScreens(), this.getLightGroups()]);
 
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('connect_audio', this.getAudios.bind(this));
