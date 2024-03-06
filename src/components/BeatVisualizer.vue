@@ -1,8 +1,8 @@
 <template>
-<div class="flex flex-row gap-1 beat-visualizer">
-  <i :class="store.beat ? 'pi pi-circle' : 'pi pi-circle-fill'" />
-  <i :class="store.beat ? 'pi pi-circle-fill' : 'pi pi-circle'" />
-</div>
+  <div class="flex flex-row gap-1 beat-visualizer">
+    <i :class="store.beat ? 'pi pi-circle' : 'pi pi-circle-fill'" />
+    <i :class="store.beat ? 'pi pi-circle-fill' : 'pi pi-circle'" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +17,4 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

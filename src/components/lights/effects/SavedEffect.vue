@@ -16,7 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { type LightsEffectsColorCreateParams, RgbColor, SearchLightCreateParams } from '@/api/Client';
+import {
+  type LightsEffectsColorCreateParams,
+  RgbColor,
+  SearchLightCreateParams
+} from '@/api/Client';
 import ColorBox from '@/components/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
 
@@ -28,7 +32,7 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  remove: [],
+  remove: [];
 }>();
 
 const colors =

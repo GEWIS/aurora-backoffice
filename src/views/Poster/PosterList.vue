@@ -7,7 +7,11 @@
         <Spinner />
       </div>
       <div v-else class="grid">
-        <div v-for="poster in store.posters" :key="poster.name" class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2">
+        <div
+          v-for="poster in store.posters"
+          :key="poster.name"
+          class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2"
+        >
           <PosterCard :poster="poster" />
         </div>
       </div>
@@ -24,6 +28,4 @@ const store = usePosterStore();
 store.init();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -9,7 +9,7 @@ interface MusicBeatStore {
 export const useMusicBeatStore = defineStore('music-beat', {
   state: (): MusicBeatStore => ({
     beat: false,
-    initialized: false,
+    initialized: false
   }),
   getters: {},
   actions: {
@@ -30,6 +30,6 @@ export const useMusicBeatStore = defineStore('music-beat', {
       if (!store.backofficeSocket) return;
 
       store.backofficeSocket.removeListener('beat', this.handleBeat);
-    },
+    }
   }
 });

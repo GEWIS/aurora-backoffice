@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const menu = ref();
 const darkMode = ref<boolean>(document.documentElement.getAttribute('data-theme') === 'dark');
@@ -23,12 +23,12 @@ const items = ref([
       {
         label: 'Light mode',
         icon: 'pi pi-sun',
-        command: () => enableDarkMode(false),
+        command: () => enableDarkMode(false)
       },
       {
         label: 'Dark mode',
         icon: 'pi pi-moon',
-        command: () => enableDarkMode(true),
+        command: () => enableDarkMode(true)
       }
     ]
   }
@@ -44,6 +44,4 @@ const enableDarkMode = (darkEnabled: boolean) => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

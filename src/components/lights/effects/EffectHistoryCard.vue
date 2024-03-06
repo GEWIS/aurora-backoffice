@@ -1,8 +1,6 @@
 <template>
   <Panel :header="lightGroups.map((g) => g?.name).join(', ')">
-    <div class="p-2">
-      Hello!
-    </div>
+    <div class="p-2">Hello!</div>
   </Panel>
 </template>
 
@@ -15,9 +13,9 @@ const props = defineProps<{
 }>();
 
 const store = useHandlersStore();
-const lightGroups = props.effect.lightGroupIds.map((id: number) => store
-  .getRegisteredLights().find((g) => g.id === id));
-
+const lightGroups = props.effect.lightGroupIds.map((id: number) =>
+  store.getRegisteredLights().find((g) => g.id === id)
+);
 </script>
 
 <style scoped>

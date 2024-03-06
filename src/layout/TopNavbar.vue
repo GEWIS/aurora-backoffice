@@ -55,7 +55,7 @@ const leftItems = ref([
         label: 'Posters',
         route: '/poster/list'
       }
-    ],
+    ]
   },
   {
     label: 'Modes',
@@ -79,7 +79,7 @@ const leftItems = ref([
 </script>
 
 <style scoped lang="scss">
-:root[data-theme="dark"] #logo {
+:root[data-theme='dark'] #logo {
   filter: invert(0.9);
 }
 </style>

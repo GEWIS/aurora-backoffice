@@ -64,7 +64,10 @@
               <div>
                 <h4 class="mt-0 mb-1">Colors</h4>
                 <div class="flex flex-row gap-2 flex-wrap">
-                  <div v-for="(effect, index) in effectsControllerStore.chosenColorEffects" :key="effect.type">
+                  <div
+                    v-for="(effect, index) in effectsControllerStore.chosenColorEffects"
+                    :key="effect.type"
+                  >
                     <SavedEffect
                       :effect="effect"
                       @remove="effectsControllerStore.removeColorEffect(index)"
@@ -77,7 +80,10 @@
                 <h4 class="mt-0 mb-1">Movement</h4>
                 <div>
                   <div class="flex flex-row gap-2 flex-wrap">
-                    <div v-for="(effect, index) in effectsControllerStore.chosenMovementEffects" :key="effect.type">
+                    <div
+                      v-for="(effect, index) in effectsControllerStore.chosenMovementEffects"
+                      :key="effect.type"
+                    >
                       <SavedEffect
                         :effect="effect"
                         removeable
@@ -166,8 +172,8 @@ import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
 import BeatVisualizer from '@/components/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
-import EffectRandomPosition from "@/components/lights/effects/movement/EffectRandomPosition.vue";
-import EffectTableRotate from "@/components/lights/effects/movement/EffectTableRotate.vue";
+import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
+import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

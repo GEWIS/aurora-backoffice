@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { onUnmounted } from 'vue';
 import CenturionTapeSelect from '@/components/modes/centurion/CenturionTapeSelect.vue';
@@ -25,9 +24,6 @@ store.init();
 onUnmounted(() => {
   store.destroy();
 });
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

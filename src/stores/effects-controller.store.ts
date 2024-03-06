@@ -1,7 +1,6 @@
 import type { LightsEffectsColorCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { Client, LightsEffectsMovementCreateParams, LightsGroupResponse } from "@/api/Client";
-
+import { Client, LightsEffectsMovementCreateParams, LightsGroupResponse } from '@/api/Client';
 
 export interface PushedEffects {
   timestamp: Date;
@@ -22,7 +21,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     selectedLightsGroupIds: [],
     chosenColorEffects: [],
     chosenMovementEffects: [],
-    pastPushedEffects: [],
+    pastPushedEffects: []
   }),
   getters: {},
   actions: {
@@ -99,7 +98,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
           return client.applyLightsEffectColor(id, []);
-        }),
+        })
       );
     },
     async disableLightsMovement() {
@@ -107,8 +106,8 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
           return client.applyLightsEffectMovement(id, []);
-        }),
+        })
       );
-    },
+    }
   }
 });

@@ -1,7 +1,10 @@
 <template>
   <Panel header="Currently active tape">
     <template #default>
-      <div v-if="store.loading || (!!store.currentTape && !!currentTape)" class="flex flex-column gap-3">
+      <div
+        v-if="store.loading || (!!store.currentTape && !!currentTape)"
+        class="flex flex-column gap-3"
+      >
         <CenturionTapeOperations :tape="currentTape" />
         <Divider />
         <CenturionTapeTimeline :tape="currentTape" />
@@ -22,19 +25,16 @@ import CenturionTapeTimeline from '@/components/modes/centurion/CenturionTapeTim
 import CenturionTapeOperations from '@/components/modes/centurion/CenturionTapeOperations.vue';
 import { computed, type ComputedRef } from 'vue';
 import { MixTapeResponse } from '@/api/Client';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import CenturionQuitButton from '@/components/modes/centurion/CenturionQuitButton.vue';
 
 const store = useCenturionStore();
 
-const currentTape: ComputedRef<MixTapeResponse | undefined> = computed<MixTapeResponse | undefined>(() => {
-  const { tapes, currentTape } = store;
-  return tapes?.find((t) => t.name === currentTape?.name);
-});
-
+const currentTape: ComputedRef<MixTapeResponse | undefined> = computed<MixTapeResponse | undefined>(
+  () => {
+    const { tapes, currentTape } = store;
+    return tapes?.find((t) => t.name === currentTape?.name);
+  }
+);
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

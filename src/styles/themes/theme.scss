@@ -1,9 +1,9 @@
-:root[data-theme="dark"] {
-  @import "lara-dark/theme";
+:root[data-theme='dark'] {
+  @import 'lara-dark/theme';
 }
 
-:root:not([data-theme="dark"]) {
-  @import "lara-light/theme";
+:root:not([data-theme='dark']) {
+  @import 'lara-light/theme';
 }
 
 //@import "lara-light/theme";

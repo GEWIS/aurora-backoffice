@@ -4,7 +4,7 @@
       <slot name="topAction" />
     </template>
     <template v-if="$slots.header" #header>
-      <slot name="header"/>
+      <slot name="header" />
     </template>
     <slot name="default" />
     <template v-if="action" #footer>
@@ -39,9 +39,9 @@ const props = defineProps({
 });
 
 defineSlots<{
-  topAction?: any,
-  header?: any,
-  default: any,
+  topAction?: any;
+  header?: any;
+  default: any;
 }>();
 
 const router = useRouter();

@@ -3,11 +3,13 @@
     <Button
       label="Refresh"
       :loading="refreshLoading"
-      @click="async () => {
-        refreshLoading = true;
-        await store.getPosters();
-        refreshLoading = false;
-      }"
+      @click="
+        async () => {
+          refreshLoading = true;
+          await store.getPosters();
+          refreshLoading = false;
+        }
+      "
     >
       <template #icon>
         <FontAwesomeIcon :icon="faRefresh" class="mr-2" />
@@ -16,11 +18,13 @@
     <Button
       label="Force reload from source"
       :loading="updateLoading"
-      @click="async () => {
-        updateLoading = true;
-        await store.reloadPosters();
-        updateLoading = false;
-      }"
+      @click="
+        async () => {
+          updateLoading = true;
+          await store.reloadPosters();
+          updateLoading = false;
+        }
+      "
     >
       <template #icon>
         <FontAwesomeIcon :icon="faDownload" class="mr-2" />
@@ -41,6 +45,4 @@ const refreshLoading = ref(false);
 const updateLoading = ref(false);
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

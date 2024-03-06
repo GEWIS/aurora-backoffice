@@ -11,7 +11,7 @@ interface CurrentlyPlayingStore {
 export const useCurrentlyPlayingStore = defineStore('currently-playing', {
   state: (): CurrentlyPlayingStore => ({
     currentlyPlaying: null,
-    initialized: false,
+    initialized: false
   }),
   getters: {},
   actions: {

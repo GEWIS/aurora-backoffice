@@ -9,7 +9,7 @@ interface SocketStore {
 export const useSocketStore = defineStore('socket', {
   state: (): SocketStore => ({
     rootSocket: undefined,
-    backofficeSocket: undefined,
+    backofficeSocket: undefined
   }),
   getters: {},
   actions: {
@@ -32,6 +32,6 @@ export const useSocketStore = defineStore('socket', {
         });
       });
       return Promise.all([promise1, promise2]);
-    },
-  },
+    }
+  }
 });

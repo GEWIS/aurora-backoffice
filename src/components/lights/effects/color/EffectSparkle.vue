@@ -1,10 +1,6 @@
 <template>
-  <EffectSettingsDialog
-    :can-save="colors.length > 0"
-    effect-name="Sparkle"
-    @save="handleAddEffect"
-  >
-    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => colors = c" />
+  <EffectSettingsDialog :can-save="colors.length > 0" effect-name="Sparkle" @save="handleAddEffect">
+    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => (colors = c)" />
     <SelectorRatioSlider
       id="sparkle-ratio"
       :min="0"
@@ -12,7 +8,7 @@
       name="Turn-on ratio (every cycle)"
       :step="0.05"
       :value="ratio"
-      @update="(newVal: number) => ratio = newVal"
+      @update="(newVal: number) => (ratio = newVal)"
     />
     <SelectorRatioSlider
       id="sparkle-dimDuration"
@@ -21,7 +17,7 @@
       name="Turn-off time (in ms)"
       :step="25"
       :value="dimDuration"
-      @update="(newVal: number) => dimDuration = newVal"
+      @update="(newVal: number) => (dimDuration = newVal)"
     />
     <SelectorRatioSlider
       id="sparkle-cycleTime"
@@ -30,7 +26,7 @@
       name="Cycle time (in ms)"
       :step="25"
       :value="cycleTime"
-      @update="(newVal: number) => cycleTime = newVal"
+      @update="(newVal: number) => (cycleTime = newVal)"
     />
   </EffectSettingsDialog>
 </template>
@@ -62,6 +58,4 @@ const handleAddEffect = () => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

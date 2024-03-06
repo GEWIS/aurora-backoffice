@@ -3,9 +3,7 @@
     <FontAwesomeIcon :icon="faMusic" />
     <div>[{{ formatDuration(song.timestamp) }}]</div>
     <div>
-      <div v-for="track in tracks" :key="track.title">
-        {{ track.artist }} - {{track.title}}
-      </div>
+      <div v-for="track in tracks" :key="track.title">{{ track.artist }} - {{ track.title }}</div>
     </div>
   </div>
 </template>
@@ -28,6 +26,4 @@ const tracks = computed<SongData[]>(() => {
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

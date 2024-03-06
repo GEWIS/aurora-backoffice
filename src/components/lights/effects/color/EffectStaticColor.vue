@@ -4,7 +4,7 @@
     effect-name="StaticColor"
     @save="handleAddEffect"
   >
-    <SelectorLightsColor single-color @colorsUpdated="(c) => colors = c" />
+    <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
     <SelectorBoolean
       id="beat-toggle"
       name="Beat Toggle"
@@ -18,7 +18,7 @@
       name=""
       :step="0.05"
       :value="relativeBrightness"
-      @update="(newVal) => relativeBrightness = newVal"
+      @update="(newVal) => (relativeBrightness = newVal)"
     />
   </EffectSettingsDialog>
 </template>
@@ -49,6 +49,4 @@ const handleAddEffect = () => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

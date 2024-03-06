@@ -77,8 +77,7 @@ onMounted(async () => {
       scope: 'openid'
     });
 
-    window.location.href =
-      oidcParameters.authUrl + '?' + queryParameters.toString();
+    window.location.href = oidcParameters.authUrl + '?' + queryParameters.toString();
   }
 });
 </script>
@@ -105,7 +104,7 @@ h1 {
   margin: 0 auto;
 }
 
-:root[data-theme="dark"] #login-image {
+:root[data-theme='dark'] #login-image {
   filter: invert(0.9);
 }
 

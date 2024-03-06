@@ -2,11 +2,11 @@
   <Card
     :pt="{
       body: { class: 'p-3 m-0' },
-      content: { class: 'p-0 m-0' },
+      content: { class: 'p-0 m-0' }
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type as string === 'img'">
+    <template #header v-if="(poster.type as string) === 'img'">
       <div class="full-width">
         <Carousel
           :value="poster.source"
@@ -39,15 +39,15 @@
           image-class="full-width"
           preview
         />
-<!--        <Image-->
-<!--          v-for="source in poster.source"-->
-<!--          :key="source"-->
-<!--          :src="source"-->
-<!--          :alt="poster.name"-->
-<!--          class="full-width"-->
-<!--          image-class="full-width"-->
-<!--          preview-->
-<!--        />-->
+        <!--        <Image-->
+        <!--          v-for="source in poster.source"-->
+        <!--          :key="source"-->
+        <!--          :src="source"-->
+        <!--          :alt="poster.name"-->
+        <!--          class="full-width"-->
+        <!--          image-class="full-width"-->
+        <!--          preview-->
+        <!--        />-->
       </div>
     </template>
     <template #header v-else>
@@ -71,7 +71,9 @@
         <div
           class="font-bold text-overflow-ellipsis white-space-nowrap overflow-hidden"
           :title="poster.name"
-        >{{ poster.name }}</div>
+        >
+          {{ poster.name }}
+        </div>
         <div class="text-sm mt-2 font-italic opacity-50">
           <FontAwesomeIcon :icon="faClock" />
           {{ poster.timeout }} seconds
@@ -87,10 +89,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 defineProps<{
-  poster: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster);
+  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster;
 }>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

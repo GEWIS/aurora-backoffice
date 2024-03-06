@@ -8,12 +8,14 @@
 </template>
 
 <script setup lang="ts">
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<{
   checked: boolean;
   name: string;
   id: string;
 }>();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emit = defineEmits<{
   click: [];
 }>();

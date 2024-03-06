@@ -8,11 +8,13 @@
               size="small"
               title="Move to this timestamp"
               :style="{ padding: '0.5rem' }"
-              @click="async () => {
-                loading = true;
-                await store.skipCenturion(event.timestamp);
-                loading = false;
-              }"
+              @click="
+                async () => {
+                  loading = true;
+                  await store.skipCenturion(event.timestamp);
+                  loading = false;
+                }
+              "
               :loading="loading"
             >
               <FontAwesomeIcon :icon="faClockRotateLeft" />
@@ -70,9 +72,6 @@ defineProps<{
 }>();
 
 const loading = ref(false);
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

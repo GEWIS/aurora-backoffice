@@ -1,11 +1,7 @@
 <template>
   <div class="flex justify-content-center align-items-center gap-4">
     <template v-if="!store.loading && !!tape">
-      <img
-        :src="tape.coverUrl"
-        style="height: 120px; border-radius: 5px;"
-        :alt="tape.name"
-      />
+      <img :src="tape.coverUrl" style="height: 120px; border-radius: 5px" :alt="tape.name" />
       <div class="flex flex-column gap-2">
         <h3 class="m-0 p-0">{{ tape.name }}</h3>
         <div class="flex flex-row justify-content-center">
@@ -13,11 +9,13 @@
             size="small"
             outlined
             title="Play"
-            @click="async () => {
-              loading = true;
-              await store.startCenturion();
-              loading = false;
-            }"
+            @click="
+              async () => {
+                loading = true;
+                await store.startCenturion();
+                loading = false;
+              }
+            "
             :loading="loading"
           >
             <FontAwesomeIcon :icon="faPlay" />
@@ -26,11 +24,13 @@
             size="small"
             outlined
             title="Pause"
-            @click="async () => {
-              loading = true;
-              await store.pauseCenturion();
-              loading = false;
-            }"
+            @click="
+              async () => {
+                loading = true;
+                await store.pauseCenturion();
+                loading = false;
+              }
+            "
             :loading="loading"
           >
             <FontAwesomeIcon :icon="faPause" />
@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPause, faPlay, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import type { MixTapeResponse } from '@/api/Client';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { ref } from 'vue';
@@ -62,9 +62,6 @@ const loading = ref(false);
 defineProps<{
   tape?: MixTapeResponse;
 }>();
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

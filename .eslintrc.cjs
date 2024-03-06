@@ -11,7 +11,10 @@ module.exports = {
     '@vue/eslint-config-prettier/skip-formatting'
   ],
 
-  ignorePatterns: ['/src/components/icons/*.vue'],
+  ignorePatterns: [
+    '/src/components/icons/*.vue',
+    '/src/api/Client.ts'
+  ],
   rules: {
     'max-len': ['warn', { code: 120 }],
     semi: ['error', 'always'],

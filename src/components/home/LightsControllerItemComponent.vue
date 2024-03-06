@@ -7,9 +7,13 @@
       <div class="flex flex-column">
         <span class="font-bold text-sm">{{ group.name }}</span>
         <SubscriberHandlerChangeDropdown
-          :current-handler="handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))"
+          :current-handler="
+            handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
+          "
           :possible-handlers="handlersStore.lightsHandlers"
-          @change="(newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)"
+          @change="
+            (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
+          "
           :loading="handlersStore.loading"
         />
       </div>
@@ -30,18 +34,15 @@ const props = defineProps<{
 }>();
 
 const subscriberStore = storeToRefs(useSubscriberStore());
-const lightsGroups = subscriberStore
-  .lightsGroups.value.filter((g) => g.controller.id === props.controller.id);
+const lightsGroups = subscriberStore.lightsGroups.value.filter(
+  (g) => g.controller.id === props.controller.id
+);
 const handlersStore = useHandlersStore();
 
-const connected: ComputedRef<boolean> = computed(
-  () => {
-    const socketIds = props.controller.socketIds as any | undefined;
-    return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
-  });
-
+const connected: ComputedRef<boolean> = computed(() => {
+  const socketIds = props.controller.socketIds as any | undefined;
+  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+});
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

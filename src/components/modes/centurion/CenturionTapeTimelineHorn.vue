@@ -15,9 +15,6 @@ import { formatDuration } from '@/utils/formatterUtils';
 defineProps<{
   horn: HornEvent;
 }>();
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

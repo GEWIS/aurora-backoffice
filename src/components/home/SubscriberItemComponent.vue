@@ -24,11 +24,10 @@ const props = defineProps<{
   icon: IconDefinition;
 }>();
 
-const connected: ComputedRef<boolean> = computed(
-  () => {
-    const socketIds = props.subscriber.socketIds as any | undefined;
-    return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
-  });
+const connected: ComputedRef<boolean> = computed(() => {
+  const socketIds = props.subscriber.socketIds as any | undefined;
+  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+});
 </script>
 
 <style scoped lang="scss"></style>

@@ -24,17 +24,14 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  change: [handler: string | null],
+  change: [handler: string | null];
 }>();
 
-const connected: ComputedRef<boolean> = computed(
-  () => {
-    const socketIds = props.subscriber.socketIds as any | undefined;
-    console.log(socketIds);
-    return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
-  });
+const connected: ComputedRef<boolean> = computed(() => {
+  const socketIds = props.subscriber.socketIds as any | undefined;
+  console.log(socketIds);
+  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+});
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

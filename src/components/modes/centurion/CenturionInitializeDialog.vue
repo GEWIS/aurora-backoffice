@@ -9,9 +9,7 @@
   >
     <template #default>
       <div class="flex flex-column gap-3">
-        <div>
-          Are you sure you want to initialize the mix tape "{{ selectedTape.name }}"?
-        </div>
+        <div>Are you sure you want to initialize the mix tape "{{ selectedTape.name }}"?</div>
         <div>
           <span>The following listeners will be used to enable this mode:</span>
           <div class="flex flex-row gap-2">
@@ -36,7 +34,9 @@
             <div class="flex flex-1 flex-column text-center gap-1">
               <h4 class="mb-1">Lights groups</h4>
               <template v-if="lightGroups.length > 0">
-                <div v-for="lightsGroup in lightGroups" :key="lightsGroup.id">{{ lightsGroup.name }}</div>
+                <div v-for="lightsGroup in lightGroups" :key="lightsGroup.id">
+                  {{ lightsGroup.name }}
+                </div>
               </template>
               <template v-else>
                 <span class="font-italic">No lights groups selected.</span>
@@ -48,20 +48,8 @@
     </template>
     <template #footer>
       <div class="flex flex-row gap-1 justify-content-end">
-        <Button
-          severity="secondary"
-          size="small"
-          @click="$emit('close')"
-        >
-          Cancel
-        </Button>
-        <Button
-          size="small"
-          @click="initialize()"
-          :loading="loading"
-        >
-          Ok
-        </Button>
+        <Button severity="secondary" size="small" @click="$emit('close')"> Cancel </Button>
+        <Button size="small" @click="initialize()" :loading="loading"> Ok </Button>
       </div>
     </template>
   </Dialog>
@@ -85,12 +73,14 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  'close': [],
+  close: [];
 }>();
 
 const audios = computed(() => store.audios.filter((a) => props.selectedAudios.includes(a.id)));
 const screens = computed(() => store.screens.filter((a) => props.selectedScreens.includes(a.id)));
-const lightGroups = computed(() => store.lightsGroups.filter((a) => props.selectedLightGroups.includes(a.id)));
+const lightGroups = computed(() =>
+  store.lightsGroups.filter((a) => props.selectedLightGroups.includes(a.id))
+);
 
 const loading = ref(false);
 
@@ -100,13 +90,11 @@ const initialize = async () => {
     props.selectedTape.name,
     props.selectedAudios,
     props.selectedScreens,
-    props.selectedLightGroups,
+    props.selectedLightGroups
   );
   emit('close');
   loading.value = false;
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

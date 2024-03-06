@@ -1,9 +1,5 @@
 <template>
-  <EffectSettingsDialog
-    can-save
-    effect-name="SingleFlood"
-    @save="handleAddEffect"
-  >
+  <EffectSettingsDialog can-save effect-name="SingleFlood" @save="handleAddEffect">
     <SelectorRatioSlider
       id="dimMilliseconds"
       :min="0"
@@ -11,7 +7,7 @@
       name="Dim time (in ms)"
       :step="100"
       :value="dimMilliseconds"
-      @update="(newVal: number) => dimMilliseconds = newVal"
+      @update="(newVal: number) => (dimMilliseconds = newVal)"
     />
   </EffectSettingsDialog>
 </template>
@@ -36,6 +32,4 @@ const handleAddEffect = () => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

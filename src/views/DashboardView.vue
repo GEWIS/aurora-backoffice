@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import SubscribersOverview from '@/components/home/SubscribersOverview.vue';
-import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useAuthStore } from '@/stores/auth.store';
 import '@/styles/BasePage.scss';
 import SpotifyCurrentlyPlaying from '@/components/home/SpotifyCurrentlyPlaying.vue';

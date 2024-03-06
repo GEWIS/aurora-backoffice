@@ -10,19 +10,14 @@
     dismissable-mask
   >
     <div class="flex flex-column gap-3 justify-content-center">
-      <div v-if="!currentBpmLoading && currentBpm != null">
-        Current BPM: {{ currentBpm }}
-      </div>
-      <div v-else-if="!currentBpmLoading">
-        Artificial Beat Generator is inactive
-      </div>
+      <div v-if="!currentBpmLoading && currentBpm != null">Current BPM: {{ currentBpm }}</div>
+      <div v-else-if="!currentBpmLoading">Artificial Beat Generator is inactive</div>
       <div v-else>
         <Spinner />
       </div>
       <div class="flex flex-column gap-1">
         <div
-          class="w-full h-8rem border-round border-1 p-2 flex flex-column
-                flex-wrap justify-content-center align-items-center"
+          class="w-full h-8rem border-round border-1 p-2 flex flex-column flex-wrap justify-content-center align-items-center"
         >
           <p v-if="getBpm() != null">{{ getBpm() }} BPM</p>
           <p v-else>Tap to set BPM</p>
@@ -72,7 +67,8 @@ const renderTaps = () => {
 };
 
 const fetchCurrentBpm = () => {
-  new Client().getArtificalBeatGenerator()
+  new Client()
+    .getArtificalBeatGenerator()
     .then((response) => {
       if (response == null) {
         currentBpm.value = null;
@@ -80,7 +76,7 @@ const fetchCurrentBpm = () => {
         currentBpm.value = response.bpm;
       }
     })
-    .finally(() => currentBpmLoading.value = false);
+    .finally(() => (currentBpmLoading.value = false));
 };
 
 const getBpm = () => {
@@ -88,7 +84,7 @@ const getBpm = () => {
   const first = taps.value[0];
   const last = taps.value[taps.value.length - 1];
   const msDiff = last.getTime() - first.getTime();
-  const bpm = 60000 * (taps.value.length - 1) / msDiff;
+  const bpm = (60000 * (taps.value.length - 1)) / msDiff;
   return Math.round(bpm);
 };
 
@@ -101,19 +97,19 @@ const setArtificialBeats = () => {
   const bpm = getBpm();
   if (bpm == null) return;
   savingBpmLoading.value = true;
-  new Client().startArtificialBeatGenerator(new ArtificialBeatGeneratorParams({ bpm }))
-    .then(() => visible.value = false)
-    .finally(() => savingBpmLoading.value = false);
+  new Client()
+    .startArtificialBeatGenerator(new ArtificialBeatGeneratorParams({ bpm }))
+    .then(() => (visible.value = false))
+    .finally(() => (savingBpmLoading.value = false));
 };
 
 const stopArtificialBeats = () => {
   stopBpmLoading.value = true;
-  new Client().stopArtificialBeatGenerator()
-    .then(() => visible.value = false)
-    .finally(() => stopBpmLoading.value = false);
+  new Client()
+    .stopArtificialBeatGenerator()
+    .then(() => (visible.value = false))
+    .finally(() => (stopBpmLoading.value = false));
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

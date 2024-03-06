@@ -26,23 +26,24 @@ import { formatDuration } from '@/utils/formatterUtils';
 import { computed } from 'vue';
 
 const props = defineProps<{
-  tape: MixTapeResponse,
+  tape: MixTapeResponse;
 }>();
 
-const timePerHorn = computed(() => Math.round(props.tape.duration / props.tape.horns * 1000) / 1000);
+const timePerHorn = computed(
+  () => Math.round((props.tape.duration / props.tape.horns) * 1000) / 1000
+);
 </script>
 
 <style scoped lang="scss">
-  .details-table {
-
-    td {
-      padding-bottom: 0.5rem;
-    }
-
-    td:first-child {
-      font-weight: bold;
-      text-align: right;
-      padding-right: 0.25rem;
-    }
+.details-table {
+  td {
+    padding-bottom: 0.5rem;
   }
+
+  td:first-child {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 0.25rem;
+  }
+}
 </style>

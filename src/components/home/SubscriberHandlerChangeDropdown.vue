@@ -6,9 +6,11 @@
     option-value="name"
     placeholder="Select handler..."
     class="text-overflow-ellipsis full-width"
-    @update:model-value="(newHandler: string | null) => {
-      $emit('change', newHandler)
-    }"
+    @update:model-value="
+      (newHandler: string | null) => {
+        $emit('change', newHandler);
+      }
+    "
     show-clear
     :loading="loading"
   />
@@ -18,16 +20,14 @@
 import type { Handler } from '@/stores/handlers.store';
 
 defineProps<{
-  currentHandler?: Handler,
-  possibleHandlers: Handler[],
-  loading?: boolean,
+  currentHandler?: Handler;
+  possibleHandlers: Handler[];
+  loading?: boolean;
 }>();
 
 defineEmits<{
-  change: [handler: string | null],
+  change: [handler: string | null];
 }>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

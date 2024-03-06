@@ -10,10 +10,12 @@
             :options="store.tapes != null ? store.tapes : undefined"
             class="text-overflow-ellipsis full-width"
             placeholder="Choose a tape..."
-            @update:modelValue="(value: string) => {
-              console.log(value);
-              selectedTapeName = value
-            }"
+            @update:modelValue="
+              (value: string) => {
+                console.log(value);
+                selectedTapeName = value;
+              }
+            "
             :title="selectedTapeName"
           />
         </div>
@@ -22,9 +24,9 @@
             :selected-audios="selectedAudios"
             :selected-screens="selectedScreens"
             :selected-light-groups="selectedLightGroups"
-            @update:audios="(ids: number[]) => selectedAudios = ids"
-            @update:screens="(ids: number[]) => selectedScreens = ids"
-            @update:light-groups="(ids: number[]) => selectedLightGroups = ids"
+            @update:audios="(ids: number[]) => (selectedAudios = ids)"
+            @update:screens="(ids: number[]) => (selectedScreens = ids)"
+            @update:light-groups="(ids: number[]) => (selectedLightGroups = ids)"
           />
         </div>
         <div v-if="selectedTape != null">
@@ -45,11 +47,9 @@
     </template>
     <template #footer>
       <div class="text-right">
-        <Button
-          size="small"
-          :disabled="!canOpenConfirmModal"
-          @click="confirmModalOpen = true"
-        >Initialize</Button>
+        <Button size="small" :disabled="!canOpenConfirmModal" @click="confirmModalOpen = true"
+          >Initialize</Button
+        >
         <CenturionInitializeDialog
           v-if="canOpenConfirmModal && selectedTape !== undefined"
           :visible="confirmModalOpen"
@@ -86,9 +86,6 @@ const confirmModalOpen = ref<boolean>(false);
 const canOpenConfirmModal = computed(() => {
   return selectedTapeName.value !== undefined && selectedAudios.value.length > 0;
 });
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

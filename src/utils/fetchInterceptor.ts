@@ -1,4 +1,4 @@
-import { toastError, toastSuccess } from '@/utils/toastHandler';
+import { toastError } from '@/utils/toastHandler';
 
 interface ErrorResponse {
   message: string;
