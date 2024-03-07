@@ -1,7 +1,6 @@
-import type { TrackChangeEvent } from '@/api/Client';
 import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
-import { Client } from '@/api/Client';
+import { SpotifyService, type TrackChangeEvent } from '@/api';
 
 interface CurrentlyPlayingStore {
   currentlyPlaying: TrackChangeEvent | null;
@@ -27,7 +26,7 @@ export const useCurrentlyPlayingStore = defineStore('currently-playing', {
 
       store.backofficeSocket.on('change_track', this.handleChangeTrack.bind(this));
 
-      const event = await new Client().getSpotifyCurrentlyPlaying();
+      const event = await SpotifyService.getSpotifyCurrentlyPlaying();
       this.handleChangeTrack([event]);
     },
     destroy() {

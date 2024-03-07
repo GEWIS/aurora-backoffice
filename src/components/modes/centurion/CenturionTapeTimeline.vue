@@ -57,13 +57,13 @@
 </template>
 
 <script setup lang="ts">
-import { HornEvent, type MixTapeResponse, SongEvent } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import CenturionTapeTimelineHorn from '@/components/modes/centurion/CenturionTapeTimelineHorn.vue';
 import CenturionTapeTimelineSong from '@/components/modes/centurion/CenturionTapeTimelineSong.vue';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { ref } from 'vue';
+import type { HornEvent, MixTapeResponse, SongEvent } from '@/api';
 
 const store = useCenturionStore();
 

@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api/Client';
 import SubscriberHandlerChangeDropdown from '@/components/home/SubscriberHandlerChangeDropdown.vue';
 import type { Handler } from '@/stores/handlers.store';
 import { computed, type ComputedRef } from 'vue';
+import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
 
 const props = defineProps<{
   subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;

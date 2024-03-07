@@ -15,20 +15,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { SingleFloodCreateParams, SingleFloodCreateParamsType } from '@/api/Client';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
+import { SingleFloodCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
 const dimMilliseconds = ref<number>(500);
 
 const handleAddEffect = () => {
-  const createParams = new SingleFloodCreateParams();
-  createParams.type = SingleFloodCreateParamsType.SingleFlood;
-  createParams.props.dimMilliseconds = dimMilliseconds.value;
-
-  store.addColorEffect(createParams);
+  store.addColorEffect({
+    type: SingleFloodCreateParams.type.SINGLE_FLOOD,
+    props: {
+      dimMilliseconds: dimMilliseconds.value
+    }
+  });
 };
 </script>
 

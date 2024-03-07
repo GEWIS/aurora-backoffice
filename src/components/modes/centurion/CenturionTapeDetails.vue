@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import type { MixTapeResponse } from '@/api/Client';
 import { formatDuration } from '@/utils/formatterUtils';
 import { computed } from 'vue';
+import type { MixTapeResponse } from '@/api';
 
 const props = defineProps<{
   tape: MixTapeResponse;

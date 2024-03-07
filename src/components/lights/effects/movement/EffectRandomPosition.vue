@@ -16,19 +16,20 @@
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RandomPositionCreateParams, RandomPositionCreateParamsType } from '@/api/Client';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+import { RandomPositionCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
 const beatsToMove = ref<number>(1);
 
 const handleAddEffect = () => {
-  const createParams = new RandomPositionCreateParams();
-  createParams.type = RandomPositionCreateParamsType.RandomPosition;
-  createParams.props.beatsToMove = beatsToMove.value;
-
-  store.addMovementEffect(createParams);
+  store.addMovementEffect({
+    type: RandomPositionCreateParams.type.RANDOM_POSITION,
+    props: {
+      beatsToMove: beatsToMove.value
+    }
+  });
 };
 </script>
 

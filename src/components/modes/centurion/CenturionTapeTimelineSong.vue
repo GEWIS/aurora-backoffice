@@ -9,11 +9,11 @@
 </template>
 
 <script setup lang="ts">
-import { SongData, type SongEvent } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { formatDuration } from '../../../utils/formatterUtils';
+import type { SongData, SongEvent } from '@/api';
 
 const props = defineProps<{
   song: SongEvent;

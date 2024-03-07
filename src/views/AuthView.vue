@@ -13,9 +13,9 @@
 import CopyrightBanner from '@/layout/CopyrightBanner.vue';
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { Client, OIDCParameters } from '@/api/Client';
 import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthenticationService } from '@/api';
 
 const route = useRoute();
 const router = useRouter();
@@ -46,14 +46,15 @@ onMounted(async () => {
       await router.push({ name: 'auth' });
     }
 
-    let oidcParameters = new OIDCParameters({
-      code: queryParameters.get('code')!,
-      state: queryParameters.get('state')!,
-      session_state: queryParameters.get('session_state')!
-    });
-
     await authStore
-      .OIDCLogin(oidcParameters, new Client())
+      .OIDCLogin({
+        authUrl: '',
+        clientId: '',
+        redirectUri: '',
+        code: queryParameters.get('code')!,
+        state: queryParameters.get('state')!,
+        session_state: queryParameters.get('session_state')!
+      })
       .then(() => {
         router.push(url!);
       })
@@ -66,7 +67,7 @@ onMounted(async () => {
     sessionStorage.setItem('state', state);
     sessionStorage.setItem('url', route.query.path as string);
 
-    const oidcParameters = await new Client().getOidcParameters();
+    const oidcParameters = await AuthenticationService.getOidcParameters();
 
     let queryParameters = new URLSearchParams({
       client_id: oidcParameters.clientId,

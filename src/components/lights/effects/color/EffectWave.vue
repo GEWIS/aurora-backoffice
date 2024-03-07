@@ -24,11 +24,11 @@
 
 <script setup lang="ts">
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { RgbColor, WaveCreateParams, WaveCreateParamsType } from '@/api/Client';
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
+import { RgbColor, WaveCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -37,13 +37,14 @@ const size = ref<number>(1);
 const cycleTime = ref<number>(1000);
 
 const handleAddEffect = () => {
-  const createParams = new WaveCreateParams();
-  createParams.type = WaveCreateParamsType.Wave;
-  createParams.props.color = colors.value[0];
-  createParams.props.size = size.value;
-  createParams.props.cycleTime = cycleTime.value;
-
-  store.addColorEffect(createParams);
+  store.addColorEffect({
+    type: WaveCreateParams.type.WAVE,
+    props: {
+      color: colors.value[0],
+      size: size.value,
+      cycleTime: cycleTime.value
+    }
+  });
 };
 </script>
 

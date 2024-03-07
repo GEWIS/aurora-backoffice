@@ -56,10 +56,10 @@
 </template>
 
 <script setup lang="ts">
-import type { MixTapeResponse } from '@/api/Client';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed, ref } from 'vue';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
+import type { MixTapeResponse } from '@/api';
 
 const store = useSubscriberStore();
 const centurionStore = useCenturionStore();

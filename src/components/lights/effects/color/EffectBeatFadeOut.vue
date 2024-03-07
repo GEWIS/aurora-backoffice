@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
-import { BeatFadeOutCreateParams, BeatFadeOutCreateParamsType, type RgbColor } from '@/api/Client';
 import { ref } from 'vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+import { BeatFadeOutCreateParams, RgbColor } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -13,13 +13,14 @@ const enableFade = ref<boolean>(false);
 const addBlacks = ref<boolean>(false);
 
 const handleAddEffect = () => {
-  const createParams = new BeatFadeOutCreateParams();
-  createParams.type = BeatFadeOutCreateParamsType.BeatFadeOut;
-  createParams.props.colors = colors.value;
-  createParams.props.enableFade = enableFade.value;
-  createParams.props.nrBlacks = addBlacks.value ? 1 : 0;
-
-  store.addColorEffect(createParams);
+  store.addColorEffect({
+    type: BeatFadeOutCreateParams.type.BEAT_FADE_OUT,
+    props: {
+      colors: colors.value,
+      enableFade: enableFade.value,
+      nrBlacks: addBlacks.value ? 1 : 0
+    }
+  });
 };
 </script>
 

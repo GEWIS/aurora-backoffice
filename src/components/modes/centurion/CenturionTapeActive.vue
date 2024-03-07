@@ -24,8 +24,8 @@ import { useCenturionStore } from '@/stores/modes/centurion.store';
 import CenturionTapeTimeline from '@/components/modes/centurion/CenturionTapeTimeline.vue';
 import CenturionTapeOperations from '@/components/modes/centurion/CenturionTapeOperations.vue';
 import { computed, type ComputedRef } from 'vue';
-import { MixTapeResponse } from '@/api/Client';
 import CenturionQuitButton from '@/components/modes/centurion/CenturionQuitButton.vue';
+import type { MixTapeResponse } from '@/api';
 
 const store = useCenturionStore();
 

@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { computed, type ComputedRef } from 'vue';
+import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
 
 const props = defineProps<{
   subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;

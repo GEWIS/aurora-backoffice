@@ -22,10 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { RgbColor } from '@/api/Client';
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
 import ColorBox from '@/components/ColorBox.vue';
+import { RgbColor } from '@/api';
 
 const store = useColorStore();
 

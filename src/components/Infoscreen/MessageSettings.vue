@@ -150,14 +150,21 @@
 
 <script setup lang="ts">
 import { onMounted, type Ref, ref } from 'vue';
-import { Client, Message, MessageParams } from '@/api/Client';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
+import { InfoscreenService, type Message, type MessageParams } from '@/api';
 
 const messages = ref<Message[]>([]);
-const message: Ref<Message> = ref(new Message());
+// TODO temporary, update
+const message: Ref<Message> = ref({
+  id: '',
+  createdAt: '',
+  updatedAt: '',
+  user: '',
+  message: ''
+});
 const selectedMessages: Ref<Message[]> = ref([]);
 const isSubmitted: Ref<boolean> = ref(false);
 const showMessageDialog: Ref<boolean> = ref(false);
@@ -165,14 +172,12 @@ const showDeleteMessageDialog: Ref<boolean> = ref(false);
 const showDeleteMessagesDialog: Ref<boolean> = ref(false);
 const loading = ref(true);
 
-let client: Client;
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
 
 onMounted(() => {
-  client = new Client();
-  client.getAllMessages().then((response: Message[]) => {
+  InfoscreenService.getAllMessages().then((response: Message[]) => {
     messages.value = response;
     loading.value = false;
   });
@@ -180,13 +185,13 @@ onMounted(() => {
 
 const newMessage = () => {
   // TODO get actual user
-  message.value = new Message({
-    id: '-1',
-    user: 'currentUser',
-    message: '',
-    createdAt: new Date(),
-    updatedAt: new Date()
-  });
+  // message.value = new Message({
+  //   id: '-1',
+  //   user: 'currentUser',
+  //   message: '',
+  //   createdAt: new Date(),
+  //   updatedAt: new Date()
+  // });
 
   isSubmitted.value = false;
   showMessageDialog.value = true;
@@ -200,24 +205,20 @@ const hideDialog = () => {
 const saveMessage = () => {
   // Check if existing message is exited
   if (message.value.id) {
-    client
-      .updateMessage(message.value.id.toString(), {
-        user: message.value.user!,
-        message: message.value.message!
-      } as MessageParams)
-      .then((response) => {
-        const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
-        messages.value[index] = response;
-      });
+    InfoscreenService.updateMessage(message.value.id.toString(), {
+      user: message.value.user!,
+      message: message.value.message!
+    } as MessageParams).then((response) => {
+      const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
+      messages.value[index] = response;
+    });
   } else {
-    client
-      .createMessage({
-        user: message.value.user!,
-        message: message.value.message!
-      } as MessageParams)
-      .then((response) => {
-        messages.value.push(response);
-      });
+    InfoscreenService.createMessage({
+      user: message.value.user!,
+      message: message.value.message!
+    } as MessageParams).then((response) => {
+      messages.value.push(response);
+    });
   }
 
   isSubmitted.value = true;
@@ -236,13 +237,13 @@ const confirmDeleteMessage = (deleteMessage: Message) => {
 };
 
 const deleteMessage = () => {
-  client.deleteMessage(message.value.id.toString()).then(() => {
+  InfoscreenService.deleteMessage(message.value.id.toString()).then(() => {
     messages.value = messages.value.filter(
       (filterMessage: Message) => filterMessage.id !== message.value.id
     );
   });
 
-  message.value = new Message();
+  //message.value = new Message();
   showDeleteMessageDialog.value = false;
 };
 
@@ -253,7 +254,7 @@ const confirmDeleteSelectedMessages = () => {
 
 const deleteSelectedMessages = () => {
   for (let deletedMessage of selectedMessages.value) {
-    client.deleteMessage(deletedMessage.id.toString());
+    InfoscreenService.deleteMessage(deletedMessage.id.toString());
   }
   messages.value = messages.value.filter(
     (filterMessage: Message) => !selectedMessages.value.includes(filterMessage)

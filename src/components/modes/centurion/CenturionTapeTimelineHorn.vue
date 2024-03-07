@@ -7,10 +7,10 @@
 </template>
 
 <script setup lang="ts">
-import { HornEvent } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faBullhorn } from '@fortawesome/free-solid-svg-icons/faBullhorn';
 import { formatDuration } from '@/utils/formatterUtils';
+import type { HornEvent } from '@/api';
 
 defineProps<{
   horn: HornEvent;

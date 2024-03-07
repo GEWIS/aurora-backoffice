@@ -84,7 +84,9 @@
                       v-for="(effect, index) in effectsControllerStore.chosenMovementEffects"
                       :key="effect.type"
                     >
+                      <!-- TODO check if correct; v-if needed to assert correct type-->
                       <SavedEffect
+                        v-if="effect.type === SearchLightCreateParams.type.SEARCH_LIGHT"
                         :effect="effect"
                         removeable
                         @remove="effectsControllerStore.removeMovementEffect(index)"
@@ -174,6 +176,7 @@ import BeatVisualizer from '@/components/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
+import { SearchLightCreateParams } from '@/api';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

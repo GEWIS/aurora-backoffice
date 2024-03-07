@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { Client, OIDCParameters, User } from '@/api/Client';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import { useSocketStore } from '@/stores/socket.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
+import { AuthenticationService, type OidcParameters, type User, UserService } from '@/api';
 
 interface AuthStore {
   name: string | null;
@@ -26,7 +26,7 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async init(): Promise<void> {
-      await new Client().getInformation().then(async (res: User) => {
+      UserService.getInformation().then(async (res: User) => {
         this.name = res.name;
         this.roles = res.roles;
 
@@ -34,8 +34,8 @@ export const useAuthStore = defineStore('auth', {
         await useColorStore().init();
       });
     },
-    async OIDCLogin(oidcParameters: OIDCParameters, client: Client): Promise<void> {
-      await client.authOIDC(oidcParameters).then((res: User) => {
+    async OIDCLogin(oidcParameters: OidcParameters): Promise<void> {
+      await AuthenticationService.authOidc(oidcParameters).then((res: User) => {
         this.name = res.name;
         this.roles = res.roles;
       });
@@ -45,8 +45,8 @@ export const useAuthStore = defineStore('auth', {
       await useColorStore().init();
       await useSubscriberStore().init();
     },
-    async MockLogin(client: Client): Promise<void> {
-      await client.authMock(undefined).then((res: User) => {
+    async MockLogin(): Promise<void> {
+      AuthenticationService.authMock(undefined).then((res: User) => {
         this.name = res.name;
         this.roles = res.roles;
       });

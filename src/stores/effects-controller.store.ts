@@ -1,6 +1,11 @@
-import type { LightsEffectsColorCreateParams } from '@/api/Client';
 import { defineStore } from 'pinia';
-import { Client, LightsEffectsMovementCreateParams, LightsGroupResponse } from '@/api/Client';
+import {
+  HandlersService,
+  type LightsEffectsColorCreateParams,
+  type LightsEffectsMovementCreateParams,
+  type LightsGroupResponse,
+  LightsService
+} from '@/api';
 
 export interface PushedEffects {
   timestamp: Date;
@@ -57,14 +62,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       this.chosenMovementEffects = [];
     },
     async sendEffects() {
-      const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map(async (id) => {
           if (this.chosenColorEffects.length > 0) {
-            await client.applyLightsEffectColor(id, this.chosenColorEffects);
+            await HandlersService.applyLightsEffectColor(id, this.chosenColorEffects);
           }
           if (this.chosenMovementEffects.length > 0) {
-            await client.applyLightsEffectMovement(id, this.chosenMovementEffects);
+            await HandlersService.applyLightsEffectMovement(id, this.chosenMovementEffects);
           }
         })
       );
@@ -78,34 +82,30 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       this.chosenMovementEffects = [];
     },
     async enableStrobe() {
-      const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return client.enableStrobeOnLightsGroup(id, undefined);
+          return LightsService.enableStrobeOnLightsGroup(id, undefined);
         })
       );
     },
     async disableStrobe() {
-      const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return client.disableStrobeOnLightsGroup(id);
+          return LightsService.disableStrobeOnLightsGroup(id);
         })
       );
     },
     async disableLightsColors() {
-      const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return client.applyLightsEffectColor(id, []);
+          return HandlersService.applyLightsEffectColor(id, []);
         })
       );
     },
     async disableLightsMovement() {
-      const client = new Client();
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return client.applyLightsEffectMovement(id, []);
+          return HandlersService.applyLightsEffectMovement(id, []);
         })
       );
     }

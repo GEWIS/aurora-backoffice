@@ -16,13 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type LightsEffectsColorCreateParams,
-  RgbColor,
-  SearchLightCreateParams
-} from '@/api/Client';
 import ColorBox from '@/components/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
+import { type LightsEffectsColorCreateParams, RgbColor, SearchLightCreateParams } from '@/api';
 
 const colorStore = useColorStore();
 
@@ -35,10 +31,14 @@ defineEmits<{
   remove: [];
 }>();
 
-const colors =
-  props.effect.props.colors ??
-  (props.effect.props.color ? [props.effect.props.color] : undefined) ??
-  [];
+let colors: Array<RgbColor>;
+if ('colors' in props.effect.props) {
+  colors = props.effect.props.colors;
+} else if ('color' in props.effect.props) {
+  colors = [props.effect.props.color];
+} else {
+  colors = [];
+}
 </script>
 
 <style scoped></style>

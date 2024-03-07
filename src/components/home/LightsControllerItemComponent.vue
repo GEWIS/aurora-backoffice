@@ -22,12 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { LightsControllerResponse } from '@/api/Client';
 import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeDropdown from '@/components/home/SubscriberHandlerChangeDropdown.vue';
 import { computed, type ComputedRef } from 'vue';
+import type { LightsControllerResponse } from '@/api';
 
 const props = defineProps<{
   controller: LightsControllerResponse;

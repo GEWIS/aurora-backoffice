@@ -6,7 +6,7 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="(poster.type as string) === 'img'">
+    <template #header v-if="poster.type === PosterType_IMAGE.IMG">
       <div class="full-width">
         <Carousel
           :value="poster.source"
@@ -39,15 +39,6 @@
           image-class="full-width"
           preview
         />
-        <!--        <Image-->
-        <!--          v-for="source in poster.source"-->
-        <!--          :key="source"-->
-        <!--          :src="source"-->
-        <!--          :alt="poster.name"-->
-        <!--          class="full-width"-->
-        <!--          image-class="full-width"-->
-        <!--          preview-->
-        <!--        />-->
       </div>
     </template>
     <template #header v-else>
@@ -55,13 +46,17 @@
         class="full-width flex justify-content-center align-items-center"
         style="aspect-ratio: 16/9; background-color: silver"
       >
-        <a v-if="poster.type === 'extern'" :href="poster.source[0]" target="_blank">
+        <a
+          v-if="poster.type === PosterType_EXTERNAL.EXTERN"
+          :href="poster.source[0]"
+          target="_blank"
+        >
           <Button outlined>
-            {{ (poster.type as string).charAt(0).toUpperCase() + (poster.type as string).slice(1) }}
+            {{ capitalize(poster.type) }}
           </Button>
         </a>
         <span v-else>
-          {{ (poster.type as string).charAt(0).toUpperCase() + (poster.type as string).slice(1) }}
+          {{ capitalize(poster.type) }}
         </span>
       </div>
     </template>
@@ -84,12 +79,22 @@
 </template>
 
 <script setup lang="ts">
-import { ErrorPoster, LocalPoster, MediaPoster, PhotoPoster, Poster } from '@/api/Client';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import {
+  type ErrorPoster,
+  type LocalPoster,
+  type MediaPoster,
+  type PhotoPoster,
+  PosterType_IMAGE
+} from '@/api';
+
+const capitalize = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 
 defineProps<{
-  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster | Poster;
+  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster;
 }>();
 </script>
 

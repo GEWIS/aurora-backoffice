@@ -1,17 +1,16 @@
 import { defineStore } from 'pinia';
-import {
-  AudioResponse,
-  Client,
-  HandlerResponse_AudioResponse_,
-  HandlerResponse_LightsGroupResponse_,
-  HandlerResponse_ScreenResponse_,
-  LightsGroupResponse,
-  NewHandlerParams,
-  ScreenResponse
-} from '@/api/Client';
 import { handleError } from '@/utils/errorHandler';
 
 import { useSocketStore } from '@/stores/socket.store';
+import {
+  type AudioResponse,
+  type HandlerResponse_AudioResponse_,
+  type HandlerResponse_LightsGroupResponse_,
+  type HandlerResponse_ScreenResponse_,
+  HandlersService,
+  type LightsGroupResponse,
+  type ScreenResponse
+} from '@/api';
 
 export type Handler =
   | HandlerResponse_ScreenResponse_
@@ -37,19 +36,23 @@ export const useHandlersStore = defineStore('handlers', {
   actions: {
     async getAudioHandlers() {
       this.loading = true;
-      await new Client().getAudioHandlers().then((handlers) => (this.audioHandlers = handlers));
+      await HandlersService.getAudioHandlers().then((handlers) => (this.audioHandlers = handlers));
 
       this.loading = false;
     },
     async getLightsHandlers() {
       this.loading = true;
-      await new Client().getLightsHandlers().then((handlers) => (this.lightsHandlers = handlers));
+      await HandlersService.getLightsHandlers().then(
+        (handlers) => (this.lightsHandlers = handlers)
+      );
 
       this.loading = false;
     },
     async getScreenHandlers() {
       this.loading = true;
-      await new Client().getScreenHandlers().then((handlers) => (this.screenHandlers = handlers));
+      await HandlersService.getScreenHandlers().then(
+        (handlers) => (this.screenHandlers = handlers)
+      );
 
       this.loading = false;
     },
@@ -72,12 +75,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        const client = new Client();
-        const params = new NewHandlerParams();
-        params.name = newHandler != null ? newHandler : '';
-        await client.setAudioHandler(id, params);
+        await HandlersService.setAudioHandler(id, {
+          name: newHandler != null ? newHandler : ''
+        });
 
-        this.audioHandlers = await client.getAudioHandlers();
+        this.audioHandlers = await HandlersService.getAudioHandlers();
       } catch (e: any) {
         handleError(e);
       }
@@ -87,12 +89,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        const client = new Client();
-        const params = new NewHandlerParams();
-        params.name = newHandler != null ? newHandler : '';
-        await client.setLightsHandler(id, params);
+        await HandlersService.setLightsHandler(id, {
+          name: newHandler != null ? newHandler : ''
+        });
 
-        this.lightsHandlers = await client.getLightsHandlers();
+        this.lightsHandlers = await HandlersService.getLightsHandlers();
       } catch (e: any) {
         handleError(e);
       }
@@ -102,12 +103,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        const client = new Client();
-        const params = new NewHandlerParams();
-        params.name = newHandler != null ? newHandler : '';
-        await client.setScreenHandler(id, params);
+        await HandlersService.setScreenHandler(id, {
+          name: newHandler != null ? newHandler : ''
+        });
 
-        this.screenHandlers = await client.getScreenHandlers();
+        this.screenHandlers = await HandlersService.getScreenHandlers();
       } catch (e: any) {
         handleError(e);
       }

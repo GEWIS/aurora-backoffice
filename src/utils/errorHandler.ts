@@ -1,21 +1,17 @@
 import { toastError } from '@/utils/toastHandler';
-import type { ApiException } from '@/api/Client';
+import type { ApiException } from '@/api';
 
 export interface ErrorResponse {
   message: string;
   details?: string;
 }
 
+// TODO check if still correct
 export function handleError(response: ApiException) {
-  try {
-    const res = JSON.parse(response.response) as ErrorResponse;
-    handleErrorMessage(res);
-  } catch (err: any) {
-    handleErrorMessage({
-      message: response.message,
-      details: err.toString()
-    });
-  }
+  handleErrorMessage({
+    message: response.name,
+    details: response.message
+  });
 }
 
 export function handleErrorMessage(message: ErrorResponse) {

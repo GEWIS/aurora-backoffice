@@ -41,17 +41,18 @@ const offsetFactor = ref<number>(0.25);
 
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { SearchLightCreateParams, SearchLightCreateParamsType } from '@/api/Client';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+import { SearchLightCreateParams } from '@/api';
 
 const handleAddEffect = () => {
-  const createParams = new SearchLightCreateParams();
-  createParams.type = SearchLightCreateParamsType.SearchLight;
-  createParams.props.cycleTime = cycleTime.value;
-  createParams.props.offsetFactor = offsetFactor.value;
-  createParams.props.radiusFactor = radiusFactor.value;
-
-  store.addMovementEffect(createParams);
+  store.addMovementEffect({
+    type: SearchLightCreateParams.type.SEARCH_LIGHT,
+    props: {
+      cycleTime: cycleTime.value,
+      offsetFactor: offsetFactor.value,
+      radiusFactor: radiusFactor.value
+    }
+  });
 };
 </script>
 

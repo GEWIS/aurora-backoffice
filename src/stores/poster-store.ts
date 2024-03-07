@@ -1,8 +1,14 @@
-import { Client, ErrorPoster, LocalPoster, MediaPoster, PhotoPoster, Poster } from '@/api/Client';
 import { defineStore } from 'pinia';
+import {
+  PosterScreenService,
+  type LocalPoster,
+  type MediaPoster,
+  type PhotoPoster,
+  type ErrorPoster
+} from '@/api';
 
 interface PosterStore {
-  posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster | Poster)[];
+  posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster)[];
   loading: boolean;
 }
 
@@ -14,8 +20,7 @@ export const usePosterStore = defineStore('poster', {
   getters: {},
   actions: {
     async getPosters() {
-      const client = new Client();
-      await client.getPosters().then((p) => (this.posters = p));
+      await PosterScreenService.getPosters().then((p) => (this.posters = p));
     },
     async init() {
       this.loading = true;
@@ -24,7 +29,7 @@ export const usePosterStore = defineStore('poster', {
     },
     async reloadPosters() {
       this.loading = true;
-      await new Client().forceUpdatePosters();
+      await PosterScreenService.forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;
