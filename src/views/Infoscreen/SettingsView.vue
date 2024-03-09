@@ -13,9 +13,6 @@
           <EROSettings />
         </div>
       </div>
-      <div>
-        <MessageSettings />
-      </div>
     </div>
   </div>
 </template>
@@ -23,7 +20,6 @@
 <script setup lang="ts">
 import TimeSettings from '@/components/Infoscreen/TimeSettings.vue';
 import RoomResponsibleSettings from '@/components/Infoscreen/RoomResponsibleSettings.vue';
-import MessageSettings from '@/components/Infoscreen/MessageSettings.vue';
 import EROSettings from '@/components/Infoscreen/EROSettings.vue';
 </script>
 

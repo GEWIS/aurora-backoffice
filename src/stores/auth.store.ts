@@ -3,6 +3,7 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import { useSocketStore } from '@/stores/socket.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
+import { useInfoscreenStore } from '@/stores/infoscreen.store';
 import { AuthenticationService, type OidcParameters, type User, UserService } from '@/api';
 
 interface AuthStore {
@@ -39,22 +40,21 @@ export const useAuthStore = defineStore('auth', {
         this.name = res.name;
         this.roles = res.roles;
       });
-
-      await useSocketStore().connect();
-      await useHandlersStore().init();
-      await useColorStore().init();
-      await useSubscriberStore().init();
+      await this.initStores();
     },
     async MockLogin(): Promise<void> {
-      AuthenticationService.authMock(undefined).then((res: User) => {
+      await AuthenticationService.authMock(undefined).then((res: User) => {
         this.name = res.name;
         this.roles = res.roles;
       });
-
+      await this.initStores();
+    },
+    async initStores(): Promise<void> {
       await useSocketStore().connect();
       await useHandlersStore().init();
       await useColorStore().init();
       await useSubscriberStore().init();
+      await useInfoscreenStore().init();
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;

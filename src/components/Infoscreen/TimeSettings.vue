@@ -2,49 +2,64 @@
   <div>
     <CardComponent header="Times">
       <div class="flex flex-column">
-        <span class="font-bold my-2">Room Open</span>
+        <span class="font-bold my-2">Room Status</span>
         <Dropdown
           v-model="selectedRoomOpen"
-          :options="roomOpenStatus"
+          :options="roomStatus"
           optionLabel="option"
           placeholder="Select an option"
+          @change="changeRoomStatus"
         />
-        <span class="font-bold my-2">Alcohol Time</span>
-        <Dropdown
-          v-model="selectedAlcoholTime"
-          :options="alcoholTime"
-          optionLabel="time"
-          placeholder="Select a time"
-        />
+        <template v-if="selectedRoomOpen && selectedRoomOpen.option === RoomStatus.OPEN">
+          <span class="font-bold my-2">Alcohol Time</span>
+          <Dropdown
+            v-model="selectedAlcoholTime"
+            :options="alcoholTime"
+            optionLabel="time"
+            placeholder="Select a time"
+            @change="changeAlcoholTime"
+          />
+        </template>
       </div>
     </CardComponent>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-// import { Client } from '@/api/Client';
+import { ref } from 'vue';
 
 import CardComponent from '@/layout/CardComponent.vue';
-import Dropdown from 'primevue/dropdown';
+import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
+import { AlcoholTime, RoomStatus } from '@/api';
+import { storeToRefs } from 'pinia';
+import { useInfoscreenStore } from '@/stores/infoscreen.store';
 
-const roomOpenStatus = ref([
-  { option: 'Yes', code: 'YES' },
-  { option: 'No', code: 'NO' }
+const infoscreenStore = useInfoscreenStore();
+const infoscreen = storeToRefs(useInfoscreenStore());
+
+const roomStatus = ref([
+  { option: RoomStatus.OPEN, code: RoomStatus.OPEN },
+  { option: RoomStatus.CLOSED, code: RoomStatus.CLOSED }
 ]);
-const selectedRoomOpen = ref(roomOpenStatus.value[0]);
+const selectedRoomOpen = ref(
+  roomStatus.value.find((i) => i.option === infoscreen.infoscreenSettings.value.roomStatus)
+);
+const changeRoomStatus = (e: DropdownChangeEvent) => {
+  infoscreen.infoscreenSettings.value.roomStatus = e.value.option;
+  infoscreenStore.setInfo();
+};
 
 const alcoholTime = ref([
-  { time: '16:30', code: 'NORMAL' },
-  { time: '14:00 (lecture free days)', code: 'EARLY' }
+  { time: AlcoholTime._16_30, code: AlcoholTime._16_30 },
+  { time: AlcoholTime._14_00, code: AlcoholTime._14_00 }
 ]);
-const selectedAlcoholTime = ref(alcoholTime.value[0]);
-
-onMounted(() => {
-  // const client = new Client()
-  // client.getTime().then((data) => {
-  // })
-});
+const selectedAlcoholTime = ref(
+  alcoholTime.value.find((i) => i.time === infoscreen.infoscreenSettings.value.alcoholTime)
+);
+const changeAlcoholTime = (e: DropdownChangeEvent) => {
+  infoscreen.infoscreenSettings.value.alcoholTime = e.value.time;
+  infoscreenStore.setInfo();
+};
 </script>
 
 <style scoped>
