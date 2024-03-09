@@ -12,7 +12,7 @@
     "lint-fix": "eslint ./src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore ",
     "format": "prettier --ignore-path .gitignore --check ./src/",
     "format-fix": "prettier --ignore-path .gitignore --write ./src/",
-    "gen-client": "nswag openapi2tsclient /input:../narrowcasting-core/build/swagger.json /output:src/api/Client.ts",
+    "gen-client": "openapi --input ../narrowcasting-core/build/swagger.json --output src/api/",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -56,6 +56,7 @@
     "lodash": "^4.17.21",
     "npm-run-all": "^4.1.5",
     "nswag": "^14.0.2",
+    "openapi-typescript-codegen": "0.25.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
