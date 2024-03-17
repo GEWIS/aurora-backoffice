@@ -50,20 +50,24 @@ export const useInfoscreenStore = defineStore('infoscreen', {
       await InfoscreenService.setInformation(this.infoscreenSettings).catch((e) => handleError(e));
     },
     async getMessages() {
-      await InfoscreenService.getAllMessages().then(
-        (a: Array<Message>) => (this.infoscreenMessages = a)
-      );
+      await InfoscreenService.getAllMessages()
+        .then((a: Array<Message>) => (this.infoscreenMessages = a))
+        .catch(handleError);
     },
     async getKeyHolders() {
-      await InfoscreenService.getKeyHolders().then(
-        (a: Array<Member>) => (this.infoscreenResponsibles = a)
-      );
+      await InfoscreenService.getKeyHolders()
+        .then((a: Array<Member>) => (this.infoscreenResponsibles = a))
+        .catch(handleError);
     },
     async getBoard() {
-      await InfoscreenService.getBoard().then((a: Array<Member>) => (this.infoscreenBoard = a));
+      await InfoscreenService.getBoard()
+        .then((a: Array<Member>) => (this.infoscreenBoard = a))
+        .catch(handleError);
     },
     async getERO() {
-      await InfoscreenService.getEro().then((a: Array<Member>) => (this.infoscreenERO = a));
+      await InfoscreenService.getEro()
+        .then((a: Array<Member>) => (this.infoscreenERO = a))
+        .catch(handleError);
     },
     async init(): Promise<void> {
       await Promise.all([
