@@ -45,7 +45,7 @@ import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { SearchLightCreateParams } from '@/api';
 
 const handleAddEffect = () => {
-  store.addMovementEffect({
+  store.setMovementEffect({
     type: SearchLightCreateParams.type.SEARCH_LIGHT,
     props: {
       cycleTime: cycleTime.value,

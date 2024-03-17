@@ -24,7 +24,7 @@ const store = useEffectsControllerStore();
 const dimMilliseconds = ref<number>(500);
 
 const handleAddEffect = () => {
-  store.addColorEffect({
+  store.setColorEffect({
     type: SingleFloodCreateParams.type.SINGLE_FLOOD,
     props: {
       dimMilliseconds: dimMilliseconds.value

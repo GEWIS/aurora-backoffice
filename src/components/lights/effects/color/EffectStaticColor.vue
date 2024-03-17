@@ -39,7 +39,7 @@ const beatToggle = ref<boolean>(false);
 const relativeBrightness = ref<number>(1);
 
 const handleAddEffect = () => {
-  store.addColorEffect({
+  store.setColorEffect({
     type: StaticColorCreateParams.type.STATIC_COLOR,
     props: {
       color: colors.value[0],

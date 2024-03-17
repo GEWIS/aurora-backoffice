@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 
 defineProps<{
   effectName: string;
   canSave: boolean;
+  disabled?: boolean;
 }>();
 defineEmits<{
   save: [];
 }>();
 
+const store = useEffectsControllerStore();
 const visible = ref<boolean>(false);
 </script>
 
@@ -18,6 +21,7 @@ const visible = ref<boolean>(false);
     icon="pi pi-plus"
     @click="() => (visible = true)"
     severity="success"
+    :disabled="store.selectedLightsGroupIds.length === 0"
   />
 
   <Dialog

@@ -47,7 +47,7 @@ const dimDuration = ref<number>(800);
 const cycleTime = ref<number>(200);
 
 const handleAddEffect = () => {
-  store.addColorEffect({
+  store.setColorEffect({
     type: SparkleCreateParams.type.SPARKLE,
     props: {
       colors: colors.value,

@@ -13,7 +13,7 @@ const enableFade = ref<boolean>(false);
 const addBlacks = ref<boolean>(false);
 
 const handleAddEffect = () => {
-  store.addColorEffect({
+  store.setColorEffect({
     type: BeatFadeOutCreateParams.type.BEAT_FADE_OUT,
     props: {
       colors: colors.value,

@@ -24,7 +24,7 @@ const store = useEffectsControllerStore();
 const beatsToMove = ref<number>(1);
 
 const handleAddEffect = () => {
-  store.addMovementEffect({
+  store.setMovementEffect({
     type: RandomPositionCreateParams.type.RANDOM_POSITION,
     props: {
       beatsToMove: beatsToMove.value

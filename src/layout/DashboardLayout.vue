@@ -1,6 +1,7 @@
 <template>
   <TopNavbar />
   <RouterView />
+  <div class="mt-8"></div>
   <CopyrightBanner />
 </template>
 

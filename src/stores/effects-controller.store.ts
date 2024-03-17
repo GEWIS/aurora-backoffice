@@ -7,25 +7,21 @@ import {
   LightsService
 } from '@/api';
 
-export interface PushedEffects {
+export interface PushedEffect {
   timestamp: Date;
   lightGroupIds: number[];
-  colorEffects: LightsEffectsColorCreateParams[];
-  movementEffects: LightsEffectsMovementCreateParams[];
+  colorEffect?: LightsEffectsColorCreateParams;
+  movementEffect?: LightsEffectsMovementCreateParams;
 }
 
 interface EffectsControllerStore {
   selectedLightsGroupIds: number[];
-  chosenColorEffects: LightsEffectsColorCreateParams[];
-  chosenMovementEffects: LightsEffectsMovementCreateParams[];
-  pastPushedEffects: PushedEffects[];
+  pastPushedEffects: PushedEffect[];
 }
 
 export const useEffectsControllerStore = defineStore('effectsController', {
   state: (): EffectsControllerStore => ({
     selectedLightsGroupIds: [],
-    chosenColorEffects: [],
-    chosenMovementEffects: [],
     pastPushedEffects: []
   }),
   getters: {},
@@ -44,42 +40,29 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     resetLightsGroupSelection() {
       this.selectedLightsGroupIds = [];
     },
-    addColorEffect(effect: LightsEffectsColorCreateParams) {
-      this.chosenColorEffects.push(effect);
-    },
-    addMovementEffect(effect: LightsEffectsMovementCreateParams) {
-      this.chosenMovementEffects.push(effect);
-    },
-    removeColorEffect(index: number) {
-      this.chosenColorEffects.splice(index, 1);
-    },
-    removeMovementEffect(index: number) {
-      this.chosenMovementEffects.splice(index, 1);
-    },
-
-    clearEffects() {
-      this.chosenColorEffects = [];
-      this.chosenMovementEffects = [];
-    },
-    async sendEffects() {
-      await Promise.all(
-        this.selectedLightsGroupIds.map(async (id) => {
-          if (this.chosenColorEffects.length > 0) {
-            await HandlersService.applyLightsEffectColor(id, this.chosenColorEffects);
-          }
-          if (this.chosenMovementEffects.length > 0) {
-            await HandlersService.applyLightsEffectMovement(id, this.chosenMovementEffects);
-          }
-        })
-      );
-      this.pastPushedEffects.unshift({
-        colorEffects: this.chosenColorEffects,
-        movementEffects: this.chosenMovementEffects,
-        lightGroupIds: this.selectedLightsGroupIds,
-        timestamp: new Date()
+    setColorEffect(effect: LightsEffectsColorCreateParams, lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
+      ids.map(async (id) => {
+        await HandlersService.applyLightsEffectColor(id, [effect]);
       });
-      this.chosenColorEffects = [];
-      this.chosenMovementEffects = [];
+      const pastEffect: PushedEffect = {
+        colorEffect: { ...effect },
+        lightGroupIds: [...ids],
+        timestamp: new Date()
+      };
+      this.pastPushedEffects = [pastEffect, ...this.pastPushedEffects.slice(0, 9)];
+    },
+    setMovementEffect(effect: LightsEffectsMovementCreateParams, lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
+      ids.map(async (id) => {
+        await HandlersService.applyLightsEffectMovement(id, [effect]);
+      });
+      const pastEffect: PushedEffect = {
+        movementEffect: { ...effect },
+        lightGroupIds: [...ids],
+        timestamp: new Date()
+      };
+      this.pastPushedEffects = [pastEffect, ...this.pastPushedEffects.slice(0, 9)];
     },
     async enableStrobe() {
       await Promise.all(

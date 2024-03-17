@@ -37,7 +37,7 @@ const size = ref<number>(1);
 const cycleTime = ref<number>(1000);
 
 const handleAddEffect = () => {
-  store.addColorEffect({
+  store.setColorEffect({
     type: WaveCreateParams.type.WAVE,
     props: {
       color: colors.value[0],

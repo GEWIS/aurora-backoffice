@@ -34,7 +34,7 @@ const cycleTime = ref<number>(10000);
 const offsetFactor = ref<number>(0.25);
 
 const handleAddEffect = () => {
-  store.addMovementEffect({
+  store.setMovementEffect({
     type: TableRotateCreateParams.type.TABLE_ROTATE,
     props: {
       cycleTime: cycleTime.value,

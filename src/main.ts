@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import timeago from 'vue-timeago3';
 import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
@@ -43,6 +44,13 @@ import Carousel from 'primevue/carousel';
 
 export const app = createApp(App);
 
+// define options
+const timeagoOptions = {
+  converterOptions: {
+    includeSeconds: true
+  }
+};
+
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
@@ -51,6 +59,8 @@ SetupInterceptors();
 
 app.use(createPinia());
 await useAuthStore().init();
+
+app.use(timeago, timeagoOptions);
 
 app.component('Button', Button);
 app.component('Card', Card);
