@@ -6,6 +6,7 @@
     @blur="disableStrobe()"
     @mouseleave="disableStrobe()"
     @touchend="disableStrobe()"
+    :disabled="store.selectedLightsGroupIds.length === 0"
   >
     Strobe
   </Button>
@@ -15,6 +16,7 @@
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { ref } from 'vue';
 
+const store = useEffectsControllerStore();
 const enabled = ref<boolean>(false);
 
 const enableStrobe = () => {
@@ -27,8 +29,6 @@ const disableStrobe = () => {
   store.disableStrobe();
   enabled.value = false;
 };
-
-const store = useEffectsControllerStore();
 </script>
 
 <style scoped></style>

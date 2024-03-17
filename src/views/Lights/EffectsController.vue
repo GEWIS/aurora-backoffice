@@ -62,23 +62,24 @@
         <Card class="w-100">
           <template #title> Other effects & settings </template>
           <template #content>
-            <div class="flex flex-row gap-2 flex-wrap">
+            <div class="flex flex-row gap-2 flex-wrap justify-content-center">
               <StrobeButton />
-              <ArtificialBeatDialog />
               <Button
                 @click="() => effectsControllerStore.disableLightsColors()"
-                severity="danger"
+                severity="secondary"
                 :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
               >
                 Disable colors
               </Button>
               <Button
                 @click="() => effectsControllerStore.disableLightsMovement()"
-                severity="danger"
+                severity="secondary"
                 :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
               >
                 Disable movement
               </Button>
+              <Divider />
+              <ArtificialBeatDialog />
             </div>
           </template>
         </Card>

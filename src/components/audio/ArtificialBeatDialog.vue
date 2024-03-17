@@ -1,5 +1,5 @@
 <template>
-  <Button @click="visible = true">Beats</Button>
+  <Button @click="visible = true">Beat Generator</Button>
 
   <Dialog
     v-model:visible="visible"
