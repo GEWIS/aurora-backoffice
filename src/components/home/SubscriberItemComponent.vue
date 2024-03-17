@@ -5,7 +5,7 @@
         <FontAwesomeIcon class="text-6xl mr-3 my-2" :icon="icon" />
       </div>
     </td>
-    <td>
+    <td colspan="3">
       <div class="flex flex-column mb-2">
         <slot />
       </div>

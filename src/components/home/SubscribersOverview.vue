@@ -1,10 +1,10 @@
 <template>
   <div>
     <Panel header="Current Subscribers">
-      <table>
+      <table class="w-full" style="table-layout: fixed">
         <tbody>
           <tr>
-            <td colspan="2">
+            <td colspan="4">
               <div class="text-center uppercase">
                 <span style="color: #d40000" class="m-auto">Screens</span>
               </div>
@@ -31,7 +31,7 @@
             />
           </SubscriberItemComponent>
           <tr>
-            <td colspan="2">
+            <td colspan="4">
               <div class="text-center uppercase mt-3">
                 <span style="color: #d40000" class="m-auto">Audio players</span>
               </div>
@@ -56,7 +56,7 @@
             />
           </SubscriberItemComponent>
           <tr>
-            <td colspan="2">
+            <td colspan="4">
               <div class="text-center uppercase mt-3">
                 <span style="color: #d40000" class="m-auto">Light controllers</span>
               </div>
