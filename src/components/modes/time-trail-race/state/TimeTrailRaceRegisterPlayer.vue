@@ -2,7 +2,7 @@
   <div class="flex flex-column gap-3">
     <div class="flex flex-column gap-2">
       <label for="time-trail-race-player-name">Player name</label>
-      <InputText id="time-trail-race-player-name" v-model="playerName" />
+      <InputText id="time-trail-race-player-name" class="w-full" v-model="playerName" />
     </div>
     <div class="flex align-items-center">
       <Checkbox v-model="isAlcoholFree" inputId="isAlcoholFree" name="isAlcoholFree" binary />

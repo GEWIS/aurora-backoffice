@@ -148,12 +148,14 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     async init() {
       this.loading = true;
       try {
-        const { state, sessionName } = await ModesService.getRaceState();
+        const { state, sessionName, scoreboard } = await ModesService.getRaceState();
         this.state = state;
         this.sessionName = sessionName;
+        this.scoreboard = scoreboard;
       } catch (e) {
         this.state = undefined;
         this.sessionName = undefined;
+        this.scoreboard = [];
       }
       this.loading = false;
 
