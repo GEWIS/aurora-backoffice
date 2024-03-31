@@ -58,6 +58,7 @@ $scaleLG: 1.25 !default;
 $focusOutlineColor: $primaryLightestColor !default;
 $focusOutline: 0 none !default;
 $focusOutlineOffset: 0 !default;
+$inputFocusOutlineOffset: $focusOutlineOffset !default;
 $focusShadow: 0 0 0 0.2rem $focusOutlineColor !default;
 
 //action icons
@@ -220,6 +221,17 @@ $dangerButtonTextActiveColor: $dangerButtonTextColor !default;
 $dangerButtonActiveBorderColor: #fecaca !default;
 $dangerButtonFocusShadow: 0 0 0 1px scale-color($dangerButtonBg, $lightness: 30%) !default;
 
+$contrastButtonBg: #ffffff !default;
+$contrastButtonTextColor: $shade900 !default;
+$contrastButtonBorder: 1px solid $contrastButtonBg !default;
+$contrastButtonHoverBg: #f3f4f6 !default;
+$contrastButtonTextHoverColor: $contrastButtonTextColor !default;
+$contrastButtonHoverBorderColor: #f3f4f6 !default;
+$contrastButtonActiveBg: #e5e7eb !default;
+$contrastButtonTextActiveColor: $contrastButtonTextColor !default;
+$contrastButtonActiveBorderColor: #e5e7eb !default;
+$contrastButtonFocusShadow: none !default;
+
 $linkButtonColor: $primaryColor !default;
 $linkButtonHoverColor: $primaryColor !default;
 $linkButtonTextHoverDecoration: underline !default;
@@ -356,7 +368,7 @@ $inputSwitchHandleOnBg: $primaryTextColor !default;
 $panelHeaderBorderColor: $shade600 !default;
 $panelHeaderBorder: 1px solid $shade600 !default;
 $panelHeaderBg: $shade800 !default;
-$panelHeaderTextColor: $primaryColor !default;
+$panelHeaderTextColor: $shade000 !default;
 $panelHeaderFontWeight: 700 !default;
 $panelHeaderPadding: 1.25rem !default;
 $panelToggleableHeaderPadding: 0.75rem 1.25rem !default;
@@ -367,7 +379,7 @@ $panelHeaderTextHoverColor: $shade000 !default;
 
 $panelContentBorderColor: $shade600 !default;
 $panelContentBorder: 1px solid $shade600 !default;
-$panelContentBg: $shade900 !default;
+$panelContentBg: $shade800 !default;
 $panelContentEvenRowBg: #1c2532 !default;
 $panelContentTextColor: $shade000 !default;
 $panelContentPadding: 1.25rem !default;
@@ -605,6 +617,14 @@ $errorMessageBg: rgba(239, 68, 68, 0.2) !default;
 $errorMessageBorder: solid #ef4444 !default;
 $errorMessageTextColor: #fca5a5 !default;
 $errorMessageIconColor: #fca5a5 !default;
+$secondaryMessageBg: $secondaryButtonBg !default;
+$secondaryMessageBorder: solid $secondaryButtonBg !default;
+$secondaryMessageTextColor: $secondaryButtonTextColor !default;
+$secondaryMessageIconColor: $secondaryButtonTextColor !default;
+$contrastMessageBg: $contrastButtonBg !default;
+$contrastMessageBorder: solid $contrastButtonBg !default;
+$contrastMessageTextColor: $contrastButtonTextColor !default;
+$contrastMessageIconColor: $contrastButtonTextColor !default;
 
 //overlays
 $overlayContentBorder: 1px solid $shade600 !default;

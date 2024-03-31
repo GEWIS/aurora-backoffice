@@ -10,6 +10,7 @@ import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsController from '@/views/Lights/EffectsController.vue';
 import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
 import PosterList from '@/views/Poster/PosterList.vue';
+// import TimeTrailRaceModeView from '@/views/Modes/TimeTrailRaceModeView.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -86,6 +87,11 @@ const router = createRouter({
               component: CenturionModeView,
               name: 'centurionMode'
             }
+            // {
+            //   path: 'timeTrailRace',
+            //   component: TimeTrailRaceModeView,
+            //   name: 'timeTrailRaceMode'
+            // }
           ]
         },
         {

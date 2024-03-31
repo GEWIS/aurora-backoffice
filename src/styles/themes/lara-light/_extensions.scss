@@ -11,7 +11,7 @@
   }
 
   .p-button-label {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .p-selectbutton > .p-button,
@@ -154,6 +154,17 @@
     .p-panel-header {
       .p-panel-title {
         text-transform: uppercase;
+      }
+    }
+  }
+
+  .p-stepper {
+    .p-stepper-header {
+      &.p-highlight {
+        .p-stepper-number {
+          background: $primaryColor;
+          color: $primaryTextColor;
+        }
       }
     }
   }

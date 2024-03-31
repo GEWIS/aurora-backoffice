@@ -63,6 +63,10 @@ const leftItems = ref([
       {
         label: 'Centurion',
         route: '/modes/centurion'
+      },
+      {
+        label: 'Spoelbakkenrace',
+        route: '/modes/timeTrailRace'
       }
     ]
   },
