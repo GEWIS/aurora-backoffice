@@ -123,7 +123,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.currentPlayer = event.player;
       this.state = event.state as any as TimeTrailRaceState;
       this.sessionName = event.sessionName;
-      this.startTime = undefined;
+      this.scoreboard = event.scoreboard;
     },
     async revealScore() {
       this.loading = true;
@@ -143,6 +143,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.state = event.state as any as TimeTrailRaceState;
       this.sessionName = event.sessionName;
       this.scoreboard = event.scoreboard;
+      this.startTime = undefined;
     },
     async init() {
       this.loading = true;

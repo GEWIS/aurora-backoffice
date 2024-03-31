@@ -53,7 +53,6 @@ const selectedLightGroups = ref<number[]>([]);
 const confirmModalOpen = ref<boolean>(false);
 const confirmModalLoading = ref<boolean>(false);
 const canOpenConfirmModal = computed(() => {
-  console.log(sessionName);
   return sessionName.value.length > 0;
 });
 

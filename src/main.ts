@@ -41,6 +41,8 @@ import Skeleton from 'primevue/skeleton';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Image from 'primevue/image';
 import Carousel from 'primevue/carousel';
+import Stepper from 'primevue/stepper';
+import StepperPanel from 'primevue/stepperpanel';
 
 export const app = createApp(App);
 
@@ -88,5 +90,7 @@ app.component('Skeleton', Skeleton);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Image', Image);
 app.component('Carousel', Carousel);
+app.component('Stepper', Stepper);
+app.component('StepperPanel', StepperPanel);
 
 app.mount('#app');
