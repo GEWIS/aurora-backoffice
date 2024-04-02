@@ -5,7 +5,9 @@
       <tbody>
         <tr>
           <td class="font-bold mr-1 text-right">Time:</td>
-          <td>{{ toStopwatchString(store.currentPlayer?.timeMs) }}</td>
+          <td>
+            {{ stopwatch }}
+          </td>
         </tr>
         <tr>
           <td class="font-bold mr-1 text-right">Position:</td>
@@ -23,11 +25,19 @@
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { toStopwatchString } from '@/utils/timeUtils';
 import { computed } from 'vue';
+import type { ScoreboardItem } from '../../../../api';
 
 const store = useTimeTrailRaceStore();
 
 const position = computed(() => {
   return (store.scoreboard.findIndex((s) => s.uuid === store.currentPlayer?.uuid) ?? -2) + 1;
+});
+
+const stopwatch = computed(() => {
+  if (!store.currentPlayer) return '';
+  const time = (store.currentPlayer as ScoreboardItem).timeMs;
+  if (!time) return '';
+  return toStopwatchString(time);
 });
 </script>
 

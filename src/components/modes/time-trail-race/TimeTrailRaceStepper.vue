@@ -47,7 +47,7 @@
   </Panel>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { TimeTrailRaceState } from '@/api';
 import { computed } from 'vue';

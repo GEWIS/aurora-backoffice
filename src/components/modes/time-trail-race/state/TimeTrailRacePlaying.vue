@@ -11,11 +11,13 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { toStopwatchString } from '@/utils/timeUtils';
 
 const now = ref(new Date());
-const interval = ref<NodeJS.Timeout>();
+const interval = ref<number>();
 const store = useTimeTrailRaceStore();
 
 const timeString = computed(() => {
-  const totalDiffMs = now.value.getTime() - store.startTime?.getTime();
+  const totalDiffMs = store.startTime
+    ? now.value.getTime() - store.startTime.getTime()
+    : Number.NaN;
   return toStopwatchString(totalDiffMs);
 });
 

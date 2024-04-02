@@ -18,12 +18,17 @@
 <script setup lang="ts">
 import ColorBox from '@/components/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
-import { type LightsEffectsColorCreateParams, RgbColor, SearchLightCreateParams } from '@/api';
+import {
+  type LightsEffectsColorCreateParams,
+  type LightsEffectsMovementCreateParams,
+  RgbColor,
+  SearchLightCreateParams
+} from '@/api';
 
 const colorStore = useColorStore();
 
 const props = defineProps<{
-  effect: LightsEffectsColorCreateParams | SearchLightCreateParams;
+  effect: LightsEffectsColorCreateParams | LightsEffectsMovementCreateParams;
   removeable?: boolean;
 }>();
 

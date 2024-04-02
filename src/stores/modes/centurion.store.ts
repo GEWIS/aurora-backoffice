@@ -5,7 +5,7 @@ import {
   type MixTapeResponse,
   ModesService,
   type CenturionResponse,
-  type ApiException
+  type HttpApiException
 } from '@/api';
 
 interface CenturionStore {
@@ -27,11 +27,11 @@ export const useCenturionStore = defineStore('centurion', {
       // TODO check if error handling is okay
       ModesService.getCenturion()
         .then((tape) => (this.currentTape = tape))
-        .catch((e: ApiException | string) => {
+        .catch((e: HttpApiException | string) => {
           if ((typeof e !== 'string' && e.statusCode === 404) || e === 'Centurion not enabled') {
             this.currentTape = null;
           } else {
-            handleError(e as ApiException);
+            handleError(e as HttpApiException);
           }
         });
       if (handleLoading) this.loading = false;

@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+// @ts-ignore package does exist
 import timeago from 'vue-timeago3';
 import App from './App.vue';
 import router from './router';
