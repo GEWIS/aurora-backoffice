@@ -12,7 +12,6 @@
             placeholder="Choose a tape..."
             @update:modelValue="
               (value: string) => {
-                console.log(value);
                 selectedTapeName = value;
               }
             "

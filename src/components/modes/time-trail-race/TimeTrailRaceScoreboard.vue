@@ -6,7 +6,7 @@
           <td class="text-right font-bold pr-1">{{ index + 1 }}</td>
           <td class="text-right font-bold pr-2" :class="score.bac && 'player-bac'">
             <font-awesome-icon
-              :icon="faBan"
+              :icon="faSkullCrossbones"
               v-if="score.alcoholFree"
               title="Alcohol free"
               class="mr-1"
@@ -24,13 +24,13 @@
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { toStopwatchString } from '@/utils/timeUtils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
 
 const store = useTimeTrailRaceStore();
 </script>
 
 <style scoped>
 .player-bac {
-  text-shadow: green 0 0 2px;
+  text-shadow: lightgreen 0 0 2px;
 }
 </style>

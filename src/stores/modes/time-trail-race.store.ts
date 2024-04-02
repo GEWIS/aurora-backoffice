@@ -44,9 +44,12 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
         audioIds,
         screenIds,
         lightsGroupIds
-      });
-      this.sessionName = sessionName;
-      this.state = TimeTrailRaceState.INITIALIZED;
+      })
+        .then(() => {
+          this.sessionName = sessionName;
+          this.state = TimeTrailRaceState.INITIALIZED;
+        })
+        .catch(handleError);
 
       this.loading = false;
     },

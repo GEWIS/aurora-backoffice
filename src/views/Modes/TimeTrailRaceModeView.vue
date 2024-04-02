@@ -2,13 +2,13 @@
   <div class="page-container">
     <div class="page-title">Spoelbakkenrace Mode</div>
     <div class="grid">
-      <div class="col-12 md:col-6 lg:col-4">
+      <div class="col-12 md:col-12 lg:col-4">
         <TimeTrailRaceInitialize />
       </div>
       <div class="col-12 md:col-6 lg:col-4">
         <TimeTrailRaceStepper />
       </div>
-      <div class="col-12 md:col-12 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-4">
         <TimeTrailRaceScoreboard />
       </div>
     </div>
