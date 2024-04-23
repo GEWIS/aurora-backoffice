@@ -21,8 +21,7 @@ import { useColorStore } from '@/stores/color.store';
 import {
   type LightsEffectsColorCreateParams,
   type LightsEffectsMovementCreateParams,
-  RgbColor,
-  SearchLightCreateParams
+  type RgbColor
 } from '@/api';
 
 const colorStore = useColorStore();

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="infoscreen.infoscreenSettings.value.roomStatus !== RoomStatus.CLOSED">
+  <div v-if="infoscreen.infoscreenSettings.value.roomStatus !== RoomStatusEnum.CLOSED">
     <CardComponent label="Confirm" header="Responsibles">
       <div class="flex flex-column">
         <span class="font-bold my-2">First Responsible</span>
@@ -55,7 +55,7 @@ import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
 
 import { storeToRefs } from 'pinia';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
-import { type Member, RoomStatus } from '@/api';
+import { type Member, RoomStatusEnum } from '@/api';
 
 enum RoomGroup {
   BOARD = 'Board',

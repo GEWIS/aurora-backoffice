@@ -4,17 +4,17 @@ import SelectorLightsColor from '@/components/lights/effects/props/SelectorLight
 import { ref } from 'vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { BeatFadeOutCreateParams, RgbColor } from '@/api';
+import { type BeatFadeOutCreateParams, RgbColorEnum } from '@/api';
 
 const store = useEffectsControllerStore();
 
-const colors = ref<RgbColor[]>([]);
+const colors = ref<RgbColorEnum[]>([]);
 const enableFade = ref<boolean>(false);
 const addBlacks = ref<boolean>(false);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: BeatFadeOutCreateParams.type.BEAT_FADE_OUT,
+    type: 'BeatFadeOut' as BeatFadeOutCreateParams['type'],
     props: {
       colors: colors.value,
       enableFade: enableFade.value,
@@ -30,7 +30,7 @@ const handleAddEffect = () => {
     :can-save="colors.length > 0"
     @save="handleAddEffect"
   >
-    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorLightsColor @colorsUpdated="(c: RgbColorEnum[]) => (colors = c)" />
     <SelectorBoolean
       :checked="enableFade"
       @click="() => (enableFade = !enableFade)"

@@ -17,7 +17,7 @@ import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { RandomPositionCreateParams } from '@/api';
+import { type RandomPositionCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -25,7 +25,7 @@ const beatsToMove = ref<number>(1);
 
 const handleAddEffect = () => {
   store.setMovementEffect({
-    type: RandomPositionCreateParams.type.RANDOM_POSITION,
+    type: 'RandomPosition' as RandomPositionCreateParams['type'],
     props: {
       beatsToMove: beatsToMove.value
     }

@@ -5,15 +5,15 @@
       <ToggleButton
         v-for="color in colors"
         :key="color"
-        :model-value="selectedColors.includes(color as RgbColor)"
+        :model-value="selectedColors.includes(color as RgbColorEnum)"
         :on-label="color"
         :off-label="color"
         class="p-button-secondary"
-        @click="handleColorClick(color as RgbColor)"
+        @click="handleColorClick(color as RgbColorEnum)"
       >
         <template #icon>
           <div class="mr-1">
-            <ColorBox :color="store.getHexColor(color as RgbColor)" />
+            <ColorBox :color="store.getHexColor(color as RgbColorEnum)" />
           </div>
         </template>
       </ToggleButton>
@@ -25,7 +25,7 @@
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
 import ColorBox from '@/components/ColorBox.vue';
-import { RgbColor } from '@/api';
+import { RgbColorEnum } from '@/api';
 
 const store = useColorStore();
 
@@ -33,13 +33,13 @@ const props = defineProps<{
   singleColor?: boolean;
 }>();
 const emit = defineEmits<{
-  colorsUpdated: [colors: RgbColor[]];
+  colorsUpdated: [colors: RgbColorEnum[]];
 }>();
 
-const colors: string[] = Object.values(RgbColor);
-const selectedColors: Ref<RgbColor[]> = ref([]);
+const colors: string[] = Object.values(RgbColorEnum);
+const selectedColors: Ref<RgbColorEnum[]> = ref([]);
 
-const handleColorClick = (color: RgbColor) => {
+const handleColorClick = (color: RgbColorEnum) => {
   const i = selectedColors.value.findIndex((c) => c === color);
   if (props.singleColor) {
     selectedColors.value = [color];

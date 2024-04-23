@@ -9,7 +9,7 @@ import {
   type RaceStartedEvent,
   type RegisterPlayerParams,
   type ScoreboardItem,
-  TimeTrailRaceState
+  type TimeTrailRaceState
 } from '@/api';
 import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
@@ -40,14 +40,16 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
 
       await ModesService.enableTimeTrailRace({
-        sessionName,
-        audioIds,
-        screenIds,
-        lightsGroupIds
+        requestBody: {
+          sessionName,
+          audioIds,
+          screenIds,
+          lightsGroupIds
+        }
       })
         .then(() => {
           this.sessionName = sessionName;
-          this.state = TimeTrailRaceState.INITIALIZED;
+          this.state = 'INITIALIZED' as TimeTrailRaceState;
         })
         .catch(handleError);
 
@@ -55,7 +57,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async registerPlayer(params: RegisterPlayerParams) {
       this.loading = true;
-      await ModesService.raceRegisterPlayer(params)
+      await ModesService.raceRegisterPlayer({
+        requestBody: params
+      })
         .then(this.handleRegisterPlayer)
         .catch((e: ApiError) => {
           handleError({

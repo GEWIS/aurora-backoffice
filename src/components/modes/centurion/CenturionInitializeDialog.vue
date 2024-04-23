@@ -13,13 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import { useSubscriberStore } from '@/stores/subscriber.store';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import type { MixTapeResponse } from '@/api';
 import ModeConfirmDialog from '@/components/modes/ModeConfirmDialog.vue';
 
-const store = useSubscriberStore();
 const centurionStore = useCenturionStore();
 
 const props = defineProps<{

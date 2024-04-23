@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
-import { TimeTrailRaceState } from '@/api';
+import { TimeTrailRaceStateEnum } from '@/api';
 import { computed } from 'vue';
 import TimeTrailRaceRegisterPlayer from '@/components/modes/time-trail-race/state/TimeTrailRaceRegisterPlayer.vue';
 import TimeTrailRaceReady from '@/components/modes/time-trail-race/state/TimeTrailRacePreparation.vue';
@@ -61,16 +61,16 @@ const store = useTimeTrailRaceStore();
 const currentStep = computed(() => {
   switch (store.state) {
     case undefined:
-    case TimeTrailRaceState.INITIALIZED:
-    case TimeTrailRaceState.SCOREBOARD:
+    case TimeTrailRaceStateEnum.INITIALIZED:
+    case TimeTrailRaceStateEnum.SCOREBOARD:
       return 0;
-    case TimeTrailRaceState.PLAYER_REGISTERED:
+    case TimeTrailRaceStateEnum.PLAYER_REGISTERED:
       return 1;
-    case TimeTrailRaceState.PLAYER_READY:
+    case TimeTrailRaceStateEnum.PLAYER_READY:
       return 2;
-    case TimeTrailRaceState.STARTED:
+    case TimeTrailRaceStateEnum.STARTED:
       return 3;
-    case TimeTrailRaceState.FINISHED:
+    case TimeTrailRaceStateEnum.FINISHED:
       return 4;
     default:
       return 0;

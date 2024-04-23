@@ -64,10 +64,12 @@ export const useCenturionStore = defineStore('centurion', {
       this.loading = true;
 
       await ModesService.enableCenturion({
-        centurionName: tapeName,
-        audioIds: audioIds,
-        screenIds: screenIds,
-        lightsGroupIds: lightsGroupIds
+        requestBody: {
+          centurionName: tapeName,
+          audioIds: audioIds,
+          screenIds: screenIds,
+          lightsGroupIds: lightsGroupIds
+        }
       });
       await this.getCurrentCenturion(false);
       this.loading = false;
@@ -86,7 +88,9 @@ export const useCenturionStore = defineStore('centurion', {
     },
     async skipCenturion(seconds: number) {
       await ModesService.skipCenturion({
-        seconds: seconds
+        requestBody: {
+          seconds: seconds
+        }
       });
     }
   }

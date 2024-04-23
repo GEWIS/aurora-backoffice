@@ -205,18 +205,23 @@ const hideDialog = () => {
 const saveMessage = () => {
   // Check if existing message is exited
   if (message.value.id) {
-    InfoscreenService.updateMessage(message.value.id.toString(), {
-      user: message.value.user!,
-      message: message.value.message!
-    } as MessageParams).then((response) => {
+    InfoscreenService.updateMessage({
+      id: message.value.id.toString(),
+      requestBody: {
+        user: message.value.user!,
+        message: message.value.message!
+      } as MessageParams
+    }).then((response) => {
       const index = messages.value.map((mapMessage) => mapMessage.id).indexOf(response.id);
       messages.value[index] = response;
     });
   } else {
     InfoscreenService.createMessage({
-      user: message.value.user!,
-      message: message.value.message!
-    } as MessageParams).then((response) => {
+      requestBody: {
+        user: message.value.user!,
+        message: message.value.message!
+      } as MessageParams
+    }).then((response) => {
       messages.value.push(response);
     });
   }
@@ -237,7 +242,9 @@ const confirmDeleteMessage = (deleteMessage: Message) => {
 };
 
 const deleteMessage = () => {
-  InfoscreenService.deleteMessage(message.value.id.toString()).then(() => {
+  InfoscreenService.deleteMessage({
+    id: message.value.id.toString()
+  }).then(() => {
     messages.value = messages.value.filter(
       (filterMessage: Message) => filterMessage.id !== message.value.id
     );
@@ -254,7 +261,9 @@ const confirmDeleteSelectedMessages = () => {
 
 const deleteSelectedMessages = () => {
   for (let deletedMessage of selectedMessages.value) {
-    InfoscreenService.deleteMessage(deletedMessage.id.toString());
+    InfoscreenService.deleteMessage({
+      id: deletedMessage.id.toString()
+    });
   }
   messages.value = messages.value.filter(
     (filterMessage: Message) => !selectedMessages.value.includes(filterMessage)

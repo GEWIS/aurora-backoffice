@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 
 import {
+  type HttpApiException,
   type Information,
   type InformationParams,
   InfoscreenService,
   type Member,
   type Message,
-  RoomStatus
+  RoomStatusEnum
 } from '@/api';
 import { handleError } from '@/utils/errorHandler';
 
@@ -21,7 +22,7 @@ interface InfoscreenStore {
 export const useInfoscreenStore = defineStore('infoscreen', {
   state: (): InfoscreenStore => ({
     infoscreenSettings: {
-      roomStatus: RoomStatus.CLOSED,
+      roomStatus: RoomStatusEnum.CLOSED,
       alcoholTime: null,
       firstResponsible: null,
       secondResponsible: null,
@@ -46,8 +47,9 @@ export const useInfoscreenStore = defineStore('infoscreen', {
       });
     },
     async setInfo() {
-      console.log(this.infoscreenSettings);
-      await InfoscreenService.setInformation(this.infoscreenSettings).catch((e) => handleError(e));
+      await InfoscreenService.setInformation({
+        requestBody: this.infoscreenSettings
+      }).catch((e) => handleError(e as HttpApiException));
     },
     async getMessages() {
       await InfoscreenService.getAllMessages()

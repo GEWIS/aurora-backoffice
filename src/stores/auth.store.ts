@@ -36,7 +36,9 @@ export const useAuthStore = defineStore('auth', {
       });
     },
     async OIDCLogin(oidcParameters: OidcParameters): Promise<void> {
-      await AuthenticationService.authOidc(oidcParameters).then((res: User) => {
+      await AuthenticationService.authOidc({
+        requestBody: oidcParameters
+      }).then((res: User) => {
         this.name = res.name;
         this.roles = res.roles;
       });

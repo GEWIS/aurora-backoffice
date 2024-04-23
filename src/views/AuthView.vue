@@ -48,9 +48,6 @@ onMounted(async () => {
 
     await authStore
       .OIDCLogin({
-        authUrl: '',
-        clientId: '',
-        redirectUri: '',
         code: queryParameters.get('code')!,
         state: queryParameters.get('state')!,
         session_state: queryParameters.get('session_state')!

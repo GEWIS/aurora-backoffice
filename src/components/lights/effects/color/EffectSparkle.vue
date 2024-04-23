@@ -1,6 +1,6 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length > 0" effect-name="Sparkle" @save="handleAddEffect">
-    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorLightsColor @colorsUpdated="(c: RgbColorEnum[]) => (colors = c)" />
     <SelectorRatioSlider
       id="sparkle-ratio"
       :min="0"
@@ -37,18 +37,18 @@ import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, SparkleCreateParams } from '@/api';
+import { RgbColorEnum, type SparkleCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
-const colors = ref<RgbColor[]>([]);
+const colors = ref<RgbColorEnum[]>([]);
 const ratio = ref<number>(0.2);
 const dimDuration = ref<number>(800);
 const cycleTime = ref<number>(200);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: SparkleCreateParams.type.SPARKLE,
+    type: 'Sparkle' as SparkleCreateParams['type'],
     props: {
       colors: colors.value,
       ratio: ratio.value,

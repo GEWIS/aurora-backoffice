@@ -6,7 +6,7 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type === PosterType_IMAGE.IMG">
+    <template #header v-if="isMediaPoster(poster)">
       <div class="full-width">
         <Carousel
           :value="poster.source"
@@ -81,13 +81,11 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import {
-  type ErrorPoster,
-  type LocalPoster,
-  type MediaPoster,
-  type PhotoPoster,
-  PosterType_IMAGE
-} from '@/api';
+import { type ErrorPoster, type LocalPoster, type MediaPoster, type PhotoPoster } from '@/api';
+
+function isMediaPoster(poster: any): poster is MediaPoster {
+  return poster && typeof poster.source === 'string';
+}
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);

@@ -96,7 +96,9 @@ const setArtificialBeats = () => {
   const bpm = getBpm();
   if (bpm == null) return;
   savingBpmLoading.value = true;
-  ArtificialBeatGeneratorService.startArtificialBeatGenerator({ bpm: bpm })
+  ArtificialBeatGeneratorService.startArtificialBeatGenerator({
+    requestBody: { bpm: bpm }
+  })
     .then(() => (visible.value = false))
     .finally(() => (savingBpmLoading.value = false));
 };

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { type LightsColorResponse, LightsService, RgbColor } from '@/api';
+import { type LightsColorResponse, LightsService, type RgbColor } from '@/api';
 
 interface ColorStore {
   colors: LightsColorResponse[];

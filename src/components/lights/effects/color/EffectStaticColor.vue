@@ -30,17 +30,17 @@ import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDial
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, StaticColorCreateParams } from '@/api';
+import { RgbColorEnum, type StaticColorCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
-const colors = ref<RgbColor[]>([]);
+const colors = ref<RgbColorEnum[]>([]);
 const beatToggle = ref<boolean>(false);
 const relativeBrightness = ref<number>(1);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: StaticColorCreateParams.type.STATIC_COLOR,
+    type: 'StaticColor' as StaticColorCreateParams['type'],
     props: {
       color: colors.value[0],
       beatToggle: beatToggle.value,

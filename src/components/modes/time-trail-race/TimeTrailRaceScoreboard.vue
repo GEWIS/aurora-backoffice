@@ -2,7 +2,7 @@
   <Panel header="Scoreboard">
     <table class="w-full">
       <tbody>
-        <tr v-for="(score, index) in store.scoreboard">
+        <tr v-for="(score, index) in store.scoreboard" :key="index">
           <td class="text-right font-bold pr-1">{{ index + 1 }}</td>
           <td class="text-right font-bold pr-2" :class="score.bac && 'player-bac'">
             <font-awesome-icon

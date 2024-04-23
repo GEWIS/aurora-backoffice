@@ -26,7 +26,7 @@ import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { TableRotateCreateParams } from '@/api';
+import { type TableRotateCreateParams } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -35,7 +35,7 @@ const offsetFactor = ref<number>(0.25);
 
 const handleAddEffect = () => {
   store.setMovementEffect({
-    type: TableRotateCreateParams.type.TABLE_ROTATE,
+    type: 'TableRotate' as TableRotateCreateParams['type'],
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value

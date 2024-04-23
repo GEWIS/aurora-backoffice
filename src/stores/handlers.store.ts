@@ -75,8 +75,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        await HandlersService.setAudioHandler(id, {
-          name: newHandler != null ? newHandler : ''
+        await HandlersService.setAudioHandler({
+          id: id,
+          requestBody: {
+            name: newHandler != null ? newHandler : ''
+          }
         });
 
         this.audioHandlers = await HandlersService.getAudioHandlers();
@@ -89,8 +92,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        await HandlersService.setLightsHandler(id, {
-          name: newHandler != null ? newHandler : ''
+        await HandlersService.setLightsHandler({
+          id: id,
+          requestBody: {
+            name: newHandler != null ? newHandler : ''
+          }
         });
 
         this.lightsHandlers = await HandlersService.getLightsHandlers();
@@ -103,8 +109,11 @@ export const useHandlersStore = defineStore('handlers', {
       try {
         this.loading = true;
 
-        await HandlersService.setScreenHandler(id, {
-          name: newHandler != null ? newHandler : ''
+        await HandlersService.setScreenHandler({
+          id: id,
+          requestBody: {
+            name: newHandler != null ? newHandler : ''
+          }
         });
 
         this.screenHandlers = await HandlersService.getScreenHandlers();
