@@ -6,7 +6,7 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type === PosterType_IMAGE.IMG">
+    <template #header v-if="poster.type === 'img'">
       <div class="full-width">
         <Carousel
           :value="poster.source"
@@ -46,11 +46,7 @@
         class="full-width flex justify-content-center align-items-center"
         style="aspect-ratio: 16/9; background-color: silver"
       >
-        <a
-          v-if="poster.type === PosterType_EXTERNAL.EXTERN"
-          :href="poster.source[0]"
-          target="_blank"
-        >
+        <a v-if="poster.type === 'extern'" :href="poster.source[0]" target="_blank">
           <Button outlined>
             {{ capitalize(poster.type) }}
           </Button>
@@ -81,13 +77,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import {
-  type ErrorPoster,
-  type LocalPoster,
-  type MediaPoster,
-  type PhotoPoster,
-  PosterType_IMAGE
-} from '@/api';
+import { type ErrorPoster, type LocalPoster, type MediaPoster, type PhotoPoster } from '@/api';
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);

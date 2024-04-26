@@ -44,6 +44,7 @@ import Image from 'primevue/image';
 import Carousel from 'primevue/carousel';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
+import InputSwitch from 'primevue/inputswitch';
 
 export const app = createApp(App);
 
@@ -93,5 +94,6 @@ app.component('Image', Image);
 app.component('Carousel', Carousel);
 app.component('Stepper', Stepper);
 app.component('StepperPanel', StepperPanel);
+app.component('InputSwitch', InputSwitch);
 
 app.mount('#app');

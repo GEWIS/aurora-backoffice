@@ -30,6 +30,8 @@
         <FontAwesomeIcon :icon="faDownload" class="mr-2" />
       </template>
     </Button>
+    <div class="flex-1" />
+    <PosterBorrelModeSwitch />
   </div>
 </template>
 
@@ -38,6 +40,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faDownload, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { usePosterStore } from '@/stores/poster-store';
+import PosterBorrelModeSwitch from '@/components/poster/PosterBorrelModeSwitch.vue';
 
 const store = usePosterStore();
 
