@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { computed, ref } from 'vue';
+import { computed, type ComputedRef, ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
@@ -36,7 +36,7 @@ import { useSubscriberStore } from '@/stores/subscriber.store';
 
 const store = useEffectsControllerStore();
 const subscriberStore = useSubscriberStore();
-const gobos: string[] = computed(() => {
+const gobos: ComputedRef<string[]> = computed(() => {
   return subscriberStore.lightsGroups
     .map((g) => g.movingHeadWheels.map((w) => w.gobos))
     .flat()

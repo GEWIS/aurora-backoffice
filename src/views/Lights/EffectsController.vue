@@ -52,8 +52,9 @@
             <h4 class="mt-2 mb-1">Movement</h4>
             <div class="flex flex-row flex-wrap gap-2">
               <EffectSearchLight />
-              <EffectRandomPosition />
               <EffectTableRotate />
+              <EffectClassicRotate />
+              <EffectRandomPosition />
             </div>
           </template>
         </Card>
@@ -121,6 +122,7 @@ import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
+import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();
