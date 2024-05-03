@@ -1,12 +1,7 @@
 import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
 import { handleError } from '@/utils/errorHandler';
-import {
-  type MixTapeResponse,
-  ModesService,
-  type CenturionResponse,
-  type HttpApiException
-} from '@/api';
+import { type MixTapeResponse, ModesService, type CenturionResponse, ApiError } from '@/api';
 
 interface CenturionStore {
   currentTape: CenturionResponse | null;
@@ -27,11 +22,11 @@ export const useCenturionStore = defineStore('centurion', {
       // TODO check if error handling is okay
       ModesService.getCenturion()
         .then((tape) => (this.currentTape = tape))
-        .catch((e: HttpApiException | string) => {
-          if ((typeof e !== 'string' && e.statusCode === 404) || e === 'Centurion not enabled') {
+        .catch((e: ApiError | string) => {
+          if ((typeof e !== 'string' && e.status === 404) || e === 'Centurion not enabled') {
             this.currentTape = null;
-          } else {
-            handleError(e as HttpApiException);
+          } else if (typeof e !== 'string') {
+            handleError(e);
           }
         });
       if (handleLoading) this.loading = false;
