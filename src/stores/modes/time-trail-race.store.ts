@@ -172,6 +172,14 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       socketStore.backofficeSocket?.on('race-player-finish', this.handleFinish.bind(this));
       socketStore.backofficeSocket?.on('race-scoreboard', this.handleRevealScore.bind(this));
     },
+    async quit() {
+      this.loading = true;
+      await ModesService.disableTimeTrailRacing();
+      this.state = undefined;
+      this.sessionName = undefined;
+      this.scoreboard = [];
+      this.loading = false;
+    },
     destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener(

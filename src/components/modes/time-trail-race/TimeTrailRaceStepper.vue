@@ -1,5 +1,13 @@
 <template>
   <Panel :header="`Play - ${store.sessionName}`">
+    <template #header>
+      <div class="flex flex-row align-items-center w-full">
+        <div class="p-panel-title flex-1">{{ `Play - ${store.sessionName}` }}</div>
+        <div>
+          <TimeTrailRaceQuitButton />
+        </div>
+      </div>
+    </template>
     <template #default v-if="store.sessionName != null && store.state != null">
       <Stepper orientation="vertical" :active-step="currentStep" linear>
         <StepperPanel header="Register player">
@@ -56,6 +64,7 @@ import TimeTrailRaceReady from '@/components/modes/time-trail-race/state/TimeTra
 import TimeTrailRaceAnnounce from '@/components/modes/time-trail-race/state/TimeTrailRaceAnnounce.vue';
 import TimeTrailRacePlaying from '@/components/modes/time-trail-race/state/TimeTrailRacePlaying.vue';
 import TimeTrailRaceScore from '@/components/modes/time-trail-race/state/TimeTrailRaceScore.vue';
+import TimeTrailRaceQuitButton from '@/components/modes/time-trail-race/TimeTrailRaceQuitButton.vue';
 
 const store = useTimeTrailRaceStore();
 const currentStep = computed(() => {
