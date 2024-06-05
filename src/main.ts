@@ -45,6 +45,7 @@ import Carousel from 'primevue/carousel';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import InputSwitch from 'primevue/inputswitch';
+import Column from 'primevue/column';
 
 export const app = createApp(App);
 
@@ -77,6 +78,7 @@ app.component('Menu', Menu);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);
 app.component('DataTable', DataTable);
+app.component('Column', Column);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('Checkbox', Checkbox);

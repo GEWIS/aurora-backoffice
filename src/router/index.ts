@@ -11,6 +11,7 @@ import EffectsController from '@/views/Lights/EffectsController.vue';
 import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
 import PosterList from '@/views/Poster/PosterList.vue';
 import TimeTrailRaceModeView from '@/views/Modes/TimeTrailRaceModeView.vue';
+import ScenesController from '@/views/Lights/ScenesController.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -101,6 +102,11 @@ const router = createRouter({
               path: 'effectsController',
               component: EffectsController,
               name: 'lightsEffectsController'
+            },
+            {
+              path: 'scenesController',
+              component: ScenesController,
+              name: 'lightsScenesController'
             }
           ]
         }

@@ -76,6 +76,10 @@ const leftItems = ref([
       {
         label: 'Effects',
         route: '/lights/effectsController'
+      },
+      {
+        label: 'Scenes',
+        route: '/lights/scenesController'
       }
     ]
   }
