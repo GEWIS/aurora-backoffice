@@ -3,12 +3,10 @@
     <div class="page-title">Room Responsibles</div>
     <RoomResponsibleOverview />
   </div>
-  <CopyrightBanner />
 </template>
 
 <script setup lang="ts">
 import RoomResponsibleOverview from '@/components/Infoscreen/RoomResponsibleOverview.vue';
-import CopyrightBanner from '@/layout/CopyrightBanner.vue';
 </script>
 
 <style scoped>
