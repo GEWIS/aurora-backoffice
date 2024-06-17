@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import {
-  PosterScreenService,
   type LocalPoster,
   type MediaPoster,
   type PhotoPoster,
-  type ErrorPoster
+  type ErrorPoster,
+  HandlersService
 } from '@/api';
 
 interface PosterStore {
@@ -22,14 +22,14 @@ export const usePosterStore = defineStore('poster', {
   getters: {},
   actions: {
     async getPosters() {
-      await PosterScreenService.getPosters(true).then((p) => {
+      await HandlersService.getPosters(true).then((p) => {
         this.posters = p.posters;
         this.borrelModeActive = p.borrelMode;
       });
     },
     async setBorrelMode(enabled: boolean) {
       this.loading = true;
-      await PosterScreenService.setPosterBorrelMode({ enabled }).then(() => {
+      await HandlersService.setPosterBorrelMode({ enabled }).then(() => {
         this.loading = false;
         this.borrelModeActive = enabled;
       });
@@ -41,7 +41,7 @@ export const usePosterStore = defineStore('poster', {
     },
     async reloadPosters() {
       this.loading = true;
-      await PosterScreenService.forceUpdatePosters();
+      await HandlersService.forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;
