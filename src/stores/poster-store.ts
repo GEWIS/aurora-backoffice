@@ -22,12 +22,10 @@ export const usePosterStore = defineStore('poster', {
   getters: {},
   actions: {
     async getPosters() {
-      await PosterScreenService.getPosters(true).then((p) => (this.posters = p));
-    },
-    async getBorrelModeActive() {
-      await PosterScreenService.getPosterBorrelMode().then(
-        (r) => (this.borrelModeActive = r.enabled)
-      );
+      await PosterScreenService.getPosters(true).then((p) => {
+        this.posters = p.posters;
+        this.borrelModeActive = p.borrelMode;
+      });
     },
     async setBorrelMode(enabled: boolean) {
       this.loading = true;
@@ -39,7 +37,6 @@ export const usePosterStore = defineStore('poster', {
     async init() {
       this.loading = true;
       await this.getPosters();
-      await this.getBorrelModeActive();
       this.loading = false;
     },
     async reloadPosters() {
