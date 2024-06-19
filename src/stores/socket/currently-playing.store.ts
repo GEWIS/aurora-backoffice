@@ -14,8 +14,8 @@ export const useCurrentlyPlayingStore = defineStore('currently-playing', {
   }),
   getters: {},
   actions: {
-    handleChangeTrack(events: TrackChangeEvent[]) {
-      console.log('change track', events);
+    handleChangeTrack(events?: TrackChangeEvent[]) {
+      if (!events || events.length === 0) return;
       this.currentlyPlaying = events[0];
     },
     async init() {

@@ -29,7 +29,6 @@ defineEmits<{
 
 const connected: ComputedRef<boolean> = computed(() => {
   const socketIds = props.subscriber.socketIds as any | undefined;
-  console.log(socketIds);
   return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
 });
 </script>
