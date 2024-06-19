@@ -23,16 +23,41 @@
 
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPersonRunning, faPowerOff, faShareFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { ref } from 'vue';
+import {
+  faPersonRunning,
+  faPersonWalking,
+  faPowerOff,
+  faShareFromSquare
+} from '@fortawesome/free-solid-svg-icons';
+import { computed } from 'vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import type { MenuItem } from 'primevue/menuitem';
+import { useSceneControllerStore } from '@/stores/scene-controller.store';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
+const sceneStore = useSceneControllerStore();
 
-const items = ref<MenuItem[]>([
+const sceneMenuItems = computed<MenuItem[]>(() =>
+  sceneStore.favoriteScenes.map((s) => {
+    const lightGroupIds = s.effects
+      .map((e) => e.lightsGroups.map((g) => g.id))
+      .flat()
+      .flat()
+      .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
+    return {
+      label: s.name,
+      icon: faPersonWalking as any as string,
+      command: async () => {
+        await handlersStore.setLightsHandler(lightGroupIds, 'ScenesHandler');
+        await sceneStore.applyScene(s.id);
+      }
+    };
+  })
+);
+
+const items = computed<MenuItem[]>(() => [
   {
     label: 'Reset to defaults',
     icon: faPowerOff as any as string,
@@ -54,14 +79,7 @@ const items = ref<MenuItem[]>([
           handlersStore.setLightsHandler(ids);
         }
       },
-      // {
-      //   label: 'Borrel mode (moving)',
-      //   icon: faPersonWalking
-      // },
-      // {
-      //   label: 'Borrel mode (static)',
-      //   icon: faPerson
-      // },
+      ...sceneMenuItems.value,
       {
         label: 'Random effects',
         icon: faPersonRunning as any as string,
