@@ -27,7 +27,7 @@ export const useCurrentlyPlayingStore = defineStore('currently-playing', {
       store.backofficeSocket.on('change_track', this.handleChangeTrack.bind(this));
 
       const event = await SpotifyService.getSpotifyCurrentlyPlaying();
-      this.handleChangeTrack([event]);
+      this.handleChangeTrack(event);
     },
     destroy() {
       const store = useSocketStore();

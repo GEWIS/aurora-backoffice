@@ -6,6 +6,12 @@
   >
     <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
     <Dropdown v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
+    <Dropdown
+      v-model="goboRotate"
+      :options="goboRotates"
+      placeholder="Select a gobo rotate effect"
+      show-clear
+    />
     <SelectorBoolean
       id="beat-toggle"
       name="Beat Toggle"
@@ -40,11 +46,20 @@ const gobos: ComputedRef<string[]> = computed(() => {
   return subscriberStore.lightsGroups
     .map((g) => g.movingHeadWheels.map((w) => w.gobos))
     .flat()
-    .flat();
+    .flat()
+    .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
+});
+const goboRotates: ComputedRef<string[]> = computed(() => {
+  return subscriberStore.lightsGroups
+    .map((g) => g.movingHeadWheels.map((w) => w.goboRotates))
+    .flat()
+    .flat()
+    .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
 });
 
 const colors = ref<RgbColor[]>([]);
 const gobo = ref<string>('');
+const goboRotate = ref<string>('');
 const beatToggle = ref<boolean>(false);
 const relativeBrightness = ref<number>(1);
 
@@ -54,6 +69,7 @@ const handleAddEffect = () => {
     props: {
       color: colors.value[0],
       gobo: gobo.value ? gobo.value : undefined,
+      goboRotate: goboRotate.value ? goboRotate.value : undefined,
       beatToggle: beatToggle.value,
       relativeBrightness: relativeBrightness.value
     }
