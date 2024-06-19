@@ -71,13 +71,23 @@ export const useHandlersStore = defineStore('handlers', {
 
       this.loading = false;
     },
-    async setAudioHandler(id: number, newHandler: string | null): Promise<void> {
+    async setAudioHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
         this.loading = true;
 
-        await HandlersService.setAudioHandler(id, {
-          name: newHandler != null ? newHandler : ''
-        });
+        if (Array.isArray(id)) {
+          await Promise.all(
+            id.map((i) =>
+              HandlersService.setAudioHandler(i, {
+                name: newHandler != null ? newHandler : ''
+              })
+            )
+          );
+        } else {
+          await HandlersService.setAudioHandler(id, {
+            name: newHandler != null ? newHandler : ''
+          });
+        }
 
         this.audioHandlers = await HandlersService.getAudioHandlers();
       } catch (e: any) {
@@ -85,13 +95,23 @@ export const useHandlersStore = defineStore('handlers', {
       }
       this.loading = false;
     },
-    async setLightsHandler(id: number, newHandler: string | null): Promise<void> {
+    async setLightsHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
         this.loading = true;
 
-        await HandlersService.setLightsHandler(id, {
-          name: newHandler != null ? newHandler : ''
-        });
+        if (Array.isArray(id)) {
+          await Promise.all(
+            id.map((i) =>
+              HandlersService.setLightsHandler(i, {
+                name: newHandler != null ? newHandler : ''
+              })
+            )
+          );
+        } else {
+          await HandlersService.setLightsHandler(id, {
+            name: newHandler != null ? newHandler : ''
+          });
+        }
 
         this.lightsHandlers = await HandlersService.getLightsHandlers();
       } catch (e: any) {
@@ -99,13 +119,23 @@ export const useHandlersStore = defineStore('handlers', {
       }
       this.loading = false;
     },
-    async setScreenHandler(id: number, newHandler: string | null): Promise<void> {
+    async setScreenHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
         this.loading = true;
 
-        await HandlersService.setScreenHandler(id, {
-          name: newHandler != null ? newHandler : ''
-        });
+        if (Array.isArray(id)) {
+          await Promise.all(
+            id.map((i) =>
+              HandlersService.setScreenHandler(i, {
+                name: newHandler != null ? newHandler : ''
+              })
+            )
+          );
+        } else {
+          await HandlersService.setScreenHandler(id, {
+            name: newHandler != null ? newHandler : ''
+          });
+        }
 
         this.screenHandlers = await HandlersService.getScreenHandlers();
       } catch (e: any) {
@@ -130,6 +160,18 @@ export const useHandlersStore = defineStore('handlers', {
       const handler = this.screenHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
+    },
+    async reset() {
+      try {
+        this.loading = true;
+        await HandlersService.resetAllHandlersToDefaults();
+
+        await this.getAudioHandlers();
+        await this.getLightsHandlers();
+        await this.getScreenHandlers();
+      } catch (e: any) {
+        handleError(e);
+      }
     }
   }
 });
