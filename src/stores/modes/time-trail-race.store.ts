@@ -29,8 +29,29 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     scoreboard: [],
     loading: true
   }),
-  getters: {},
+  getters: {
+    enabled(): boolean {
+      return this.sessionName != null && this.state != null && !this.loading;
+    },
+    disabled(): boolean {
+      return (this.sessionName == null || this.state == null) && !this.loading;
+    }
+  },
   actions: {
+    async getTimeTrailMode() {
+      this.loading = true;
+      try {
+        const { state, sessionName, scoreboard } = await ModesService.getRaceState();
+        this.state = state;
+        this.sessionName = sessionName;
+        this.scoreboard = scoreboard;
+      } catch (e) {
+        this.state = undefined;
+        this.sessionName = undefined;
+        this.scoreboard = [];
+      }
+      this.loading = false;
+    },
     async initializeTimeTrailMode(
       sessionName: string,
       audioIds: number[],
@@ -149,18 +170,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.startTime = undefined;
     },
     async init() {
-      this.loading = true;
-      try {
-        const { state, sessionName, scoreboard } = await ModesService.getRaceState();
-        this.state = state;
-        this.sessionName = sessionName;
-        this.scoreboard = scoreboard;
-      } catch (e) {
-        this.state = undefined;
-        this.sessionName = undefined;
-        this.scoreboard = [];
-      }
-      this.loading = false;
+      await this.getTimeTrailMode();
 
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on(

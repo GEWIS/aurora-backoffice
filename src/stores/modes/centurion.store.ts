@@ -15,7 +15,14 @@ export const useCenturionStore = defineStore('centurion', {
     tapes: null,
     loading: true
   }),
-  getters: {},
+  getters: {
+    enabled(): boolean {
+      return this.currentTape != null && !this.loading;
+    },
+    disabled(): boolean {
+      return this.currentTape == null && !this.loading;
+    }
+  },
   actions: {
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
