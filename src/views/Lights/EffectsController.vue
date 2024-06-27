@@ -5,7 +5,7 @@
       <BeatVisualizer />
     </div>
     <div class="grid">
-      <div class="md:col-4 lg:col-3">
+      <div class="col-12 md:col-4 lg:col-3">
         <Card class="w-full">
           <template #title>(1) Lights groups</template>
           <template #content>

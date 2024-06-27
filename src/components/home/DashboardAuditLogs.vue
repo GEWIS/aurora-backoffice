@@ -7,7 +7,7 @@
           class="mr-1 text-xl"
           :style="{ marginTop: '-0.25rem', marginBottom: '-0.15rem' }"
         />
-        Currently Playing
+        Recent activity
       </div>
     </template>
     <template #default>

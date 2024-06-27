@@ -1,5 +1,5 @@
 <template>
-  <Panel>
+  <Panel class="w-full">
     <template #header>
       <div class="p-panel-title uppercase">
         <FontAwesomeIcon

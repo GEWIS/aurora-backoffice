@@ -2,16 +2,16 @@
   <div class="page-container">
     <div class="page-title">Hello, {{ authStore.name }}.</div>
     <div class="grid">
-      <div class="sm:col-12 md:col-6 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-4">
         <SubscribersOverview />
       </div>
-      <div class="sm:col-12 md:col-6 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-4">
         <SpotifyCurrentlyPlaying />
       </div>
-      <div class="sm:col-12 md:col-6 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-4">
         <DashboardShortcuts />
       </div>
-      <div class="sm:col-12">
+      <div class="col-12">
         <DashboardAuditLogs />
       </div>
     </div>
