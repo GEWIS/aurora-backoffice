@@ -4,6 +4,7 @@ import 'primeflex/primeflex.scss';
 import './styles/themes/theme.scss';
 // import './styles/themes/lara-light/theme.scss';
 import 'primeicons/primeicons.css';
+import '@/assets/styles.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
