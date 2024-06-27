@@ -15,7 +15,7 @@
         </tr>
       </tbody>
     </table>
-    <Button :loading="store.loading" @click="store.revealScore()">
+    <Button class="w-full h-5rem" :loading="store.loading" @click="store.revealScore()">
       Reveal scores on screen & play again
     </Button>
   </div>

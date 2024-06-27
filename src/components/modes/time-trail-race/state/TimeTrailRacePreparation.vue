@@ -1,5 +1,7 @@
 <template>
-  <Button :loading="store.loading" @click="store.ready()"> Player ready on the bar </Button>
+  <Button class="w-full h-5rem" :loading="store.loading" @click="store.ready()">
+    Player ready on the bar
+  </Button>
 </template>
 
 <script setup lang="ts">

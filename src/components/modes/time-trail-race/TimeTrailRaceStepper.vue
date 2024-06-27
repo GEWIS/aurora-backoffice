@@ -9,6 +9,18 @@
       </div>
     </template>
     <template #default v-if="store.sessionName != null && store.state != null">
+      <Button
+        class="w-full text-center mb-3"
+        outlined
+        :disabled="
+          store.state === TimeTrailRaceState.INITIALIZED ||
+          store.state === TimeTrailRaceState.SCOREBOARD
+        "
+        :loading="store.loading"
+        @click="store.resetPlayer()"
+      >
+        Reset player
+      </Button>
       <Stepper orientation="vertical" :active-step="currentStep" linear>
         <StepperPanel header="Register player">
           <template #content>

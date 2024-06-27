@@ -1,7 +1,9 @@
 <template>
   <div>
     <h2>{{ timeString }}</h2>
-    <Button :loading="store.loading" @click="store.finish()"> Finish! </Button>
+    <Button class="w-full h-5rem" :loading="store.loading" @click="store.finish()">
+      Finish!
+    </Button>
   </div>
 </template>
 

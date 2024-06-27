@@ -169,6 +169,19 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.scoreboard = event.scoreboard;
       this.startTime = undefined;
     },
+    async resetPlayer() {
+      this.loading = true;
+      await ModesService.raceResetPlayer()
+        .then(this.handleRevealScore)
+        .catch((e: ApiError) => {
+          handleError({
+            name: e.statusText,
+            message: e.message,
+            statusCode: e.status
+          });
+        });
+      this.loading = false;
+    },
     async init() {
       await this.getTimeTrailMode();
 

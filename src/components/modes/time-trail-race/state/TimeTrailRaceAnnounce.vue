@@ -1,5 +1,5 @@
 <template>
-  <Button :loading="store.loading" @click="store.start()"> Start! </Button>
+  <Button class="w-full h-5rem" :loading="store.loading" @click="store.start()"> Start! </Button>
 </template>
 
 <script setup lang="ts">
