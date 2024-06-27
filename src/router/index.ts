@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DashboardLayout from '@/layout/DashboardLayout.vue';
+import AppLayout from '@/layout/AppLayout.vue';
 import AuthView from '@/views/AuthView.vue';
 import DashboardView from '@/views/DashboardView.vue';
 import RoomresponsibleView from '@/views/Infoscreen/RoomresponsibleView.vue';
 import SettingsView from '@/views/Infoscreen/SettingsView.vue';
-import PageNotFoundView from '@/views/PageNotFoundView.vue';
+import NotFound from '@/views/NotFound.vue';
 import { useAuthStore } from '@/stores/auth.store';
 import UnauthorizedView from '@/views/UnauthorizedView.vue';
 import EffectsController from '@/views/Lights/EffectsController.vue';
@@ -49,7 +49,7 @@ const router = createRouter({
     },
     {
       path: '',
-      component: DashboardLayout,
+      component: AppLayout,
       meta: { requiresAuth: true },
       children: [
         {
@@ -127,7 +127,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       meta: { requiresAuth: true },
-      component: PageNotFoundView,
+      component: NotFound,
       name: 'notFound'
     }
   ]
