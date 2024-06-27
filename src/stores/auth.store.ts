@@ -6,6 +6,7 @@ import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
 import { AuthenticationService, type OidcParameters, type User, UserService } from '@/api';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
+import { useAuditStore } from '@/stores/audit.store';
 
 interface AuthStore {
   name: string | null;
@@ -52,11 +53,14 @@ export const useAuthStore = defineStore('auth', {
     },
     async initStores(): Promise<void> {
       await useSocketStore().connect();
-      await useHandlersStore().init();
-      await useColorStore().init();
-      await useSubscriberStore().init();
-      await useInfoscreenStore().init();
-      await useSceneControllerStore().init();
+      await Promise.all([
+        useHandlersStore().init(),
+        useColorStore().init(),
+        useSubscriberStore().init(),
+        useInfoscreenStore().init(),
+        useSceneControllerStore().init(),
+        useAuditStore().init()
+      ]);
     },
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;

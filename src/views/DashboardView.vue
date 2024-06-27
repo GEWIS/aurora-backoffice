@@ -11,6 +11,9 @@
       <div class="sm:col-12 md:col-6 lg:col-4">
         <DashboardShortcuts />
       </div>
+      <div class="sm:col-12">
+        <DashboardAuditLogs />
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import '@/styles/BasePage.scss';
 import SpotifyCurrentlyPlaying from '@/components/home/SpotifyCurrentlyPlaying.vue';
 import DashboardShortcuts from '@/components/home/DashboardShortcuts.vue';
+import DashboardAuditLogs from '@/components/home/DashboardAuditLogs.vue';
 
 const authStore = useAuthStore();
 </script>
