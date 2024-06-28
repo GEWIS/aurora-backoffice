@@ -58,9 +58,10 @@
     "nswag": "^14.0.8",
     "openapi-typescript-codegen": "0.29.0",
     "prettier": "^3.3.2",
+    "sass": "^1.77.6",
     "typescript": "^5.5.2",
     "vite": "^5.3.2",
-    "sass": "^1.77.6",
+    "vite-plugin-chunk-split": "^0.5.0",
     "vite-plugin-mkcert": "^1.17.5",
     "vue-tsc": "^2.0.22"
   }
