@@ -33,8 +33,6 @@ defineProps<{
 </template>
 
 <style scoped>
-@import '../../../styles/BasePage.scss';
-
 .button-content > :nth-child(1) {
   font-weight: bold;
 }

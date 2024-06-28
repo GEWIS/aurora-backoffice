@@ -23,6 +23,4 @@ import RoomResponsibleSettings from '@/components/Infoscreen/RoomResponsibleSett
 import EROSettings from '@/components/Infoscreen/EROSettings.vue';
 </script>
 
-<style scoped>
-@import '@/styles/BasePage.scss';
-</style>
+<style scoped></style>

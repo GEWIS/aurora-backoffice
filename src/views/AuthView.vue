@@ -5,12 +5,10 @@
       <hr />
       <Spinner id="login-image" />
     </main>
-    <CopyrightBanner />
   </div>
 </template>
 
 <script setup lang="ts">
-import CopyrightBanner from '@/layout/CopyrightBanner.vue';
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';

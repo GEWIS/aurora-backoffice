@@ -9,6 +9,4 @@
 import RoomResponsibleOverview from '@/components/Infoscreen/RoomResponsibleOverview.vue';
 </script>
 
-<style scoped>
-@import '@/styles/BasePage.scss';
-</style>
+<style scoped></style>

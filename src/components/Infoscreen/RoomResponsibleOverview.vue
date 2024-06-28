@@ -63,8 +63,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@import '@/styles/BasePage.scss';
-
 .roomresponsible-header {
   display: flex;
   justify-content: flex-end;

@@ -6,9 +6,6 @@
         <SubscribersOverview />
       </div>
       <div class="col-12 md:col-6 lg:col-4">
-        <SpotifyCurrentlyPlaying />
-      </div>
-      <div class="col-12 md:col-6 lg:col-4">
         <DashboardShortcuts />
       </div>
       <div class="col-12">
@@ -21,8 +18,6 @@
 <script setup lang="ts">
 import SubscribersOverview from '@/components/home/SubscribersOverview.vue';
 import { useAuthStore } from '@/stores/auth.store';
-import '@/styles/BasePage.scss';
-import SpotifyCurrentlyPlaying from '@/components/home/SpotifyCurrentlyPlaying.vue';
 import DashboardShortcuts from '@/components/home/DashboardShortcuts.vue';
 import DashboardAuditLogs from '@/components/home/DashboardAuditLogs.vue';
 
