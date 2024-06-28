@@ -1,18 +1,17 @@
 <template>
   <ul class="layout-menu">
     <template v-for="(item, i) in model" :key="item">
-      <app-menu-item v-if="!item.separator" :item="item" :index="i"></app-menu-item>
-      <li v-if="item.separator" class="menu-separator"></li>
+      <AppMenuItem :item="item" :index="i"></AppMenuItem>
     </template>
   </ul>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-
 import AppMenuItem from './AppMenuItem.vue';
+import { type MenuItem } from './AppMenuItem.vue';
 
-const model = ref([
+const model = ref<MenuItem[]>([
   {
     label: 'Home',
     items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
@@ -27,38 +26,19 @@ const model = ref([
   {
     label: 'Lights',
     items: [
-      { label: 'Effects', icon: 'pi pi-fw pi-sparkles', to: '/blocks', badge: 'NEW' },
-      {
-        label: 'Scenes',
-        icon: 'pi pi-fw pi-globe',
-        url: 'https://www.primefaces.org/primeblocks-vue',
-        target: '_blank'
-      }
+      { label: 'Effects', icon: 'pi pi-fw pi-sparkles', to: '/lights/effects' },
+      { label: 'Scenes', icon: 'pi pi-fw pi-sparkles', to: '/lights/scenes' }
     ]
   },
   {
     label: 'Audio',
-    items: [
-      {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-megaphone',
-        to: '/landing'
-      }
-    ]
+    items: [{ label: 'Settings', icon: 'pi pi-fw pi-megaphone', to: '/' }]
   },
   {
     label: 'Modes',
     items: [
-      {
-        label: 'Spoelbakkenrace',
-        icon: 'pi pi-fw pi-bars',
-        to: '/modes/spoelbakkenrace'
-      },
-      {
-        label: 'Centurion',
-        icon: 'pi pi-fw pi-crown',
-        to: '/modes/centurion'
-      }
+      { label: 'Spoelbakkenrace', icon: 'pi pi-fw pi-bars', to: '/modes/timetrailrace' },
+      { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' }
     ]
   }
 ]);

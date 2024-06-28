@@ -265,6 +265,4 @@ const deleteSelectedMessages = () => {
 };
 </script>
 
-<style scoped>
-@import '@/styles/BasePage.scss';
-</style>
+<style scoped></style>

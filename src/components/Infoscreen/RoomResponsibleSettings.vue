@@ -117,6 +117,4 @@ const changeSecondResponsible = (e: DropdownChangeEvent) => {
 };
 </script>
 
-<style scoped>
-@import '@/styles/BasePage.scss';
-</style>
+<style scoped></style>

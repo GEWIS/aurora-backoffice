@@ -1,8 +1,6 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
 import 'primeflex/primeflex.scss';
-import './styles/themes/theme.scss';
-// import './styles/themes/lara-light/theme.scss';
 import 'primeicons/primeicons.css';
 import '@/assets/styles.scss';
 
