@@ -1,13 +1,8 @@
 <template>
   <div class="card mb-0">
-    <h5>Audio</h5>
-    <div class="flex justify-content-between mb-3">
-      <SubscriberItemComponent
-        v-for="audio in subscriberStore.audios.value"
-        :key="audio.id"
-        :subscriber="audio"
-        :icon="faVolumeHigh"
-      >
+    <h4><FontAwesomeIcon class="mr-3" :icon="faVolumeHigh" />Audio</h4>
+    <div class="flex justify-content-evenly flex-wrap">
+      <div v-for="audio in subscriberStore.audios.value" :key="audio.id" class="m-3">
         <SubscriberItemContent
           :subscriber="audio"
           :current-handler="
@@ -19,7 +14,7 @@
           "
           :loading="handlersStore.loading"
         />
-      </SubscriberItemComponent>
+      </div>
     </div>
   </div>
 </template>
@@ -27,10 +22,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
-import SubscriberItemComponent from '@/components/home/SubscriberItemComponent.vue';
 import { useHandlersStore } from '@/stores/handlers.store';
-import SubscriberItemContent from '@/components/home/SubscriberItemContent.vue';
+import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
 import { faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
