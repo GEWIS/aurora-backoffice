@@ -4,8 +4,8 @@
     :options="possibleHandlers"
     option-label="name"
     option-value="name"
-    placeholder="Select handler..."
-    class="text-overflow-ellipsis full-width"
+    placeholder="Select handler"
+    class="overflow-hidden text-overflow-ellipsis w-13rem"
     @update:model-value="
       (newHandler: string | null) => {
         $emit('change', newHandler);

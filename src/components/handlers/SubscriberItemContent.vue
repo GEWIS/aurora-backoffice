@@ -1,17 +1,24 @@
 <template>
-  <span class="font-bold">{{ subscriber.name }}</span>
-  <span v-if="connected" class="text-sm">Connected</span>
-  <span v-if="!connected" class="font-italic text-sm opacity-30">Disconnected</span>
-  <subscriber-handler-change-dropdown
-    :current-handler="currentHandler"
-    :possible-handlers="possibleHandlers"
-    :loading="loading"
-    @change="(newHandler: string | null) => $emit('change', newHandler)"
-  />
+  <div>
+    <div class="flex justify-content-around align-items-start mb-3">
+      <div>
+        <span class="block text-500 font-medium"
+          >{{ subscriber.name }}
+          <span v-if="!connected" class="font-italic text-sm opacity-30 ml-2">Disconnected</span>
+        </span>
+      </div>
+    </div>
+    <subscriber-handler-change-dropdown
+      :current-handler="currentHandler"
+      :possible-handlers="possibleHandlers"
+      :loading="loading"
+      @change="(newHandler: string | null) => $emit('change', newHandler)"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import SubscriberHandlerChangeDropdown from '@/components/home/SubscriberHandlerChangeDropdown.vue';
+import SubscriberHandlerChangeDropdown from '@/components/handlers/SubscriberHandlerChangeDropdown.vue';
 import type { Handler } from '@/stores/handlers.store';
 import { computed, type ComputedRef } from 'vue';
 import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
