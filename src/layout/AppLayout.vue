@@ -61,7 +61,7 @@ const unbindOutsideClickListener = () => {
 
 const isOutsideClicked = (event: Event) => {
   const sidebar = document.querySelector('.layout-sidebar');
-  const sidebarButton = document.querySelector('.layout-menu-button');
+  const sidebarButton = document.querySelector('.layout-topbar-button');
 
   const isInside =
     sidebar!.contains(event.target as Node) || sidebarButton!.contains(event.target as Node);

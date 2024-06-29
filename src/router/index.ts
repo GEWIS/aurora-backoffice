@@ -8,6 +8,8 @@ declare module 'vue-router' {
   }
 }
 import AppLayout from '@/layout/AppLayout.vue';
+import { useLayoutStore } from '@/stores/layout.store';
+import { usePrimeVue } from 'primevue/config';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -121,6 +123,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  const layoutStore = useLayoutStore();
+  layoutStore.init(usePrimeVue());
+
   const authStore = useAuthStore();
   // Automatically login using mock when in development mode
   if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
