@@ -9,6 +9,7 @@
       :class="{ 'active-route': checkActiveRoute(item) }"
       tabindex="0"
       :to="item.to"
+      @click="itemClick"
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
       <span class="layout-menuitem-text">{{ item.label }}</span>
@@ -26,6 +27,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { useLayoutStore } from '@/stores/layout.store';
 
 export interface MenuItem {
   label: string;
@@ -53,9 +55,17 @@ defineProps({
   }
 });
 
+const layoutStore = useLayoutStore();
 const route = useRoute();
+
 const checkActiveRoute = (item: MenuItem) => {
   return route.path === item.to;
+};
+
+const itemClick = () => {
+  if (layoutStore.menuMobileActive) {
+    layoutStore.switchMenuMobile();
+  }
 };
 </script>
 
