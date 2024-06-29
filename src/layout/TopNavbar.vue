@@ -80,6 +80,10 @@ const leftItems = ref([
       {
         label: 'Scenes',
         route: '/lights/scenesController'
+      },
+      {
+        label: 'Fixtures',
+        route: '/lights/fixtures'
       }
     ]
   }

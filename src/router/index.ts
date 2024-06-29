@@ -13,6 +13,7 @@ import PosterList from '@/views/Poster/PosterList.vue';
 import TimeTrailRaceModeView from '@/views/Modes/TimeTrailRaceModeView.vue';
 import ScenesController from '@/views/Lights/ScenesController.vue';
 import AuditLogsView from '@/views/AuditLogsView.vue';
+import FixtureOverview from '@/views/Lights/FixtureOverview.vue';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -108,6 +109,11 @@ const router = createRouter({
               path: 'scenesController',
               component: ScenesController,
               name: 'lightsScenesController'
+            },
+            {
+              path: 'fixtures',
+              component: FixtureOverview,
+              name: 'fixturesOverview'
             }
           ]
         },

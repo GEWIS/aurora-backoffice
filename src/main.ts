@@ -47,6 +47,7 @@ import StepperPanel from 'primevue/stepperpanel';
 import InputSwitch from 'primevue/inputswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
+import InlineMessage from 'primevue/inlinemessage';
 
 export const app = createApp(App);
 
@@ -99,5 +100,6 @@ app.component('Carousel', Carousel);
 app.component('Stepper', Stepper);
 app.component('StepperPanel', StepperPanel);
 app.component('InputSwitch', InputSwitch);
+app.component('InlineMessage', InlineMessage);
 
 app.mount('#app');

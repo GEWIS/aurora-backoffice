@@ -44,14 +44,14 @@ const store = useEffectsControllerStore();
 const subscriberStore = useSubscriberStore();
 const gobos: ComputedRef<string[]> = computed(() => {
   return subscriberStore.lightsGroups
-    .map((g) => g.movingHeadWheels.map((w) => w.gobos))
+    .map((g) => g.movingHeadWheels.map((w) => w.fixture.gobos))
     .flat()
     .flat()
     .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
 });
 const goboRotates: ComputedRef<string[]> = computed(() => {
   return subscriberStore.lightsGroups
-    .map((g) => g.movingHeadWheels.map((w) => w.goboRotates))
+    .map((g) => g.movingHeadWheels.map((w) => w.fixture.goboRotates))
     .flat()
     .flat()
     .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
