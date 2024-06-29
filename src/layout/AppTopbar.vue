@@ -5,31 +5,30 @@
       <span>Aurora</span>
     </router-link>
 
-    <button class="p-link layout-menu-button layout-topbar-button" @click="switchMenu">
+    <button class="p-link layout-topbar-button left" @click="switchMenu">
       <i class="pi pi-bars"></i>
     </button>
 
-    <div class="p-link layout-topbar-menu-button layout-topbar-button">
-      <ToggleButton
-        v-model="isLightMode"
-        offIcon="pi pi-moon"
-        offLabel=""
-        onIcon="pi pi-sun"
-        onLabel=""
-        @click="onThemeChangeButton"
-      />
+    <div class="p-link layout-topbar-button right" @click="onThemeChangeButton">
+      <i
+        :class="[
+          'pi',
+          {
+            'pi-moon': !darkMode,
+            'pi-sun': darkMode
+          }
+        ]"
+      ></i>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { usePrimeVue } from 'primevue/config';
 import { useLayoutStore } from '@/stores/layout.store';
+import { storeToRefs } from 'pinia';
 
-const isLightMode = ref(false);
-const $primevue = usePrimeVue();
 const layoutStore = useLayoutStore();
+const { darkMode } = storeToRefs(layoutStore);
 
 const switchMenu = () => {
   if (window.innerWidth > 991) {
@@ -40,9 +39,7 @@ const switchMenu = () => {
 };
 
 const onThemeChangeButton = () => {
-  let currentTheme = isLightMode.value ? 'aura-dark-blue' : 'aura-light-blue';
-  let newTheme = isLightMode.value ? 'aura-light-blue' : 'aura-dark-blue';
-  $primevue.changeTheme(currentTheme, newTheme, 'theme-css', () => {});
+  layoutStore.switchTheme();
 };
 </script>
 
