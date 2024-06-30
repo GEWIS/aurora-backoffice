@@ -1,51 +1,32 @@
 <template>
-  <Menu :model="items" class="p-panel pt-0">
-    <template #start>
-      <div class="p-panel-header border-right-none border-left-none border-top-none mb-2">
-        <div class="p-panel-title uppercase">
-          <FontAwesomeIcon
-            :icon="faShareFromSquare"
-            class="mr-1 text-xl"
-            :style="{ marginTop: '-0.25rem', marginBottom: '-0.15rem' }"
-          />
-          Shortcuts
-        </div>
-      </div>
-    </template>
-    <template #item="{ item, props }">
-      <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-        <a :href="href" v-bind="props.action" @click="navigate">
+  <BasicBlock header="Shortcuts" icon="pi-file-import">
+    <Menu :model="items" class="border-transparent">
+      <template #item="{ item, props }">
+        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+          <a :href="href" v-bind="props.action" @click="navigate">
+            <DashboardShortcutItem
+              :icon="item.icon"
+              :label="item.label"
+              :loading="item.loading"
+              :enabled="item.enabledIcon"
+              :disabled="item.disabledIcon"
+            />
+          </a>
+        </router-link>
+        <a v-else v-bind="props.action">
           <DashboardShortcutItem
-            :icon="item.faIcon"
+            :icon="item.icon"
             :label="item.label"
             :loading="item.loading"
             :enabled="item.enabledIcon"
-            :disabled="item.disabledIcon"
           />
         </a>
-      </router-link>
-      <a v-else v-bind="props.action">
-        <DashboardShortcutItem
-          :icon="item.faIcon"
-          :label="item.label"
-          :loading="item.loading"
-          :enabled="item.enabledIcon"
-        />
-      </a>
-    </template>
-  </Menu>
+      </template>
+    </Menu>
+  </BasicBlock>
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-  faDice,
-  faHelmetSafety,
-  faLightbulb,
-  faPowerOff,
-  faShareFromSquare,
-  faStopwatch
-} from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
@@ -56,6 +37,7 @@ import { ModesService } from '@/api';
 import { handleError } from '@/utils/errorHandler';
 import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
 import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
+import BasicBlock from '@/components/BasicBlock.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -75,7 +57,7 @@ const sceneMenuItems = computed<IShortcutItem[]>(() =>
       .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
     return {
       label: s.name,
-      faIcon: faLightbulb,
+      icon: 'pi-lightbulb',
       command: async () => {
         await handlersStore.setLightsHandler(lightGroupIds, 'ScenesHandler');
         await sceneStore.applyScene(s.id);
@@ -86,21 +68,23 @@ const sceneMenuItems = computed<IShortcutItem[]>(() =>
 
 const items = computed<IShortcutItem[]>(() => [
   {
-    label: 'Reset to defaults',
-    faIcon: faPowerOff,
-    command: () => {
-      handlersStore.reset();
-    }
-  },
-  {
-    separator: true
+    label: 'Defaults',
+    items: [
+      {
+        label: 'Reset to defaults',
+        icon: 'pi-power-off',
+        command: () => {
+          handlersStore.reset();
+        }
+      }
+    ]
   },
   {
     label: 'Lights',
     items: [
       {
         label: 'Disable',
-        faIcon: faPowerOff,
+        icon: 'pi-power-off',
         command: () => {
           const ids = subscriberStore.lightsGroups.map((g) => g.id);
           handlersStore.setLightsHandler(ids);
@@ -109,7 +93,7 @@ const items = computed<IShortcutItem[]>(() => [
       ...sceneMenuItems.value,
       {
         label: 'Random effects',
-        faIcon: faDice,
+        icon: 'pi-sparkles',
         command: () => {
           const ids = subscriberStore.lightsGroups.map((g) => g.id);
           handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
@@ -122,7 +106,7 @@ const items = computed<IShortcutItem[]>(() => [
     items: [
       {
         label: 'Disable',
-        faIcon: faPowerOff,
+        icon: 'pi-power-off',
         command: () => {
           ModesService.disableAllModes()
             .then(async () => {
@@ -136,7 +120,7 @@ const items = computed<IShortcutItem[]>(() => [
       },
       {
         label: 'Centurion',
-        faIcon: faHelmetSafety,
+        icon: 'pi-prime',
         route: '/modes/centurion',
         loading: centurionModeStore.loading,
         enabledIcon: centurionModeStore.enabled,
@@ -144,7 +128,7 @@ const items = computed<IShortcutItem[]>(() => [
       },
       {
         label: 'Spoelbakkenrace',
-        faIcon: faStopwatch,
+        icon: 'pi-hourglass',
         route: '/modes/timeTrailRace',
         loading: timeTrailRaceModeStore.loading,
         enabledIcon: timeTrailRaceModeStore.enabled,
