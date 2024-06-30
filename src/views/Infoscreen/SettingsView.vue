@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import TimeSettings from '@/components/Infoscreen/TimeSettings.vue';
-import RoomResponsibleSettings from '@/components/Infoscreen/RoomResponsibleSettings.vue';
-import EROSettings from '@/components/Infoscreen/EROSettings.vue';
+import TimeSettings from '@/components/infoscreen/TimeSettings.vue';
+import RoomResponsibleSettings from '@/components/infoscreen/RoomResponsibleSettings.vue';
+import EROSettings from '@/components/infoscreen/EROSettings.vue';
 </script>
 
 <style scoped></style>

@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-0">
-    <h4><FontAwesomeIcon class="mr-3" :icon="faDisplay" />Screens</h4>
-    <div class="flex justify-content-evenly flex-wrap">
+    <h4><i class="pi pi-desktop mr-3" style="font-size: 1.25rem"></i>Screens</h4>
+    <div class="flex justify-content-between flex-wrap">
       <div v-for="screen in subscriberStore.screens.value" :key="screen.id" class="m-3">
         <SubscriberItemContent
           :subscriber="screen"
@@ -22,10 +22,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
-import { faDisplay } from '@fortawesome/free-solid-svg-icons';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();

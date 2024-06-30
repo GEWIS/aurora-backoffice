@@ -99,9 +99,8 @@ h1 {
   color: black;
   max-width: 350px;
   width: 100%;
-  margin: 0 auto;
   font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
 }
 
 #login-image {

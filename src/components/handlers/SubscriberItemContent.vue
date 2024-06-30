@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="flex justify-content-around align-items-start mb-3">
+    <div class="mb-2">
       <div>
         <span class="block text-500 font-medium"
           >{{ subscriber.name }}
-          <span v-if="!connected" class="font-italic text-sm opacity-30 ml-2">Disconnected</span>
+          <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
         </span>
       </div>
     </div>
-    <subscriber-handler-change-dropdown
+    <SubscriberHandlerChangeDropdown
       :current-handler="currentHandler"
       :possible-handlers="possibleHandlers"
       :loading="loading"
@@ -37,6 +37,19 @@ defineEmits<{
 const connected: ComputedRef<boolean> = computed(() => {
   const socketIds = props.subscriber.socketIds as any | undefined;
   return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+});
+
+const connectedText = computed(() => {
+  return connected.value ? 'connected' : 'disconnected';
+});
+
+const connectedIcon = computed(() => {
+  return {
+    'pi-sort-alt': connected.value,
+    'text-green-300': connected.value,
+    'pi-sort-alt-slash': !connected.value,
+    'text-400': !connected.value
+  };
 });
 </script>
 

@@ -10,19 +10,19 @@
     <div class="col-12 xl:col-4">
       <LightHandlerBlock />
     </div>
-    <!--    <div class="col-12 md:col-6 lg:col-4">-->
-    <!--      <DashboardShortcuts />-->
-    <!--    </div>-->
+    <div class="col-12 md:col-6 lg:col-4">
+      <ShortcutBlock />
+    </div>
     <div class="col-12">
-      <DashboardAuditLogs />
+      <AuditLogs />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth.store';
-import DashboardShortcuts from '@/components/home/DashboardShortcuts.vue';
-import DashboardAuditLogs from '@/components/home/DashboardAuditLogs.vue';
+import ShortcutBlock from '@/components/shortcuts/ShortcutBlock.vue';
+import AuditLogs from '@/components/audit/AuditLogs.vue';
 import ScreenHandlerBlock from '@/components/handlers/ScreenHandlerBlock.vue';
 import AudioHandlerBlock from '@/components/handlers/AudioHandlerBlock.vue';
 import LightHandlerBlock from '@/components/handlers/LightHandlerBlock.vue';

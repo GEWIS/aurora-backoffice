@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import BeatVisualizer from '@/components/BeatVisualizer.vue';
+import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faCheck, faCross, faLightbulb, faMoon } from '@fortawesome/free-solid-svg-icons';

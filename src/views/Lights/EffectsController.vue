@@ -117,7 +117,7 @@ import EffectSparkle from '@/components/lights/effects/color/EffectSparkle.vue';
 import EffectStaticColor from '@/components/lights/effects/color/EffectStaticColor.vue';
 import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
-import BeatVisualizer from '@/components/BeatVisualizer.vue';
+import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
