@@ -1,7 +1,7 @@
 <template>
   <div class="layout-topbar">
     <router-link to="/" class="layout-topbar-logo">
-      <img src="/layout/images/logo@0.25x.png" alt="logo" />
+      <img :src="logoUrl" alt="logo" />
       <span>Aurora</span>
     </router-link>
 
@@ -26,9 +26,14 @@
 <script setup lang="ts">
 import { useLayoutStore } from '@/stores/layout.store';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 const layoutStore = useLayoutStore();
 const { darkMode } = storeToRefs(layoutStore);
+
+const logoUrl = computed(() => {
+  return `/layout/images/${darkMode.value ? 'helmet-black' : 'helmet-white'}.svg`;
+});
 
 const switchMenu = () => {
   if (window.innerWidth > 991) {
