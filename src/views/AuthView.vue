@@ -1,7 +1,7 @@
 <template>
   <div>
     <main>
-      <img id="login-image" src="../assets/img/AVICO.svg" alt="logo" />
+      <img id="login-image" :src="logoUrl" alt="logo" />
       <hr />
       <Spinner id="login-image" />
     </main>
@@ -9,15 +9,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthenticationService } from '@/api';
+import { useLayoutStore } from '@/stores/layout.store';
+import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
+const layoutStore = useLayoutStore();
+const { darkMode } = storeToRefs(layoutStore);
 
 onMounted(async () => {
   if (route.path === '/auth/callback') {
@@ -78,6 +82,10 @@ onMounted(async () => {
 
     window.location.href = oidcParameters.authUrl + '?' + queryParameters.toString();
   }
+});
+
+const logoUrl = computed(() => {
+  return `/layout/images/${darkMode.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
 </script>
 
