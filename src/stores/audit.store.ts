@@ -16,7 +16,7 @@ export const useAuditStore = defineStore('audit', {
   state: (): AuditStore => ({
     dashboardEntries: [],
     entries: [],
-    take: 20,
+    take: 5,
     skip: 0,
     count: 0,
     loading: true
@@ -27,7 +27,7 @@ export const useAuditStore = defineStore('audit', {
       this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, 15);
     },
     async init() {
-      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, 15)
+      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, this.take, this.skip)
         .then((r) => {
           this.dashboardEntries = r.records;
           this.count = r.pagination.count;

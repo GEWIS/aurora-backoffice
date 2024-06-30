@@ -20,18 +20,18 @@ const router = createRouter({
         {
           path: '/auth',
           name: 'auth',
-          component: () => import('@/views/AuthView.vue'),
+          component: () => import('@/views/Base/AuthView.vue'),
           children: [
             {
               path: 'callback',
-              component: () => import('@/views/AuthView.vue'),
+              component: () => import('@/views/Base/AuthView.vue'),
               name: 'authCallback'
             }
           ]
         },
         {
           path: '/unauthorized',
-          component: () => import('@/views/UnauthView.vue'),
+          component: () => import('@/views/Base/UnauthView.vue'),
           name: 'unauthorized'
         }
       ]
@@ -43,7 +43,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          component: () => import('@/views/DashboardView.vue'),
+          component: () => import('@/views/Base/DashboardView.vue'),
           name: 'dashboard'
         },
         {
@@ -108,7 +108,7 @@ const router = createRouter({
         },
         {
           path: '/audit',
-          component: () => import('@/views/AuditLogsView.vue'),
+          component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs'
         }
       ]
@@ -116,7 +116,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       meta: { requiresAuth: true },
-      component: () => import('@/views/NotFound.vue'),
+      component: () => import('@/views/Base/NotFound.vue'),
       name: 'notFound'
     }
   ]

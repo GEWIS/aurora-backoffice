@@ -1,12 +1,11 @@
 <template>
-  <div class="card mb-0">
-    <h4><i class="pi pi-lightbulb mr-3" style="font-size: 1.25rem"></i>Lights</h4>
+  <BasicBlock header="Lights" icon="pi-lightbulb">
     <div class="flex justify-content-between flex-wrap">
-      <div v-for="controller in controllers" :key="controller.id" class="m-3">
+      <div v-for="controller in controllers" :key="controller.id">
         <LightsControllerItemComponent :controller="controller" />
       </div>
     </div>
-  </div>
+  </BasicBlock>
 </template>
 
 <script setup lang="ts">
@@ -14,6 +13,7 @@ import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed } from 'vue';
 import LightsControllerItemComponent from '@/components/handlers/LightsControllerItemComponent.vue';
+import BasicBlock from '@/components/BasicBlock.vue';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const controllers = computed(() =>

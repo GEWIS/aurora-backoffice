@@ -35,7 +35,6 @@ export const useLayoutStore = defineStore('layout', {
     },
     switchMenuDesktop() {
       this.menuDesktopActive = !this.menuDesktopActive;
-      console.log(this.menuDesktopActive);
     },
     switchTheme() {
       const newTheme = this.darkMode ? 'light' : 'dark';

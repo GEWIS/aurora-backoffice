@@ -5,7 +5,7 @@
     option-label="name"
     option-value="name"
     placeholder="Select handler"
-    class="overflow-hidden text-overflow-ellipsis w-13rem"
+    class="overflow-hidden text-overflow-ellipsis w-14rem"
     @update:model-value="
       (newHandler: string | null) => {
         $emit('change', newHandler);

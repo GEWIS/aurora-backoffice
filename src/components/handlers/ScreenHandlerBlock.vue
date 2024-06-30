@@ -1,6 +1,5 @@
 <template>
-  <div class="card mb-0">
-    <h4><i class="pi pi-desktop mr-3" style="font-size: 1.25rem"></i>Screens</h4>
+  <BasicBlock header="Screens" icon="pi-desktop">
     <div class="flex justify-content-between flex-wrap">
       <div v-for="screen in subscriberStore.screens.value" :key="screen.id" class="m-3">
         <SubscriberItemContent
@@ -16,7 +15,7 @@
         />
       </div>
     </div>
-  </div>
+  </BasicBlock>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +23,7 @@ import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
+import BasicBlock from '@/components/BasicBlock.vue';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
