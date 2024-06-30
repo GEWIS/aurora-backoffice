@@ -54,8 +54,8 @@ import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { ModesService } from '@/api';
 import { handleError } from '@/utils/errorHandler';
-import DashboardShortcutItem from '@/components/home/DashboardShortcutItem.vue';
-import { type IDashboardShortcutItem } from '@/components/home/IDashboardShortcutItem';
+import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
+import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -66,7 +66,7 @@ centurionModeStore.getCurrentCenturion(true);
 const timeTrailRaceModeStore = useTimeTrailRaceStore();
 timeTrailRaceModeStore.getTimeTrailMode();
 
-const sceneMenuItems = computed<IDashboardShortcutItem[]>(() =>
+const sceneMenuItems = computed<IShortcutItem[]>(() =>
   sceneStore.favoriteScenes.map((s) => {
     const lightGroupIds = s.effects
       .map((e) => e.lightsGroups.map((g) => g.id))
@@ -84,7 +84,7 @@ const sceneMenuItems = computed<IDashboardShortcutItem[]>(() =>
   })
 );
 
-const items = computed<IDashboardShortcutItem[]>(() => [
+const items = computed<IShortcutItem[]>(() => [
   {
     label: 'Reset to defaults',
     faIcon: faPowerOff,

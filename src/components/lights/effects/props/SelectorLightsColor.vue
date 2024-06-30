@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
-import ColorBox from '@/components/ColorBox.vue';
+import ColorBox from '@/components/lights/effects/ColorBox.vue';
 import { RgbColor } from '@/api';
 
 const store = useColorStore();

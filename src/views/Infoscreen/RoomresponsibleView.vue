@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import RoomResponsibleOverview from '@/components/Infoscreen/RoomResponsibleOverview.vue';
+import RoomResponsibleOverview from '@/components/infoscreen/RoomResponsibleOverview.vue';
 </script>
 
 <style scoped></style>
