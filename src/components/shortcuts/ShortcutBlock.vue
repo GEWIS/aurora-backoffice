@@ -1,6 +1,9 @@
 <template>
   <BasicBlock header="Shortcuts" icon="pi-file-import">
-    <Menu :model="items" class="border-transparent">
+    <Menu :model="items" class="border-transparent columns">
+      <template #submenuheader="{ item }">
+        <span class="bold-header">{{ item.label }}</span>
+      </template>
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
@@ -139,4 +142,14 @@ const items = computed<IShortcutItem[]>(() => [
 ]);
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.columns {
+  columns: 1 !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .columns {
+    columns: 2 !important;
+  }
+}
+</style>

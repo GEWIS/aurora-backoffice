@@ -28,4 +28,10 @@ store.setSkip(0);
 store.getLogs();
 </script>
 
-<style scoped></style>
+<style lang="scss">
+@use '@/assets/layout/layout.scss';
+
+th {
+  @extend .bold-header;
+}
+</style>

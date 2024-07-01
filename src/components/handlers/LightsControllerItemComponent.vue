@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-2">
-      <span class="block text-500 font-medium ml-3"
+      <span class="block ml-3 bold-header"
         >{{ controller.name }}
         <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
       </span>
@@ -10,7 +10,7 @@
   <div class="flex justify-content-between flex-wrap">
     <div v-for="group in lightsGroups" :key="group.id" class="m-3">
       <div class="mb-2">
-        <span class="block text-500 font-medium">
+        <span class="block bold-header">
           {{ group.name }}
         </span>
       </div>
