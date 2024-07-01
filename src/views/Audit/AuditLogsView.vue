@@ -1,6 +1,5 @@
 <template>
-  <div class="page-container">
-    <div class="page-title">Audit logs</div>
+  <BasicBlock header="Audit logs" icon="pi-book">
     <div>
       <DataTable :value="store.entries" data-key="id">
         <Column field="createdAt" header="Timestamp">
@@ -20,13 +19,20 @@
         always-show
       />
     </div>
-  </div>
+  </BasicBlock>
 </template>
 
 <script setup lang="ts">
 import { useAuditStore } from '@/stores/audit.store';
+import BasicBlock from '@/components/BasicBlock.vue';
 
 const store = useAuditStore();
 </script>
 
-<style scoped></style>
+<style lang="scss">
+@use '@/assets/layout/layout.scss';
+
+th {
+  @extend .bold-header;
+}
+</style>
