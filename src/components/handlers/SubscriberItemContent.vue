@@ -2,7 +2,7 @@
   <div>
     <div class="mb-2">
       <div>
-        <span class="block text-500 font-medium"
+        <span class="block bold-header"
           >{{ subscriber.name }}
           <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
         </span>
