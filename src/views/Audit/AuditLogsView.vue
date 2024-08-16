@@ -33,6 +33,6 @@ const store = useAuditStore();
 @use '@/assets/layout/layout.scss';
 
 th {
-  @extend .bold-header;
+  @extend h6;
 }
 </style>
