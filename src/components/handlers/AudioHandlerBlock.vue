@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Audio" icon="pi-volume-up">
+  <BasicBlock title="Audio" icon="pi-volume-up">
     <div class="grid">
       <div
         v-for="audio in subscriberStore.audios.value"
@@ -15,7 +15,7 @@
           @change="
             (newHandler: string | null) => handlersStore.setAudioHandler(audio.id, newHandler)
           "
-          :loading="handlersStore.loading"
+          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
         />
       </div>
     </div>

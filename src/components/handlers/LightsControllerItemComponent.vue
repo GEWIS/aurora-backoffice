@@ -23,7 +23,7 @@
           @change="
             (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
           "
-          :loading="handlersStore.loading"
+          :loading="handlersStore.gettingLights || handlersStore.settingLights"
         />
       </div>
     </div>

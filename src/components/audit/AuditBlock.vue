@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Logs" icon="pi-book">
+  <BasicBlock title="Logs" icon="pi-book">
     <DataTable :value="store.dashboardEntries" data-key="id" :loading="store.loading" class="my-3">
       <Column field="createdAt" header="Timestamp">
         <template #body="slotProps">

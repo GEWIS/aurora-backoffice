@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Shortcuts" icon="pi-file-import">
+  <BasicBlock title="Shortcuts" icon="pi-file-import">
     <div class="columns">
       <div v-for="items in menus" :key="items[0].key" class="break">
         <Menu :model="items" class="border-transparent">

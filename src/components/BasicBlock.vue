@@ -1,15 +1,18 @@
 <template>
   <div class="card mb-0">
-    <h4 class="uppercase mb-4">
-      <i :class="['pi mr-3', icon]" style="font-size: 1.25rem"></i>{{ header }}
-    </h4>
+    <div class="flex justify-content-between mb-4">
+      <h4 class="uppercase mb-0">
+        <i :class="['pi mr-3', icon]" style="font-size: 1.25rem"></i>{{ title }}
+      </h4>
+      <slot name="header" />
+    </div>
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 defineProps({
-  header: String,
+  title: String,
   icon: String
 });
 </script>

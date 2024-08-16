@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Screens" icon="pi-desktop">
+  <BasicBlock title="Screens" icon="pi-desktop">
     <div class="grid">
       <div
         v-for="screen in subscriberStore.screens.value"
@@ -15,7 +15,7 @@
           @change="
             (newHandler: string | null) => handlersStore.setScreenHandler(screen.id, newHandler)
           "
-          :loading="handlersStore.loading"
+          :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
         />
       </div>
     </div>
