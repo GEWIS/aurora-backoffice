@@ -1,9 +1,7 @@
 <template>
   <BasicBlock header="Lights" icon="pi-lightbulb">
-    <div class="flex justify-content-between flex-wrap">
-      <div v-for="controller in controllers" :key="controller.id">
-        <LightsControllerItemComponent :controller="controller" />
-      </div>
+    <div v-for="controller in controllers" :key="controller.id">
+      <LightsControllerItemComponent :controller="controller" />
     </div>
   </BasicBlock>
 </template>

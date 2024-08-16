@@ -1,12 +1,6 @@
 <template>
   <BasicBlock header="Logs" icon="pi-book">
-    <DataTable
-      :value="store.dashboardEntries"
-      data-key="id"
-      size="small"
-      :loading="store.loading"
-      class="my-3"
-    >
+    <DataTable :value="store.dashboardEntries" data-key="id" :loading="store.loading" class="my-3">
       <Column field="createdAt" header="Timestamp">
         <template #body="slotProps">
           {{ new Date(slotProps.data.createdAt).toLocaleString() }}
@@ -32,6 +26,6 @@ store.getLogs();
 @use '@/assets/layout/layout.scss';
 
 th {
-  @extend .bold-header;
+  @extend h6;
 }
 </style>

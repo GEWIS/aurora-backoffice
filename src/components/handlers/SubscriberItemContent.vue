@@ -2,10 +2,10 @@
   <div>
     <div class="mb-2">
       <div>
-        <span class="block bold-header"
-          >{{ subscriber.name }}
+        <h6 class="mb-0">
+          {{ subscriber.name }}
           <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
-        </span>
+        </h6>
       </div>
     </div>
     <SubscriberHandlerChangeDropdown

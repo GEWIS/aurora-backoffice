@@ -1,31 +1,35 @@
 <template>
   <BasicBlock header="Shortcuts" icon="pi-file-import">
-    <Menu :model="items" class="border-transparent columns">
-      <template #submenuheader="{ item }">
-        <span class="bold-header">{{ item.label }}</span>
-      </template>
-      <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-          <a :href="href" v-bind="props.action" @click="navigate">
-            <DashboardShortcutItem
-              :icon="item.icon"
-              :label="item.label"
-              :loading="item.loading"
-              :enabled="item.enabledIcon"
-              :disabled="item.disabledIcon"
-            />
-          </a>
-        </router-link>
-        <a v-else v-bind="props.action">
-          <DashboardShortcutItem
-            :icon="item.icon"
-            :label="item.label"
-            :loading="item.loading"
-            :enabled="item.enabledIcon"
-          />
-        </a>
-      </template>
-    </Menu>
+    <div class="columns">
+      <div v-for="items in menus" :key="items[0].key" class="break">
+        <Menu :model="items" class="border-transparent">
+          <template #submenuheader="{ item }">
+            <h6 class="mb-0">{{ item.label }}</h6>
+          </template>
+          <template #item="{ item, props }">
+            <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+              <a :href="href" v-bind="props.action" @click="navigate">
+                <DashboardShortcutItem
+                  :icon="item.icon"
+                  :label="item.label"
+                  :loading="item.loading"
+                  :enabled="item.enabledIcon"
+                  :disabled="item.disabledIcon"
+                />
+              </a>
+            </router-link>
+            <a v-else v-bind="props.action">
+              <DashboardShortcutItem
+                :icon="item.icon"
+                :label="item.label"
+                :loading="item.loading"
+                :enabled="item.enabledIcon"
+              />
+            </a>
+          </template>
+        </Menu>
+      </div>
+    </div>
   </BasicBlock>
 </template>
 
@@ -69,7 +73,7 @@ const sceneMenuItems = computed<IShortcutItem[]>(() =>
   })
 );
 
-const items = computed<IShortcutItem[]>(() => [
+const defaults: IShortcutItem[] = [
   {
     label: 'Defaults',
     items: [
@@ -81,7 +85,10 @@ const items = computed<IShortcutItem[]>(() => [
         }
       }
     ]
-  },
+  }
+];
+
+const lights: IShortcutItem[] = [
   {
     label: 'Lights',
     items: [
@@ -103,7 +110,10 @@ const items = computed<IShortcutItem[]>(() => [
         }
       }
     ]
-  },
+  }
+];
+
+const modes: IShortcutItem[] = [
   {
     label: 'Modes',
     items: [
@@ -139,17 +149,25 @@ const items = computed<IShortcutItem[]>(() => [
       }
     ]
   }
-]);
+];
+
+const menus = computed<Array<Array<IShortcutItem>>>(() => [defaults, lights, modes]);
 </script>
 
 <style lang="scss">
+@import 'primeflex/core/variables';
+
 .columns {
   columns: 1 !important;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: $sm) {
   .columns {
     columns: 2 !important;
   }
+}
+
+.break {
+  break-inside: avoid;
 }
 </style>

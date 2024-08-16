@@ -1,7 +1,11 @@
 <template>
   <BasicBlock header="Audio" icon="pi-volume-up">
-    <div class="flex justify-content-between flex-wrap">
-      <div v-for="audio in subscriberStore.audios.value" :key="audio.id" class="m-3">
+    <div class="grid">
+      <div
+        v-for="audio in subscriberStore.audios.value"
+        :key="audio.id"
+        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-6 xxl:col-4"
+      >
         <SubscriberItemContent
           :subscriber="audio"
           :current-handler="
