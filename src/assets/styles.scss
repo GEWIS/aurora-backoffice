@@ -1,4 +1,19 @@
 $gutter: 1rem; //for primeflex grid system
+
+$sm: 576px !default;
+$md: 768px !default;
+$lg: 992px !default;
+$xl: 1200px !default;
+$xxl: 1600px !default;
+
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl
+) !default;
+
 @import '@/assets/layout/layout.scss';
 @import 'primeflex/primeflex.scss';
 @import 'primeicons/primeicons.css';

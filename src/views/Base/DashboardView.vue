@@ -1,7 +1,7 @@
 <template>
   <h1>Hello, {{ authStore.name }}</h1>
   <div class="grid nested-grid">
-    <div class="xl:col-6 col-12">
+    <div class="col-12 xl:col-6">
       <div class="grid">
         <div class="col-12">
           <ScreenHandlerBlock />

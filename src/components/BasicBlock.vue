@@ -1,6 +1,6 @@
 <template>
   <div class="card mb-0">
-    <h4 class="uppercase">
+    <h4 class="uppercase mb-4">
       <i :class="['pi mr-3', icon]" style="font-size: 1.25rem"></i>{{ header }}
     </h4>
     <slot />

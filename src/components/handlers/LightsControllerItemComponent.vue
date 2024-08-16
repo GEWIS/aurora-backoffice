@@ -1,29 +1,31 @@
 <template>
-  <div>
-    <div class="mb-2">
-      <span class="block ml-3 bold-header"
-        >{{ controller.name }}
-        <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
-      </span>
-    </div>
-  </div>
-  <div class="flex justify-content-between flex-wrap">
-    <div v-for="group in lightsGroups" :key="group.id" class="m-3">
-      <div class="mb-2">
-        <span class="block bold-header">
-          {{ group.name }}
-        </span>
+  <div class="bg-transparent card">
+    <h6 class="mb-4">
+      {{ controller.name }}
+      <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
+    </h6>
+    <div class="grid">
+      <div
+        v-for="group in lightsGroups"
+        :key="group.id"
+        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-6 xxl:col-4"
+      >
+        <div class="mb-2">
+          <h6 class="mb-0">
+            {{ group.name }}
+          </h6>
+        </div>
+        <SubscriberHandlerChangeDropdown
+          :current-handler="
+            handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
+          "
+          :possible-handlers="handlersStore.lightsHandlers"
+          @change="
+            (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
+          "
+          :loading="handlersStore.loading"
+        />
       </div>
-      <SubscriberHandlerChangeDropdown
-        :current-handler="
-          handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
-        "
-        :possible-handlers="handlersStore.lightsHandlers"
-        @change="
-          (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
-        "
-        :loading="handlersStore.loading"
-      />
     </div>
   </div>
 </template>
