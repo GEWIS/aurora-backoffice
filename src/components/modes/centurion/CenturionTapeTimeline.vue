@@ -17,7 +17,7 @@
               "
               :loading="loading"
             >
-              <FontAwesomeIcon :icon="faClockRotateLeft" />
+              <i class="pi pi-clock" />
             </Button>
           </td>
           <td>
@@ -57,8 +57,6 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import CenturionTapeTimelineHorn from '@/components/modes/centurion/CenturionTapeTimelineHorn.vue';
 import CenturionTapeTimelineSong from '@/components/modes/centurion/CenturionTapeTimelineSong.vue';
 import { useCenturionStore } from '@/stores/modes/centurion.store';

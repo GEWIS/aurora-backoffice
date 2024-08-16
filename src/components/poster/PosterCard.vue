@@ -66,7 +66,7 @@
           {{ poster.name }}
         </div>
         <div class="text-sm mt-2 font-italic opacity-50">
-          <FontAwesomeIcon :icon="faClock" />
+          <i class="pi pi-clock" />
           {{ poster.timeout }} seconds
         </div>
       </div>
@@ -75,8 +75,6 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { type ErrorPoster, type LocalPoster, type MediaPoster, type PhotoPoster } from '@/api';
 
 const capitalize = (text: string) => {
