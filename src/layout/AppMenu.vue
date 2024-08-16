@@ -30,17 +30,17 @@ const model = ref<MenuItem[]>([
     label: 'Lights',
     items: [
       { label: 'Effects', icon: 'pi pi-fw pi-sparkles', to: '/lights/effects' },
-      { label: 'Scenes', icon: 'pi pi-fw pi-sparkles', to: '/lights/scenes' }
+      { label: 'Scenes', icon: 'pi pi-fw pi-sliders-h', to: '/lights/scenes' }
     ]
   },
-  {
-    label: 'Audio',
-    items: [{ label: 'Settings', icon: 'pi pi-fw pi-megaphone', to: '/' }]
-  },
+  // {
+  //   label: 'Audio',
+  //   items: [{ label: 'Settings', icon: 'pi pi-fw pi-megaphone', to: '/' }]
+  // },
   {
     label: 'Modes',
     items: [
-      { label: 'Spoelbakkenrace', icon: 'pi pi-fw pi-bars', to: '/modes/timetrailrace' },
+      { label: 'Spoelbakkenrace', icon: 'pi pi-fw pi-hourglass', to: '/modes/timetrailrace' },
       { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' }
     ]
   }

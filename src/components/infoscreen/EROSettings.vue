@@ -1,10 +1,29 @@
 <template>
   <div>
-    <CardComponent header="EROs">
-      <div class="flex flex-column">
-        <span class="font-bold my-2">First ERO</span>
+    <div class="flex flex-column">
+      <span class="font-bold my-2">First ERO</span>
+      <Dropdown
+        v-model="selectedFirstERO"
+        :options="EROs"
+        optionLabel="label"
+        optionGroupLabel="label"
+        optionGroupChildren="items"
+        placeholder="Select a User"
+        :filter="true"
+        filterMatchMode="contains"
+        :showClear="!selectedSecondERO"
+        @change="changeFirstERO"
+      >
+        <template #optiongroup="slotProps">
+          <div class="flex align-items-center">
+            <div>{{ slotProps.option.label }}</div>
+          </div>
+        </template>
+      </Dropdown>
+      <template v-if="selectedFirstERO">
+        <span class="font-bold my-2">Second ERO</span>
         <Dropdown
-          v-model="selectedFirstERO"
+          v-model="selectedSecondERO"
           :options="EROs"
           optionLabel="label"
           optionGroupLabel="label"
@@ -12,8 +31,8 @@
           placeholder="Select a User"
           :filter="true"
           filterMatchMode="contains"
-          :showClear="!selectedSecondERO"
-          @change="changeFirstERO"
+          showClear
+          @change="changeSecondERO"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -21,35 +40,13 @@
             </div>
           </template>
         </Dropdown>
-        <template v-if="selectedFirstERO">
-          <span class="font-bold my-2">Second ERO</span>
-          <Dropdown
-            v-model="selectedSecondERO"
-            :options="EROs"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select a User"
-            :filter="true"
-            filterMatchMode="contains"
-            showClear
-            @change="changeSecondERO"
-          >
-            <template #optiongroup="slotProps">
-              <div class="flex align-items-center">
-                <div>{{ slotProps.option.label }}</div>
-              </div>
-            </template>
-          </Dropdown>
-        </template>
-      </div>
-    </CardComponent>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import CardComponent from '@/layout/CardComponent.vue';
 import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
 import { storeToRefs } from 'pinia';

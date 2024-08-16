@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock title="Audit logs" icon="pi-book">
+  <AppContainer title="Audit logs" icon="pi-book">
     <div>
       <DataTable :value="store.entries" data-key="id">
         <Column field="createdAt" header="Timestamp">
@@ -19,12 +19,12 @@
         always-show
       />
     </div>
-  </BasicBlock>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
 import { useAuditStore } from '@/stores/audit.store';
-import BasicBlock from '@/components/BasicBlock.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useAuditStore();
 </script>

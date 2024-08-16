@@ -1,18 +1,38 @@
 <template>
   <div v-if="infoscreen.infoscreenSettings.value.roomStatus !== RoomStatus.CLOSED">
-    <CardComponent label="Confirm" header="Responsibles">
-      <div class="flex flex-column">
-        <span class="font-bold my-2">First Responsible</span>
+    <div class="flex flex-column">
+      <span class="font-bold my-2">First Responsible</span>
+      <Dropdown
+        v-model="selectedFirstResponsible"
+        :options="roomResponsibles"
+        optionLabel="label"
+        optionGroupLabel="label"
+        optionGroupChildren="items"
+        placeholder="Select User"
+        :filter="true"
+        filterMatchMode="contains"
+        @change="changeFirstResponsible"
+      >
+        <template #optiongroup="slotProps">
+          <div class="flex align-items-center">
+            <div>{{ slotProps.option.label }}</div>
+          </div>
+        </template>
+      </Dropdown>
+      <template v-if="selectedFirstResponsible.value != null">
+        <span class="font-bold my-2">Second Responsible</span>
         <Dropdown
-          v-model="selectedFirstResponsible"
+          v-model="selectedSecondResponsible"
           :options="roomResponsibles"
           optionLabel="label"
           optionGroupLabel="label"
           optionGroupChildren="items"
-          placeholder="Select User"
+          placeholder="Select a User"
           :filter="true"
           filterMatchMode="contains"
-          @change="changeFirstResponsible"
+          v-if="selectedFirstResponsible"
+          showClear
+          @change="changeSecondResponsible"
         >
           <template #optiongroup="slotProps">
             <div class="flex align-items-center">
@@ -20,37 +40,14 @@
             </div>
           </template>
         </Dropdown>
-        <template v-if="selectedFirstResponsible.value != null">
-          <span class="font-bold my-2">Second Responsible</span>
-          <Dropdown
-            v-model="selectedSecondResponsible"
-            :options="roomResponsibles"
-            optionLabel="label"
-            optionGroupLabel="label"
-            optionGroupChildren="items"
-            placeholder="Select a User"
-            :filter="true"
-            filterMatchMode="contains"
-            v-if="selectedFirstResponsible"
-            showClear
-            @change="changeSecondResponsible"
-          >
-            <template #optiongroup="slotProps">
-              <div class="flex align-items-center">
-                <div>{{ slotProps.option.label }}</div>
-              </div>
-            </template>
-          </Dropdown>
-        </template>
-      </div>
-    </CardComponent>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import CardComponent from '@/layout/CardComponent.vue';
 import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
 
 import { storeToRefs } from 'pinia';

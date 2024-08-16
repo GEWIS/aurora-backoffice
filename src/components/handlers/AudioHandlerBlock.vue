@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock title="Audio" icon="pi-volume-up">
+  <AppContainer title="Audio" icon="pi-volume-up">
     <div class="grid">
       <div
         v-for="audio in subscriberStore.audios.value"
@@ -19,7 +19,7 @@
         />
       </div>
     </div>
-  </BasicBlock>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
-import BasicBlock from '@/components/BasicBlock.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
