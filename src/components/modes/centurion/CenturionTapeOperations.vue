@@ -18,7 +18,7 @@
             "
             :loading="loading"
           >
-            <FontAwesomeIcon :icon="faPlay" />
+            <i class="pi pi-play" />
           </Button>
           <Button
             size="small"
@@ -33,7 +33,7 @@
             "
             :loading="loading"
           >
-            <FontAwesomeIcon :icon="faPause" />
+            <i class="pi pi-pause" />
           </Button>
         </div>
       </div>
@@ -49,8 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { ref } from 'vue';
 import type { MixTapeResponse } from '@/api';

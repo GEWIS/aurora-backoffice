@@ -7,17 +7,15 @@
     style="margin: -0.6rem"
     :loading="store.loading"
   >
-    <FontAwesomeIcon :icon="faTrash" />
+    <i class="pi pi-trash" />
   </Button>
 
   <ConfirmDialog />
 </template>
 
 <script setup lang="ts">
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { useConfirm } from 'primevue/useconfirm';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const store = useCenturionStore();
 

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row gap-1 align-items-center">
-    <FontAwesomeIcon :icon="faMusic" />
+    <i class="pi pi-headphones" />
     <div>[{{ formatDuration(song.timestamp) }}]</div>
     <div>
       <div v-for="track in tracks" :key="track.title">{{ track.artist }} - {{ track.title }}</div>
@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import { computed } from 'vue';
 import { formatDuration } from '../../../utils/formatterUtils';
 import type { SongData, SongEvent } from '@/api';

@@ -5,12 +5,7 @@
         <tr v-for="(score, index) in store.scoreboard" v-bind:key="score.name">
           <td class="text-right font-bold pr-1">{{ index + 1 }}</td>
           <td class="text-right font-bold pr-2" :class="score.bac && 'player-bac'">
-            <font-awesome-icon
-              :icon="faSkullCrossbones"
-              v-if="score.alcoholFree"
-              title="Alcohol free"
-              class="mr-1"
-            />
+            <i class="pi pi-asterisk mr-1" v-if="score.alcoholFree" title="Alcohol free" />
             {{ score.name }}
           </td>
           <td>{{ toStopwatchString(score.timeMs) }}</td>
@@ -23,8 +18,6 @@
 <script setup lang="ts">
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { toStopwatchString } from '@/utils/timeUtils';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
 
 const store = useTimeTrailRaceStore();
 </script>
