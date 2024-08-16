@@ -1,6 +1,5 @@
 <template>
-  <div class="page-container">
-    <div class="page-title">Spoelbakkenrace Mode</div>
+  <AppContainer title="Spoelbakkenrace Mode" icon="pi-hourglass">
     <div class="grid">
       <div class="col-12 md:col-12 lg:col-4">
         <TimeTrailRaceInitialize />
@@ -12,7 +11,7 @@
         <TimeTrailRaceScoreboard />
       </div>
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +20,7 @@ import { onUnmounted } from 'vue';
 import TimeTrailRaceInitialize from '@/components/modes/time-trail-race/TimeTrailRaceInitialize.vue';
 import TimeTrailRaceStepper from '@/components/modes/time-trail-race/TimeTrailRaceStepper.vue';
 import TimeTrailRaceScoreboard from '@/components/modes/time-trail-race/TimeTrailRaceScoreboard.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useTimeTrailRaceStore();
 store.init();

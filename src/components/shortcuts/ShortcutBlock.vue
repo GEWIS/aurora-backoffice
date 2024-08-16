@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock title="Shortcuts" icon="pi-file-import">
+  <AppContainer title="Shortcuts" icon="pi-file-import">
     <div class="columns">
       <div v-for="items in menus" :key="items[0].key" class="break">
         <Menu :model="items" class="border-transparent">
@@ -30,7 +30,7 @@
         </Menu>
       </div>
     </div>
-  </BasicBlock>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -44,7 +44,7 @@ import { ModesService } from '@/api';
 import { handleError } from '@/utils/errorHandler';
 import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
 import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
-import BasicBlock from '@/components/BasicBlock.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();

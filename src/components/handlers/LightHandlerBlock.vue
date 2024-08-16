@@ -1,9 +1,9 @@
 <template>
-  <BasicBlock title="Lights" icon="pi-lightbulb">
+  <AppContainer title="Lights" icon="pi-lightbulb">
     <div v-for="controller in controllers" :key="controller.id">
       <LightsControllerItemComponent :controller="controller" />
     </div>
-  </BasicBlock>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,7 @@ import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed } from 'vue';
 import LightsControllerItemComponent from '@/components/handlers/LightsControllerItemComponent.vue';
-import BasicBlock from '@/components/BasicBlock.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const controllers = computed(() =>

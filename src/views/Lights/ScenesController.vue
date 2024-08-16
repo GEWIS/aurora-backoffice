@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock title="Scenes" icon="pi-sliders-h">
+  <AppContainer title="Scenes" icon="pi-sliders-h">
     <template #header>
       <div class="flex flex-row gap-3 align-items-center">
         <Button>
@@ -28,14 +28,14 @@
         </template>
       </Column>
     </DataTable>
-  </BasicBlock>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
 import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import SceneDeleteButton from '@/components/lights/scenes/SceneDeleteButton.vue';
-import BasicBlock from '@/components/BasicBlock.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useSceneControllerStore();
 store.initPage();

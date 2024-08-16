@@ -16,7 +16,7 @@
       </template>
     </Button>
     <Button
-      label="Force reload from source"
+      label="Force reload"
       :loading="updateLoading"
       @click="
         async () => {

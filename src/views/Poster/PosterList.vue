@@ -1,8 +1,9 @@
 <template>
-  <div class="page-container">
-    <div class="page-title">Loaded posters</div>
-    <div class="flex flex-column full-width gap-4">
+  <AppContainer title="Posters" icon="pi-image">
+    <template #header>
       <PosterOperations />
+    </template>
+    <div class="flex flex-column full-width gap-4">
       <div v-if="store.loading">
         <Spinner />
       </div>
@@ -16,13 +17,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
 import { usePosterStore } from '@/stores/poster-store';
 import PosterOperations from '@/components/poster/PosterOperations.vue';
 import PosterCard from '@/components/poster/PosterCard.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const store = usePosterStore();
 store.init();

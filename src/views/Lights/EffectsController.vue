@@ -1,9 +1,8 @@
 <template>
-  <div class="page-container">
-    <div class="page-title flex flex-row align-items-center justify-content-between">
-      <span>Effects controller</span>
+  <AppContainer title="Effects controller" icon="pi-sparkles">
+    <template #header>
       <BeatVisualizer />
-    </div>
+    </template>
     <div class="grid">
       <div class="col-12 md:col-4 lg:col-3">
         <Card class="w-full">
@@ -103,7 +102,7 @@
         </Card>
       </div>
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -123,6 +122,7 @@ import EffectRandomPosition from '@/components/lights/effects/movement/EffectRan
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

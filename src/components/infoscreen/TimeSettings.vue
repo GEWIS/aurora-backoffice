@@ -1,34 +1,31 @@
 <template>
   <div>
-    <CardComponent header="Times">
-      <div class="flex flex-column">
-        <span class="font-bold my-2">Room Status</span>
+    <div class="flex flex-column">
+      <span class="font-bold my-2">Room Status</span>
+      <Dropdown
+        v-model="selectedRoomOpen"
+        :options="roomStatus"
+        optionLabel="option"
+        placeholder="Select an option"
+        @change="changeRoomStatus"
+      />
+      <template v-if="selectedRoomOpen && selectedRoomOpen.option === RoomStatus.OPEN">
+        <span class="font-bold my-2">Alcohol Time</span>
         <Dropdown
-          v-model="selectedRoomOpen"
-          :options="roomStatus"
-          optionLabel="option"
-          placeholder="Select an option"
-          @change="changeRoomStatus"
+          v-model="selectedAlcoholTime"
+          :options="alcoholTime"
+          optionLabel="time"
+          placeholder="Select a time"
+          @change="changeAlcoholTime"
         />
-        <template v-if="selectedRoomOpen && selectedRoomOpen.option === RoomStatus.OPEN">
-          <span class="font-bold my-2">Alcohol Time</span>
-          <Dropdown
-            v-model="selectedAlcoholTime"
-            :options="alcoholTime"
-            optionLabel="time"
-            placeholder="Select a time"
-            @change="changeAlcoholTime"
-          />
-        </template>
-      </div>
-    </CardComponent>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import CardComponent from '@/layout/CardComponent.vue';
 import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
 import { AlcoholTime, RoomStatus } from '@/api';
 import { storeToRefs } from 'pinia';
