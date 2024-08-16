@@ -1,10 +1,12 @@
 <template>
   <div>
     <div class="mb-2">
-      <div>
-        <h6 class="mb-0">
+      <div class="flex max-w-full w-full overflow-hidden">
+        <h6 class="mb-0 overflow-hidden white-space-nowrap text-overflow-ellipsis">
           {{ subscriber.name }}
-          <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
+        </h6>
+        <h6 class="m-0 white-space-nowrap">
+          <i :title="connectedText" :class="['pi text-sm ml-3', connectedIcon]" />
         </h6>
       </div>
     </div>

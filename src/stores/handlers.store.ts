@@ -21,7 +21,12 @@ interface HandlersStore {
   audioHandlers: HandlerResponse_AudioResponse_[];
   lightsHandlers: HandlerResponse_LightsGroupResponse_[];
   screenHandlers: HandlerResponse_ScreenResponse_[];
-  loading: boolean;
+  gettingAudio: boolean;
+  settingAudio: boolean;
+  gettingScreens: boolean;
+  settingScreens: boolean;
+  gettingLights: boolean;
+  settingLights: boolean;
 }
 
 export const useHandlersStore = defineStore('handlers', {
@@ -30,33 +35,38 @@ export const useHandlersStore = defineStore('handlers', {
       audioHandlers: [],
       lightsHandlers: [],
       screenHandlers: [],
-      loading: true
+      gettingAudio: false,
+      settingAudio: false,
+      gettingScreens: false,
+      settingScreens: false,
+      gettingLights: false,
+      settingLights: false
     }) as HandlersStore,
   getters: {},
   actions: {
     async getAudioHandlers() {
-      this.loading = true;
+      this.gettingAudio = true;
       await HandlersService.getAudioHandlers().then((handlers) => (this.audioHandlers = handlers));
-
-      this.loading = false;
+      this.gettingAudio = false;
     },
     async getLightsHandlers() {
-      this.loading = true;
+      this.gettingLights = true;
       await HandlersService.getLightsHandlers().then(
         (handlers) => (this.lightsHandlers = handlers)
       );
-
-      this.loading = false;
+      this.gettingLights = false;
     },
     async getScreenHandlers() {
-      this.loading = true;
+      this.gettingScreens = true;
       await HandlersService.getScreenHandlers().then(
         (handlers) => (this.screenHandlers = handlers)
       );
-
-      this.loading = false;
+      this.gettingScreens = false;
     },
     async init(): Promise<void> {
+      this.gettingAudio = true;
+      this.gettingScreens = true;
+      this.gettingLights = true;
       await this.getAudioHandlers();
       await this.getLightsHandlers();
       await this.getScreenHandlers();
@@ -69,12 +79,13 @@ export const useHandlersStore = defineStore('handlers', {
         this.getLightsHandlers.bind(this)
       );
 
-      this.loading = false;
+      this.gettingAudio = false;
+      this.gettingScreens = false;
+      this.gettingLights = false;
     },
     async setAudioHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
-        this.loading = true;
-
+        this.settingAudio = true;
         if (Array.isArray(id)) {
           await Promise.all(
             id.map((i) =>
@@ -93,12 +104,11 @@ export const useHandlersStore = defineStore('handlers', {
       } catch (e: any) {
         handleError(e);
       }
-      this.loading = false;
+      this.settingAudio = false;
     },
     async setLightsHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
-        this.loading = true;
-
+        this.settingLights = true;
         if (Array.isArray(id)) {
           await Promise.all(
             id.map((i) =>
@@ -117,12 +127,11 @@ export const useHandlersStore = defineStore('handlers', {
       } catch (e: any) {
         handleError(e);
       }
-      this.loading = false;
+      this.settingLights = false;
     },
     async setScreenHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
       try {
-        this.loading = true;
-
+        this.settingScreens = true;
         if (Array.isArray(id)) {
           await Promise.all(
             id.map((i) =>
@@ -141,7 +150,7 @@ export const useHandlersStore = defineStore('handlers', {
       } catch (e: any) {
         handleError(e);
       }
-      this.loading = false;
+      this.settingScreens = false;
     },
     getRegisteredAudios(handlerName?: string): AudioResponse[] {
       if (!handlerName) return this.audioHandlers.map((h) => h.entities).flat();
@@ -163,7 +172,9 @@ export const useHandlersStore = defineStore('handlers', {
     },
     async reset() {
       try {
-        this.loading = true;
+        this.gettingAudio = true;
+        this.gettingScreens = true;
+        this.gettingLights = true;
         await HandlersService.resetAllHandlersToDefaults();
 
         await this.getAudioHandlers();
@@ -172,6 +183,9 @@ export const useHandlersStore = defineStore('handlers', {
       } catch (e: any) {
         handleError(e);
       }
+      this.gettingAudio = false;
+      this.gettingScreens = false;
+      this.gettingLights = false;
     }
   }
 });

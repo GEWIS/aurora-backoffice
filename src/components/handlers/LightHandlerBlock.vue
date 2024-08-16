@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Lights" icon="pi-lightbulb">
+  <BasicBlock title="Lights" icon="pi-lightbulb">
     <div v-for="controller in controllers" :key="controller.id">
       <LightsControllerItemComponent :controller="controller" />
     </div>
@@ -20,5 +20,3 @@ const controllers = computed(() =>
     .filter((c1, index, all) => index === all.findIndex((c2) => c1.id === c2.id))
 );
 </script>
-
-<style scoped lang="scss"></style>

@@ -1,5 +1,5 @@
 <template>
-  <BasicBlock header="Audit logs" icon="pi-book">
+  <BasicBlock title="Audit logs" icon="pi-book">
     <div>
       <DataTable :value="store.entries" data-key="id">
         <Column field="createdAt" header="Timestamp">
