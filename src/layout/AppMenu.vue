@@ -30,7 +30,8 @@ const model = ref<MenuItem[]>([
     label: 'Lights',
     items: [
       { label: 'Effects', icon: 'pi pi-fw pi-sparkles', to: '/lights/effects' },
-      { label: 'Scenes', icon: 'pi pi-fw pi-sliders-h', to: '/lights/scenes' }
+      { label: 'Scenes', icon: 'pi pi-fw pi-sliders-h', to: '/lights/scenesController' },
+      { label: 'Fixtures', icon: 'pi pi-fw pi-bolt', to: '/lights/fixtures' }
     ]
   },
   // {

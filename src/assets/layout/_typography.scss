@@ -68,8 +68,7 @@ blockquote {
 }
 
 hr {
-  // TODO
-  border-top: solid blue;
+  border-top: solid var(--text-color);
   border-width: 1px 0 0 0;
   margin: 1rem 0;
 }
