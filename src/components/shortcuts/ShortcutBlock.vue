@@ -4,7 +4,7 @@
       <div v-for="items in menus" :key="items[0].key" class="break">
         <Menu :model="items" class="border-transparent">
           <template #submenuheader="{ item }">
-            <h6 class="mb-0">{{ item.label }}</h6>
+            <h6 class="mb-0 text-override">{{ item.label }}</h6>
           </template>
           <template #item="{ item, props }">
             <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -169,5 +169,9 @@ const menus = computed<Array<Array<IShortcutItem>>>(() => [defaults, lights, mod
 
 .break {
   break-inside: avoid;
+}
+
+.text-override {
+  color: var(--p-text-color);
 }
 </style>

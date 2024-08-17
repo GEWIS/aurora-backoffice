@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-column">
       <span class="font-bold my-2">Room Status</span>
-      <Dropdown
+      <Select
         v-model="selectedRoomOpen"
         :options="roomStatus"
         optionLabel="option"
@@ -11,7 +11,7 @@
       />
       <template v-if="selectedRoomOpen && selectedRoomOpen.option === RoomStatus.OPEN">
         <span class="font-bold my-2">Alcohol Time</span>
-        <Dropdown
+        <Select
           v-model="selectedAlcoholTime"
           :options="alcoholTime"
           optionLabel="time"
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
+import Select, { type SelectChangeEvent } from 'primevue/select';
 import { AlcoholTime, RoomStatus } from '@/api';
 import { storeToRefs } from 'pinia';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
@@ -41,7 +41,7 @@ const roomStatus = ref([
 const selectedRoomOpen = ref(
   roomStatus.value.find((i) => i.option === infoscreen.infoscreenSettings.value.roomStatus)
 );
-const changeRoomStatus = (e: DropdownChangeEvent) => {
+const changeRoomStatus = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.roomStatus = e.value.option;
   infoscreenStore.setInfo();
 };
@@ -53,7 +53,7 @@ const alcoholTime = ref([
 const selectedAlcoholTime = ref(
   alcoholTime.value.find((i) => i.time === infoscreen.infoscreenSettings.value.alcoholTime)
 );
-const changeAlcoholTime = (e: DropdownChangeEvent) => {
+const changeAlcoholTime = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.alcoholTime = e.value.time;
   infoscreenStore.setInfo();
 };

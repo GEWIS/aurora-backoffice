@@ -2,7 +2,7 @@
   <div v-if="infoscreen.infoscreenSettings.value.roomStatus !== RoomStatus.CLOSED">
     <div class="flex flex-column">
       <span class="font-bold my-2">First Responsible</span>
-      <Dropdown
+      <Select
         v-model="selectedFirstResponsible"
         :options="roomResponsibles"
         optionLabel="label"
@@ -18,10 +18,10 @@
             <div>{{ slotProps.option.label }}</div>
           </div>
         </template>
-      </Dropdown>
+      </Select>
       <template v-if="selectedFirstResponsible.value != null">
         <span class="font-bold my-2">Second Responsible</span>
-        <Dropdown
+        <Select
           v-model="selectedSecondResponsible"
           :options="roomResponsibles"
           optionLabel="label"
@@ -39,7 +39,7 @@
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>
-        </Dropdown>
+        </Select>
       </template>
     </div>
   </div>
@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
+import Select, { type SelectChangeEvent } from 'primevue/select';
 
 import { storeToRefs } from 'pinia';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
@@ -102,13 +102,13 @@ for (let i = 0; i < groups.length; i += 1) {
   }, []);
 }
 
-const changeFirstResponsible = (e: DropdownChangeEvent) => {
+const changeFirstResponsible = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.firstResponsible = e.value.value;
   console.log(selectedFirstResponsible);
   infoscreenStore.setInfo();
 };
 
-const changeSecondResponsible = (e: DropdownChangeEvent) => {
+const changeSecondResponsible = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.secondResponsible = e.value ? e.value.value : null;
   infoscreenStore.setInfo();
 };

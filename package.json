@@ -16,6 +16,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.4",
     "@vee-validate/yup": "^4.13.2",
     "axios": "^1.7.4",
     "dotenv": "^16.4.5",
@@ -23,7 +24,7 @@
     "pinia": "^2.2.2",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
-    "primevue": "3.53.0",
+    "primevue": "^4.0.4",
     "socket.io-client": "^4.7.5",
     "uuid": "^10.0.0",
     "vee-validate": "^4.13.2",

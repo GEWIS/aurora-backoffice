@@ -15,7 +15,6 @@
         <RouterView />
       </div>
     </div>
-    <div class="layout-mask"></div>
   </div>
   <Toast />
 </template>

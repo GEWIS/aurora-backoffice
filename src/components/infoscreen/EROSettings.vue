@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-column">
       <span class="font-bold my-2">First ERO</span>
-      <Dropdown
+      <Select
         v-model="selectedFirstERO"
         :options="EROs"
         optionLabel="label"
@@ -19,10 +19,10 @@
             <div>{{ slotProps.option.label }}</div>
           </div>
         </template>
-      </Dropdown>
+      </Select>
       <template v-if="selectedFirstERO">
         <span class="font-bold my-2">Second ERO</span>
-        <Dropdown
+        <Select
           v-model="selectedSecondERO"
           :options="EROs"
           optionLabel="label"
@@ -39,7 +39,7 @@
               <div>{{ slotProps.option.label }}</div>
             </div>
           </template>
-        </Dropdown>
+        </Select>
       </template>
     </div>
   </div>
@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Dropdown, { type DropdownChangeEvent } from 'primevue/dropdown';
+import Select, { type SelectChangeEvent } from 'primevue/select';
 import { useInfoscreenStore } from '@/stores/infoscreen.store';
 import { storeToRefs } from 'pinia';
 import type { Member } from '@/api';
@@ -89,12 +89,12 @@ for (let i = 0; i < groups.length; i += 1) {
   }, []);
 }
 
-const changeFirstERO = (e: DropdownChangeEvent) => {
+const changeFirstERO = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.firstERO = e.value ? e.value.value : null;
   infoscreenStore.setInfo();
 };
 
-const changeSecondERO = (e: DropdownChangeEvent) => {
+const changeSecondERO = (e: SelectChangeEvent) => {
   infoscreen.infoscreenSettings.value.secondERO = e.value ? e.value.value : null;
   infoscreenStore.setInfo();
 };

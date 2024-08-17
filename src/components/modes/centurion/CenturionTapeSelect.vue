@@ -3,7 +3,7 @@
     <template v-if="!store.loading" #default>
       <div class="flex flex-column gap-4">
         <div>
-          <Dropdown
+          <Select
             :modelValue="selectedTapeName"
             optionLabel="name"
             optionValue="name"

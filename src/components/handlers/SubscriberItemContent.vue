@@ -10,7 +10,7 @@
         </h6>
       </div>
     </div>
-    <SubscriberHandlerChangeDropdown
+    <SubscriberHandlerChangeSelect
       :current-handler="currentHandler"
       :possible-handlers="possibleHandlers"
       :loading="loading"
@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import SubscriberHandlerChangeDropdown from '@/components/handlers/SubscriberHandlerChangeDropdown.vue';
+import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import type { Handler } from '@/stores/handlers.store';
 import { computed, type ComputedRef } from 'vue';
 import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';

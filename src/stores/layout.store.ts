@@ -37,19 +37,21 @@ export const useLayoutStore = defineStore('layout', {
       this.menuDesktopActive = !this.menuDesktopActive;
     },
     switchTheme() {
-      const newTheme = this.darkMode ? 'light' : 'dark';
-      localStorage.setItem('theme', newTheme);
       this.darkMode = !this.darkMode;
-      this.setTheme();
+      const theme = this.darkMode ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      this.applyTheme();
     },
-    setTheme() {
-      const currentTheme = this.darkMode ? 'aura-dark-blue' : 'aura-light-blue';
-      const newTheme = this.darkMode ? 'aura-light-blue' : 'aura-dark-blue';
-      this.primeVue.changeTheme(currentTheme, newTheme, 'theme-css', () => {});
+    applyTheme() {
+      const element = document.querySelector('html');
+      if (this.darkMode) {
+        element!.classList.add('dark-mode');
+      } else {
+        element!.classList.remove('dark-mode');
+      }
     },
-    init(primeVue: any) {
-      this.primeVue = primeVue;
-      this.setTheme();
+    init() {
+      this.applyTheme();
     }
   }
 });

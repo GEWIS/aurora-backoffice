@@ -1,7 +1,6 @@
 <template>
   <div>
     <DataTable
-      v-model:filters="filters"
       :value="roomResponsibles"
       dataKey="id"
       :loading="loading"
@@ -11,7 +10,7 @@
         <div class="roomresponsible-header">
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText v-model="filters['global'].value" placeholder="Search" />
+            <!--            <InputText v-model="filters['global'].value" placeholder="Search" />-->
           </span>
         </div>
       </template>
@@ -27,7 +26,7 @@ import { onMounted, ref } from 'vue';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { FilterMatchMode } from 'primevue/api';
+// import { FilterMatchMode } from 'primevue';
 
 const roomResponsibles = ref([
   {
@@ -47,9 +46,9 @@ const roomResponsibles = ref([
   }
 ]);
 
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-});
+// const filters = ref({
+//   global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+// });
 
 const loading = ref(true);
 

@@ -1,7 +1,6 @@
 <template>
   <div class="card">
     <DataTable
-      v-model:filters="filters"
       :value="messages"
       dataKey="id"
       :loading="loading"
@@ -28,7 +27,7 @@
           </div>
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText v-model="filters['global'].value" placeholder="Search" />
+            <!--            <InputText v-model="filters['global'].value" placeholder="Search" />-->
           </span>
         </div>
       </template>
@@ -153,7 +152,7 @@ import { onMounted, type Ref, ref } from 'vue';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { FilterMatchMode } from 'primevue/api';
+// import { FilterMatchMode } from 'primevue/api';
 import { InfoscreenService, type Message, type MessageParams } from '@/api';
 
 const messages = ref<Message[]>([]);
@@ -172,9 +171,9 @@ const showDeleteMessageDialog: Ref<boolean> = ref(false);
 const showDeleteMessagesDialog: Ref<boolean> = ref(false);
 const loading = ref(true);
 
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-});
+// const filters = ref({
+//   global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+// });
 
 onMounted(() => {
   InfoscreenService.getAllMessages().then((response: Message[]) => {

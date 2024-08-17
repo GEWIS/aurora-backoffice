@@ -32,7 +32,7 @@ const layoutStore = useLayoutStore();
 const { darkMode } = storeToRefs(layoutStore);
 
 const logoUrl = computed(() => {
-  return `/layout/images/${darkMode.value ? 'helmet-black' : 'helmet-white'}.svg`;
+  return `/layout/images/${darkMode.value ? 'helmet-white' : 'helmet-black'}.svg`;
 });
 
 const switchMenu = () => {
@@ -48,4 +48,6 @@ const onThemeChangeButton = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import '@/assets/styles.scss';
+</style>

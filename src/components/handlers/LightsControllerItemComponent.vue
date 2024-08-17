@@ -15,7 +15,7 @@
             {{ group.name }}
           </h6>
         </div>
-        <SubscriberHandlerChangeDropdown
+        <SubscriberHandlerChangeSelect
           :current-handler="
             handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
           "
@@ -34,7 +34,7 @@
 import { storeToRefs } from 'pinia';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
-import SubscriberHandlerChangeDropdown from '@/components/handlers/SubscriberHandlerChangeDropdown.vue';
+import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import { computed, type ComputedRef } from 'vue';
 import type { LightsControllerResponse } from '@/api';
 

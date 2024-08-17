@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  src: url('fonts/Inter-roman.var.woff2?v=3.19') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  src: url('fonts/Inter-italic.var.woff2?v=3.19') format('woff2');
+}
+
 h1,
 h2,
 h3,
@@ -8,7 +24,6 @@ h6 {
   font-family: inherit;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--surface-900);
 
   &:first-child {
     margin-top: 0;
@@ -53,7 +68,8 @@ blockquote {
 }
 
 hr {
-  border-top: solid var(--surface-border);
+  // TODO
+  border-top: solid blue;
   border-width: 1px 0 0 0;
   margin: 1rem 0;
 }
@@ -61,6 +77,7 @@ hr {
 p {
   margin: 0 0 1rem 0;
   line-height: 1.5;
+  color: var(--p-text-color);
 
   &:last-child {
     margin-bottom: 0;
