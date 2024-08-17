@@ -1,6 +1,5 @@
 <template>
-  <div class="page-container">
-    <div class="page-title">Fixture Overview</div>
+  <AppContainer title="Fixture Overview" icon="pi pi-fw pi-bolt">
     <div>
       <DataTable
         :value="subscriberStore.lightsGroups"
@@ -47,7 +46,7 @@
                   }
                 "
               >
-                <FontAwesomeIcon :icon="faSnowflake" />
+                <i class="pi pi-pause"></i>
               </Button>
               <Button
                 size="small"
@@ -63,7 +62,7 @@
                   }
                 "
               >
-                <FontAwesomeIcon :icon="faFire" />
+                <i class="pi pi-play"></i>
               </Button>
             </div>
           </template>
@@ -86,7 +85,7 @@
                     :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleFreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faSnowflake" />
+                    <i class="pi pi-pause"></i>
                   </Button>
                   <Button
                     size="small"
@@ -94,7 +93,7 @@
                     :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleUnfreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faFire" />
+                    <i class="pi pi-play"></i>
                   </Button>
                   <Button
                     size="small"
@@ -105,7 +104,7 @@
                     "
                     @click="handleHardwareReset(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faArrowRotateLeft" />
+                    <i class="pi pi-sync"></i>
                   </Button>
                 </div>
               </template>
@@ -114,18 +113,17 @@
         </template>
       </DataTable>
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed, ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faArrowRotateLeft, faFire, faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { type LightsGroupResponse, LightsService } from '@/api';
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastError, toastSuccess } from '@/utils/toastHandler';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
