@@ -1,8 +1,8 @@
 <template>
   <li :class="{ 'layout-root-menuitem': root }">
-    <div v-if="root" class="layout-menuitem-root-text">
+    <p v-if="root" class="layout-menuitem-root-text p-card-title">
       {{ item.label }}
-    </div>
+    </p>
 
     <RouterLink
       v-if="item.to && !item.items"

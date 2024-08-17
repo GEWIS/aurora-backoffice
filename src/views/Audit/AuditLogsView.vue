@@ -34,5 +34,6 @@ const store = useAuditStore();
 
 th {
   @extend h6;
+  font-weight: 500 !important;
 }
 </style>

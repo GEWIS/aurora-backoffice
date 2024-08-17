@@ -18,9 +18,9 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
-import Dropdown from 'primevue/dropdown';
+import Select from 'primevue/select';
 import Checkbox from 'primevue/checkbox';
-import TabView from 'primevue/tabview';
+import Tabs from 'primevue/tabs';
 import ScrollPanel from 'primevue/scrollpanel';
 import FileUpload from 'primevue/fileupload';
 import ProgressSpinner from 'primevue/progressspinner';
@@ -42,11 +42,12 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import Image from 'primevue/image';
 import Carousel from 'primevue/carousel';
 import Stepper from 'primevue/stepper';
-import StepperPanel from 'primevue/stepperpanel';
-import InputSwitch from 'primevue/inputswitch';
+import StepPanel from 'primevue/steppanel';
+import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
-import InlineMessage from 'primevue/inlinemessage';
+import Message from 'primevue/message';
+import Aura from '@primevue/themes/aura';
 
 export const app = createApp(App);
 
@@ -58,7 +59,14 @@ const timeagoOptions = {
 };
 
 app.use(router);
-app.use(PrimeVue);
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura,
+    options: {
+      darkModeSelector: '.dark-mode'
+    }
+  }
+});
 app.use(ToastService);
 app.use(ConfirmationService);
 SetupInterceptors();
@@ -82,9 +90,9 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('Paginator', Paginator);
 app.component('Dialog', Dialog);
-app.component('Dropdown', Dropdown);
+app.component('Select', Select);
 app.component('Checkbox', Checkbox);
-app.component('TabView', TabView);
+app.component('Tabs', Tabs);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
@@ -97,8 +105,8 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Image', Image);
 app.component('Carousel', Carousel);
 app.component('Stepper', Stepper);
-app.component('StepperPanel', StepperPanel);
-app.component('InputSwitch', InputSwitch);
-app.component('InlineMessage', InlineMessage);
+app.component('InlineMessage', Message);
+app.component('StepperPanel', StepPanel);
+app.component('ToggleSwitch', ToggleSwitch);
 
 app.mount('#app');

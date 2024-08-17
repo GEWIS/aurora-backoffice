@@ -5,8 +5,8 @@
     @save="handleAddEffect"
   >
     <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
-    <Dropdown v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
-    <Dropdown
+    <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
+    <Select
       v-model="goboRotate"
       :options="goboRotates"
       placeholder="Select a gobo rotate effect"

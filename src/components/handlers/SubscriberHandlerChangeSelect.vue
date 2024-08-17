@@ -1,5 +1,5 @@
 <template>
-  <Dropdown
+  <Select
     :model-value="currentHandler?.name"
     :options="possibleHandlers"
     option-label="name"

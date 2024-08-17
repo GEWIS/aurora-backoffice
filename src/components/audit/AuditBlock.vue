@@ -9,7 +9,7 @@
       <Column field="userName" header="Name" />
       <Column field="action" header="Action" />
     </DataTable>
-    <RouterLink to="/audit">More recent activity</RouterLink>
+    <RouterLink to="/audit" class="text">More recent activity</RouterLink>
   </AppContainer>
 </template>
 
@@ -25,7 +25,12 @@ store.getLogs();
 <style lang="scss">
 @use '@/assets/layout/layout.scss';
 
+.text {
+  @extend p;
+}
+
 th {
   @extend h6;
+  font-weight: 500 !important;
 }
 </style>
