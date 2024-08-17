@@ -47,7 +47,7 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
-import Aura from '@primevue/themes/aura';
+import { AuraPreset } from '@/assets/preset';
 
 export const app = createApp(App);
 
@@ -61,7 +61,7 @@ const timeagoOptions = {
 app.use(router);
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
+    preset: AuraPreset,
     options: {
       darkModeSelector: '.dark-mode'
     }
