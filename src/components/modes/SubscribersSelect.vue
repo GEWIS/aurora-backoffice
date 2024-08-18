@@ -1,13 +1,15 @@
 <template>
-  <div class="flex flex-column gap-2">
+  <div class="flex flex-column gap-2 w-full max-w-full">
     <MultiSelect
+      class="w-full"
       :model-value="selectedAudios"
       :options="store.audios"
+      filter
       option-label="name"
       option-value="id"
-      placeholder="Select audio players..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:audios', value)"
+      placeholder="Select audio"
+      :maxSelectedLabels="2"
+      @update:modelValue="(value: number[]) => $emit('update:audios', value)"
       :title="
         store.audios
           .filter((a) => selectedAudios.includes(a.id))
@@ -16,13 +18,15 @@
       "
     />
     <MultiSelect
+      class="w-full"
       :model-value="selectedScreens"
       :options="store.screens"
+      filter
       option-label="name"
       option-value="id"
-      placeholder="Select screens..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:screens', value)"
+      placeholder="Select screens"
+      :maxSelectedLabels="2"
+      @update:modelValue="(value: number[]) => $emit('update:screens', value)"
       :title="
         store.screens
           .filter((a) => selectedScreens.includes(a.id))
@@ -31,13 +35,15 @@
       "
     />
     <MultiSelect
+      class="w-full"
       :model-value="selectedLightGroups"
       :options="store.lightsGroups"
+      filter
       option-label="name"
       option-value="id"
-      placeholder="Select lights groups..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:light-groups', value)"
+      placeholder="Select lights..."
+      :maxSelectedLabels="2"
+      @update:modelValue="(value: number[]) => $emit('update:light-groups', value)"
       :title="
         store.lightsGroups
           .filter((a) => selectedLightGroups.includes(a.id))

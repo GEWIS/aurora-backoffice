@@ -7,13 +7,17 @@ interface CenturionStore {
   currentTape: CenturionResponse | null;
   loading: boolean;
   tapes: MixTapeResponse[] | null;
+  playing: boolean;
+  skipping: boolean;
 }
 
 export const useCenturionStore = defineStore('centurion', {
   state: (): CenturionStore => ({
     currentTape: null,
     tapes: null,
-    loading: true
+    loading: true,
+    playing: false,
+    skipping: false
   }),
   getters: {
     enabled(): boolean {
@@ -43,6 +47,8 @@ export const useCenturionStore = defineStore('centurion', {
 
       await this.getCurrentCenturion(false);
       this.loading = false;
+      console.log(this.currentTape);
+      this.playing = this.currentTape?.playing ?? false;
 
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on(
@@ -73,6 +79,7 @@ export const useCenturionStore = defineStore('centurion', {
       });
       await this.getCurrentCenturion(false);
       this.loading = false;
+      this.playing = false;
     },
     async quitCenturion() {
       this.loading = true;
@@ -82,14 +89,18 @@ export const useCenturionStore = defineStore('centurion', {
     },
     async startCenturion() {
       await ModesService.startCenturion();
+      this.playing = true;
     },
     async pauseCenturion() {
       await ModesService.stopCenturion();
+      this.playing = false;
     },
     async skipCenturion(seconds: number) {
+      this.skipping = true;
       await ModesService.skipCenturion({
         seconds: seconds
       });
+      this.skipping = false;
     }
   }
 });
