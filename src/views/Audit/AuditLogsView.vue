@@ -33,7 +33,11 @@ const store = useAuditStore();
 @use '@/assets/layout/layout.scss';
 
 th {
+  padding-top: 0 !important;
   @extend h6;
+}
+
+.p-datatable-column-title {
   font-weight: 500 !important;
 }
 </style>

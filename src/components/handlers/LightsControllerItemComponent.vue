@@ -1,33 +1,33 @@
 <template>
-  <div class="bg-transparent card">
-    <h6 class="mb-4">
-      {{ controller.name }}
-      <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
-    </h6>
-    <div class="grid">
+  <Card class="bg-transparent">
+    <template #content>
+      <h6 class="mb-4">
+        {{ controller.name }}
+        <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
+      </h6>
       <div
-        v-for="group in lightsGroups"
-        :key="group.id"
-        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-6 xxl:col-4"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
       >
-        <div class="mb-2">
-          <h6 class="mb-0">
-            {{ group.name }}
-          </h6>
+        <div v-for="group in lightsGroups" :key="group.id">
+          <div class="mb-2">
+            <h6 class="mb-0">
+              {{ group.name }}
+            </h6>
+          </div>
+          <SubscriberHandlerChangeSelect
+            :current-handler="
+              handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
+            "
+            :possible-handlers="handlersStore.lightsHandlers"
+            @change="
+              (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
+            "
+            :loading="handlersStore.gettingLights || handlersStore.settingLights"
+          />
         </div>
-        <SubscriberHandlerChangeSelect
-          :current-handler="
-            handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
-          "
-          :possible-handlers="handlersStore.lightsHandlers"
-          @change="
-            (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
-          "
-          :loading="handlersStore.gettingLights || handlersStore.settingLights"
-        />
       </div>
-    </div>
-  </div>
+    </template>
+  </Card>
 </template>
 
 <script setup lang="ts">

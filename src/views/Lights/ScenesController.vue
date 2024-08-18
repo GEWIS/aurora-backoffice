@@ -1,8 +1,8 @@
 <template>
   <AppContainer title="Scenes" icon="pi-sliders-h">
     <template #header>
-      <div class="flex flex-row gap-3 align-items-center">
-        <Button>
+      <div class="flex flex-row gap-5 align-items-center">
+        <Button size="small">
           <i class="pi pi-moon mr-2" />
           Clear scenes
         </Button>

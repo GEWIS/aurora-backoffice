@@ -1,8 +1,8 @@
 <template>
   <AppContainer title="Shortcuts" icon="pi-file-import">
-    <div class="columns">
-      <div v-for="items in menus" :key="items[0].key" class="break">
-        <Menu :model="items" class="border-transparent">
+    <div class="columns-1 sm:columns-2">
+      <div v-for="items in menus" :key="items[0].key" class="break-inside-avoid">
+        <Menu :model="items" class="!border-none">
           <template #submenuheader="{ item }">
             <h6 class="mb-0 text-override">{{ item.label }}</h6>
           </template>
@@ -155,22 +155,6 @@ const menus = computed<Array<Array<IShortcutItem>>>(() => [defaults, lights, mod
 </script>
 
 <style lang="scss">
-@import 'primeflex/core/variables';
-
-.columns {
-  columns: 1 !important;
-}
-
-@media screen and (min-width: $sm) {
-  .columns {
-    columns: 2 !important;
-  }
-}
-
-.break {
-  break-inside: avoid;
-}
-
 .text-override {
   color: var(--p-text-color);
 }

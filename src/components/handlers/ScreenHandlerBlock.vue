@@ -1,11 +1,9 @@
 <template>
   <AppContainer title="Screens" icon="pi-desktop">
-    <div class="grid">
-      <div
-        v-for="screen in subscriberStore.screens.value"
-        :key="screen.id"
-        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-6 xxl:col-4"
-      >
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
+    >
+      <div v-for="screen in subscriberStore.screens.value" :key="screen.id">
         <SubscriberItemContent
           :subscriber="screen"
           :current-handler="

@@ -3,26 +3,28 @@
     <template #header>
       <BeatVisualizer />
     </template>
-    <div class="grid">
-      <div class="col-12 md:col-4 lg:col-3">
-        <Card class="w-full">
-          <template #title>(1) Lights groups</template>
-          <template #content>
-            <div class="flex flex-column gap-2 w-100">
-              <div class="flex flex-row gap-2 w-100">
-                <Button
-                  class="flex-1 text-center"
-                  severity="secondary"
-                  @click="effectsControllerStore.resetLightsGroupSelection()"
-                  >Reset</Button
-                >
-                <Button
-                  class="flex-1 text-center"
-                  severity="secondary"
-                  @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
-                  >Select all</Button
-                >
-              </div>
+
+    <!-- Light groups -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+      <Card class="w-full">
+        <template #title>(1) Lights groups</template>
+        <template #content>
+          <div class="flex flex-col gap-5 w-100">
+            <div class="flex flex-row gap-5 w-100">
+              <Button
+                class="w-1/2 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.resetLightsGroupSelection()"
+                >Reset</Button
+              >
+              <Button
+                class="w-1/2 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
+                >Select all</Button
+              >
+            </div>
+            <div class="flex flex-row flex-wrap gap-5">
               <div v-for="group in activeLightGroups" :key="group.id">
                 <LightsGroupToggleButton
                   :lights-group="group"
@@ -34,73 +36,72 @@
                 <LightsGroupToggleButton :lights-group="group" disabled />
               </div>
             </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12 md:col-8 lg:col-6 flex flex-column gap-3">
-        <Card>
-          <template #title> (2) Create effects </template>
-          <template #content>
-            <h4 class="mt-0 mb-1">Colors</h4>
-            <div class="flex flex-row flex-wrap gap-2 mb-3">
-              <EffectBeatFadeOut />
-              <EffectSparkle />
-              <EffectStaticColor />
-              <EffectWave />
-            </div>
-            <h4 class="mt-2 mb-1">Movement</h4>
-            <div class="flex flex-row flex-wrap gap-2">
-              <EffectSearchLight />
-              <EffectTableRotate />
-              <EffectClassicRotate />
-              <EffectRandomPosition />
-            </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12 lg:col-3">
-        <Card class="w-100">
-          <template #title> Other effects & settings </template>
-          <template #content>
-            <div class="flex flex-row gap-2 flex-wrap justify-content-center">
-              <StrobeButton />
-              <Button
-                @click="() => effectsControllerStore.disableLightsColors()"
-                severity="secondary"
-                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+          </div>
+        </template>
+      </Card>
+
+      <!-- Create effects -->
+      <Card>
+        <template #title> (2) Create effects </template>
+        <template #content>
+          <h4 class="mt-0 mb-1">Colors</h4>
+          <div class="flex flex-row flex-wrap gap-5 mb-5">
+            <EffectBeatFadeOut />
+            <EffectSparkle />
+            <EffectStaticColor />
+            <EffectWave />
+          </div>
+          <h4 class="mt-2 mb-1">Movement</h4>
+          <div class="flex flex-row flex-wrap gap-5">
+            <EffectSearchLight />
+            <EffectTableRotate />
+            <EffectClassicRotate />
+            <EffectRandomPosition />
+          </div>
+        </template>
+      </Card>
+
+      <!-- Other effects & settings -->
+      <Card>
+        <template #title> Other effects & settings </template>
+        <template #content>
+          <div class="flex flex-row gap-1 flex-wrap justify-center">
+            <StrobeButton />
+            <Button
+              @click="() => effectsControllerStore.disableLightsColors()"
+              severity="secondary"
+              :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+            >
+              Disable colors
+            </Button>
+            <Button
+              @click="() => effectsControllerStore.disableLightsMovement()"
+              severity="secondary"
+              :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+            >
+              Disable movement
+            </Button>
+            <Divider />
+            <ArtificialBeatDialog />
+          </div>
+        </template>
+      </Card>
+
+      <Card>
+        <template #title> Past effects </template>
+        <template #content>
+          <div class="overflow-y-scroll w-full">
+            <div class="flex flex-row gap-5">
+              <div
+                v-for="effect in effectsControllerStore.pastPushedEffects"
+                :key="effect.timestamp.getTime()"
               >
-                Disable colors
-              </Button>
-              <Button
-                @click="() => effectsControllerStore.disableLightsMovement()"
-                severity="secondary"
-                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
-              >
-                Disable movement
-              </Button>
-              <Divider />
-              <ArtificialBeatDialog />
-            </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12">
-        <Card class="w-100">
-          <template #title> Past effects </template>
-          <template #content>
-            <div class="overflow-y-scroll w-full">
-              <div class="flex flex-row gap-3">
-                <div
-                  v-for="effect in effectsControllerStore.pastPushedEffects"
-                  :key="effect.timestamp.getTime()"
-                >
-                  <EffectHistoryCard :effect="effect" />
-                </div>
+                <EffectHistoryCard :effect="effect" />
               </div>
             </div>
-          </template>
-        </Card>
-      </div>
+          </div>
+        </template>
+      </Card>
     </div>
   </AppContainer>
 </template>

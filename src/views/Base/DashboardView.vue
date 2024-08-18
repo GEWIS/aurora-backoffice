@@ -1,28 +1,14 @@
 <template>
   <h1>Hello, {{ authStore.name }}</h1>
-  <div class="grid nested-grid">
-    <div class="col-12 xl:col-6">
-      <div class="grid">
-        <div class="col-12">
-          <ScreenHandlerBlock />
-        </div>
-        <div class="col-12">
-          <AudioHandlerBlock />
-        </div>
-        <div class="col-12">
-          <LightHandlerBlock />
-        </div>
-      </div>
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-10">
+    <div class="flex flex-col gap-10">
+      <ScreenHandlerBlock />
+      <AudioHandlerBlock />
+      <LightHandlerBlock />
     </div>
-    <div class="xl:col-6 col-12">
-      <div class="grid">
-        <div class="col-12">
-          <ShortcutBlock />
-        </div>
-        <div class="col-12">
-          <AuditBlock />
-        </div>
-      </div>
+    <div class="flex flex-col gap-10">
+      <ShortcutBlock />
+      <AuditBlock />
     </div>
   </div>
 </template>
@@ -37,5 +23,3 @@ import LightHandlerBlock from '@/components/handlers/LightHandlerBlock.vue';
 
 const authStore = useAuthStore();
 </script>
-
-<style scoped lang="scss"></style>

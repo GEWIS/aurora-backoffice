@@ -1,15 +1,9 @@
 <template>
-  <AppContainer title="Spoelbakkenrace Mode" icon="pi-hourglass">
-    <div class="grid">
-      <div class="col-12 md:col-12 lg:col-4">
-        <TimeTrailRaceInitialize />
-      </div>
-      <div class="col-12 md:col-6 lg:col-4">
-        <TimeTrailRaceStepper />
-      </div>
-      <div class="col-12 md:col-6 lg:col-4">
-        <TimeTrailRaceScoreboard />
-      </div>
+  <AppContainer title="Spoelbakkenrace" icon="pi-hourglass">
+    <div class="grid grid-cols-1 lg:grid-cols-3">
+      <TimeTrailRaceInitialize />
+      <TimeTrailRaceStepper />
+      <TimeTrailRaceScoreboard />
     </div>
   </AppContainer>
 </template>
