@@ -1,8 +1,8 @@
 <template>
   <Panel header="Spoelbakkenrace" action="Start">
     <template #default>
-      <div class="flex flex-column gap-4">
-        <div class="flex flex-column gap-2">
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
           <label for="time-trail-race-session-name">Session name</label>
           <InputText id="time-trail-race-session-name" v-model="sessionName" />
         </div>

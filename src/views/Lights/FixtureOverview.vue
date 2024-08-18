@@ -7,7 +7,7 @@
         v-model:expanded-rows="expandedRows"
       >
         <template #header>
-          <div class="flex flex-wrap justify-content-end gap-2">
+          <div class="flex flex-wrap justify-end gap-5">
             <Button text icon="pi pi-plus" label="Expand All" @click="expandAll" />
             <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
           </div>

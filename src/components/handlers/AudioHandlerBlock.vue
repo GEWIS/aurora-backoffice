@@ -1,11 +1,9 @@
 <template>
   <AppContainer title="Audio" icon="pi-volume-up">
-    <div class="grid">
-      <div
-        v-for="audio in subscriberStore.audios.value"
-        :key="audio.id"
-        class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-6 xxl:col-4"
-      >
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
+    >
+      <div v-for="audio in subscriberStore.audios.value" :key="audio.id">
         <SubscriberItemContent
           :subscriber="audio"
           :current-handler="

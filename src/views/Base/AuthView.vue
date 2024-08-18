@@ -1,27 +1,31 @@
 <template>
-  <div>
-    <main>
-      <img id="login-image" :src="logoUrl" alt="logo" />
-      <hr />
-      <Spinner id="login-image" />
-    </main>
+  <div class="flex align-items-center justify-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-col align-items-center justify-center">
+      <Card>
+        <template #content>
+          <div class="w-full py-8 px-5 sm:px-8 flex flex-col align-items-center rounded-2xl">
+            <span class="font-bold text-3xl">
+              <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+            </span>
+            <h1 class="text-900 font-bold text-3xl lg:text-5xl mb-2">Loading</h1>
+            <div class="text-600 mb-5">Please wait</div>
+          </div>
+        </template>
+      </Card>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthenticationService } from '@/api';
-import { useLayoutStore } from '@/stores/layout.store';
-import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
-const layoutStore = useLayoutStore();
-const { darkMode } = storeToRefs(layoutStore);
 
 onMounted(async () => {
   if (route.path === '/auth/callback') {
@@ -83,73 +87,4 @@ onMounted(async () => {
     window.location.href = oidcParameters.authUrl + '?' + queryParameters.toString();
   }
 });
-
-const logoUrl = computed(() => {
-  return `/layout/images/${darkMode.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
 </script>
-
-<style scoped lang="scss">
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-h1 {
-  color: black;
-  max-width: 350px;
-  width: 100%;
-  font-size: 2.5rem;
-  margin: 0 auto 1.5rem;
-}
-
-#login-image {
-  max-height: 150px;
-
-  display: block;
-  margin: 0 auto;
-}
-
-:root[data-theme='dark'] #login-image {
-  filter: invert(0.9);
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  max-width: 350px;
-  margin: 4rem auto;
-}
-
-.p-button {
-  margin: 1rem auto;
-  max-width: 350px;
-  width: 100%;
-  max-height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#gewis-branding {
-  max-height: 24px;
-  margin-right: 1rem;
-}
-
-label {
-  color: black;
-  margin-bottom: 0.5rem;
-}
-
-hr {
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  max-width: 350px;
-  width: 100%;
-}
-
-.p-inputtext {
-  margin-bottom: 0.5rem;
-}
-</style>

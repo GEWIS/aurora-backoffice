@@ -1,6 +1,5 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
-import 'primeflex/primeflex.scss';
 import 'primeicons/primeicons.css';
 import '@/assets/styles.scss';
 
@@ -24,6 +23,7 @@ import Tabs from 'primevue/tabs';
 import ScrollPanel from 'primevue/scrollpanel';
 import FileUpload from 'primevue/fileupload';
 import ProgressSpinner from 'primevue/progressspinner';
+import ProgressBar from 'primevue/progressbar';
 import { useAuthStore } from '@/stores/auth.store';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
@@ -96,6 +96,7 @@ app.component('Tabs', Tabs);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
+app.component('ProgressBar', ProgressBar);
 app.component('Slider', Slider);
 app.component('Toast', Toast);
 app.component('MultiSelect', MultiSelect);
