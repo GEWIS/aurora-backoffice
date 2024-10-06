@@ -1,4 +1,4 @@
-import { type AuditLogEntryResponse, AuditLogsService } from '@/api';
+import { type AuditLogEntryResponse, getAuditLogs } from '@/api';
 import { defineStore } from 'pinia';
 import { handleError } from '@/utils/errorHandler';
 import { useSocketStore } from '@/stores/socket.store';
@@ -27,12 +27,18 @@ export const useAuditStore = defineStore('audit', {
       this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, 15);
     },
     async init() {
-      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, this.take, this.skip)
-        .then((r) => {
-          this.dashboardEntries = r.records;
-          this.count = r.pagination.count;
+      await getAuditLogs({
+        query: {
+          take: this.take,
+          skip: this.skip
+        }
+      })
+        .then((logs) => {
+          this.dashboardEntries = logs.data!.records;
+          this.count = logs.data!.pagination.count;
         })
         .catch(handleError);
+
       this.loading = false;
 
       const socketStore = useSocketStore();
@@ -40,10 +46,15 @@ export const useAuditStore = defineStore('audit', {
     },
     async getLogs() {
       this.loading = true;
-      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, this.take, this.skip)
-        .then((r) => {
-          this.entries = r.records;
-          this.count = r.pagination.count;
+      await getAuditLogs({
+        query: {
+          take: this.take,
+          skip: this.skip
+        }
+      })
+        .then((logs) => {
+          this.entries = logs.data!.records;
+          this.count = logs.data!.pagination.count;
         })
         .catch(handleError);
       this.loading = false;

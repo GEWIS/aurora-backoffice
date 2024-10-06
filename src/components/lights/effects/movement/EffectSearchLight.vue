@@ -42,11 +42,11 @@ const offsetFactor = ref<number>(0.25);
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { SearchLightCreateParams } from '@/api';
+import { MovementEffects_SearchLight } from '@/api';
 
 const handleAddEffect = () => {
   store.setMovementEffect({
-    type: SearchLightCreateParams.type.SEARCH_LIGHT,
+    type: MovementEffects_SearchLight.SEARCH_LIGHT,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,

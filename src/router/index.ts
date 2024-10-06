@@ -46,21 +46,6 @@ const router = createRouter({
           name: 'dashboard'
         },
         {
-          path: '/infoscreen',
-          children: [
-            {
-              path: 'settings',
-              component: () => import('@/views/Infoscreen/SettingsView.vue'),
-              name: 'infoscreenSettings'
-            },
-            {
-              path: 'roomresponsibles',
-              component: () => import('@/views/Infoscreen/RoomresponsibleView.vue'),
-              name: 'infoscreenRoomresposibles'
-            }
-          ]
-        },
-        {
           path: '/poster',
           children: [
             {
@@ -128,6 +113,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   // Automatically login using mock when in development mode
   if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
+    console.log('Not authenticated, logging in as mock');
     await authStore.MockLogin();
   }
   const authenticated = authStore.isAuthenticated();

@@ -21,10 +21,7 @@ const model = ref<MenuItem[]>([
   },
   {
     label: 'Screens',
-    items: [
-      { label: 'Infoscreen', icon: 'pi pi-fw pi-info-circle', to: '/infoscreen/settings' },
-      { label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/list' }
-    ]
+    items: [{ label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/list' }]
   },
   {
     label: 'Lights',

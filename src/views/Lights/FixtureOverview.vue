@@ -38,7 +38,7 @@
                 :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
-                    await LightsService.freezeLightsGroup(slotProps.data.id);
+                    await freezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
                       body: `Successfully froze lights group '${slotProps.data.name}'`
@@ -54,7 +54,7 @@
                 :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
-                    await LightsService.unfreezeLightsGroup(slotProps.data.id);
+                    await unfreezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
                       body: `Successfully unfroze lights group '${slotProps.data.name}'`
@@ -120,7 +120,20 @@
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed, ref } from 'vue';
-import { type LightsGroupResponse, LightsService } from '@/api';
+import {
+  freezeGroupMovingHeadRgb,
+  freezeGroupMovingHeadWheel,
+  freezeGroupPar,
+  freezeLightsGroup,
+  type LightsGroupResponse,
+  resetGroupMovingHeadRgb,
+  resetGroupMovingHeadWheel,
+  resetGroupPar,
+  unfreezeGroupPar,
+  unfreezeLightsGroup,
+  unfreezeMovingHeadRgb,
+  unfreezeMovingHeadWheel
+} from '@/api';
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastError, toastSuccess } from '@/utils/toastHandler';
 import AppContainer from '@/layout/AppContainer.vue';
@@ -150,13 +163,13 @@ const handleFreeze = async (type: FixtureType, id: number) => {
   try {
     switch (type) {
       case FixtureType.PAR:
-        await LightsService.freezeGroupPar(id);
+        await freezeGroupPar({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.freezeGroupMovingHeadRgb(id);
+        await freezeGroupMovingHeadRgb({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.freezeGroupMovingHeadWheel(id);
+        await freezeGroupMovingHeadWheel({ path: { id } });
         break;
     }
     toastSuccess({
@@ -172,13 +185,13 @@ const handleUnfreeze = async (type: FixtureType, id: number) => {
   try {
     switch (type) {
       case FixtureType.PAR:
-        await LightsService.unfreezeGroupPar(id);
+        await unfreezeGroupPar({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.unfreezeMovingHeadRgb(id);
+        await unfreezeMovingHeadRgb({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.unfreezeMovingHeadWheel(id);
+        await unfreezeMovingHeadWheel({ path: { id } });
         break;
     }
     toastSuccess({
@@ -194,13 +207,13 @@ const handleHardwareReset = async (type: FixtureType, id: number) => {
   try {
     switch (type) {
       case FixtureType.PAR:
-        await LightsService.resetGroupPar(id);
+        await resetGroupPar({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.resetGroupMovingHeadRgb(id);
+        await resetGroupMovingHeadRgb({ path: { id } });
         break;
       case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.resetGroupMovingHeadWheel(id);
+        await resetGroupMovingHeadWheel({ path: { id } });
         break;
     }
     toastSuccess({

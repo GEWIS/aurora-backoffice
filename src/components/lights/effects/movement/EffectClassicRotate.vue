@@ -32,11 +32,11 @@ const offsetFactor = ref<number>(0);
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { ClassicRotateCreateParams } from '@/api';
+import { MovementEffects_ClassicRotate } from '@/api';
 
 const handleAddEffect = () => {
   store.setMovementEffect({
-    type: ClassicRotateCreateParams.type.CLASSIC_ROTATE,
+    type: MovementEffects_ClassicRotate.CLASSIC_ROTATE,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value

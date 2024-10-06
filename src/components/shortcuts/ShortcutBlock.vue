@@ -40,11 +40,11 @@ import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
-import { ModesService } from '@/api';
 import { handleError } from '@/utils/errorHandler';
 import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
 import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
 import AppContainer from '@/layout/AppContainer.vue';
+import { disableAllModes } from '@/api';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -121,7 +121,7 @@ const modes: IShortcutItem[] = [
         label: 'Disable',
         icon: 'pi-power-off',
         command: () => {
-          ModesService.disableAllModes()
+          disableAllModes()
             .then(async () => {
               await Promise.all([
                 centurionModeStore.getCurrentCenturion(),

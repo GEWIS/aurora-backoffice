@@ -28,7 +28,7 @@ import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, WaveCreateParams } from '@/api';
+import { ColorEffects_Wave, RgbColor } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -38,7 +38,7 @@ const cycleTime = ref<number>(1000);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: WaveCreateParams.type.WAVE,
+    type: ColorEffects_Wave.WAVE,
     props: {
       color: colors.value[0],
       size: size.value,

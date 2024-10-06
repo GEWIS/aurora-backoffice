@@ -4,7 +4,9 @@ import {
   type MediaPoster,
   type PhotoPoster,
   type ErrorPoster,
-  HandlersService
+  getPosters,
+  setPosterBorrelMode,
+  forceUpdatePosters
 } from '@/api';
 
 interface PosterStore {
@@ -22,14 +24,18 @@ export const usePosterStore = defineStore('poster', {
   getters: {},
   actions: {
     async getPosters() {
-      await HandlersService.getPosters(true).then((p) => {
-        this.posters = p.posters;
-        this.borrelModeActive = p.borrelMode;
+      getPosters({
+        query: { alwaysReturnBorrelPosters: true }
+      }).then((posters) => {
+        this.posters = posters.data!.posters;
+        this.borrelModeActive = posters.data!.borrelMode;
       });
     },
     async setBorrelMode(enabled: boolean) {
       this.loading = true;
-      await HandlersService.setPosterBorrelMode({ enabled }).then(() => {
+      await setPosterBorrelMode({
+        body: { enabled }
+      }).then(() => {
         this.loading = false;
         this.borrelModeActive = enabled;
       });
@@ -41,7 +47,7 @@ export const usePosterStore = defineStore('poster', {
     },
     async reloadPosters() {
       this.loading = true;
-      await HandlersService.forceUpdatePosters();
+      await forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;

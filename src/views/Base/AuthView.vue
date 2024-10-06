@@ -21,7 +21,7 @@ import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
-import { AuthenticationService } from '@/api';
+import { getOidcParameters } from '@/api';
 
 const route = useRoute();
 const router = useRouter();
@@ -54,9 +54,6 @@ onMounted(async () => {
 
     await authStore
       .OIDCLogin({
-        authUrl: '',
-        clientId: '',
-        redirectUri: '',
         code: queryParameters.get('code')!,
         state: queryParameters.get('state')!,
         session_state: queryParameters.get('session_state')!
@@ -73,18 +70,17 @@ onMounted(async () => {
     sessionStorage.setItem('state', state);
     sessionStorage.setItem('url', route.query.path as string);
 
-    const oidcParameters = await AuthenticationService.getOidcParameters();
-
+    const oidcParameters = await getOidcParameters();
     let queryParameters = new URLSearchParams({
-      client_id: oidcParameters.clientId,
-      redirect_uri: oidcParameters.redirectUri,
+      client_id: oidcParameters.data!.clientId,
+      redirect_uri: oidcParameters.data!.redirectUri,
       state: state,
       response_mode: 'fragment',
       response_type: 'code',
       scope: 'openid'
     });
 
-    window.location.href = oidcParameters.authUrl + '?' + queryParameters.toString();
+    window.location.href = oidcParameters.data!.authUrl + '?' + queryParameters.toString();
   }
 });
 </script>

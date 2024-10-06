@@ -17,7 +17,7 @@ import { ref } from 'vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { SingleFloodCreateParams } from '@/api';
+import { ColorEffects_SingleFlood } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -25,7 +25,7 @@ const dimMilliseconds = ref<number>(500);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: SingleFloodCreateParams.type.SINGLE_FLOOD,
+    type: ColorEffects_SingleFlood.SINGLE_FLOOD,
     props: {
       dimMilliseconds: dimMilliseconds.value
     }

@@ -6,7 +6,7 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type === 'img'">
+    <template #header v-if="poster.type == PosterType_IMAGE.IMG">
       <div class="full-width">
         <Carousel
           :value="poster.source"
@@ -75,14 +75,14 @@
 </template>
 
 <script setup lang="ts">
-import { type ErrorPoster, type LocalPoster, type MediaPoster, type PhotoPoster } from '@/api';
+import { type Poster, PosterType_IMAGE } from '@/api';
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
 defineProps<{
-  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster;
+  poster: Poster;
 }>();
 </script>
 

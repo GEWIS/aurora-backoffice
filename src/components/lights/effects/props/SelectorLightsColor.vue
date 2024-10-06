@@ -25,7 +25,7 @@
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
 import ColorBox from '@/components/lights/effects/ColorBox.vue';
-import { RgbColor } from '@/api';
+import { type RgbColor } from '@/api';
 
 const store = useColorStore();
 
@@ -36,7 +36,25 @@ const emit = defineEmits<{
   colorsUpdated: [colors: RgbColor[]];
 }>();
 
-const colors: string[] = Object.values(RgbColor);
+const colors: string[] = [
+  'white',
+  'red',
+  'green',
+  'blue',
+  'yellow',
+  'lightblue',
+  'orange',
+  'rosered',
+  'purple',
+  'cyan',
+  'pink',
+  'gold',
+  'brown',
+  'lightpink',
+  'lime',
+  'uv',
+  'blindingwhite'
+];
 const selectedColors: Ref<RgbColor[]> = ref([]);
 
 const handleColorClick = (color: RgbColor) => {

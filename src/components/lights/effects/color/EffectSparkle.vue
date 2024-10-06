@@ -37,7 +37,7 @@ import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, SparkleCreateParams } from '@/api';
+import { ColorEffects_Sparkle, RgbColor } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -48,7 +48,7 @@ const cycleTime = ref<number>(200);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: SparkleCreateParams.type.SPARKLE,
+    type: ColorEffects_Sparkle.SPARKLE,
     props: {
       colors: colors.value,
       ratio: ratio.value,

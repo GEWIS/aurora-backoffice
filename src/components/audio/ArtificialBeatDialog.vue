@@ -50,7 +50,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { splitArrayIntoChunks } from '@/utils/arrayUtils';
-import { ArtificialBeatGeneratorService } from '@/api';
+import {
+  getArtificalBeatGenerator,
+  startArtificialBeatGenerator,
+  stopArtificialBeatGenerator
+} from '@/api';
 
 const visible = ref<boolean>(false);
 const taps = ref<Date[]>([]);
@@ -67,13 +71,9 @@ const renderTaps = () => {
 };
 
 const fetchCurrentBpm = () => {
-  ArtificialBeatGeneratorService.getArtificalBeatGenerator()
-    .then((response) => {
-      if (response == null) {
-        currentBpm.value = null;
-      } else {
-        currentBpm.value = response.bpm;
-      }
+  getArtificalBeatGenerator()
+    .then((beats) => {
+      currentBpm.value = beats.data!.bpm;
     })
     .finally(() => (currentBpmLoading.value = false));
 };
@@ -96,14 +96,14 @@ const setArtificialBeats = () => {
   const bpm = getBpm();
   if (bpm == null) return;
   savingBpmLoading.value = true;
-  ArtificialBeatGeneratorService.startArtificialBeatGenerator({ bpm: bpm })
+  startArtificialBeatGenerator({ body: { bpm: bpm } })
     .then(() => (visible.value = false))
     .finally(() => (savingBpmLoading.value = false));
 };
 
 const stopArtificialBeats = () => {
   stopBpmLoading.value = true;
-  ArtificialBeatGeneratorService.stopArtificialBeatGenerator()
+  stopArtificialBeatGenerator()
     .then(() => (visible.value = false))
     .finally(() => (stopBpmLoading.value = false));
 };

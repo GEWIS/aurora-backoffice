@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
 import {
-  HandlersService,
+  applyLightsEffectColor,
+  applyLightsEffectMovement,
+  disableStrobeOnLightsGroup,
+  enableStrobeOnLightsGroup,
   type LightsEffectsColorCreateParams,
   type LightsEffectsMovementCreateParams,
-  type LightsGroupResponse,
-  LightsService
+  type LightsGroupResponse
 } from '@/api';
 
 export interface PushedEffect {
@@ -43,7 +45,10 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     setColorEffect(effect: LightsEffectsColorCreateParams, lightGroupIds?: number[]) {
       const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       ids.map(async (id) => {
-        await HandlersService.applyLightsEffectColor(id, [effect]);
+        await applyLightsEffectColor({
+          body: [effect],
+          path: { id }
+        });
       });
       const pastEffect: PushedEffect = {
         colorEffect: { ...effect },
@@ -55,7 +60,10 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     setMovementEffect(effect: LightsEffectsMovementCreateParams, lightGroupIds?: number[]) {
       const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       ids.map(async (id) => {
-        await HandlersService.applyLightsEffectMovement(id, [effect]);
+        await applyLightsEffectMovement({
+          body: [effect],
+          path: { id }
+        });
       });
       const pastEffect: PushedEffect = {
         movementEffect: { ...effect },
@@ -67,28 +75,38 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     async enableStrobe() {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return LightsService.enableStrobeOnLightsGroup(id, undefined);
+          return enableStrobeOnLightsGroup({
+            path: { id }
+          });
         })
       );
     },
     async disableStrobe() {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return LightsService.disableStrobeOnLightsGroup(id);
+          return disableStrobeOnLightsGroup({
+            path: { id }
+          });
         })
       );
     },
     async disableLightsColors() {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return HandlersService.applyLightsEffectColor(id, []);
+          return applyLightsEffectColor({
+            body: [],
+            path: { id }
+          });
         })
       );
     },
     async disableLightsMovement() {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
-          return HandlersService.applyLightsEffectMovement(id, []);
+          return applyLightsEffectMovement({
+            body: [],
+            path: { id }
+          });
         })
       );
     }

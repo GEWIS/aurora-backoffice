@@ -4,7 +4,7 @@ import SelectorLightsColor from '@/components/lights/effects/props/SelectorLight
 import { ref } from 'vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { BeatFadeOutCreateParams, RgbColor } from '@/api';
+import { ColorEffects_BeatFadeOut, RgbColor } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -14,7 +14,7 @@ const addBlacks = ref<boolean>(false);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: BeatFadeOutCreateParams.type.BEAT_FADE_OUT,
+    type: ColorEffects_BeatFadeOut.BEAT_FADE_OUT,
     props: {
       colors: colors.value,
       enableFade: enableFade.value,

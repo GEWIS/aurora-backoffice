@@ -1,15 +1,22 @@
 import {
-  ApiError,
-  ModesService,
+  disableTimeTrailRacing,
+  enableTimeTrailRace,
+  getRaceState,
   type PlayerParams,
+  raceFinish,
   type RaceFinishedEvent,
   type RacePlayerReadyEvent,
   type RacePlayerRegisteredEvent,
+  raceReady,
+  raceRegisterPlayer,
+  raceResetPlayer,
+  raceRevealScore,
   type RaceScoreboardEvent,
+  raceStart,
   type RaceStartedEvent,
   type RegisterPlayerParams,
   type ScoreboardItem,
-  TimeTrailRaceState
+  type TimeTrailRaceState
 } from '@/api';
 import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
@@ -41,10 +48,10 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     async getTimeTrailMode() {
       this.loading = true;
       try {
-        const { state, sessionName, scoreboard } = await ModesService.getRaceState();
-        this.state = state;
-        this.sessionName = sessionName;
-        this.scoreboard = scoreboard;
+        const res = await getRaceState();
+        this.state = res.data!.state;
+        this.sessionName = res.data!.sessionName;
+        this.scoreboard = res.data!.scoreboard;
       } catch (e) {
         this.state = undefined;
         this.sessionName = undefined;
@@ -60,15 +67,17 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     ) {
       this.loading = true;
 
-      await ModesService.enableTimeTrailRace({
-        sessionName,
-        audioIds,
-        screenIds,
-        lightsGroupIds
+      await enableTimeTrailRace({
+        body: {
+          lightsGroupIds: lightsGroupIds,
+          screenIds: screenIds,
+          audioIds: audioIds,
+          sessionName: sessionName
+        }
       })
         .then(() => {
           this.sessionName = sessionName;
-          this.state = TimeTrailRaceState.INITIALIZED;
+          this.state = 'INITIALIZED' as TimeTrailRaceState;
         })
         .catch(handleError);
 
@@ -76,15 +85,11 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async registerPlayer(params: RegisterPlayerParams) {
       this.loading = true;
-      await ModesService.raceRegisterPlayer(params)
-        .then(this.handleRegisterPlayer)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceRegisterPlayer({
+        body: params
+      })
+        .then((player) => this.handleRegisterPlayer(player.data!))
+        .catch(handleError);
       this.loading = false;
     },
     handleRegisterPlayer(event: RacePlayerRegisteredEvent) {
@@ -95,15 +100,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async ready() {
       this.loading = true;
-      await ModesService.raceReady()
-        .then(this.handleReady)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceReady()
+        .then((ready) => this.handleReady(ready.data!))
+        .catch(handleError);
       this.loading = false;
     },
     handleReady(event: RacePlayerReadyEvent) {
@@ -113,15 +112,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async start() {
       this.loading = true;
-      await ModesService.raceStart()
-        .then(this.handleStart)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceStart()
+        .then((start) => this.handleStart(start.data!))
+        .catch(handleError);
       this.loading = false;
     },
     handleStart(event: RaceStartedEvent) {
@@ -132,15 +125,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async finish() {
       this.loading = true;
-      await ModesService.raceFinish()
-        .then(this.handleFinish)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceFinish()
+        .then((finish) => this.handleFinish(finish.data!))
+        .catch(handleError);
       this.loading = false;
     },
     handleFinish(event: RaceFinishedEvent) {
@@ -151,15 +138,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async revealScore() {
       this.loading = true;
-      await ModesService.raceRevealScore()
-        .then(this.handleRevealScore)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceRevealScore()
+        .then((score) => this.handleRevealScore(score.data!))
+        .catch(handleError);
       this.loading = false;
     },
     handleRevealScore(event: RaceScoreboardEvent) {
@@ -171,15 +152,9 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async resetPlayer() {
       this.loading = true;
-      await ModesService.raceResetPlayer()
-        .then(this.handleRevealScore)
-        .catch((e: ApiError) => {
-          handleError({
-            name: e.statusText,
-            message: e.message,
-            statusCode: e.status
-          });
-        });
+      await raceResetPlayer()
+        .then((reset) => this.handleRevealScore(reset.data!))
+        .catch(handleError);
       this.loading = false;
     },
     async init() {
@@ -197,7 +172,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     async quit() {
       this.loading = true;
-      await ModesService.disableTimeTrailRacing();
+      await disableTimeTrailRacing();
       this.state = undefined;
       this.sessionName = undefined;
       this.scoreboard = [];

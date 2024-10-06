@@ -37,7 +37,7 @@ import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDial
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, StaticColorCreateParams } from '@/api';
+import { ColorEffects_StaticColor, RgbColor } from '@/api';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 
 const store = useEffectsControllerStore();
@@ -65,7 +65,7 @@ const relativeBrightness = ref<number>(1);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: StaticColorCreateParams.type.STATIC_COLOR,
+    type: ColorEffects_StaticColor.STATIC_COLOR,
     props: {
       color: colors.value[0],
       gobo: gobo.value ? gobo.value : undefined,

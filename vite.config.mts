@@ -5,6 +5,13 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   base: '/',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   plugins: [vue()],
   server: {
     port: 8080,
