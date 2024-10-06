@@ -9,6 +9,7 @@ declare module 'vue-router' {
 }
 import AppLayout from '@/layout/AppLayout.vue';
 import { useLayoutStore } from '@/stores/layout.store';
+import { SecurityGroup } from '@/api';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -30,7 +31,7 @@ const router = createRouter({
         },
         {
           path: '/unauthorized',
-          component: () => import('@/views/Base/UnauthView.vue'),
+          component: () => import('@/views/Base/UnauthorizedView.vue'),
           name: 'unauthorized'
         }
       ]
@@ -100,7 +101,7 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       meta: { requiresAuth: true },
-      component: () => import('@/views/Base/NotFound.vue'),
+      component: () => import('@/views/Base/NotFoundView.vue'),
       name: 'notFound'
     }
   ]
@@ -111,10 +112,14 @@ router.beforeEach(async (to, from, next) => {
   layoutStore.init();
 
   const authStore = useAuthStore();
-  // Automatically login using mock when in development mode
+  // Automatically login using mock when in devops mode
   if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
-    console.log('Not authenticated, logging in as mock');
-    await authStore.MockLogin();
+    await authStore.MockLogin({
+      id: 'dev',
+      name: 'dev',
+      roles: [SecurityGroup.ADMIN]
+    });
+    await authStore.initStores();
   }
   const authenticated = authStore.isAuthenticated();
   const hasRights = authStore.roles && authStore.roles.length > 0;

@@ -3,6 +3,15 @@ import { defineStore } from 'pinia';
 import { handleError } from '@/utils/errorHandler';
 import { useSocketStore } from '@/stores/socket.store';
 
+/**
+ * Audit store
+ * @param dashboardEntries - The log entries shown on the dashboard
+ * @param entries - The log entries
+ * @param take - The number of entries to show
+ * @param skip - The number of entries to skip
+ * @param count - The total number of pages needed to show all entries
+ * @param loading - The loading state
+ */
 interface AuditStore {
   dashboardEntries: AuditLogEntryResponse[];
   entries: AuditLogEntryResponse[];
@@ -23,9 +32,16 @@ export const useAuditStore = defineStore('audit', {
   }),
   getters: {},
   actions: {
+    /**
+     * Handle the audit log addition
+     * @param log
+     */
     async handleAuditLogAddition(log: AuditLogEntryResponse) {
-      this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, 15);
+      this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, this.take);
     },
+    /**
+     * Initialize the store
+     */
     async init() {
       await getAuditLogs({
         query: {
@@ -40,10 +56,12 @@ export const useAuditStore = defineStore('audit', {
         .catch(handleError);
 
       this.loading = false;
-
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('audit_log_create', this.handleAuditLogAddition);
     },
+    /**
+     * Get the audit logs
+     */
     async getLogs() {
       this.loading = true;
       await getAuditLogs({
@@ -59,14 +77,25 @@ export const useAuditStore = defineStore('audit', {
         .catch(handleError);
       this.loading = false;
     },
+    /**
+     * Set the skip value
+     * @param skip
+     */
     async setSkip(skip: number) {
       this.skip = skip;
       await this.getLogs();
     },
+    /**
+     * Set the take value
+     * @param take
+     */
     async setTake(take: number) {
       this.take = take;
       await this.getLogs();
     },
+    /**
+     * Destroy the store
+     */
     async destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener('audit_log_create', this.handleAuditLogAddition);
