@@ -48,6 +48,7 @@ import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
 import { AuraPreset } from '@/assets/preset';
+import { client } from '@/api/services.gen';
 
 export const app = createApp(App);
 
@@ -69,6 +70,11 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.use(ConfirmationService);
+
+client.setConfig({
+  baseUrl: '/api'
+});
+
 SetupInterceptors();
 
 app.use(createPinia());
