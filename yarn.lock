@@ -217,11 +217,6 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
-"@hey-api/client-axios@^0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@hey-api/client-axios/-/client-axios-0.2.7.tgz#919d971e098f2eec606bd10f7038bc7fb672899b"
-  integrity sha512-3691It5Bt87/kS1K5+vPt6RdSk/gCnkiaEgjrasgRWKHktJ727f+7QWs+KfmCTSGeXf5ODTu7zNOBwzVkLzGkA==
-
 "@hey-api/client-fetch@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@hey-api/client-fetch/-/client-fetch-0.4.0.tgz#099fd79db01f2232e03b6a3ce3bed247e2b8d9b7"
@@ -4571,7 +4566,7 @@ vue-tsc@^2.0.29:
     "@vue/language-core" "2.1.6"
     semver "^7.5.4"
 
-vue@^3.4.38:
+vue@^3.5.11:
   version "3.5.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.11.tgz#3e307183797629f701e303a0a008f517ae031483"
   integrity sha512-/8Wurrd9J3lb72FTQS7gRMNQD4nztTtKPmuDuPuhqXmmpD6+skVjAeahNpVzsuky6Sy9gy7wn8UadqPtt9SQIg==

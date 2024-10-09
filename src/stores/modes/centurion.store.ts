@@ -58,7 +58,6 @@ export const useCenturionStore = defineStore('centurion', {
 
       await this.getCurrentCenturion(false);
       this.loading = false;
-      console.log(this.currentTape);
       this.playing = this.currentTape?.playing ?? false;
 
       const socketStore = useSocketStore();

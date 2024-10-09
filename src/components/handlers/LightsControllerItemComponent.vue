@@ -23,6 +23,7 @@
               (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
             "
             :loading="handlersStore.gettingLights || handlersStore.settingLights"
+            :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           />
         </div>
       </div>
@@ -37,6 +38,7 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import { computed, type ComputedRef } from 'vue';
 import type { LightsControllerResponse } from '@/api';
+import { useAuthStore } from '@/stores/auth.store';
 
 const props = defineProps<{
   controller: LightsControllerResponse;
@@ -47,6 +49,7 @@ const lightsGroups = subscriberStore.lightsGroups.value.filter(
   (g) => g.controller.id === props.controller.id
 );
 const handlersStore = useHandlersStore();
+const authStore = useAuthStore();
 
 const connected: ComputedRef<boolean> = computed(() => {
   const socketIds = props.controller.socketIds as any | undefined;

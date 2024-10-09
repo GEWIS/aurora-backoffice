@@ -8,34 +8,42 @@ import {
   authOidc,
   type AuthUser,
   getInformation,
+  getSecurityGroups,
+  type ISecurityGroups,
+  type ISecuritySections,
   type OidcParameters,
   SecurityGroup
 } from '@/api';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useAuditStore } from '@/stores/audit.store';
+import _ from 'lodash';
 
 /**
  * Auth store
  * @param name - The name of the user
  * @param roles - The roles of the user
  * @param development - Whether in development mode
+ * @param securityGroups - The security groups
  */
 interface AuthStore {
   name: string | null;
   roles: SecurityGroup[];
   development: boolean;
+  securityGroups?: ISecurityGroups;
 }
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthStore => ({
     name: null,
     roles: [],
-    development: false
+    development: false,
+    securityGroups: undefined
   }),
   getters: {
     getName: (state) => state.name,
     getRoles: (state) => state.roles,
-    getDevelopment: (state) => state.development
+    getDevelopment: (state) => state.development,
+    getSecurityGroups: (state) => state.securityGroups
   },
   actions: {
     /**
@@ -49,6 +57,9 @@ export const useAuthStore = defineStore('auth', {
         await useHandlersStore().init();
         await useColorStore().init();
       });
+
+      const securityGroups = await getSecurityGroups();
+      this.securityGroups = securityGroups.data;
     },
     /**
      * Login a user using OIDC
@@ -77,23 +88,47 @@ export const useAuthStore = defineStore('auth', {
       });
     },
     /**
-     * Initialize the stores
+     * Initialize the stores -- only those which the user has access to
      */
     async initStores(): Promise<void> {
       await useSocketStore().connect();
-      await Promise.all([
-        useHandlersStore().init(),
-        useColorStore().init(),
-        useSubscriberStore().init(),
-        useSceneControllerStore().init(),
-        useAuditStore().init()
-      ]);
+      if (
+        this.isInSecurityGroup('handler', 'base') &&
+        this.isInSecurityGroup('handler', 'base') &&
+        this.isInSecurityGroup('handler', 'base')
+      ) {
+        await useHandlersStore().init();
+      }
+      if (this.isInSecurityGroup('light', 'base')) {
+        await useColorStore().init();
+      }
+      if (
+        this.isInSecurityGroup('audio', 'base') &&
+        this.isInSecurityGroup('light', 'base') &&
+        this.isInSecurityGroup('screen', 'base')
+      ) {
+        await useSubscriberStore().init();
+      }
+      if (this.isInSecurityGroup('scenes', 'base')) {
+        await useSceneControllerStore().init();
+      }
+      if (this.isInSecurityGroup('audit', 'base')) {
+        await useAuditStore().init();
+      }
     },
     /**
      * Check if the user is authenticated
      */
     isAuthenticated(): boolean {
       return this.name !== undefined && this.roles.length > 0;
+    },
+    /**
+     * Check if the user is in a security group
+     * @param group - The endpoint for the security
+     * @param section - The security group to check for
+     */
+    isInSecurityGroup(group: keyof ISecurityGroups, section: keyof ISecuritySections): boolean {
+      return _.intersection(this.roles, this.securityGroups![group][section]).length > 0;
     }
   }
 });

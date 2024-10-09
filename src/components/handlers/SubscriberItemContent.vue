@@ -14,6 +14,7 @@
       :current-handler="currentHandler"
       :possible-handlers="possibleHandlers"
       :loading="loading"
+      :disabled="disabled"
       @change="(newHandler: string | null) => $emit('change', newHandler)"
     />
   </div>
@@ -30,6 +31,7 @@ const props = defineProps<{
   currentHandler: Handler | undefined;
   possibleHandlers: Handler[];
   loading?: boolean;
+  disabled?: boolean;
 }>();
 
 defineEmits<{

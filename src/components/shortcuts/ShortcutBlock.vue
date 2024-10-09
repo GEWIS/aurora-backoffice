@@ -1,6 +1,6 @@
 <template>
   <AppContainer title="Shortcuts" icon="pi-file-import">
-    <div class="columns-1 sm:columns-2">
+    <div v-if="menus.length > 0" class="columns-1 sm:columns-2">
       <div v-for="items in menus" :key="items[0].key" class="break-inside-avoid">
         <Menu :model="items" class="!border-none">
           <template #submenuheader="{ item }">
@@ -30,6 +30,10 @@
         </Menu>
       </div>
     </div>
+    <!-- TODO: possibly hide instead of displaying this -->
+    <div v-else>
+      <p>No shortcuts available</p>
+    </div>
   </AppContainer>
 </template>
 
@@ -45,16 +49,23 @@ import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
 import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
 import AppContainer from '@/layout/AppContainer.vue';
 import { disableAllModes } from '@/api';
+import { useAuthStore } from '@/stores/auth.store';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
 const sceneStore = useSceneControllerStore();
+const authStore = useAuthStore();
 
 const centurionModeStore = useCenturionStore();
-centurionModeStore.getCurrentCenturion(true);
+if (authStore.isInSecurityGroup('centurion', 'privileged')) {
+  centurionModeStore.getCurrentCenturion(true);
+}
 const timeTrailRaceModeStore = useTimeTrailRaceStore();
-timeTrailRaceModeStore.getTimeTrailMode();
+if (authStore.isInSecurityGroup('timetrail', 'base')) {
+  timeTrailRaceModeStore.getTimeTrailMode();
+}
 
+// TODO why does this reactivity not work as expected?
 const sceneMenuItems = computed<IShortcutItem[]>(() =>
   sceneStore.favoriteScenes.map((s) => {
     const lightGroupIds = s.effects
@@ -73,85 +84,118 @@ const sceneMenuItems = computed<IShortcutItem[]>(() =>
   })
 );
 
-const defaults: IShortcutItem[] = [
-  {
-    label: 'Defaults',
-    items: [
-      {
-        label: 'Reset to defaults',
-        icon: 'pi-power-off',
-        command: () => {
-          handlersStore.reset();
-        }
-      }
-    ]
+// Add items based on the user's security groups
+const defaults = computed<IShortcutItem[] | boolean>(() => {
+  const showReset = authStore.isInSecurityGroup('handler', 'privileged');
+  if (!showReset) {
+    return false;
   }
-];
 
-const lights: IShortcutItem[] = [
-  {
-    label: 'Lights',
-    items: [
-      {
-        label: 'Disable',
-        icon: 'pi-power-off',
-        command: () => {
-          const ids = subscriberStore.lightsGroups.map((g) => g.id);
-          handlersStore.setLightsHandler(ids);
+  return [
+    {
+      label: 'Defaults',
+      items: [
+        {
+          label: 'Reset to defaults',
+          icon: 'pi-power-off',
+          command: () => {
+            handlersStore.reset();
+          }
         }
-      },
-      ...sceneMenuItems.value,
-      {
-        label: 'Random effects',
-        icon: 'pi-sparkles',
-        command: () => {
-          const ids = subscriberStore.lightsGroups.map((g) => g.id);
-          handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
-        }
-      }
-    ]
+      ]
+    }
+  ].filter(Boolean) as IShortcutItem[];
+});
+
+// Add items based on the user's security groups
+const lights = computed<IShortcutItem[] | boolean>(() => {
+  const showLights = authStore.isInSecurityGroup('handler', 'privileged');
+
+  if (!showLights) {
+    return false;
   }
-];
 
-const modes: IShortcutItem[] = [
-  {
-    label: 'Modes',
-    items: [
-      {
-        label: 'Disable',
-        icon: 'pi-power-off',
-        command: () => {
-          disableAllModes()
-            .then(async () => {
-              await Promise.all([
-                centurionModeStore.getCurrentCenturion(),
-                timeTrailRaceModeStore.getTimeTrailMode()
-              ]);
-            })
-            .catch(handleError);
+  console.log(sceneMenuItems.value);
+
+  return [
+    {
+      label: 'Lights',
+      items: [
+        {
+          label: 'Disable',
+          icon: 'pi-power-off',
+          command: () => {
+            const ids = subscriberStore.lightsGroups.map((g) => g.id);
+            handlersStore.setLightsHandler(ids);
+          }
+        },
+        ...sceneMenuItems.value,
+        {
+          label: 'Random effects',
+          icon: 'pi-sparkles',
+          command: () => {
+            const ids = subscriberStore.lightsGroups.map((g) => g.id);
+            handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
+          }
         }
-      },
-      {
-        label: 'Centurion',
-        icon: 'pi-prime',
-        route: '/modes/centurion',
-        loading: centurionModeStore.loading,
-        enabledIcon: centurionModeStore.enabled,
-        disabledIcon: centurionModeStore.disabled
-      },
-      {
-        label: 'Spoelbakkenrace',
-        icon: 'pi-hourglass',
-        route: '/modes/timeTrailRace',
-        loading: timeTrailRaceModeStore.loading,
-        enabledIcon: timeTrailRaceModeStore.enabled,
-        disabledIcon: timeTrailRaceModeStore.disabled
-      }
-    ]
-  }
-];
+      ]
+    }
+  ].filter(Boolean) as IShortcutItem[];
+});
 
-const menus = computed<Array<Array<IShortcutItem>>>(() => [defaults, lights, modes]);
+// Add items based on the user's security groups
+const modes = computed<IShortcutItem[] | boolean>(() => {
+  const showModes = authStore.isInSecurityGroup('mode', 'base');
+  const showCenturion = authStore.isInSecurityGroup('centurion', 'privileged');
+  const showTimeTrail = authStore.isInSecurityGroup('timetrail', 'base');
+
+  if (!(showModes || showCenturion || showTimeTrail)) {
+    return false;
+  }
+
+  return [
+    {
+      label: 'Modes',
+      items: [
+        showModes &&
+          authStore.isInSecurityGroup('mode', 'base') && {
+            label: 'Disable',
+            icon: 'pi-power-off',
+            command: () => {
+              disableAllModes()
+                .then(async () => {
+                  await Promise.all([
+                    centurionModeStore.getCurrentCenturion(),
+                    timeTrailRaceModeStore.getTimeTrailMode()
+                  ]);
+                })
+                .catch(handleError);
+            }
+          },
+        showCenturion && {
+          label: 'Centurion',
+          icon: 'pi-prime',
+          route: '/modes/centurion',
+          loading: centurionModeStore.loading,
+          enabledIcon: centurionModeStore.enabled,
+          disabledIcon: centurionModeStore.disabled
+        },
+        showTimeTrail && {
+          label: 'Spoelbakkenrace',
+          icon: 'pi-hourglass',
+          route: '/modes/timeTrailRace',
+          loading: timeTrailRaceModeStore.loading,
+          enabledIcon: timeTrailRaceModeStore.enabled,
+          disabledIcon: timeTrailRaceModeStore.disabled
+        }
+      ]
+    }
+  ].filter(Boolean) as IShortcutItem[];
+});
+
+const menus = computed<Array<Array<IShortcutItem>>>(
+  () => [defaults.value, lights.value, modes.value].filter(Boolean) as Array<Array<IShortcutItem>>
+);
 </script>
 
 <style lang="scss">

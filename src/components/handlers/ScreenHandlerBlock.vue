@@ -14,6 +14,7 @@
             (newHandler: string | null) => handlersStore.setScreenHandler(screen.id, newHandler)
           "
           :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
+          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
         />
       </div>
     </div>
@@ -26,9 +27,11 @@ import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
 import AppContainer from '@/layout/AppContainer.vue';
+import { useAuthStore } from '@/stores/auth.store';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
+const authStore = useAuthStore();
 </script>
 
 <style scoped lang="scss"></style>

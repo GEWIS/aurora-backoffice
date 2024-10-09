@@ -6,14 +6,18 @@
     </DevGuard>
   </div>
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-10">
-    <div class="flex flex-col gap-10">
-      <ScreenHandlerBlock />
-      <AudioHandlerBlock />
-      <LightHandlerBlock />
-    </div>
+    <AuthGuard group="handler" section="base">
+      <div class="flex flex-col gap-10">
+        <ScreenHandlerBlock />
+        <AudioHandlerBlock />
+        <LightHandlerBlock />
+      </div>
+    </AuthGuard>
     <div class="flex flex-col gap-10">
       <ShortcutBlock />
-      <AuditBlock />
+      <AuthGuard group="audit" section="base">
+        <AuditBlock />
+      </AuthGuard>
     </div>
   </div>
 </template>
@@ -25,8 +29,9 @@ import AuditBlock from '@/components/audit/AuditBlock.vue';
 import ScreenHandlerBlock from '@/components/handlers/ScreenHandlerBlock.vue';
 import AudioHandlerBlock from '@/components/handlers/AudioHandlerBlock.vue';
 import LightHandlerBlock from '@/components/handlers/LightHandlerBlock.vue';
-import DevSettings from '@/components/devops/DevSettings.vue';
-import DevGuard from '@/components/devops/DevGuard.vue';
+import DevSettings from '@/components/auth/DevSettings.vue';
+import DevGuard from '@/components/auth/DevGuard.vue';
+import AuthGuard from '@/components/auth/AuthGuard.vue';
 
 const authStore = useAuthStore();
 </script>

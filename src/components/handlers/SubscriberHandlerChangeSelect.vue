@@ -12,6 +12,7 @@
       }
     "
     show-clear
+    :disabled="disabled"
     :loading="loading"
   />
 </template>
@@ -22,6 +23,7 @@ import type { Handler } from '@/stores/handlers.store';
 defineProps<{
   currentHandler?: Handler;
   possibleHandlers: Handler[];
+  disabled?: boolean;
   loading?: boolean;
 }>();
 

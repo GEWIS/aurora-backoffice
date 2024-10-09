@@ -26,7 +26,6 @@ const lightGroups = props.effect.lightGroupIds.map((id: number) =>
 const effectsControllerStore = useEffectsControllerStore();
 
 const setEffect = () => {
-  console.log(props.effect);
   if (props.effect.colorEffect !== undefined) {
     effectsControllerStore.setColorEffect(props.effect.colorEffect, props.effect.lightGroupIds);
   }
