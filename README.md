@@ -1,11 +1,11 @@
 # Aurora Backoffice
 This repository contains the management interface of the Aurora software suite.
-The backoffice is primarily responsible for sending commands to the [core](https://github.com/gewis/narrowcasting-core) over HTTP.
+The backoffice is primarily responsible for sending commands to the [core](https://github.com/gewis/aurora-core) over HTTP.
 To see the current state of Aurora, the backoffice can also receive SocketIO messages.
 
 ## Prerequisites
 - NodeJS 20.
-- A locally running copy of [aurora-core](https://github.com/gewis/narrowcasting-core).
+- A locally running copy of [aurora-core](https://github.com/gewis/aurora-core).
 The backoffice repository should be cloned next to the core repository, so in the folder `../aurora-core`.
 This is necessary to generate the required API client files (installation step 2).
 
