@@ -1,46 +1,31 @@
-# sudosos-frontend-vue3
+# Aurora Backoffice
+This repository contains the management interface of the Aurora software suite.
+The backoffice is primarily responsible for sending commands to the [core](https://github.com/gewis/narrowcasting-core) over HTTP.
+To see the current state of Aurora, the backoffice can also receive SocketIO messages.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Prerequisites
+- NodeJS 20.
+- A locally running copy of [aurora-core](https://github.com/gewis/narrowcasting-core).
+The backoffice repository should be cloned next to the core repository, so in the folder `../aurora-core`.
+This is necessary to generate the required API client files (installation step 2).
 
-## Recommended IDE Setup
+## Installation
+1. Run `npm install`.
+2. Run `npm run gen-client` to generate the Typescript files required to communicate with the core.
+3. Run `npm run dev`.
+4. The application should now be running at http://localhost:8080.
+In a development environment with a local copy of Aurora Core, you should be logged in automatically.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Deployment
+Deployment is done using Docker-compose in the core repository.
+This should work out of the box if you meet the prerequisites.
 
-## Type Support for `.vue` Imports in TS
+## Copyright
+Copyright © 2023-2024 Study Association GEWIS - Some rights reserved.
+You can use our software freely within the limits of our license.
+However, we worked very hard on this project and invested a lot of time in it
+so we ask you to leave our copyright marks in place when modifying our software.
+Of course, you are free to add your own.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## License
+Aurora uses the [AGPL-3.0 license](LICENSE).
