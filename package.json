@@ -12,7 +12,7 @@
     "lint-fix": "eslint ./src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore --fix",
     "format": "prettier --ignore-path .gitignore --check ./src/",
     "format-fix": "prettier --ignore-path .gitignore --write ./src/",
-    "gen-client": "openapi --input ../narrowcasting-core/build/swagger.json --output src/api/",
+    "gen-client": "openapi --input ../aurora-core/build/swagger.json --output src/api/",
     "prepare": "husky install"
   },
   "dependencies": {
