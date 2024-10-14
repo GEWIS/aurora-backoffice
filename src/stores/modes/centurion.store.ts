@@ -14,6 +14,14 @@ import {
   skipCenturion
 } from '@/api';
 
+/**
+ * Centurion store
+ * @param currentTape - The current loaded centurion tape
+ * @param tapes - The available centurion tapes
+ * @param loading - Whether the centurion is loading
+ * @param playing - Whether the centurion is playing
+ * @param skipping - Whether the centurion is skipping
+ */
 interface CenturionStore {
   currentTape: CenturionResponse | null;
   loading: boolean;
@@ -36,9 +44,18 @@ export const useCenturionStore = defineStore('centurion', {
     },
     disabled(): boolean {
       return this.currentTape == null && !this.loading;
-    }
+    },
+    getCurrentTape: (state) => state.currentTape,
+    getTapes: (state) => state.tapes,
+    isLoading: (state) => state.loading,
+    isPlaying: (state) => state.playing,
+    isSkipping: (state) => state.skipping
   },
   actions: {
+    /**
+     * Get the current centurion tape
+     * @param handleLoading - whether to enable and disable loading
+     */
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
       // TODO check if error handling is okay
@@ -53,6 +70,9 @@ export const useCenturionStore = defineStore('centurion', {
         });
       if (handleLoading) this.loading = false;
     },
+    /**
+     * Initialize the store
+     */
     async init() {
       await getCenturionTapes().then((tapes) => (this.tapes = tapes.data!));
 
@@ -66,6 +86,9 @@ export const useCenturionStore = defineStore('centurion', {
         this.getCurrentCenturion.bind(this)
       );
     },
+    /**
+     * Destroy the store
+     */
     async destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener(
@@ -73,6 +96,13 @@ export const useCenturionStore = defineStore('centurion', {
         this.getCurrentCenturion.bind(this)
       );
     },
+    /**
+     * Initialize the centurion
+     * @param tapeName - The name of the centurion tape
+     * @param audioIds - The audio ids to use
+     * @param screenIds - The screen ids to use
+     * @param lightsGroupIds - The lights group ids to use
+     */
     async initializeCenturion(
       tapeName: string,
       audioIds: number[],
@@ -93,20 +123,33 @@ export const useCenturionStore = defineStore('centurion', {
       this.loading = false;
       this.playing = false;
     },
+    /**
+     * Quit the centurion
+     */
     async quitCenturion() {
       this.loading = true;
       await disableCenturion();
       this.currentTape = null;
       this.loading = false;
     },
+    /**
+     * Start the centurion
+     */
     async startCenturion() {
       await startCenturion();
       this.playing = true;
     },
+    /**
+     * Pause the centurion
+     */
     async pauseCenturion() {
       await stopCenturion();
       this.playing = false;
     },
+    /**
+     * Skip the centurion
+     * @param seconds - The number of seconds to skip
+     */
     async skipCenturion(seconds: number) {
       this.skipping = true;
       await skipCenturion({
