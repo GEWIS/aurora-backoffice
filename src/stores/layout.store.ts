@@ -1,12 +1,33 @@
 import { defineStore } from 'pinia';
 
+/**
+ * window widths defined by Tailwind
+ */
+export enum TailwindWidth {
+  sm = 576,
+  md = 768,
+  lg = 992,
+  xl = 1200,
+  xxl = 1600
+}
+
+/**
+ * Layout store
+ * @param menuMobileActive - Whether the menu is active on mobile
+ * @param menuDesktopActive - Whether the menu is active on desktop
+ * @param darkMode - Whether the dark mode is active
+ * @param windowWidth - The width of the window
+ */
 interface LayoutStore {
   menuMobileActive: boolean;
   menuDesktopActive: boolean;
   darkMode: boolean;
-  primeVue: any;
+  windowWidth: number;
 }
 
+/**
+ * Get dark mode from local storage, otherwise match media
+ */
 function useDarkMode() {
   if (localStorage.getItem('theme')) {
     return localStorage.getItem('theme') === 'dark';
@@ -26,22 +47,45 @@ export const useLayoutStore = defineStore('layout', {
     menuMobileActive: false,
     menuDesktopActive: false,
     darkMode: useDarkMode(),
-    primeVue: null
+    windowWidth: window.innerWidth
   }),
-  getters: {},
+  getters: {
+    getMenuMobileActive: (state) => state.menuMobileActive,
+    getMenuDesktopActive: (state) => state.menuDesktopActive,
+    getDarkMode: (state) => state.darkMode,
+    getWindowWidth: (state) => state.windowWidth
+  },
   actions: {
+    /**
+     * Initialize the store
+     */
+    init() {
+      this.applyTheme();
+    },
+    /**
+     * Toggle the menu on mobile
+     */
     switchMenuMobile() {
       this.menuMobileActive = !this.menuMobileActive;
     },
+    /**
+     * Toggle the menu on desktop
+     */
     switchMenuDesktop() {
       this.menuDesktopActive = !this.menuDesktopActive;
     },
+    /**
+     * Toggle the theme
+     */
     switchTheme() {
       this.darkMode = !this.darkMode;
       const theme = this.darkMode ? 'dark' : 'light';
       localStorage.setItem('theme', theme);
       this.applyTheme();
     },
+    /**
+     * Apply a specific theme by adding a class to the html element
+     */
     applyTheme() {
       const element = document.querySelector('html');
       if (this.darkMode) {
@@ -50,8 +94,23 @@ export const useLayoutStore = defineStore('layout', {
         element!.classList.remove('dark-mode');
       }
     },
-    init() {
-      this.applyTheme();
+    /**
+     * Adjust the state width to match the window width
+     */
+    changeWidth() {
+      this.windowWidth = window.innerWidth;
+    },
+    /**
+     * Mount the resize listener to the window
+     */
+    mountResizeListener() {
+      window.addEventListener('resize', this.changeWidth);
+    },
+    /**
+     * Unmount the resize listener from the window
+     */
+    unmountResizeListener() {
+      window.removeEventListener('resize', this.changeWidth);
     }
   }
 });
