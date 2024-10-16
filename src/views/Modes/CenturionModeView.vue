@@ -1,44 +1,46 @@
 <template>
-  <AppContainer title="Centurion" icon="pi-crown">
-    <template #header>
-      <div v-if="currentTape">
-        <StopButton :tape="currentTape" />
-      </div>
-    </template>
-    <div class="grid grid-cols-1">
+  <div class="grid lg:grid-cols-6 xxl:grid-cols-4">
+    <div class="hidden lg:flex" />
+    <AppContainer title="Centurion" icon="pi-crown" class="lg:col-span-4 xxl:col-span-2">
+      <template #header>
+        <div v-if="currentTape">
+          <StopButton :tape="currentTape" />
+        </div>
+      </template>
       <div v-if="currentTape">
         <CoverPlayButton :tape="currentTape" />
         <divider />
         <CenturionTapeTimeline :tape="currentTape" />
       </div>
       <div v-else>
-        <InitializeCenturion :vertical="width < 768" />
+        <InitializeCenturion :vertical="layoutStore.getWindowWidth < TailwindWidth.sm" />
       </div>
-    </div>
-  </AppContainer>
+    </AppContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useCenturionStore } from '@/stores/modes/centurion.store';
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import InitializeCenturion from '@/components/modes/centurion/InitializeCenturion.vue';
 import CoverPlayButton from '@/components/modes/centurion/CoverPlayButton.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import type { MixTapeResponse } from '@/api';
 import StopButton from '@/components/modes/centurion/StopButton.vue';
 import CenturionTapeTimeline from '@/components/modes/centurion/TapeTimeline.vue';
+import { useLayoutStore, TailwindWidth } from '@/stores/layout.store';
 
 const centurionStore = useCenturionStore();
+const layoutStore = useLayoutStore();
 centurionStore.init();
 
-const onWidthChange = () => (width.value = window.innerWidth);
-onMounted(() => window.addEventListener('resize', onWidthChange));
+onMounted(() => layoutStore.mountResizeListener());
 onUnmounted(() => {
-  window.removeEventListener('resize', onWidthChange);
+  layoutStore.unmountResizeListener();
   centurionStore.destroy();
 });
 
-let width = ref(window.innerWidth);
+// let width = ref(window.innerWidth);
 const currentTape = computed<MixTapeResponse | undefined>(() => {
   const tapes = centurionStore.getTapes;
   if (!tapes) return undefined;

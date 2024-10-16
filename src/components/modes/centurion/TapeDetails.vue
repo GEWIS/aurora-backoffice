@@ -1,20 +1,12 @@
 <template>
-  <table class="w-full">
-    <tbody>
-      <tr>
-        <td class="font-bold">Duration</td>
-        <td>{{ formatDuration($props.tape.duration) }}</td>
-      </tr>
-      <tr>
-        <td class="font-bold">Horns</td>
-        <td>{{ $props.tape.horns }}</td>
-      </tr>
-      <tr>
-        <td class="font-bold">Frequency</td>
-        <td>{{ timePerHorn }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="text-justify">
+    You are about to start
+    <span class="font-semibold">{{ $props.tape.name }}</span> from
+    <span class="font-semibold">{{ $props.tape.artist }}</span
+    >. This mixtape has <span class="font-semibold">{{ $props.tape.horns }}</span> horns and a
+    duration of <span class="font-semibold">{{ formatDuration($props.tape.duration) }}</span
+    >, for an average of 1 horn every <span class="font-semibold">{{ timePerHorn }}</span> seconds.
+  </div>
 </template>
 
 <script setup lang="ts">
