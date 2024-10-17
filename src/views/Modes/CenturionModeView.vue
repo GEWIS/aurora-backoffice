@@ -4,7 +4,12 @@
     <AppContainer title="Centurion" icon="pi-crown" class="lg:col-span-4 xxl:col-span-2">
       <template #header>
         <div v-if="currentTape">
-          <StopButton :tape="currentTape" />
+          <Button icon="pi pi-trash" @click="dialogRef.confirmDelete()" />
+          <DialogWrapper
+            ref="dialogRef"
+            message="Are you sure you want to quit this centurion?"
+            :on-accept="centurionStore.quitCenturion"
+          />
         </div>
       </template>
       <div v-if="currentTape">
@@ -21,15 +26,16 @@
 
 <script setup lang="ts">
 import { useCenturionStore } from '@/stores/modes/centurion.store';
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import InitializeCenturion from '@/components/modes/centurion/InitializeCenturion.vue';
 import CoverPlayButton from '@/components/modes/centurion/CoverPlayButton.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import type { MixTapeResponse } from '@/api';
-import StopButton from '@/components/modes/centurion/StopButton.vue';
 import CenturionTapeTimeline from '@/components/modes/centurion/TapeTimeline.vue';
 import { useLayoutStore, TailwindWidth } from '@/stores/layout.store';
+import DialogWrapper from '@/components/prime/DialogWrapper.vue';
 
+const dialogRef = ref();
 const centurionStore = useCenturionStore();
 const layoutStore = useLayoutStore();
 centurionStore.init();
@@ -40,7 +46,6 @@ onUnmounted(() => {
   centurionStore.destroy();
 });
 
-// let width = ref(window.innerWidth);
 const currentTape = computed<MixTapeResponse | undefined>(() => {
   const tapes = centurionStore.getTapes;
   if (!tapes) return undefined;
