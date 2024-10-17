@@ -1,13 +1,13 @@
 <template>
   <EffectSettingsDialog can-save effect-name="RandomPosition" @save="handleAddEffect">
     <SelectorRatioSlider
+      id="beats-to-move"
       :min="1"
       :max="4"
       :step="1"
       :value="beatsToMove"
-      @update="(newVal: number) => (beatsToMove = newVal)"
-      id="beats-to-move"
       name="Number of beats before changing position"
+      @update="(newVal: number) => (beatsToMove = newVal)"
     />
   </EffectSettingsDialog>
 </template>

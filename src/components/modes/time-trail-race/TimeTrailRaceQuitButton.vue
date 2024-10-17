@@ -3,9 +3,9 @@
     size="small"
     variant="danger"
     title="Stop"
-    @click="confirmDelete()"
     :loading="store.loading"
     :disabled="!store.sessionName || !store.state"
+    @click="confirmDelete()"
   >
     <i class="pi pi-trash" />
   </Button>

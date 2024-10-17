@@ -5,17 +5,14 @@ module.exports = {
   root: true,
   plugins: ['import'],
   extends: [
-    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting',
     'prettier'
   ],
 
-  ignorePatterns: [
-    '/src/components/icons/*.vue',
-    '/src/api/Client.ts'
-  ],
+  ignorePatterns: ['/src/components/icons/*.vue', '/src/api/Client.ts'],
   rules: {
     'max-len': ['warn', { code: 120 }],
     semi: ['error', 'always'],

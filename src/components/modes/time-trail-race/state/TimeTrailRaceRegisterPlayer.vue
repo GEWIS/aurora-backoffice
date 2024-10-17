@@ -2,14 +2,14 @@
   <div class="flex flex-column gap-3">
     <div class="flex flex-column gap-2">
       <label for="time-trail-race-player-name">Player name</label>
-      <InputText id="time-trail-race-player-name" class="w-full" v-model="playerName" />
+      <InputText id="time-trail-race-player-name" v-model="playerName" class="w-full" />
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="isAlcoholFree" inputId="isAlcoholFree" name="isAlcoholFree" binary />
+      <Checkbox v-model="isAlcoholFree" input-id="isAlcoholFree" name="isAlcoholFree" binary />
       <label for="isAlcoholFree" class="ml-2">Is alcohol free?</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="isBac" inputId="isBac" name="isBac" binary />
+      <Checkbox v-model="isBac" input-id="isBac" name="isBac" binary />
       <label for="isBac" class="ml-2">Is BAC?</label>
     </div>
     <div>

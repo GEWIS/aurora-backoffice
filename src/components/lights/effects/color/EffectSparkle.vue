@@ -1,6 +1,6 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length > 0" effect-name="Sparkle" @save="handleAddEffect">
-    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
     <SelectorRatioSlider
       id="sparkle-ratio"
       :min="0"

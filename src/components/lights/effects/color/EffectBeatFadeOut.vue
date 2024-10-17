@@ -30,18 +30,18 @@ const handleAddEffect = () => {
     :can-save="colors.length > 0"
     @save="handleAddEffect"
   >
-    <SelectorLightsColor @colorsUpdated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
     <SelectorBoolean
-      :checked="enableFade"
-      @click="() => (enableFade = !enableFade)"
       id="enableFade"
+      :checked="enableFade"
       name="Enable fade"
+      @click="() => (enableFade = !enableFade)"
     />
     <SelectorBoolean
-      :checked="addBlacks"
-      @click="() => (addBlacks = !addBlacks)"
       id="addBlacks"
+      :checked="addBlacks"
       name="Add blacks"
+      @click="() => (addBlacks = !addBlacks)"
     />
   </EffectSettingsDialog>
 </template>

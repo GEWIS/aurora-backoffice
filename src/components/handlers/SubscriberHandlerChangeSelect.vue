@@ -6,14 +6,14 @@
     option-value="name"
     placeholder="Select handler"
     class="overflow-hidden text-overflow-ellipsis w-full"
+    show-clear
+    :disabled="disabled"
+    :loading="loading"
     @update:model-value="
       (newHandler: string | null) => {
         $emit('change', newHandler);
       }
     "
-    show-clear
-    :disabled="disabled"
-    :loading="loading"
   />
 </template>
 

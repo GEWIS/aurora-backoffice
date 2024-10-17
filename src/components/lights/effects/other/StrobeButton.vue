@@ -1,12 +1,12 @@
 <template>
   <Button
+    :disabled="store.selectedLightsGroupIds.length === 0"
     @touchstart="enableStrobe()"
     @mousedown="enableStrobe()"
     @mouseup="disableStrobe()"
     @blur="disableStrobe()"
     @mouseleave="disableStrobe()"
     @touchend="disableStrobe()"
-    :disabled="store.selectedLightsGroupIds.length === 0"
   >
     Strobe
   </Button>

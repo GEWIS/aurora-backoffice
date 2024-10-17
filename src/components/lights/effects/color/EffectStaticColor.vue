@@ -4,7 +4,7 @@
     effect-name="StaticColor"
     @save="handleAddEffect"
   >
-    <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
     <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
     <Select
       v-model="goboRotate"

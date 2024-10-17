@@ -6,13 +6,13 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type == PosterType_IMAGE.IMG">
+    <template v-if="poster.type == PosterType_IMAGE.IMG" #header>
       <div class="full-width">
         <Carousel
+          v-if="poster.source.length > 1"
           :value="poster.source"
           :num-visible="1"
           :num-scroll="1"
-          v-if="poster.source.length > 1"
           circular
           container-class="relative"
           class="left"
@@ -41,7 +41,7 @@
         />
       </div>
     </template>
-    <template #header v-else>
+    <template v-else #header>
       <div
         class="full-width flex justify-content-center align-items-center"
         style="aspect-ratio: 16/9; background-color: silver"

@@ -2,10 +2,10 @@
   <Panel header="Scoreboard">
     <table class="w-full">
       <tbody>
-        <tr v-for="(score, index) in store.scoreboard" v-bind:key="score.name">
+        <tr v-for="(score, index) in store.scoreboard" :key="score.name">
           <td class="text-right font-bold pr-1">{{ index + 1 }}</td>
           <td class="text-right font-bold pr-2" :class="score.bac && 'player-bac'">
-            <i class="pi pi-asterisk mr-1" v-if="score.alcoholFree" title="Alcohol free" />
+            <i v-if="score.alcoholFree" class="pi pi-asterisk mr-1" title="Alcohol free" />
             {{ score.name }}
           </td>
           <td>{{ toStopwatchString(score.timeMs) }}</td>

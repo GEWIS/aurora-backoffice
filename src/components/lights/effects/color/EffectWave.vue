@@ -1,6 +1,6 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length === 1" effect-name="Wave" @save="handleAddEffect">
-    <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
     <SelectorRatioSlider
       id="waveSize"
       :min="0"

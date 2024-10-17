@@ -1,31 +1,31 @@
 <template>
   <EffectSettingsDialog can-save effect-name="SearchLight" @save="handleAddEffect">
     <SelectorRatioSlider
+      id="radiusFactor"
       :min="0"
       :max="2"
       :step="0.1"
       :value="radiusFactor"
-      @update="(newVal: number) => (radiusFactor = newVal)"
-      id="radiusFactor"
       name="Radius factor"
+      @update="(newVal: number) => (radiusFactor = newVal)"
     />
     <SelectorRatioSlider
+      id="cycleTime"
       :min="0"
       :max="20000"
       :step="1000"
       :value="cycleTime"
-      @update="(newVal: number) => (cycleTime = newVal)"
-      id="cycleTime"
       name="Cycle time (in ms)"
+      @update="(newVal: number) => (cycleTime = newVal)"
     />
     <SelectorRatioSlider
+      id="offsetFactor"
       :min="0"
       :max="1"
       :step="0.05"
       :value="offsetFactor"
-      @update="(newVal: number) => (offsetFactor = newVal)"
-      id="offsetFactor"
       name="Offset factor"
+      @update="(newVal: number) => (offsetFactor = newVal)"
     />
   </EffectSettingsDialog>
 </template>

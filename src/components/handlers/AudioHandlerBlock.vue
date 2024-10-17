@@ -10,11 +10,11 @@
             handlersStore.audioHandlers.find((h) => !!h.entities.find((e) => e.id === audio.id))
           "
           :possible-handlers="handlersStore.audioHandlers"
+          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
+          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           @change="
             (newHandler: string | null) => handlersStore.setAudioHandler(audio.id, newHandler)
           "
-          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
-          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
         />
       </div>
     </div>

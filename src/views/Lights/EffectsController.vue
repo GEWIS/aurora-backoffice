@@ -68,16 +68,16 @@
           <div class="flex flex-row gap-1 flex-wrap justify-center">
             <StrobeButton />
             <Button
-              @click="() => effectsControllerStore.disableLightsColors()"
               severity="secondary"
               :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              @click="() => effectsControllerStore.disableLightsColors()"
             >
               Disable colors
             </Button>
             <Button
-              @click="() => effectsControllerStore.disableLightsMovement()"
               severity="secondary"
               :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              @click="() => effectsControllerStore.disableLightsMovement()"
             >
               Disable movement
             </Button>

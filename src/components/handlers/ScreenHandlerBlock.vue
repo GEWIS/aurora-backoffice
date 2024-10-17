@@ -10,11 +10,11 @@
             handlersStore.screenHandlers.find((h) => !!h.entities.find((e) => e.id === screen.id))
           "
           :possible-handlers="handlersStore.screenHandlers"
+          :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
+          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           @change="
             (newHandler: string | null) => handlersStore.setScreenHandler(screen.id, newHandler)
           "
-          :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
-          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
         />
       </div>
     </div>

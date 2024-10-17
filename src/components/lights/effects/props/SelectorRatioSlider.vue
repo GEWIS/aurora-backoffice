@@ -4,12 +4,12 @@
     <div class="card">
       <div class="">
         <InputNumber
+          :id="id"
           :model-value="value"
           class="w-full"
+          :min-fraction-digits="0"
+          :max-fraction-digits="2"
           @blur="(event) => handleNumberInputChange(event.value)"
-          :minFractionDigits="0"
-          :maxFractionDigits="2"
-          :id="id"
         />
         <Slider
           :model-value="value"

@@ -12,11 +12,11 @@
       </DataTable>
       <Paginator
         :rows="store.take"
-        :totalRecords="store.count"
+        :total-records="store.count"
         :rows-per-page-options="[5, 10, 20, 50]"
+        always-show
         @update:first="(value) => store.setSkip(value)"
         @update:rows="(value) => store.setTake(value)"
-        always-show
       />
     </div>
   </AppContainer>

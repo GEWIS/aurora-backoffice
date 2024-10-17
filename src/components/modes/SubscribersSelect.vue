@@ -8,14 +8,14 @@
       option-label="name"
       option-value="id"
       placeholder="Select audio"
-      :maxSelectedLabels="2"
-      @update:modelValue="(value: number[]) => $emit('update:audios', value)"
+      :max-selected-labels="2"
       :title="
         store.audios
           .filter((a) => selectedAudios.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:audios', value)"
     />
     <MultiSelect
       class="w-full"
@@ -25,14 +25,14 @@
       option-label="name"
       option-value="id"
       placeholder="Select screens"
-      :maxSelectedLabels="2"
-      @update:modelValue="(value: number[]) => $emit('update:screens', value)"
+      :max-selected-labels="2"
       :title="
         store.screens
           .filter((a) => selectedScreens.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:screens', value)"
     />
     <MultiSelect
       class="w-full"
@@ -42,14 +42,14 @@
       option-label="name"
       option-value="id"
       placeholder="Select lights..."
-      :maxSelectedLabels="2"
-      @update:modelValue="(value: number[]) => $emit('update:light-groups', value)"
+      :max-selected-labels="2"
       :title="
         store.lightsGroups
           .filter((a) => selectedLightGroups.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:light-groups', value)"
     />
   </div>
 </template>

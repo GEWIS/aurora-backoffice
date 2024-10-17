@@ -19,9 +19,9 @@ const visible = ref<boolean>(false);
   <Button
     :label="effectName"
     icon="pi pi-plus"
-    @click="() => (visible = true)"
     severity="success"
     :disabled="store.selectedLightsGroupIds.length === 0"
+    @click="() => (visible = true)"
   />
 
   <Dialog
@@ -30,7 +30,7 @@ const visible = ref<boolean>(false);
     :header="effectName"
     :style="{ width: '50rem' }"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
-    dismissableMask
+    dismissable-mask
   >
     <div class="flex flex-column w-100 gap-3">
       <slot></slot>

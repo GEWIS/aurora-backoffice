@@ -14,19 +14,19 @@
           >
             <div class="sm:text-lg text-center">Select a mixtape for this centurion</div>
             <Select
-              :modelValue="selectedTape"
+              :model-value="selectedTape"
               class="w-full sm:max-w-80 mx-auto"
-              optionLabel="name"
-              optionGroupLabel="label"
-              optionGroupChildren="items"
+              option-label="name"
+              option-group-label="label"
+              option-group-children="items"
               :options="availableTapes"
               placeholder="Select tape"
-              @update:modelValue="
+              :title="selectedTape?.name"
+              @update:model-value="
                 (value: MixTapeResponse) => {
                   selectedTape = value;
                 }
               "
-              :title="selectedTape?.name"
             >
               <template #optiongroup="slotProps">
                 <p>{{ slotProps.option.label }}</p>
@@ -35,8 +35,8 @@
             <div class="pt-3 w-full flex justify-center">
               <Button
                 icon="pi pi-chevron-right"
-                @click="activateCallback('2')"
                 :disabled="!selectedTape"
+                @click="activateCallback('2')"
               />
             </div>
           </div>
@@ -57,14 +57,14 @@
               option-label="name"
               option-value="id"
               placeholder="Select audio"
-              :maxSelectedLabels="2"
-              @update:modelValue="(value: number[]) => (selectedAudios = value)"
+              :max-selected-labels="2"
               :title="
                 subscriberStore.audios
                   .filter((a) => selectedAudios.includes(a.id))
                   .map((a) => a.name)
                   .join(', ')
               "
+              @update:model-value="(value: number[]) => (selectedAudios = value)"
             />
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
@@ -73,14 +73,14 @@
               option-label="name"
               option-value="id"
               placeholder="Select screens"
-              :maxSelectedLabels="2"
-              @update:modelValue="(value: number[]) => (selectedScreens = value)"
+              :max-selected-labels="2"
               :title="
                 subscriberStore.screens
                   .filter((a) => selectedScreens.includes(a.id))
                   .map((a) => a.name)
                   .join(', ')
               "
+              @update:model-value="(value: number[]) => (selectedScreens = value)"
             />
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
@@ -89,14 +89,14 @@
               option-label="name"
               option-value="id"
               placeholder="Select lights"
-              :maxSelectedLabels="2"
-              @update:modelValue="(value: number[]) => (selectedLightGroups = value)"
+              :max-selected-labels="2"
               :title="
                 subscriberStore.lightsGroups
                   .filter((a) => selectedLightGroups.includes(a.id))
                   .map((a) => a.name)
                   .join(', ')
               "
+              @update:model-value="(value: number[]) => (selectedLightGroups = value)"
             />
 
             <div class="flex pt-3 justify-center gap-5">
@@ -107,8 +107,8 @@
               />
               <Button
                 icon="pi pi-chevron-right"
-                @click="activateCallback('3')"
                 :disabled="!selectedAudios.length"
+                @click="activateCallback('3')"
               />
             </div>
           </div>
@@ -136,7 +136,7 @@
                   severity="secondary"
                   @click="activateCallback('2')"
                 />
-                <Button icon="pi pi-check" @click="initialize" :disabled="!selectedAudios.length" />
+                <Button icon="pi pi-check" :disabled="!selectedAudios.length" @click="initialize" />
               </div>
             </div>
           </div>

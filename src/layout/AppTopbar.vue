@@ -49,5 +49,5 @@ const onThemeChangeButton = () => {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles.scss';
+@use '@/assets/styles.scss';
 </style>

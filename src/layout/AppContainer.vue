@@ -16,8 +16,14 @@
 
 <script setup lang="ts">
 defineProps({
-  title: String,
-  icon: String
+  title: {
+    type: String,
+    default: ''
+  },
+  icon: {
+    type: String,
+    default: ''
+  }
 });
 </script>
 

@@ -19,11 +19,11 @@
               handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
             "
             :possible-handlers="handlersStore.lightsHandlers"
+            :loading="handlersStore.gettingLights || handlersStore.settingLights"
+            :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
             @change="
               (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
             "
-            :loading="handlersStore.gettingLights || handlersStore.settingLights"
-            :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           />
         </div>
       </div>

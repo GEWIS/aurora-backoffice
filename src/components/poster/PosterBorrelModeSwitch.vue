@@ -3,7 +3,7 @@
     Borrel mode
     <ToggleSwitch
       :disabled="store.loading"
-      :modelValue="store.borrelModeActive"
+      :model-value="store.borrelModeActive"
       @change="store.setBorrelMode(!store.borrelModeActive)"
     />
   </div>

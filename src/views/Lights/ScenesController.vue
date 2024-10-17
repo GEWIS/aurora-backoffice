@@ -13,8 +13,8 @@
       <Column field="name" header="Name" />
       <Column field="favorite" header="Favorite">
         <template #body="slotProps">
-          <i class="pi pi-check" v-if="slotProps.data.favorite" />
-          <i class="pi pi-times" v-else />
+          <i v-if="slotProps.data.favorite" class="pi pi-check" />
+          <i v-else class="pi pi-times" />
         </template>
       </Column>
       <Column header="Actions">

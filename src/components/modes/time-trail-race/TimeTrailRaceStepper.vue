@@ -8,7 +8,7 @@
         </div>
       </div>
     </template>
-    <template #default v-if="store.sessionName != null && store.state != null">
+    <template v-if="store.sessionName != null && store.state != null" #default>
       <Button
         class="w-full text-center mb-3"
         outlined
@@ -59,7 +59,7 @@
         </StepperPanel>
       </Stepper>
     </template>
-    <template #default v-else>
+    <template v-else #default>
       <div>
         <p class="font-italic">The Spoelbakkenrace has not been initialized.</p>
       </div>

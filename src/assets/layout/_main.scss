@@ -1,3 +1,5 @@
+@use './_variables' as *;
+
 :root {
   --surface-ground: var(--p-surface-100);
   --surface-hover: var(--p-surface-100);

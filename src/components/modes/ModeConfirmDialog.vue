@@ -3,9 +3,9 @@
     modal
     header="Initialize"
     :visible="visible"
-    @update:visible="$emit('close')"
     dismissable-mask
     :draggable="false"
+    @update:visible="$emit('close')"
   >
     <template #default>
       <div class="flex flex-column gap-3">
@@ -49,7 +49,7 @@
     <template #footer>
       <div class="flex flex-row gap-1 justify-content-end">
         <Button severity="secondary" size="small" @click="$emit('close')"> Cancel </Button>
-        <Button size="small" @click="$emit('ok')" :loading="loading"> Ok </Button>
+        <Button size="small" :loading="loading" @click="$emit('ok')"> Ok </Button>
       </div>
     </template>
   </Dialog>

@@ -6,7 +6,7 @@
     </div>
     <div>
       <div v-if="loading">
-        <Spinner style="height: 1rem; width: 1rem" strokeWidth="8" />
+        <Spinner style="height: 1rem; width: 1rem" stroke-width="8" />
       </div>
       <div v-if="enabled">
         <i class="pi pi-play-circle text-green-500"></i>

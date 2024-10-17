@@ -2,9 +2,9 @@
   <AppContainer title="Fixture Overview" icon="pi pi-fw pi-bolt">
     <div>
       <DataTable
+        v-model:expanded-rows="expandedRows"
         :value="subscriberStore.lightsGroups"
         data-key="id"
-        v-model:expanded-rows="expandedRows"
       >
         <template #header>
           <div class="flex flex-wrap justify-end gap-5">
