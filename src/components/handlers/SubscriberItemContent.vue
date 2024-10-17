@@ -6,24 +6,24 @@
           {{ subscriber.name }}
         </h6>
         <h6 class="m-0 white-space-nowrap">
-          <i :title="connectedText" :class="['pi text-sm ml-3', connectedIcon]" />
+          <i :class="['pi text-sm ml-3', connectedIcon]" :title="connectedText" />
         </h6>
       </div>
     </div>
     <SubscriberHandlerChangeSelect
       :current-handler="currentHandler"
-      :possible-handlers="possibleHandlers"
-      :loading="loading"
       :disabled="disabled"
+      :loading="loading"
+      :possible-handlers="possibleHandlers"
       @change="(newHandler: string | null) => $emit('change', newHandler)"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, type ComputedRef } from 'vue';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import type { Handler } from '@/stores/handlers.store';
-import { computed, type ComputedRef } from 'vue';
 import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
 
 const props = defineProps<{
@@ -39,7 +39,7 @@ defineEmits<{
 }>();
 
 const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.subscriber.socketIds as any | undefined;
+  const socketIds = props.subscriber.socketIds as never | undefined;
   return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
 });
 

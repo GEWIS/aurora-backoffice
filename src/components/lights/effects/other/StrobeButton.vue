@@ -1,20 +1,20 @@
 <template>
   <Button
     :disabled="store.selectedLightsGroupIds.length === 0"
-    @touchstart="enableStrobe()"
-    @mousedown="enableStrobe()"
-    @mouseup="disableStrobe()"
     @blur="disableStrobe()"
+    @mousedown="enableStrobe()"
     @mouseleave="disableStrobe()"
+    @mouseup="disableStrobe()"
     @touchend="disableStrobe()"
+    @touchstart="enableStrobe()"
   >
     Strobe
   </Button>
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 
 const store = useEffectsControllerStore();
 const enabled = ref<boolean>(false);

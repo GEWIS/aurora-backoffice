@@ -1,5 +1,5 @@
 <template>
-  <Panel header="Spoelbakkenrace" action="Start">
+  <Panel action="Start" header="Spoelbakkenrace">
     <template #default>
       <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-2">
@@ -8,25 +8,25 @@
         </div>
         <SubscribersSelect
           :selected-audios="selectedAudios"
-          :selected-screens="selectedScreens"
           :selected-light-groups="selectedLightGroups"
+          :selected-screens="selectedScreens"
           @update:audios="(ids: number[]) => (selectedAudios = ids)"
-          @update:screens="(ids: number[]) => (selectedScreens = ids)"
           @update:light-groups="(ids: number[]) => (selectedLightGroups = ids)"
+          @update:screens="(ids: number[]) => (selectedScreens = ids)"
         />
       </div>
     </template>
     <template #footer>
       <div class="text-right">
-        <Button size="small" :disabled="!canOpenConfirmModal" @click="confirmModalOpen = true">
+        <Button :disabled="!canOpenConfirmModal" size="small" @click="confirmModalOpen = true">
           Initialize
         </Button>
         <ModeConfirmDialog
+          :loading="confirmModalLoading"
           :selected-audios="selectedAudios"
-          :visible="confirmModalOpen"
           :selected-light-groups="selectedLightGroups"
           :selected-screens="selectedScreens"
-          :loading="confirmModalLoading"
+          :visible="confirmModalOpen"
           @close="confirmModalOpen = false"
           @ok="initialize()"
         >
@@ -38,8 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 import { computed, ref } from 'vue';
+import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import ModeConfirmDialog from '@/components/modes/ModeConfirmDialog.vue';
 

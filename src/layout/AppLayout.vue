@@ -20,13 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import AppTopbar from '@/layout/AppTopbar.vue';
 import Toast from 'primevue/toast';
 import { RouterView } from 'vue-router';
-import AppMenu from '@/layout/AppMenu.vue';
 import { ref, watch } from 'vue';
-import { useLayoutStore } from '@/stores/layout.store';
 import { storeToRefs } from 'pinia';
+import AppMenu from '@/layout/AppMenu.vue';
+import { useLayoutStore } from '@/stores/layout.store';
+import AppTopbar from '@/layout/AppTopbar.vue';
 
 const layoutStore = useLayoutStore();
 const { menuMobileActive, menuDesktopActive } = storeToRefs(layoutStore);

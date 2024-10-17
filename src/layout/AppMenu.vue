@@ -1,7 +1,7 @@
 <template>
   <ul class="layout-menu">
     <template v-for="(item, i) in model" :key="item">
-      <AppMenuItem :item="item" :index="i"></AppMenuItem>
+      <AppMenuItem :index="i" :item="item" />
     </template>
   </ul>
 </template>

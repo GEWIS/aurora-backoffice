@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { formatDuration } from '@/utils/formatterUtils';
 import { computed } from 'vue';
+import { formatDuration } from '@/utils/formatterUtils';
 import type { MixTapeResponse } from '@/api';
 
 const props = defineProps<{

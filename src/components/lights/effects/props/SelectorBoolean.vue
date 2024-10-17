@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="w-fit" @click="$emit('click')">
-      <Checkbox :id="id" :name="id" binary :value="checked" :model-value="checked" />
-      <label :for="id" class="ml-2">{{ name }}</label>
+      <Checkbox :id="id" binary :model-value="checked" :name="id" :value="checked" />
+      <label class="ml-2" :for="id">{{ name }}</label>
     </div>
   </div>
 </template>

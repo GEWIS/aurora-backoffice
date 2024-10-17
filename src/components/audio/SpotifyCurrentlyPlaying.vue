@@ -10,9 +10,9 @@
       <div v-if="store.currentlyPlaying != null" class="flex gap-2">
         <div :style="{ width: '60px' }">
           <img
+            :alt="store.currentlyPlaying.cover"
             :src="store.currentlyPlaying.cover"
             :style="{ width: '100%', borderRadius: '5px' }"
-            :alt="store.currentlyPlaying.cover"
           />
         </div>
         <div class="flex flex-column gap-1 h-100 justify-content-center">
@@ -28,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { useCurrentlyPlayingStore } from '@/stores/socket/currently-playing.store';
 import { onUnmounted } from 'vue';
+import { useCurrentlyPlayingStore } from '@/stores/socket/currently-playing.store';
 
 const store = useCurrentlyPlayingStore();
 store.init();

@@ -10,6 +10,7 @@ import {
   type HandlerResponse_AudioResponse_,
   type HandlerResponse_LightsGroupResponse_,
   type HandlerResponse_ScreenResponse_,
+  type HttpApiException,
   type LightsGroupResponse,
   resetAllHandlersToDefaults,
   type ScreenResponse,
@@ -18,7 +19,7 @@ import {
   setScreenHandler
 } from '@/api';
 
-export type Handler =
+type Handler =
   | HandlerResponse_ScreenResponse_
   | HandlerResponse_AudioResponse_
   | HandlerResponse_LightsGroupResponse_;
@@ -104,8 +105,8 @@ export const useHandlersStore = defineStore('handlers', {
           });
         }
         await getAudioHandlers().then((handlers) => (this.audioHandlers = handlers.data!));
-      } catch (e: any) {
-        handleError(e);
+      } catch (e: unknown) {
+        handleError(e as HttpApiException);
       }
       this.settingAudio = false;
     },
@@ -129,8 +130,8 @@ export const useHandlersStore = defineStore('handlers', {
         }
 
         await getLightsHandlers().then((handlers) => (this.lightsHandlers = handlers.data!));
-      } catch (e: any) {
-        handleError(e);
+      } catch (e: unknown) {
+        handleError(e as HttpApiException);
       }
       this.settingLights = false;
     },
@@ -154,8 +155,8 @@ export const useHandlersStore = defineStore('handlers', {
         }
 
         await getScreenHandlers().then((handlers) => (this.screenHandlers = handlers.data!));
-      } catch (e: any) {
-        handleError(e);
+      } catch (e: unknown) {
+        handleError(e as HttpApiException);
       }
       this.settingScreens = false;
     },
@@ -187,8 +188,8 @@ export const useHandlersStore = defineStore('handlers', {
         await this.getAudioHandlers();
         await this.getLightsHandlers();
         await this.getScreenHandlers();
-      } catch (e: any) {
-        handleError(e);
+      } catch (e: unknown) {
+        handleError(e as HttpApiException);
       }
       this.gettingAudio = false;
       this.gettingScreens = false;
@@ -196,3 +197,5 @@ export const useHandlersStore = defineStore('handlers', {
     }
   }
 });
+
+export { type Handler };

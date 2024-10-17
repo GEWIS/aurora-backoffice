@@ -10,34 +10,34 @@
       <div class="full-width">
         <Carousel
           v-if="poster.source.length > 1"
-          :value="poster.source"
-          :num-visible="1"
-          :num-scroll="1"
-          circular
-          container-class="relative"
-          class="left"
-          :prev-button-props="{ class: 'absolute left-0', style: { zIndex: 100 } }"
-          :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
-          :show-indicators="false"
           :autoplay-interval="3000"
+          circular
+          class="left"
+          container-class="relative"
+          :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
+          :num-scroll="1"
+          :num-visible="1"
+          :prev-button-props="{ class: 'absolute left-0', style: { zIndex: 100 } }"
+          :show-indicators="false"
+          :value="poster.source"
         >
           <template #item="slotProps">
             <Image
-              :src="slotProps.data"
               :alt="poster.name"
               class="full-width"
               image-class="full-width"
               preview
+              :src="slotProps.data"
             />
           </template>
         </Carousel>
         <Image
           v-else
-          :src="poster.source[0]"
           :alt="poster.name"
           class="full-width"
           image-class="full-width"
           preview
+          :src="poster.source[0]"
         />
       </div>
     </template>

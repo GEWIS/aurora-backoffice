@@ -1,7 +1,7 @@
 <template>
   <div class="grid lg:grid-cols-6 xxl:grid-cols-4">
     <div class="hidden lg:flex" />
-    <AppContainer title="Centurion" icon="pi-crown" class="lg:col-span-4 xxl:col-span-2">
+    <AppContainer class="lg:col-span-4 xxl:col-span-2" icon="pi-crown" title="Centurion">
       <template #header>
         <div v-if="currentTape">
           <Button icon="pi pi-trash" @click="dialogRef.confirmDelete()" />
@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useCenturionStore } from '@/stores/modes/centurion.store';
 import InitializeCenturion from '@/components/modes/centurion/InitializeCenturion.vue';
 import CoverPlayButton from '@/components/modes/centurion/CoverPlayButton.vue';
 import AppContainer from '@/layout/AppContainer.vue';

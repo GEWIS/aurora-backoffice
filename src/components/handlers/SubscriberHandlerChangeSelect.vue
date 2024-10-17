@@ -1,14 +1,14 @@
 <template>
   <Select
-    :model-value="currentHandler?.name"
-    :options="possibleHandlers"
-    option-label="name"
-    option-value="name"
-    placeholder="Select handler"
     class="overflow-hidden text-overflow-ellipsis w-full"
-    show-clear
     :disabled="disabled"
     :loading="loading"
+    :model-value="currentHandler?.name"
+    option-label="name"
+    option-value="name"
+    :options="possibleHandlers"
+    placeholder="Select handler"
+    show-clear
     @update:model-value="
       (newHandler: string | null) => {
         $emit('change', newHandler);

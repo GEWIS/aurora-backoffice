@@ -5,7 +5,7 @@
         <template #content>
           <div class="w-full py-8 px-5 sm:px-8 flex flex-col align-items-center rounded-2xl">
             <span class="font-bold text-3xl">
-              <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+              <ProgressBar mode="indeterminate" style="height: 6px" />
             </span>
             <h1 class="text-900 font-bold text-3xl lg:text-5xl mb-2">Loading</h1>
             <div class="text-600 mb-5">Please wait</div>
@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth.store';
 import { v4 as uuidv4 } from 'uuid';
+import { useAuthStore } from '@/stores/auth.store';
 import { getOidcParameters } from '@/api';
 
 const route = useRoute();

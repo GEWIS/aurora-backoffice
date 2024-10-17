@@ -1,5 +1,5 @@
-import { type AuditLogEntryResponse, getAuditLogs } from '@/api';
 import { defineStore } from 'pinia';
+import { type AuditLogEntryResponse, getAuditLogs } from '@/api';
 import { handleError } from '@/utils/errorHandler';
 import { useSocketStore } from '@/stores/socket.store';
 

@@ -1,10 +1,10 @@
 <template>
   <Dialog
-    modal
-    header="Initialize"
-    :visible="visible"
     dismissable-mask
     :draggable="false"
+    header="Initialize"
+    modal
+    :visible="visible"
     @update:visible="$emit('close')"
   >
     <template #default>
@@ -25,7 +25,9 @@
             <div class="flex flex-1 flex-column text-center gap-1">
               <h4 class="mb-1">Screens</h4>
               <template v-if="screens.length > 0">
-                <div v-for="screen in screens" :key="screen.id">{{ screen.name }}</div>
+                <div v-for="screen in screens" :key="screen.id">
+                  {{ screen.name }}
+                </div>
               </template>
               <template v-else>
                 <span class="font-italic">No screens selected.</span>
@@ -49,7 +51,7 @@
     <template #footer>
       <div class="flex flex-row gap-1 justify-content-end">
         <Button severity="secondary" size="small" @click="$emit('close')"> Cancel </Button>
-        <Button size="small" :loading="loading" @click="$emit('ok')"> Ok </Button>
+        <Button :loading="loading" size="small" @click="$emit('ok')"> Ok </Button>
       </div>
     </template>
   </Dialog>
@@ -75,7 +77,7 @@ defineEmits<{
 }>();
 
 defineSlots<{
-  default: any;
+  default: never;
 }>();
 
 const audios = computed(() => store.audios.filter((a) => props.selectedAudios.includes(a.id)));

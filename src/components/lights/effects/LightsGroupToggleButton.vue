@@ -1,5 +1,5 @@
 <template>
-  <ToggleButton :model-value="!!enabled" on-label="" off-label="" :disabled="disabled">
+  <ToggleButton :disabled="disabled" :model-value="!!enabled" off-label="" on-label="">
     <div class="flex flex-col gap-3">
       <span class="font-bold">{{ lightsGroup.name }} (ID: {{ lightsGroup.id }})</span>
       <div>

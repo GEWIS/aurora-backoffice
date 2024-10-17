@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMusicBeatStore } from '@/stores/socket/music-beat.store';
 import { onUnmounted } from 'vue';
+import { useMusicBeatStore } from '@/stores/socket/music-beat.store';
 
 const store = useMusicBeatStore();
 store.init();

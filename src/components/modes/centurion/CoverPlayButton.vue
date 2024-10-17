@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-3">
     <div class="flex justify-center">
       <div class="relative bg-cover w-full sm:max-w-sm rounded-2xl justify-center">
-        <img :src="tape!.coverUrl" :alt="tape!.name" class="w-full rounded-2xl" />
+        <img :alt="tape!.name" class="w-full rounded-2xl" :src="tape!.coverUrl" />
         <!-- prettier-ignore -->
         <div
           class="group absolute rounded-2xl top-0 w-full h-full flex justify-center items-center
@@ -27,13 +27,21 @@
               '!opacity-100': !store.playing
             }"
           >
-            <i v-if="store.playing" class="pi pi-pause !text-4xl text-white text-center" />
-            <i v-else class="pi pi-play !text-4xl text-white text-center translate-x-1" />
+            <i
+              v-if="store.playing"
+              class="pi pi-pause !text-4xl text-white text-center"
+            />
+            <i
+              v-else
+              class="pi pi-play !text-4xl text-white text-center translate-x-1"
+            />
           </div>
         </div>
       </div>
     </div>
-    <h4 class="text-center w-full">{{ tape!.name }}</h4>
+    <h4 class="text-center w-full">
+      {{ tape!.name }}
+    </h4>
   </div>
 </template>
 

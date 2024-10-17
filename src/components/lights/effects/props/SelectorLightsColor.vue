@@ -5,10 +5,10 @@
       <ToggleButton
         v-for="color in colors"
         :key="color"
-        :model-value="selectedColors.includes(color as RgbColor)"
-        :on-label="color"
-        :off-label="color"
         class="p-button-secondary"
+        :model-value="selectedColors.includes(color as RgbColor)"
+        :off-label="color"
+        :on-label="color"
         @click="handleColorClick(color as RgbColor)"
       >
         <template #icon>

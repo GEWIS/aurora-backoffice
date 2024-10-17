@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import InputGroup from 'primevue/inputgroup';
-import { SecurityGroup } from '@/api';
 import { ref } from 'vue';
+import { SecurityGroup } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
 
 const authStore = useAuthStore();

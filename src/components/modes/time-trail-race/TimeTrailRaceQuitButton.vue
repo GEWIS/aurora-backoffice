@@ -1,10 +1,10 @@
 <template>
   <Button
-    size="small"
-    variant="danger"
-    title="Stop"
-    :loading="store.loading"
     :disabled="!store.sessionName || !store.state"
+    :loading="store.loading"
+    size="small"
+    title="Stop"
+    variant="danger"
     @click="confirmDelete()"
   >
     <i class="pi pi-trash" />

@@ -5,17 +5,17 @@
       <InputText id="time-trail-race-player-name" v-model="playerName" class="w-full" />
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="isAlcoholFree" input-id="isAlcoholFree" name="isAlcoholFree" binary />
-      <label for="isAlcoholFree" class="ml-2">Is alcohol free?</label>
+      <Checkbox v-model="isAlcoholFree" binary input-id="isAlcoholFree" name="isAlcoholFree" />
+      <label class="ml-2" for="isAlcoholFree">Is alcohol free?</label>
     </div>
     <div class="flex align-items-center">
-      <Checkbox v-model="isBac" input-id="isBac" name="isBac" binary />
-      <label for="isBac" class="ml-2">Is BAC?</label>
+      <Checkbox v-model="isBac" binary input-id="isBac" name="isBac" />
+      <label class="ml-2" for="isBac">Is BAC?</label>
     </div>
     <div>
       <Button
-        :loading="store.loading"
         :disabled="playerName.length === 0"
+        :loading="store.loading"
         @click="
           async () => {
             await store.registerPlayer({

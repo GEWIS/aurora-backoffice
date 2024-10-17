@@ -1,13 +1,13 @@
 <template>
-  <Button @click="visible = true">Beat Generator</Button>
+  <Button @click="visible = true"> Beat Generator </Button>
 
   <Dialog
     v-model:visible="visible"
-    modal
-    header="Artifical Beat Generator"
     dismissable-mask
-    @show="onDialogShow"
+    header="Artifical Beat Generator"
+    modal
     @after-hide="taps = []"
+    @show="onDialogShow"
   >
     <div class="flex flex-column gap-3 justify-content-center">
       <div v-if="!currentBpmLoading && currentBpm != null">Current BPM: {{ currentBpm }}</div>
@@ -31,16 +31,16 @@
         </div>
       </div>
       <Button
-        label="Set BPM"
-        severity="success"
-        :loading="savingBpmLoading"
         :disabled="taps.length < 4"
+        label="Set BPM"
+        :loading="savingBpmLoading"
+        severity="success"
         @click="setArtificialBeats"
       />
       <Button
         label="Disable artificial beats"
-        severity="danger"
         :loading="stopBpmLoading"
+        severity="danger"
         @click="stopArtificialBeats"
       />
     </div>

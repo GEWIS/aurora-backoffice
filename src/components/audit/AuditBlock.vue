@@ -1,6 +1,6 @@
 <template>
-  <AppContainer title="Logs" icon="pi-book">
-    <DataTable :value="store.dashboardEntries" data-key="id" :loading="store.loading" class="mb-3">
+  <AppContainer icon="pi-book" title="Logs">
+    <DataTable class="mb-3" data-key="id" :loading="store.loading" :value="store.dashboardEntries">
       <Column field="createdAt" header="Timestamp">
         <template #body="slotProps">
           {{ new Date(slotProps.data.createdAt).toLocaleString() }}
@@ -9,7 +9,7 @@
       <Column field="userName" header="Name" />
       <Column field="action" header="Action" />
     </DataTable>
-    <RouterLink to="/audit">More recent activity</RouterLink>
+    <RouterLink to="/audit"> More recent activity </RouterLink>
   </AppContainer>
 </template>
 

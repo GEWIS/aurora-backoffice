@@ -22,10 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
-import { toStopwatchString } from '@/utils/timeUtils';
 import { computed } from 'vue';
 import type { ScoreboardItem } from '../../../../api';
+import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
+import { toStopwatchString } from '@/utils/timeUtils';
 
 const store = useTimeTrailRaceStore();
 

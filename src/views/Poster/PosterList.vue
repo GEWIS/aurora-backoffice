@@ -1,5 +1,5 @@
 <template>
-  <AppContainer title="Posters" icon="pi-image">
+  <AppContainer icon="pi-image" title="Posters">
     <template #header>
       <PosterOperations />
     </template>

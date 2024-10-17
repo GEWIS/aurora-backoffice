@@ -1,5 +1,5 @@
 <template>
-  <AppContainer title="Lights" icon="pi-lightbulb">
+  <AppContainer icon="pi-lightbulb" title="Lights">
     <div v-for="controller in controllers" :key="controller.id">
       <LightsControllerItemComponent :controller="controller" />
     </div>
@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useSubscriberStore } from '@/stores/subscriber.store';
 import { computed } from 'vue';
+import { useSubscriberStore } from '@/stores/subscriber.store';
 import LightsControllerItemComponent from '@/components/handlers/LightsControllerItemComponent.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 

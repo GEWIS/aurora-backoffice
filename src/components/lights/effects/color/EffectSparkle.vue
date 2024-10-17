@@ -3,8 +3,8 @@
     <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
     <SelectorRatioSlider
       id="sparkle-ratio"
-      :min="0"
       :max="1"
+      :min="0"
       name="Turn-on ratio (every cycle)"
       :step="0.05"
       :value="ratio"
@@ -12,8 +12,8 @@
     />
     <SelectorRatioSlider
       id="sparkle-dimDuration"
-      :min="0"
       :max="2000"
+      :min="0"
       name="Turn-off time (in ms)"
       :step="25"
       :value="dimDuration"
@@ -21,8 +21,8 @@
     />
     <SelectorRatioSlider
       id="sparkle-cycleTime"
-      :min="0"
       :max="2000"
+      :min="0"
       name="Cycle time (in ms)"
       :step="25"
       :value="cycleTime"
@@ -32,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';

@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 /**
  * window widths defined by Tailwind
  */
-export enum TailwindWidth {
+enum TailwindWidth {
   sm = 576,
   md = 768,
   lg = 992,
@@ -114,3 +114,5 @@ export const useLayoutStore = defineStore('layout', {
     }
   }
 });
+
+export { TailwindWidth };

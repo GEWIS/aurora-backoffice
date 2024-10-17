@@ -9,7 +9,7 @@ import {
   type LightsGroupResponse
 } from '@/api';
 
-export interface PushedEffect {
+interface PushedEffect {
   timestamp: Date;
   lightGroupIds: number[];
   colorEffect?: LightsEffectsColorCreateParams;
@@ -112,3 +112,5 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     }
   }
 });
+
+export { type PushedEffect };

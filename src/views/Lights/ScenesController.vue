@@ -1,5 +1,5 @@
 <template>
-  <AppContainer title="Scenes" icon="pi-sliders-h">
+  <AppContainer icon="pi-sliders-h" title="Scenes">
     <template #header>
       <div class="flex flex-row gap-5 align-items-center">
         <Button size="small">
@@ -9,7 +9,7 @@
         <BeatVisualizer />
       </div>
     </template>
-    <DataTable :value="store.scenes" :loading="store.loading">
+    <DataTable :loading="store.loading" :value="store.scenes">
       <Column field="name" header="Name" />
       <Column field="favorite" header="Favorite">
         <template #body="slotProps">

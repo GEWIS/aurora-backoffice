@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
-import { ref } from 'vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { ColorEffects_BeatFadeOut, RgbColor } from '@/api';
@@ -26,8 +26,8 @@ const handleAddEffect = () => {
 
 <template>
   <EffectSettingsDialog
-    effect-name="BeatFadeOut"
     :can-save="colors.length > 0"
+    effect-name="BeatFadeOut"
     @save="handleAddEffect"
   >
     <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />

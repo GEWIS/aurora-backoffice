@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { type ISecurityGroups, type ISecuritySections } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
-import { computed } from 'vue';
 
 const props = defineProps<{
   group: keyof ISecurityGroups;

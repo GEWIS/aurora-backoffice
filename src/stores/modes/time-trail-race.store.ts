@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia';
 import {
   disableTimeTrailRacing,
   enableTimeTrailRace,
@@ -18,7 +19,6 @@ import {
   type ScoreboardItem,
   type TimeTrailRaceState
 } from '@/api';
-import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
 import { handleError } from '@/utils/errorHandler';
 
@@ -52,7 +52,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
         this.state = res.data!.state;
         this.sessionName = res.data!.sessionName;
         this.scoreboard = res.data!.scoreboard;
-      } catch (e) {
+      } catch {
         this.state = undefined;
         this.sessionName = undefined;
         this.scoreboard = [];
@@ -95,7 +95,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     handleRegisterPlayer(event: RacePlayerRegisteredEvent) {
       this.currentPlayer = event.player;
       this.scoreboard = event.scoreboard;
-      this.state = event.state as any as TimeTrailRaceState;
+      this.state = event.state as unknown as TimeTrailRaceState;
       this.sessionName = event.sessionName;
     },
     async ready() {
@@ -107,7 +107,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     handleReady(event: RacePlayerReadyEvent) {
       this.currentPlayer = event.player;
-      this.state = event.state as any as TimeTrailRaceState;
+      this.state = event.state as unknown as TimeTrailRaceState;
       this.sessionName = event.sessionName;
     },
     async start() {
@@ -119,7 +119,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     handleStart(event: RaceStartedEvent) {
       this.currentPlayer = event.player;
-      this.state = event.state as any as TimeTrailRaceState;
+      this.state = event.state as unknown as TimeTrailRaceState;
       this.sessionName = event.sessionName;
       this.startTime = new Date(event.startTime);
     },
@@ -132,7 +132,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     handleFinish(event: RaceFinishedEvent) {
       this.currentPlayer = event.player;
-      this.state = event.state as any as TimeTrailRaceState;
+      this.state = event.state as unknown as TimeTrailRaceState;
       this.sessionName = event.sessionName;
       this.scoreboard = event.scoreboard;
     },
@@ -145,7 +145,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     },
     handleRevealScore(event: RaceScoreboardEvent) {
       this.currentPlayer = event.player;
-      this.state = event.state as any as TimeTrailRaceState;
+      this.state = event.state as unknown as TimeTrailRaceState;
       this.sessionName = event.sessionName;
       this.scoreboard = event.scoreboard;
       this.startTime = undefined;

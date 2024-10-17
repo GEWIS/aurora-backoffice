@@ -1,15 +1,15 @@
 <template>
-  <AppContainer title="Fixture Overview" icon="pi pi-fw pi-bolt">
+  <AppContainer icon="pi pi-fw pi-bolt" title="Fixture Overview">
     <div>
       <DataTable
         v-model:expanded-rows="expandedRows"
-        :value="subscriberStore.lightsGroups"
         data-key="id"
+        :value="subscriberStore.lightsGroups"
       >
         <template #header>
           <div class="flex flex-wrap justify-end gap-5">
-            <Button text icon="pi pi-plus" label="Expand All" @click="expandAll" />
-            <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
+            <Button icon="pi pi-plus" label="Expand All" text @click="expandAll" />
+            <Button icon="pi pi-minus" label="Collapse All" text @click="collapseAll" />
           </div>
         </template>
         <Column expander style="width: 5rem" />
@@ -33,9 +33,9 @@
           <template #body="slotProps">
             <div class="flex flex-row gap-1">
               <Button
+                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 size="small"
                 title="Freeze"
-                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
                     await freezeLightsGroup({ path: { id: slotProps.data.id } });
@@ -46,12 +46,12 @@
                   }
                 "
               >
-                <i class="pi pi-pause"></i>
+                <i class="pi pi-pause" />
               </Button>
               <Button
+                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 size="small"
                 title="Unfreeze"
-                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
                     await unfreezeLightsGroup({ path: { id: slotProps.data.id } });
@@ -62,7 +62,7 @@
                   }
                 "
               >
-                <i class="pi pi-play"></i>
+                <i class="pi pi-play" />
               </Button>
             </div>
           </template>
@@ -80,31 +80,31 @@
               <template #body="slotProps2">
                 <div class="flex flex-row gap-1">
                   <Button
+                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     size="small"
                     title="Freeze"
-                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleFreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <i class="pi pi-pause"></i>
+                    <i class="pi pi-pause" />
                   </Button>
                   <Button
+                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     size="small"
                     title="Unfreeze"
-                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleUnfreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <i class="pi pi-play"></i>
+                    <i class="pi pi-play" />
                   </Button>
                   <Button
-                    size="small"
-                    title="Hardware reset"
                     :disabled="
                       !activeLightsGroupIds.has(slotProps.data.id) ||
                       !slotProps2.data.fixture.canReset
                     "
+                    size="small"
+                    title="Hardware reset"
                     @click="handleHardwareReset(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <i class="pi pi-sync"></i>
+                    <i class="pi pi-sync" />
                   </Button>
                 </div>
               </template>
@@ -117,14 +117,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
-import { computed, ref } from 'vue';
 import {
   freezeGroupMovingHeadRgb,
   freezeGroupMovingHeadWheel,
   freezeGroupPar,
   freezeLightsGroup,
+  type HttpApiException,
   type LightsGroupResponse,
   resetGroupMovingHeadRgb,
   resetGroupMovingHeadWheel,
@@ -135,8 +136,9 @@ import {
   unfreezeMovingHeadWheel
 } from '@/api';
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
-import { toastError, toastSuccess } from '@/utils/toastHandler';
+import { toastSuccess } from '@/utils/toastHandler';
 import AppContainer from '@/layout/AppContainer.vue';
+import { handleError } from '@/utils/errorHandler';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -144,7 +146,7 @@ const subscriberStore = useSubscriberStore();
 const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
   expandedRows.value = subscriberStore.lightsGroups.reduce(
-    (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] = true) && rows,
+    (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] ? rows : {}),
     {}
   );
 };
@@ -176,8 +178,8 @@ const handleFreeze = async (type: FixtureType, id: number) => {
       title: 'Success',
       body: 'Successfully froze fixture'
     });
-  } catch (e: any) {
-    toastError(e.message);
+  } catch (e: unknown) {
+    handleError(e as HttpApiException);
   }
 };
 
@@ -198,8 +200,8 @@ const handleUnfreeze = async (type: FixtureType, id: number) => {
       title: 'Success',
       body: 'Successfully unfroze fixture'
     });
-  } catch (e: any) {
-    toastError(e.message);
+  } catch (e: unknown) {
+    handleError(e as HttpApiException);
   }
 };
 
@@ -220,8 +222,8 @@ const handleHardwareReset = async (type: FixtureType, id: number) => {
       title: 'Success',
       body: 'Successfully sent hardware reset signal'
     });
-  } catch (e: any) {
-    toastError(e.message);
+  } catch (e: unknown) {
+    handleError(e as HttpApiException);
   }
 };
 

@@ -2,13 +2,13 @@
   <div class="flex flex-column gap-2 w-full max-w-full">
     <MultiSelect
       class="w-full"
-      :model-value="selectedAudios"
-      :options="store.audios"
       filter
+      :max-selected-labels="2"
+      :model-value="selectedAudios"
       option-label="name"
       option-value="id"
+      :options="store.audios"
       placeholder="Select audio"
-      :max-selected-labels="2"
       :title="
         store.audios
           .filter((a) => selectedAudios.includes(a.id))
@@ -19,13 +19,13 @@
     />
     <MultiSelect
       class="w-full"
-      :model-value="selectedScreens"
-      :options="store.screens"
       filter
+      :max-selected-labels="2"
+      :model-value="selectedScreens"
       option-label="name"
       option-value="id"
+      :options="store.screens"
       placeholder="Select screens"
-      :max-selected-labels="2"
       :title="
         store.screens
           .filter((a) => selectedScreens.includes(a.id))
@@ -36,13 +36,13 @@
     />
     <MultiSelect
       class="w-full"
-      :model-value="selectedLightGroups"
-      :options="store.lightsGroups"
       filter
+      :max-selected-labels="2"
+      :model-value="selectedLightGroups"
       option-label="name"
       option-value="id"
+      :options="store.lightsGroups"
       placeholder="Select lights..."
-      :max-selected-labels="2"
       :title="
         store.lightsGroups
           .filter((a) => selectedLightGroups.includes(a.id))

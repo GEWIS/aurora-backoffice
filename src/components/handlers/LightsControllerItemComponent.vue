@@ -3,7 +3,7 @@
     <template #content>
       <h6 class="mb-4">
         {{ controller.name }}
-        <i :title="connectedText" :class="['pi text-sm ml-2', connectedIcon]"></i>
+        <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
       </h6>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
@@ -18,9 +18,9 @@
             :current-handler="
               handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
             "
-            :possible-handlers="handlersStore.lightsHandlers"
-            :loading="handlersStore.gettingLights || handlersStore.settingLights"
             :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
+            :loading="handlersStore.gettingLights || handlersStore.settingLights"
+            :possible-handlers="handlersStore.lightsHandlers"
             @change="
               (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
             "
@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import { computed, type ComputedRef } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
-import { computed, type ComputedRef } from 'vue';
 import type { LightsControllerResponse } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
 
@@ -52,7 +52,7 @@ const handlersStore = useHandlersStore();
 const authStore = useAuthStore();
 
 const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.controller.socketIds as any | undefined;
+  const socketIds = props.controller.socketIds as never | undefined;
   return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
 });
 

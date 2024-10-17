@@ -1,17 +1,17 @@
 <template>
-  <AppContainer title="Audio" icon="pi-volume-up">
+  <AppContainer icon="pi-volume-up" title="Audio">
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
     >
       <div v-for="audio in subscriberStore.audios.value" :key="audio.id">
         <SubscriberItemContent
-          :subscriber="audio"
           :current-handler="
             handlersStore.audioHandlers.find((h) => !!h.entities.find((e) => e.id === audio.id))
           "
-          :possible-handlers="handlersStore.audioHandlers"
-          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
+          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
+          :possible-handlers="handlersStore.audioHandlers"
+          :subscriber="audio"
           @change="
             (newHandler: string | null) => handlersStore.setAudioHandler(audio.id, newHandler)
           "

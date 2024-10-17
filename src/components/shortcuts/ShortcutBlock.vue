@@ -1,29 +1,31 @@
 <template>
-  <AppContainer title="Shortcuts" icon="pi-file-import">
+  <AppContainer icon="pi-file-import" title="Shortcuts">
     <div v-if="menus.length > 0" class="columns-1 sm:columns-2">
       <div v-for="items in menus" :key="items[0].key" class="break-inside-avoid">
-        <Menu :model="items" class="!border-none">
+        <Menu class="!border-none" :model="items">
           <template #submenuheader="{ item }">
-            <h6 class="mb-0 text-override">{{ item.label }}</h6>
+            <h6 class="mb-0 text-override">
+              {{ item.label }}
+            </h6>
           </template>
           <template #item="{ item, props }">
-            <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+            <router-link v-if="item.route" v-slot="{ href, navigate }" custom :to="item.route">
               <a :href="href" v-bind="props.action" @click="navigate">
                 <DashboardShortcutItem
+                  :disabled="item.disabledIcon"
+                  :enabled="item.enabledIcon"
                   :icon="item.icon"
                   :label="item.label"
                   :loading="item.loading"
-                  :enabled="item.enabledIcon"
-                  :disabled="item.disabledIcon"
                 />
               </a>
             </router-link>
             <a v-else v-bind="props.action">
               <DashboardShortcutItem
+                :enabled="item.enabledIcon"
                 :icon="item.icon"
                 :label="item.label"
                 :loading="item.loading"
-                :enabled="item.enabledIcon"
               />
             </a>
           </template>

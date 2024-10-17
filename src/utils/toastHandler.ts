@@ -1,6 +1,6 @@
 import { app } from '@/main';
 
-export interface ToastMessage {
+interface ToastMessage {
   title: string;
   body: string;
   lifeTime?: number;
@@ -13,7 +13,7 @@ enum ToastSeverity {
   ERROR = 'error'
 }
 
-export function toast(severity: ToastSeverity, message: ToastMessage) {
+function toast(severity: ToastSeverity, message: ToastMessage) {
   app.config.globalProperties.$toast.add({
     severity: severity,
     summary: message.title,
@@ -22,18 +22,20 @@ export function toast(severity: ToastSeverity, message: ToastMessage) {
   });
 }
 
-export function toastSuccess(message: ToastMessage): void {
+function toastSuccess(message: ToastMessage): void {
   toast(ToastSeverity.SUCCESS, message);
 }
 
-export function toastInfo(message: ToastMessage): void {
+function toastInfo(message: ToastMessage): void {
   toast(ToastSeverity.INFO, message);
 }
 
-export function toastWarn(message: ToastMessage): void {
+function toastWarn(message: ToastMessage): void {
   toast(ToastSeverity.WARN, message);
 }
 
-export function toastError(message: ToastMessage): void {
+function toastError(message: ToastMessage): void {
   toast(ToastSeverity.ERROR, message);
 }
+
+export { type ToastMessage, toast, toastSuccess, toastInfo, toastWarn, toastError };

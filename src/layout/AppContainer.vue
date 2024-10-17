@@ -3,7 +3,7 @@
     <template #title>
       <div class="flex justify-between mb-4">
         <h4 class="uppercase mb-0">
-          <i :class="['pi mr-3', icon]" style="font-size: 1.25rem"></i>{{ title }}
+          <i :class="['pi mr-3', icon]" style="font-size: 1.25rem" />{{ title }}
         </h4>
         <slot name="header" />
       </div>

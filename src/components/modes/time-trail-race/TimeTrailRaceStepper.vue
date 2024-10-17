@@ -2,7 +2,9 @@
   <Panel :header="`Play - ${store.sessionName}`">
     <template #header>
       <div class="flex flex-row align-items-center w-full">
-        <div class="p-panel-title flex-1">{{ `Play - ${store.sessionName}` }}</div>
+        <div class="p-panel-title flex-1">
+          {{ `Play - ${store.sessionName}` }}
+        </div>
         <div>
           <TimeTrailRaceQuitButton />
         </div>
@@ -11,17 +13,17 @@
     <template v-if="store.sessionName != null && store.state != null" #default>
       <Button
         class="w-full text-center mb-3"
-        outlined
         :disabled="
           store.state === TimeTrailRaceState.INITIALIZED ||
           store.state === TimeTrailRaceState.SCOREBOARD
         "
         :loading="store.loading"
+        outlined
         @click="store.resetPlayer()"
       >
         Reset player
       </Button>
-      <Stepper orientation="vertical" :active-step="currentStep" linear>
+      <Stepper :active-step="currentStep" linear orientation="vertical">
         <StepperPanel header="Register player">
           <template #content>
             <div class="p-3 w-full">
@@ -68,9 +70,9 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { TimeTrailRaceState } from '@/api';
-import { computed } from 'vue';
 import TimeTrailRaceRegisterPlayer from '@/components/modes/time-trail-race/state/TimeTrailRaceRegisterPlayer.vue';
 import TimeTrailRaceReady from '@/components/modes/time-trail-race/state/TimeTrailRacePreparation.vue';
 import TimeTrailRaceAnnounce from '@/components/modes/time-trail-race/state/TimeTrailRaceAnnounce.vue';

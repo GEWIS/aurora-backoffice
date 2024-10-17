@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import type { CreateSceneParams, LightsSceneResponse } from '@/api';
 import {
+  type CreateSceneParams,
+  type LightsSceneResponse,
   type HttpApiException,
   getAllScenes,
   createScene,

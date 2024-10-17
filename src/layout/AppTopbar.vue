@@ -1,12 +1,12 @@
 <template>
   <div class="layout-topbar">
-    <router-link to="/" class="layout-topbar-logo">
-      <img :src="logoUrl" alt="logo" />
+    <router-link class="layout-topbar-logo" to="/">
+      <img alt="logo" :src="logoUrl" />
       <span>Aurora</span>
     </router-link>
 
     <button class="p-link layout-topbar-button left" @click="switchMenu">
-      <i class="pi pi-bars"></i>
+      <i class="pi pi-bars" />
     </button>
 
     <div class="p-link layout-topbar-button right" @click="onThemeChangeButton">
@@ -18,15 +18,15 @@
             'pi-sun': darkMode
           }
         ]"
-      ></i>
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useLayoutStore } from '@/stores/layout.store';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
+import { useLayoutStore } from '@/stores/layout.store';
 
 const layoutStore = useLayoutStore();
 const { darkMode } = storeToRefs(layoutStore);

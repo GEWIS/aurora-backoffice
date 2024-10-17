@@ -5,10 +5,8 @@ import '@/assets/styles.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-// @ts-ignore package does exist
+// @ts-expect-error -- package does exist
 import timeago from 'vue-timeago3';
-import App from './App.vue';
-import router from './router';
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
@@ -24,7 +22,6 @@ import ScrollPanel from 'primevue/scrollpanel';
 import FileUpload from 'primevue/fileupload';
 import ProgressSpinner from 'primevue/progressspinner';
 import ProgressBar from 'primevue/progressbar';
-import { useAuthStore } from '@/stores/auth.store';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
 import Card from 'primevue/card';
@@ -32,7 +29,6 @@ import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
-import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
 import Menu from 'primevue/menu';
 import MultiSelect from 'primevue/multiselect';
@@ -47,10 +43,14 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
+import router from './router';
+import App from './App.vue';
+import SetupInterceptors from '@/utils/fetchInterceptor';
+import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/services.gen';
 
-export const app = createApp(App);
+const app = createApp(App);
 
 // define options
 const timeagoOptions = {
@@ -117,3 +117,5 @@ app.component('StepperPanel', StepPanel);
 app.component('ToggleSwitch', ToggleSwitch);
 
 app.mount('#app');
+
+export { app };

@@ -1,7 +1,7 @@
 <template>
   <Menu
-    :model="timelineItems as Array<MenuItem>"
     class="!border-none columns-1 md:columns-2 lg:columns-3 xl:columns-4 xxl:columns-5"
+    :model="timelineItems as Array<MenuItem>"
   >
     <template #item="{ item: event, props: menuProps }">
       <a class="flex justify-between" v-bind="menuProps.action">
@@ -33,11 +33,11 @@
 </template>
 
 <script setup lang="ts">
-import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { computed, type ComputedRef, ref } from 'vue';
+import type { MenuItem } from 'primevue/menuitem';
+import { useCenturionStore } from '@/stores/modes/centurion.store';
 import type { MixTapeResponse, SongData, SongEvent } from '@/api';
 import { formatDuration } from '@/utils/formatterUtils';
-import type { MenuItem } from 'primevue/menuitem';
 
 interface TimelineItem {
   label?: string | Array<SongData>;

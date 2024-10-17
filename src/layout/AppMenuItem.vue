@@ -11,7 +11,7 @@
       :to="item.to"
       @click="itemClick"
     >
-      <i :class="item.icon" class="layout-menuitem-icon"></i>
+      <i class="layout-menuitem-icon" :class="item.icon" />
       <span class="layout-menuitem-text">{{ item.label }}</span>
     </RouterLink>
 
@@ -29,6 +29,8 @@
 import { useRoute } from 'vue-router';
 import { useLayoutStore } from '@/stores/layout.store';
 
+// TODO move interfaces to separate files
+// eslint-disable-next-line import/exports-last
 export interface MenuItem {
   label: string;
   icon?: string;

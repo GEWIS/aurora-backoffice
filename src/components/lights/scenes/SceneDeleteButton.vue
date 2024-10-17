@@ -1,6 +1,6 @@
 <template>
   <ConfirmDialog />
-  <Button size="small" severity="danger" title="Delete scene" @click="openDialog()">
+  <Button severity="danger" size="small" title="Delete scene" @click="openDialog()">
     <i class="pi pi-trash" />
   </Button>
 </template>

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import _ from 'lodash';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import { useSocketStore } from '@/stores/socket.store';
@@ -16,7 +17,6 @@ import {
 } from '@/api';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useAuditStore } from '@/stores/audit.store';
-import _ from 'lodash';
 
 /**
  * Auth store

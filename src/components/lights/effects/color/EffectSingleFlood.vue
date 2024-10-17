@@ -2,8 +2,8 @@
   <EffectSettingsDialog can-save effect-name="SingleFlood" @save="handleAddEffect">
     <SelectorRatioSlider
       id="dimMilliseconds"
-      :min="0"
       :max="3000"
+      :min="0"
       name="Dim time (in ms)"
       :step="100"
       :value="dimMilliseconds"

@@ -1,24 +1,24 @@
 <template>
   <Stepper value="1">
     <StepList v-if="!vertical">
-      <Step value="1">Mixtape</Step>
-      <Step value="2">Subscribers</Step>
-      <Step value="3">Confirmation</Step>
+      <Step value="1"> Mixtape </Step>
+      <Step value="2"> Subscribers </Step>
+      <Step value="3"> Confirmation </Step>
     </StepList>
     <StepPanels>
       <!-- Selecting a tape -->
-      <StepperWrapper :wrap="vertical" value="1" header="Mixtape">
+      <StepperWrapper header="Mixtape" value="1" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="1">
           <div
             class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
           >
             <div class="sm:text-lg text-center">Select a mixtape for this centurion</div>
             <Select
-              :model-value="selectedTape"
               class="w-full sm:max-w-80 mx-auto"
-              option-label="name"
-              option-group-label="label"
+              :model-value="selectedTape"
               option-group-children="items"
+              option-group-label="label"
+              option-label="name"
               :options="availableTapes"
               placeholder="Select tape"
               :title="selectedTape?.name"
@@ -34,8 +34,8 @@
             </Select>
             <div class="pt-3 w-full flex justify-center">
               <Button
-                icon="pi pi-chevron-right"
                 :disabled="!selectedTape"
+                icon="pi pi-chevron-right"
                 @click="activateCallback('2')"
               />
             </div>
@@ -44,7 +44,7 @@
       </StepperWrapper>
 
       <!-- Select audio -->
-      <StepperWrapper :wrap="vertical" value="2" header="Subscribers">
+      <StepperWrapper header="Subscribers" value="2" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="2">
           <div
             class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
@@ -52,12 +52,12 @@
             <div class="sm:text-lg text-center">Select subscribers for this centurion</div>
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
+              :max-selected-labels="2"
               :model-value="selectedAudios"
-              :options="subscriberStore.audios"
               option-label="name"
               option-value="id"
+              :options="subscriberStore.audios"
               placeholder="Select audio"
-              :max-selected-labels="2"
               :title="
                 subscriberStore.audios
                   .filter((a) => selectedAudios.includes(a.id))
@@ -68,12 +68,12 @@
             />
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
+              :max-selected-labels="2"
               :model-value="selectedScreens"
-              :options="subscriberStore.screens"
               option-label="name"
               option-value="id"
+              :options="subscriberStore.screens"
               placeholder="Select screens"
-              :max-selected-labels="2"
               :title="
                 subscriberStore.screens
                   .filter((a) => selectedScreens.includes(a.id))
@@ -84,12 +84,12 @@
             />
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
+              :max-selected-labels="2"
               :model-value="selectedLightGroups"
-              :options="subscriberStore.lightsGroups"
               option-label="name"
               option-value="id"
+              :options="subscriberStore.lightsGroups"
               placeholder="Select lights"
-              :max-selected-labels="2"
               :title="
                 subscriberStore.lightsGroups
                   .filter((a) => selectedLightGroups.includes(a.id))
@@ -106,8 +106,8 @@
                 @click="activateCallback('1')"
               />
               <Button
-                icon="pi pi-chevron-right"
                 :disabled="!selectedAudios.length"
+                icon="pi pi-chevron-right"
                 @click="activateCallback('3')"
               />
             </div>
@@ -116,7 +116,7 @@
       </StepperWrapper>
 
       <!-- Confirming the selection -->
-      <StepperWrapper :wrap="vertical" value="3" header="Confirm">
+      <StepperWrapper header="Confirm" value="3" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="3">
           <div
             class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
@@ -127,8 +127,8 @@
               <SubscriberDetails
                 class="mt-3"
                 :selected-audios="selectedAudios"
-                :selected-screens="selectedScreens"
                 :selected-light-groups="selectedLightGroups"
+                :selected-screens="selectedScreens"
               />
               <div class="flex pt-6 justify-center gap-5">
                 <Button
@@ -136,7 +136,7 @@
                   severity="secondary"
                   @click="activateCallback('2')"
                 />
-                <Button icon="pi pi-check" :disabled="!selectedAudios.length" @click="initialize" />
+                <Button :disabled="!selectedAudios.length" icon="pi pi-check" @click="initialize" />
               </div>
             </div>
           </div>
@@ -147,15 +147,15 @@
 </template>
 
 <script setup lang="ts">
-import { useCenturionStore } from '@/stores/modes/centurion.store';
-import SubscriberDetails from '@/components/modes/centurion/SubscriberDetails.vue';
 import { computed, ref } from 'vue';
 import Stepper from 'primevue/stepper';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
-import { useSubscriberStore } from '@/stores/subscriber.store';
 import StepPanels from 'primevue/steppanels';
 import StepList from 'primevue/steplist';
+import { useSubscriberStore } from '@/stores/subscriber.store';
+import SubscriberDetails from '@/components/modes/centurion/SubscriberDetails.vue';
+import { useCenturionStore } from '@/stores/modes/centurion.store';
 import StepperWrapper from '@/components/prime/StepperWrapper.vue';
 import type { MixTapeResponse } from '@/api';
 import TapeDetails from '@/components/modes/centurion/TapeDetails.vue';

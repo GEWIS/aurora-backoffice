@@ -1,7 +1,7 @@
 <template>
-  <AppContainer title="Audit logs" icon="pi-book">
+  <AppContainer icon="pi-book" title="Audit logs">
     <div>
-      <DataTable :value="store.entries" data-key="id">
+      <DataTable data-key="id" :value="store.entries">
         <Column field="createdAt" header="Timestamp">
           <template #body="slotProps">
             {{ new Date(slotProps.data.createdAt).toLocaleString() }}
@@ -11,10 +11,10 @@
         <Column field="action" header="Action" />
       </DataTable>
       <Paginator
-        :rows="store.take"
-        :total-records="store.count"
-        :rows-per-page-options="[5, 10, 20, 50]"
         always-show
+        :rows="store.take"
+        :rows-per-page-options="[5, 10, 20, 50]"
+        :total-records="store.count"
         @update:first="(value) => store.setSkip(value)"
         @update:rows="(value) => store.setTake(value)"
       />

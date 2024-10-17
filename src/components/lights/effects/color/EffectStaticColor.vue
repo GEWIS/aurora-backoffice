@@ -14,14 +14,14 @@
     />
     <SelectorBoolean
       id="beat-toggle"
-      name="Beat Toggle"
       :checked="beatToggle"
+      name="Beat Toggle"
       @click="beatToggle = !beatToggle"
     />
     <SelectorRatioSlider
       id="relative-brightness"
-      :min="0"
       :max="1"
+      :min="0"
       name=""
       :step="0.05"
       :value="relativeBrightness"
@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { computed, type ComputedRef, ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';

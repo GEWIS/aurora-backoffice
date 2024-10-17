@@ -1,17 +1,17 @@
 <template>
-  <AppContainer title="Screens" icon="pi-desktop">
+  <AppContainer icon="pi-desktop" title="Screens">
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
     >
       <div v-for="screen in subscriberStore.screens.value" :key="screen.id">
         <SubscriberItemContent
-          :subscriber="screen"
           :current-handler="
             handlersStore.screenHandlers.find((h) => !!h.entities.find((e) => e.id === screen.id))
           "
-          :possible-handlers="handlersStore.screenHandlers"
-          :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
+          :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
+          :possible-handlers="handlersStore.screenHandlers"
+          :subscriber="screen"
           @change="
             (newHandler: string | null) => handlersStore.setScreenHandler(screen.id, newHandler)
           "

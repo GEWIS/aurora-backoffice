@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { toStopwatchString } from '@/utils/timeUtils';
 
 const now = ref(new Date());

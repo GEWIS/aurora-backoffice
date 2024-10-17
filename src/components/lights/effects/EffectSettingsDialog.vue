@@ -17,36 +17,37 @@ const visible = ref<boolean>(false);
 
 <template>
   <Button
-    :label="effectName"
-    icon="pi pi-plus"
-    severity="success"
     :disabled="store.selectedLightsGroupIds.length === 0"
+    icon="pi pi-plus"
+    :label="effectName"
+    severity="success"
     @click="() => (visible = true)"
   />
 
   <Dialog
     v-model:visible="visible"
-    modal
-    :header="effectName"
-    :style="{ width: '50rem' }"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     dismissable-mask
+    :header="effectName"
+    modal
+    :style="{ width: '50rem' }"
   >
     <div class="flex flex-column w-100 gap-3">
-      <slot></slot>
+      <slot />
     </div>
     <template #footer>
       <Button
-        severity="success"
         :disabled="!canSave"
+        severity="success"
         @click="
           () => {
             visible = false;
             $emit('save');
           }
         "
-        >Add</Button
       >
+        Add
+      </Button>
     </template>
   </Dialog>
 </template>

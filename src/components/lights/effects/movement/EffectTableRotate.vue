@@ -2,20 +2,20 @@
   <EffectSettingsDialog can-save effect-name="TableRotate" @save="handleAddEffect">
     <SelectorRatioSlider
       id="cycleTime"
-      :min="2000"
       :max="20000"
+      :min="2000"
+      name="Cycle time (in ms)"
       :step="1000"
       :value="cycleTime"
-      name="Cycle time (in ms)"
       @update="(newVal: number) => (cycleTime = newVal)"
     />
     <SelectorRatioSlider
       id="offsetFactor"
-      :min="0"
       :max="1"
+      :min="0"
+      name="Offset factor"
       :step="0.05"
       :value="offsetFactor"
-      name="Offset factor"
       @update="(newVal: number) => (offsetFactor = newVal)"
     />
   </EffectSettingsDialog>

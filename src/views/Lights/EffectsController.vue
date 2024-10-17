@@ -1,5 +1,5 @@
 <template>
-  <AppContainer title="Effects controller" icon="pi-sparkles">
+  <AppContainer icon="pi-sparkles" title="Effects controller">
     <template #header>
       <BeatVisualizer />
     </template>
@@ -7,7 +7,7 @@
     <!-- Light groups -->
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
       <Card class="w-full">
-        <template #title>(1) Lights groups</template>
+        <template #title> (1) Lights groups </template>
         <template #content>
           <div class="flex flex-col gap-5 w-100">
             <div class="flex flex-row gap-5 w-100">
@@ -15,25 +15,27 @@
                 class="w-1/2 text-center"
                 severity="secondary"
                 @click="effectsControllerStore.resetLightsGroupSelection()"
-                >Reset</Button
               >
+                Reset
+              </Button>
               <Button
                 class="w-1/2 text-center"
                 severity="secondary"
                 @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
-                >Select all</Button
               >
+                Select all
+              </Button>
             </div>
             <div class="flex flex-row flex-wrap gap-5">
               <div v-for="group in activeLightGroups" :key="group.id">
                 <LightsGroupToggleButton
-                  :lights-group="group"
                   :enabled="effectsControllerStore.selectedLightsGroupIds.includes(group.id)"
+                  :lights-group="group"
                   @click="() => effectsControllerStore.toggleLightsGroup(group.id)"
                 />
               </div>
               <div v-for="group in inactiveLightGroups" :key="group.id">
-                <LightsGroupToggleButton :lights-group="group" disabled />
+                <LightsGroupToggleButton disabled :lights-group="group" />
               </div>
             </div>
           </div>
@@ -68,15 +70,15 @@
           <div class="flex flex-row gap-1 flex-wrap justify-center">
             <StrobeButton />
             <Button
-              severity="secondary"
               :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              severity="secondary"
               @click="() => effectsControllerStore.disableLightsColors()"
             >
               Disable colors
             </Button>
             <Button
-              severity="secondary"
               :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              severity="secondary"
               @click="() => effectsControllerStore.disableLightsMovement()"
             >
               Disable movement
