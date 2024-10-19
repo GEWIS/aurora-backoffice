@@ -1,10 +1,10 @@
 <template>
   <Card>
     <template #title>
-      <div class="flex justify-between mb-4">
-        <h4 class="uppercase mb-0">
+      <div class="flex justify-between mb-4 items-center">
+        <div class="uppercase mb-0">
           <i :class="['pi mr-3', icon]" style="font-size: 1.25rem" />{{ title }}
-        </h4>
+        </div>
         <slot name="header" />
       </div>
     </template>

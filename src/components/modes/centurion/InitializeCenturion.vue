@@ -9,9 +9,7 @@
       <!-- Selecting a tape -->
       <StepperWrapper header="Mixtape" value="1" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="1">
-          <div
-            class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
-          >
+          <AppBox class="flex flex-col gap-2 mt-3 sm:mt-0">
             <div class="sm:text-lg text-center">Select a mixtape for this centurion</div>
             <Select
               class="w-full sm:max-w-80 mx-auto"
@@ -39,16 +37,14 @@
                 @click="activateCallback('2')"
               />
             </div>
-          </div>
+          </AppBox>
         </StepPanel>
       </StepperWrapper>
 
       <!-- Select audio -->
       <StepperWrapper header="Subscribers" value="2" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="2">
-          <div
-            class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
-          >
+          <AppBox class="flex flex-col gap-2 mt-3 sm:mt-0">
             <div class="sm:text-lg text-center">Select subscribers for this centurion</div>
             <MultiSelect
               class="w-full sm:max-w-80 mx-auto"
@@ -111,16 +107,14 @@
                 @click="activateCallback('3')"
               />
             </div>
-          </div>
+          </AppBox>
         </StepPanel>
       </StepperWrapper>
 
       <!-- Confirming the selection -->
       <StepperWrapper header="Confirm" value="3" :wrap="vertical">
         <StepPanel v-slot="{ activateCallback }" value="3">
-          <div
-            class="flex flex-col gap-2 rounded-lg p-5 mt-3 sm:mt-0 mb-3 border border-surface shadow-md"
-          >
+          <AppBox class="flex flex-col gap-2 mt-3 sm:mt-0">
             <div class="max-w-lg mx-auto">
               <div class="sm:text-lg text-center mb-3">Confirm centurion initialization</div>
               <TapeDetails v-if="selectedTape" :tape="selectedTape" />
@@ -139,7 +133,7 @@
                 <Button :disabled="!selectedAudios.length" icon="pi pi-check" @click="initialize" />
               </div>
             </div>
-          </div>
+          </AppBox>
         </StepPanel>
       </StepperWrapper>
     </StepPanels>
@@ -159,6 +153,7 @@ import { useCenturionStore } from '@/stores/modes/centurion.store';
 import StepperWrapper from '@/components/prime/StepperWrapper.vue';
 import type { MixTapeResponse } from '@/api';
 import TapeDetails from '@/components/modes/centurion/TapeDetails.vue';
+import AppBox from '@/layout/AppBox.vue';
 
 interface GroupedTape {
   label: string;
