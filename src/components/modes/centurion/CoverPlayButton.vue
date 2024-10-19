@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-3">
     <div class="flex justify-center">
-      <div class="relative bg-cover w-full sm:max-w-sm rounded-2xl justify-center">
+      <div class="relative bg-cover w-full max-w-sm rounded-2xl justify-center">
         <img :alt="tape!.name" class="w-full rounded-2xl" :src="tape!.coverUrl" />
         <!-- prettier-ignore -->
         <div
@@ -39,9 +39,12 @@
         </div>
       </div>
     </div>
-    <h4 class="text-center w-full">
+    <div class="text-3xl font-semibold text-center w-full">
       {{ tape!.name }}
-    </h4>
+    </div>
+    <div class="text-xl text-center w-full">
+      {{ tape!.artist }}
+    </div>
   </div>
 </template>
 

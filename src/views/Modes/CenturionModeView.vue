@@ -4,7 +4,7 @@
     <AppContainer class="lg:col-span-4 xxl:col-span-2" icon="pi-crown" title="Centurion">
       <template #header>
         <div v-if="currentTape">
-          <Button icon="pi pi-trash" @click="dialogRef.confirmDelete()" />
+          <Button icon="pi pi-times" @click="dialogRef.confirmDelete()" />
           <DialogWrapper
             ref="dialogRef"
             message="Are you sure you want to quit this centurion?"

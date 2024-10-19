@@ -1,8 +1,5 @@
 <template>
-  <Menu
-    class="!border-none columns-1 md:columns-2 lg:columns-3 xl:columns-4 xxl:columns-5"
-    :model="timelineItems as Array<MenuItem>"
-  >
+  <Menu class="!border-none columns-1 sm:columns-2" :model="timelineItems as Array<MenuItem>">
     <template #item="{ item: event, props: menuProps }">
       <a class="flex justify-between" v-bind="menuProps.action">
         <div class="flex gap-4">
