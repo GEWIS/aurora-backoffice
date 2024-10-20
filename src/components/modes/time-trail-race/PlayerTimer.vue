@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <h2>{{ timeString }}</h2>
-    <Button class="w-full h-5rem" :loading="store.loading" @click="store.finish()">
-      Finish!
-    </Button>
-  </div>
+  <div class="w-full text-center text-4xl font-bold">{{ timeString }}</div>
 </template>
 
 <script setup lang="ts">
@@ -14,11 +9,11 @@ import { toStopwatchString } from '@/utils/timeUtils';
 
 const now = ref(new Date());
 const interval = ref<number>();
-const store = useTimeTrailRaceStore();
+const timeTrailStore = useTimeTrailRaceStore();
 
 const timeString = computed(() => {
-  const totalDiffMs = store.startTime
-    ? now.value.getTime() - store.startTime.getTime()
+  const totalDiffMs = timeTrailStore.startTime
+    ? now.value.getTime() - timeTrailStore.startTime.getTime()
     : Number.NaN;
   return toStopwatchString(totalDiffMs);
 });

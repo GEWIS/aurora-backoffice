@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-column gap-2 w-full max-w-full">
+  <div class="flex flex-col gap-2 w-full max-w-full">
     <MultiSelect
-      class="w-full"
+      class="w-full sm:max-w-80 mx-auto"
       filter
       :max-selected-labels="2"
       :model-value="selectedAudios"
@@ -18,7 +18,7 @@
       @update:model-value="(value: number[]) => $emit('update:audios', value)"
     />
     <MultiSelect
-      class="w-full"
+      class="w-full sm:max-w-80 mx-auto"
       filter
       :max-selected-labels="2"
       :model-value="selectedScreens"
@@ -35,7 +35,7 @@
       @update:model-value="(value: number[]) => $emit('update:screens', value)"
     />
     <MultiSelect
-      class="w-full"
+      class="w-full sm:max-w-80 mx-auto"
       filter
       :max-selected-labels="2"
       :model-value="selectedLightGroups"
