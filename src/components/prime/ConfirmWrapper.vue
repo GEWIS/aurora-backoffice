@@ -1,9 +1,3 @@
-<template>
-  <div class="flex flex-row gap-3">
-    <ConfirmDialog />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useConfirm } from 'primevue/useconfirm';
 
@@ -15,7 +9,7 @@ const props = defineProps<{
 }>();
 
 const confirm = useConfirm();
-const confirmDelete = () => {
+const confirmDialog = () => {
   confirm.require({
     message: props.message,
     header: 'Confirm',
@@ -36,6 +30,6 @@ const confirmDelete = () => {
 };
 
 defineExpose({
-  confirmDelete
+  confirmDialog
 });
 </script>
