@@ -1,5 +1,5 @@
 <template>
-  <Stepper value="1">
+  <Stepper linear :value="currentStep">
     <StepList v-if="!vertical">
       <Step v-for="(step, index) in steps" :key="index" :value="(index + 1).toString()">
         {{ step.value }}
@@ -15,25 +15,55 @@
         :wrap="vertical"
       >
         <StepPanel v-slot="{ activateCallback }" :value="(index + 1).toString()">
-          <AppBox class="mb-4">
+          <AppBox class="flex flex-col gap-5 mb-4">
             <slot :name="index + 1" />
-            <div class="flex pt-3 justify-center gap-5">
+            <div class="flex justify-center gap-5">
               <Button
-                v-if="index > 0"
+                v-if="index > 0 && !steps[index].previousHidden"
                 :disabled="steps[index].previousDisabled"
-                icon="pi pi-chevron-left"
+                :icon="
+                  steps[index].previousIcon === null
+                    ? ''
+                    : steps[index].previousIcon
+                      ? steps[index].previousIcon
+                      : 'pi pi-chevron-left'
+                "
+                :label="steps[index].previousText"
                 severity="secondary"
-                @click="activateCallback(index.toString())"
+                @click="
+                  steps[index].previousFunction?.();
+                  steps[index].overridePreviousFunction ? null : activateCallback(index.toString());
+                "
               />
               <Button
-                v-if="index < steps.length - 1"
+                v-if="index < steps.length - 1 && !steps[index].nextHidden"
                 :disabled="steps[index].nextDisabled"
-                icon="pi pi-chevron-right"
-                @click="activateCallback((index + 2).toString())"
+                :icon="
+                  steps[index].nextIcon === null
+                    ? ''
+                    : steps[index].nextIcon
+                      ? steps[index].nextIcon
+                      : 'pi pi-chevron-right'
+                "
+                :label="steps[index].nextText"
+                @click="
+                  steps[index].nextFunction?.();
+                  steps[index].overrideNextFunction
+                    ? null
+                    : activateCallback((index + 2).toString());
+                "
               />
               <Button
-                v-if="index === steps.length - 1"
-                icon="pi pi-check"
+                v-if="index === steps.length - 1 && !steps[index].confirmHidden"
+                :disabled="steps[index].confirmDisabled"
+                :icon="
+                  steps[index].confirmIcon === null
+                    ? ''
+                    : steps[index].confirmIcon
+                      ? steps[index].confirmIcon
+                      : 'pi pi-check'
+                "
+                :label="steps[index].confirmText"
                 @click="steps[index].confirmFunction"
               />
             </div>
@@ -58,12 +88,27 @@ import { TailwindWidth, useLayoutStore } from '@/stores/layout.store';
 interface StepperStep {
   value: string;
   nextDisabled?: boolean;
+  nextHidden?: boolean;
+  nextIcon?: string | null;
+  nextText?: string;
+  nextFunction?: undefined | (() => void);
+  overrideNextFunction?: boolean;
   previousDisabled?: boolean;
-  confirmFunction?: () => void;
+  previousHidden?: boolean;
+  previousIcon?: string | null;
+  previousText?: string;
+  previousFunction?: undefined | (() => void);
+  overridePreviousFunction?: boolean;
+  confirmDisabled?: boolean;
+  confirmHidden?: boolean;
+  confirmIcon?: string | null;
+  confirmText?: string;
+  confirmFunction?: undefined | (() => void);
 }
 
 defineProps<{
   steps: StepperStep[];
+  currentStep: string;
 }>();
 
 const layoutStore = useLayoutStore();
