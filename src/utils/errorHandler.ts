@@ -1,14 +1,12 @@
 import { toastError } from '@/utils/toastHandler';
-import type { HttpApiException } from '@/api';
-import { ApiError } from '@/api';
+import { type HttpApiException } from '@/api';
 
 export interface ErrorResponse {
   message: string;
   details?: string;
 }
 
-// TODO check if still correct
-export function handleError(response: HttpApiException | ApiError) {
+export function handleError(response: HttpApiException) {
   handleErrorMessage({
     message: response.name,
     details: response.message

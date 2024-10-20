@@ -1,47 +1,58 @@
 <template>
-  <Panel header="Spoelbakkenrace" action="Start">
-    <template #default>
-      <div class="flex flex-column gap-4">
-        <div class="flex flex-column gap-2">
-          <label for="time-trail-race-session-name">Session name</label>
-          <InputText id="time-trail-race-session-name" v-model="sessionName" />
-        </div>
-        <SubscribersSelect
-          :selected-audios="selectedAudios"
-          :selected-screens="selectedScreens"
-          :selected-light-groups="selectedLightGroups"
-          @update:audios="(ids: number[]) => (selectedAudios = ids)"
-          @update:screens="(ids: number[]) => (selectedScreens = ids)"
-          @update:light-groups="(ids: number[]) => (selectedLightGroups = ids)"
+  <StepperWrapper current-step="1" :steps="initializationSteps">
+    <template #1>
+      <div class="flex flex-col gap-2 mt-3 sm:mt-0">
+        <div class="sm:text-lg text-center">Provide a name for this session</div>
+        <InputText
+          id="time-trail-race-session-name"
+          v-model="sessionName"
+          class="w-full sm:max-w-80 mx-auto"
+          placeholder="Session name"
         />
       </div>
     </template>
-    <template #footer>
-      <div class="text-right">
-        <Button size="small" :disabled="!canOpenConfirmModal" @click="confirmModalOpen = true">
-          Initialize
-        </Button>
-        <ModeConfirmDialog
+    <template #2>
+      <div class="flex flex-col gap-2 mt-3 sm:mt-0">
+        <div class="sm:text-lg text-center">Select subscribers for this centurion</div>
+        <SubscribersSelect
           :selected-audios="selectedAudios"
-          :visible="confirmModalOpen"
           :selected-light-groups="selectedLightGroups"
           :selected-screens="selectedScreens"
-          :loading="confirmModalLoading"
-          @close="confirmModalOpen = false"
-          @ok="initialize()"
-        >
-          <div>Are you sure you want to start a Spoelbakkenrace for "{{ sessionName }}"?</div>
-        </ModeConfirmDialog>
+          @update:audios="(ids: number[]) => (selectedAudios = ids)"
+          @update:light-groups="(ids: number[]) => (selectedLightGroups = ids)"
+          @update:screens="(ids: number[]) => (selectedScreens = ids)"
+        />
       </div>
     </template>
-  </Panel>
+    <template #3>
+      <div class="flex flex-col gap-2 mt-3 sm:mt-0">
+        <div class="max-w-lg mx-auto">
+          <div class="sm:text-lg text-center mb-3 font-semibold">
+            Confirm time trail race initialization
+          </div>
+          <div class="text-justify">
+            You are about to start to start a time trail race session called
+            <span class="font-semibold">{{ sessionName }}</span
+            >.
+          </div>
+          <SubscriberDetails
+            class="mt-3"
+            :selected-audios="selectedAudios"
+            :selected-light-groups="selectedLightGroups"
+            :selected-screens="selectedScreens"
+          />
+        </div>
+      </div>
+    </template>
+  </StepperWrapper>
 </template>
 
 <script setup lang="ts">
-import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 import { computed, ref } from 'vue';
+import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
-import ModeConfirmDialog from '@/components/modes/ModeConfirmDialog.vue';
+import StepperWrapper, { type StepperStep } from '@/components/prime/StepperWrapper.vue';
+import SubscriberDetails from '@/components/modes/SubscribersDetails.vue';
 
 const store = useTimeTrailRaceStore();
 
@@ -52,9 +63,12 @@ const selectedLightGroups = ref<number[]>([]);
 
 const confirmModalOpen = ref<boolean>(false);
 const confirmModalLoading = ref<boolean>(false);
-const canOpenConfirmModal = computed(() => {
-  return sessionName.value.length > 0;
-});
+
+const initializationSteps = computed<StepperStep[]>(() => [
+  { value: 'Session', nextDisabled: sessionName.value === '' },
+  { value: 'Subscribers', nextDisabled: selectedAudios.value.length === 0 },
+  { value: 'Confirmation', confirmFunction: initialize }
+]);
 
 const initialize = async () => {
   confirmModalLoading.value = true;
@@ -68,5 +82,3 @@ const initialize = async () => {
   confirmModalLoading.value = false;
 };
 </script>
-
-<style scoped></style>

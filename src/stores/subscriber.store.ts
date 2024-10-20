@@ -3,11 +3,11 @@ import { defineStore } from 'pinia';
 import { useSocketStore } from '@/stores/socket.store';
 import {
   type AudioResponse,
-  AudiosService,
+  getAudios,
+  getLightsGroups,
+  getScreens,
   type LightsGroupResponse,
-  LightsService,
-  type ScreenResponse,
-  ScreensService
+  type ScreenResponse
 } from '@/api';
 
 interface SubscriberStore {
@@ -25,13 +25,13 @@ export const useSubscriberStore = defineStore('subscribers', {
   getters: {},
   actions: {
     async getAudios() {
-      await AudiosService.getAudios().then((a) => (this.audios = a));
+      await getAudios().then((audios) => (this.audios = audios.data!));
     },
     async getScreens() {
-      await ScreensService.getScreens().then((s) => (this.screens = s));
+      await getScreens().then((screens) => (this.screens = screens.data!));
     },
     async getLightGroups() {
-      await LightsService.getLightsGroups().then((g) => (this.lightsGroups = g));
+      await getLightsGroups().then((lightsGroups) => (this.lightsGroups = lightsGroups.data!));
     },
     async init(): Promise<void> {
       await Promise.all([this.getAudios(), this.getScreens(), this.getLightGroups()]);

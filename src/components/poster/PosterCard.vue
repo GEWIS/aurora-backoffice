@@ -6,42 +6,42 @@
     }"
     style="height: 100%"
   >
-    <template #header v-if="poster.type === 'img'">
+    <template v-if="poster.type == PosterType_IMAGE.IMG" #header>
       <div class="full-width">
         <Carousel
-          :value="poster.source"
-          :num-visible="1"
-          :num-scroll="1"
           v-if="poster.source.length > 1"
-          circular
-          container-class="relative"
-          class="left"
-          :prev-button-props="{ class: 'absolute left-0', style: { zIndex: 100 } }"
-          :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
-          :show-indicators="false"
           :autoplay-interval="3000"
+          circular
+          class="left"
+          container-class="relative"
+          :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
+          :num-scroll="1"
+          :num-visible="1"
+          :prev-button-props="{ class: 'absolute left-0', style: { zIndex: 100 } }"
+          :show-indicators="false"
+          :value="poster.source"
         >
           <template #item="slotProps">
             <Image
-              :src="slotProps.data"
               :alt="poster.name"
               class="full-width"
               image-class="full-width"
               preview
+              :src="slotProps.data"
             />
           </template>
         </Carousel>
         <Image
           v-else
-          :src="poster.source[0]"
           :alt="poster.name"
           class="full-width"
           image-class="full-width"
           preview
+          :src="poster.source[0]"
         />
       </div>
     </template>
-    <template #header v-else>
+    <template v-else #header>
       <div
         class="full-width flex justify-content-center align-items-center"
         style="aspect-ratio: 16/9; background-color: silver"
@@ -66,7 +66,7 @@
           {{ poster.name }}
         </div>
         <div class="text-sm mt-2 font-italic opacity-50">
-          <FontAwesomeIcon :icon="faClock" />
+          <i class="pi pi-clock" />
           {{ poster.timeout }} seconds
         </div>
       </div>
@@ -75,16 +75,14 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { type ErrorPoster, type LocalPoster, type MediaPoster, type PhotoPoster } from '@/api';
+import { type Poster, PosterType_IMAGE } from '@/api';
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
 defineProps<{
-  poster: LocalPoster | MediaPoster | PhotoPoster | ErrorPoster;
+  poster: Poster;
 }>();
 </script>
 

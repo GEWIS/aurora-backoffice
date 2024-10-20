@@ -1,48 +1,50 @@
 <template>
-  <div class="page-container">
-    <div class="page-title flex flex-row align-items-end justify-content-between">
-      <span>Scenes Controller</span>
-      <div class="flex flex-row gap-3 align-items-center">
-        <Button>
-          <FontAwesomeIcon :icon="faMoon" class="mr-2" />
+  <AppContainer icon="pi-sliders-h" title="Scenes">
+    <template #header>
+      <div class="flex flex-row gap-5 align-items-center">
+        <Button size="small">
+          <i class="pi pi-moon mr-2" />
           Clear scenes
         </Button>
         <BeatVisualizer />
       </div>
-    </div>
-    <div>
-      <DataTable :value="store.scenes" :loading="store.loading">
-        <Column field="name" header="Name" />
-        <Column field="favorite" header="Favorite">
-          <template #body="slotProps">
-            <FontAwesomeIcon :icon="faCheck" v-if="slotProps.data.favorite" />
-            <FontAwesomeIcon :icon="faCross" v-else />
-          </template>
-        </Column>
-        <Column header="Actions">
-          <template #body="slotProps">
-            <div class="flex flex-row gap-1">
-              <Button size="small" title="Apply scene" @click="store.applyScene(slotProps.data.id)">
-                <FontAwesomeIcon :icon="faLightbulb" />
-              </Button>
-              <SceneDeleteButton :id="slotProps.data.id" />
-            </div>
-          </template>
-        </Column>
-      </DataTable>
-    </div>
-  </div>
+    </template>
+    <DataTable :loading="store.loading" :value="store.scenes">
+      <Column field="name" header="Name" />
+      <Column field="favorite" header="Favorite">
+        <template #body="slotProps">
+          <i v-if="slotProps.data.favorite" class="pi pi-check" />
+          <i v-else class="pi pi-times" />
+        </template>
+      </Column>
+      <Column header="Actions">
+        <template #body="slotProps">
+          <div class="flex flex-row gap-1">
+            <Button size="small" title="Apply scene" @click="store.applyScene(slotProps.data.id)">
+              <i class="pi pi-lightbulb" />
+            </Button>
+            <SceneDeleteButton :id="slotProps.data.id" />
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
-import BeatVisualizer from '@/components/BeatVisualizer.vue';
+import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCheck, faCross, faLightbulb, faMoon } from '@fortawesome/free-solid-svg-icons';
 import SceneDeleteButton from '@/components/lights/scenes/SceneDeleteButton.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useSceneControllerStore();
 store.initPage();
 </script>
 
-<style scoped></style>
+<style lang="scss">
+@use '@/assets/layout/layout.scss';
+
+th {
+  @extend h6;
+}
+</style>

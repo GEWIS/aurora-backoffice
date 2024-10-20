@@ -5,10 +5,10 @@
       <ToggleButton
         v-for="color in colors"
         :key="color"
-        :model-value="selectedColors.includes(color as RgbColor)"
-        :on-label="color"
-        :off-label="color"
         class="p-button-secondary"
+        :model-value="selectedColors.includes(color as RgbColor)"
+        :off-label="color"
+        :on-label="color"
         @click="handleColorClick(color as RgbColor)"
       >
         <template #icon>
@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
-import ColorBox from '@/components/ColorBox.vue';
-import { RgbColor } from '@/api';
+import ColorBox from '@/components/lights/effects/ColorBox.vue';
+import { type RgbColor } from '@/api';
 
 const store = useColorStore();
 
@@ -36,7 +36,25 @@ const emit = defineEmits<{
   colorsUpdated: [colors: RgbColor[]];
 }>();
 
-const colors: string[] = Object.values(RgbColor);
+const colors: string[] = [
+  'white',
+  'red',
+  'green',
+  'blue',
+  'yellow',
+  'lightblue',
+  'orange',
+  'rosered',
+  'purple',
+  'cyan',
+  'pink',
+  'gold',
+  'brown',
+  'lightpink',
+  'lime',
+  'uv',
+  'blindingwhite'
+];
 const selectedColors: Ref<RgbColor[]> = ref([]);
 
 const handleColorClick = (color: RgbColor) => {

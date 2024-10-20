@@ -12,11 +12,11 @@
       "
     >
       <template #icon>
-        <FontAwesomeIcon :icon="faRefresh" class="mr-2" />
+        <i class="pi pi-refresh mr-2" />
       </template>
     </Button>
     <Button
-      label="Force reload from source"
+      label="Force reload"
       :loading="updateLoading"
       @click="
         async () => {
@@ -27,7 +27,7 @@
       "
     >
       <template #icon>
-        <FontAwesomeIcon :icon="faDownload" class="mr-2" />
+        <i class="pi pi-download mr-2" />
       </template>
     </Button>
     <div class="flex-1" />
@@ -36,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faDownload, faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'vue';
 import { usePosterStore } from '@/stores/poster-store';
 import PosterBorrelModeSwitch from '@/components/poster/PosterBorrelModeSwitch.vue';

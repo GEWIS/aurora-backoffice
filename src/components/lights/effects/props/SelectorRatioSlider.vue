@@ -1,21 +1,21 @@
 <template>
   <div class="flex flex-column w-fit">
-    <label :for="id" class="font-bold block mb-1">{{ name }}</label>
+    <label class="font-bold block mb-1" :for="id">{{ name }}</label>
     <div class="card">
       <div class="">
         <InputNumber
-          :model-value="value"
-          class="w-full"
-          @blur="(event) => handleNumberInputChange(event.value)"
-          :minFractionDigits="0"
-          :maxFractionDigits="2"
           :id="id"
+          class="w-full"
+          :max-fraction-digits="2"
+          :min-fraction-digits="0"
+          :model-value="value"
+          @blur="(event) => handleNumberInputChange(event.value)"
         />
         <Slider
-          :model-value="value"
           class="w-full"
-          :min="min"
           :max="max"
+          :min="min"
+          :model-value="value"
           :step="step"
           @change="onChange"
         />

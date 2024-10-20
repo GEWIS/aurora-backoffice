@@ -1,10 +1,10 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length === 1" effect-name="Wave" @save="handleAddEffect">
-    <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
     <SelectorRatioSlider
       id="waveSize"
-      :min="0"
       :max="1"
+      :min="0"
       name="Wave size (ratio)"
       :step="0.05"
       :value="size"
@@ -12,8 +12,8 @@
     />
     <SelectorRatioSlider
       id="waveCycleTime"
-      :min="0"
       :max="5000"
+      :min="0"
       name="Cycle time (in ms)"
       :step="100"
       :value="cycleTime"
@@ -23,12 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, WaveCreateParams } from '@/api';
+import { ColorEffects_Wave, RgbColor } from '@/api';
 
 const store = useEffectsControllerStore();
 
@@ -38,7 +38,7 @@ const cycleTime = ref<number>(1000);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: WaveCreateParams.type.WAVE,
+    type: ColorEffects_Wave.WAVE,
     props: {
       color: colors.value[0],
       size: size.value,

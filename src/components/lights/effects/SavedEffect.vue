@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import ColorBox from '@/components/ColorBox.vue';
+import ColorBox from '@/components/lights/effects/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
 import {
   type LightsEffectsColorCreateParams,

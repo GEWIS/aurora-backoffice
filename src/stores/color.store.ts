@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { type LightsColorResponse, LightsService, RgbColor } from '@/api';
+import { getAllLightsColors, type LightsColorResponse, type RgbColor } from '@/api';
 
 interface ColorStore {
   colors: LightsColorResponse[];
@@ -11,7 +11,7 @@ export const useColorStore = defineStore('color', {
   }),
   actions: {
     async init(): Promise<void> {
-      await LightsService.getAllLightsColors().then((colors) => (this.colors = colors));
+      await getAllLightsColors().then((colors) => (this.colors = colors.data!));
     },
     getHexColor(c: RgbColor): string {
       const color = this.colors.find((c1) => c1.color === c);

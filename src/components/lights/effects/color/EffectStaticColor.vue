@@ -4,9 +4,9 @@
     effect-name="StaticColor"
     @save="handleAddEffect"
   >
-    <SelectorLightsColor single-color @colorsUpdated="(c) => (colors = c)" />
-    <Dropdown v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
-    <Dropdown
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
+    <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
+    <Select
       v-model="goboRotate"
       :options="goboRotates"
       placeholder="Select a gobo rotate effect"
@@ -14,14 +14,14 @@
     />
     <SelectorBoolean
       id="beat-toggle"
-      name="Beat Toggle"
       :checked="beatToggle"
+      name="Beat Toggle"
       @click="beatToggle = !beatToggle"
     />
     <SelectorRatioSlider
       id="relative-brightness"
-      :min="0"
       :max="1"
+      :min="0"
       name=""
       :step="0.05"
       :value="relativeBrightness"
@@ -31,13 +31,13 @@
 </template>
 
 <script setup lang="ts">
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import { computed, type ComputedRef, ref } from 'vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { RgbColor, StaticColorCreateParams } from '@/api';
+import { ColorEffects_StaticColor, RgbColor } from '@/api';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 
 const store = useEffectsControllerStore();
@@ -65,7 +65,7 @@ const relativeBrightness = ref<number>(1);
 
 const handleAddEffect = () => {
   store.setColorEffect({
-    type: StaticColorCreateParams.type.STATIC_COLOR,
+    type: ColorEffects_StaticColor.STATIC_COLOR,
     props: {
       color: colors.value[0],
       gobo: gobo.value ? gobo.value : undefined,

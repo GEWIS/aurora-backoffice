@@ -19,14 +19,14 @@ export const useSocketStore = defineStore('socket', {
 
       const promise1 = new Promise<void>((resolve) => {
         rootSocket.on('connect', () => {
-          console.log('SocketIO: connected to /');
+          console.info('SocketIO: connected to /');
           this.rootSocket = rootSocket;
           resolve();
         });
       });
       const promise2 = new Promise<void>((resolve) => {
         backofficeSocket.on('connect', () => {
-          console.log('SocketIO: connected to /backoffice');
+          console.info('SocketIO: connected to /backoffice');
           this.backofficeSocket = backofficeSocket;
           resolve();
         });
