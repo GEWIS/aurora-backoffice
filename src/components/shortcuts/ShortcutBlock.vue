@@ -117,8 +117,6 @@ const lights = computed<IShortcutItem[] | boolean>(() => {
     return false;
   }
 
-  console.log(sceneMenuItems.value);
-
   return [
     {
       label: 'Lights',
