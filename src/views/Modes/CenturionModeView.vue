@@ -4,9 +4,9 @@
     <AppContainer class="lg:col-span-4 xxl:col-span-2" icon="pi-crown" title="Centurion">
       <template #header>
         <div v-if="currentTape">
-          <Button icon="pi pi-times" @click="dialogRef.confirmDelete()" />
-          <DialogWrapper
-            ref="dialogRef"
+          <Button icon="pi pi-times" @click="confirmRef?.confirmDialog" />
+          <ConfirmWrapper
+            ref="confirmRef"
             message="Are you sure you want to quit this centurion?"
             :on-accept="centurionStore.quitCenturion"
           />
@@ -33,9 +33,9 @@ import AppContainer from '@/layout/AppContainer.vue';
 import type { MixTapeResponse } from '@/api';
 import CenturionTapeTimeline from '@/components/modes/centurion/TapeTimeline.vue';
 import { useLayoutStore, TailwindWidth } from '@/stores/layout.store';
-import DialogWrapper from '@/components/prime/DialogWrapper.vue';
+import ConfirmWrapper from '@/components/prime/ConfirmWrapper.vue';
 
-const dialogRef = ref();
+const confirmRef = ref();
 const centurionStore = useCenturionStore();
 const layoutStore = useLayoutStore();
 centurionStore.init();

@@ -1,5 +1,5 @@
 <template>
-  <StepperTestTest :steps="initializationSteps">
+  <StepperWrapper current-step="1" :steps="initializationSteps">
     <template #1>
       <div class="flex flex-col gap-2 mt-3 sm:mt-0">
         <div class="sm:text-lg text-center">Select a mixtape for this centurion</div>
@@ -27,53 +27,13 @@
     <template #2>
       <div class="flex flex-col gap-2 mt-3 sm:mt-0">
         <div class="sm:text-lg text-center">Select subscribers for this centurion</div>
-        <MultiSelect
-          class="w-full sm:max-w-80 mx-auto"
-          :max-selected-labels="2"
-          :model-value="selectedAudios"
-          option-label="name"
-          option-value="id"
-          :options="subscriberStore.audios"
-          placeholder="Select audio"
-          :title="
-            subscriberStore.audios
-              .filter((a) => selectedAudios.includes(a.id))
-              .map((a) => a.name)
-              .join(', ')
-          "
-          @update:model-value="(value: number[]) => (selectedAudios = value)"
-        />
-        <MultiSelect
-          class="w-full sm:max-w-80 mx-auto"
-          :max-selected-labels="2"
-          :model-value="selectedScreens"
-          option-label="name"
-          option-value="id"
-          :options="subscriberStore.screens"
-          placeholder="Select screens"
-          :title="
-            subscriberStore.screens
-              .filter((a) => selectedScreens.includes(a.id))
-              .map((a) => a.name)
-              .join(', ')
-          "
-          @update:model-value="(value: number[]) => (selectedScreens = value)"
-        />
-        <MultiSelect
-          class="w-full sm:max-w-80 mx-auto"
-          :max-selected-labels="2"
-          :model-value="selectedLightGroups"
-          option-label="name"
-          option-value="id"
-          :options="subscriberStore.lightsGroups"
-          placeholder="Select lights"
-          :title="
-            subscriberStore.lightsGroups
-              .filter((a) => selectedLightGroups.includes(a.id))
-              .map((a) => a.name)
-              .join(', ')
-          "
-          @update:model-value="(value: number[]) => (selectedLightGroups = value)"
+        <SubscribersSelect
+          :selected-audios="selectedAudios"
+          :selected-light-groups="selectedLightGroups"
+          :selected-screens="selectedScreens"
+          @update:audios="(ids: number[]) => (selectedAudios = ids)"
+          @update:light-groups="(ids: number[]) => (selectedLightGroups = ids)"
+          @update:screens="(ids: number[]) => (selectedScreens = ids)"
         />
       </div>
     </template>
@@ -93,18 +53,18 @@
         </div>
       </div>
     </template>
-  </StepperTestTest>
+  </StepperWrapper>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useSubscriberStore } from '@/stores/subscriber.store';
-import SubscriberDetails from '@/components/modes/centurion/SubscriberDetails.vue';
+import SubscriberDetails from '@/components/modes/SubscribersDetails.vue';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import type { MixTapeResponse } from '@/api';
 import TapeDetails from '@/components/modes/centurion/TapeDetails.vue';
 import type { StepperStep } from '@/components/prime/StepperWrapper.vue';
-import StepperTestTest from '@/components/prime/StepperWrapper.vue';
+import StepperWrapper from '@/components/prime/StepperWrapper.vue';
+import SubscribersSelect from '@/components/modes/SubscribersSelect.vue';
 
 interface GroupedTape {
   label: string;
@@ -121,7 +81,6 @@ defineProps<{
 }>();
 
 const centurionStore = useCenturionStore();
-const subscriberStore = useSubscriberStore();
 
 const selectedAudios = ref<number[]>([]);
 const selectedScreens = ref<number[]>([]);
