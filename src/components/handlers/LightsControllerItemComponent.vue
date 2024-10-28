@@ -1,34 +1,32 @@
 <template>
-  <Card class="bg-transparent">
-    <template #content>
-      <h6 class="mb-4">
-        {{ controller.name }}
-        <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
-      </h6>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
-      >
-        <div v-for="group in lightsGroups" :key="group.id">
-          <div class="mb-2">
-            <h6 class="mb-0">
-              {{ group.name }}
-            </h6>
-          </div>
-          <SubscriberHandlerChangeSelect
-            :current-handler="
-              handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
-            "
-            :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
-            :loading="handlersStore.gettingLights || handlersStore.settingLights"
-            :possible-handlers="handlersStore.lightsHandlers"
-            @change="
-              (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
-            "
-          />
+  <AppBox>
+    <h6 class="mb-4">
+      {{ controller.name }}
+      <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
+    </h6>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
+    >
+      <div v-for="group in lightsGroups" :key="group.id">
+        <div class="mb-2">
+          <h6 class="mb-0">
+            {{ group.name }}
+          </h6>
         </div>
+        <SubscriberHandlerChangeSelect
+          :current-handler="
+            handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
+          "
+          :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
+          :loading="handlersStore.gettingLights || handlersStore.settingLights"
+          :possible-handlers="handlersStore.lightsHandlers"
+          @change="
+            (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
+          "
+        />
       </div>
-    </template>
-  </Card>
+    </div>
+  </AppBox>
 </template>
 
 <script setup lang="ts">
@@ -39,6 +37,7 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import type { LightsControllerResponse } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
+import AppBox from '@/layout/AppBox.vue';
 
 const props = defineProps<{
   controller: LightsControllerResponse;
