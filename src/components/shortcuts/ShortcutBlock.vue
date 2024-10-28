@@ -32,10 +32,7 @@
         </Menu>
       </div>
     </div>
-    <!-- TODO: possibly hide instead of displaying this -->
-    <div v-else>
-      <p>No shortcuts available</p>
-    </div>
+    <div v-else>No shortcuts available.</div>
   </AppContainer>
 </template>
 

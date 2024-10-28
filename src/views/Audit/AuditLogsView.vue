@@ -1,6 +1,6 @@
 <template>
   <AppContainer icon="pi-book" title="Audit logs">
-    <div>
+    <div v-if="store.entries.length > 0">
       <DataTable data-key="id" :value="store.entries">
         <Column field="createdAt" header="Timestamp">
           <template #body="slotProps">
@@ -19,6 +19,7 @@
         @update:rows="(value) => store.setTake(value)"
       />
     </div>
+    <div v-else>Could not load audit logs.</div>
   </AppContainer>
 </template>
 
@@ -27,6 +28,7 @@ import { useAuditStore } from '@/stores/audit.store';
 import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useAuditStore();
+store.setSkipTake(0, 20);
 </script>
 
 <style lang="scss">

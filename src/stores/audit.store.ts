@@ -94,6 +94,20 @@ export const useAuditStore = defineStore('audit', {
       await this.getLogs();
     },
     /**
+     * Set the skip and take values at once
+     * @param skip
+     * @param take
+     */
+    async setSkipTake(skip?: number, take?: number) {
+      if (skip) {
+        this.skip = skip;
+      }
+      if (take) {
+        this.take = take;
+      }
+      await this.getLogs();
+    },
+    /**
      * Destroy the store
      */
     async destroy() {

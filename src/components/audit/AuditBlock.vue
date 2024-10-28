@@ -1,15 +1,23 @@
 <template>
   <AppContainer icon="pi-book" title="Logs">
-    <DataTable class="mb-3" data-key="id" :loading="store.loading" :value="store.dashboardEntries">
-      <Column field="createdAt" header="Timestamp">
-        <template #body="slotProps">
-          {{ new Date(slotProps.data.createdAt).toLocaleString() }}
-        </template>
-      </Column>
-      <Column field="userName" header="Name" />
-      <Column field="action" header="Action" />
-    </DataTable>
-    <RouterLink to="/audit"> More recent activity </RouterLink>
+    <div v-if="store.dashboardEntries.length > 0">
+      <DataTable
+        class="mb-3"
+        data-key="id"
+        :loading="store.loading"
+        :value="store.dashboardEntries"
+      >
+        <Column field="createdAt" header="Timestamp">
+          <template #body="slotProps">
+            {{ new Date(slotProps.data.createdAt).toLocaleString() }}
+          </template>
+        </Column>
+        <Column field="userName" header="Name" />
+        <Column field="action" header="Action" />
+      </DataTable>
+      <RouterLink to="/audit"> More recent activity </RouterLink>
+    </div>
+    <div v-else>Could not load audit logs.</div>
   </AppContainer>
 </template>
 
@@ -17,9 +25,7 @@
 import { useAuditStore } from '@/stores/audit.store';
 import AppContainer from '@/layout/AppContainer.vue';
 const store = useAuditStore();
-store.setTake(5);
-store.setSkip(0);
-store.getLogs();
+store.setSkipTake(0, 5);
 </script>
 
 <style lang="scss">
