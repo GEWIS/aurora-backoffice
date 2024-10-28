@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
+import { noop } from 'lodash';
 import {
   type CreateSceneParams,
   type LightsSceneResponse,
-  type HttpApiException,
   getAllScenes,
   createScene,
   deleteScene,
   applyScene,
   clearScene
 } from '@/api';
-import { handleError } from '@/utils/errorHandler';
 
 interface SceneControllerStore {
   scenes: LightsSceneResponse[];
@@ -30,17 +29,16 @@ export const useSceneControllerStore = defineStore('scene-controller', {
         query: { favorite: true }
       })
         .then((scenes) => (this.favoriteScenes = scenes.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     async fetchScenes() {
-      try {
-        const scenes = await getAllScenes();
-        this.scenes = scenes.data!;
-        this.favoriteScenes = scenes.data!.filter((s) => s.favorite);
-      } catch (e) {
-        handleError(e as HttpApiException);
-      }
+      await getAllScenes()
+        .then((scenes) => {
+          this.scenes = scenes.data!;
+          this.favoriteScenes = scenes.data!.filter((s) => s.favorite);
+        })
+        .catch(noop);
     },
     async initPage() {
       this.loading = true;
@@ -51,7 +49,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await createScene({
         body: body
-      }).catch(handleError);
+      }).catch(noop);
       await this.fetchScenes();
       this.loading = false;
     },
@@ -59,7 +57,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await deleteScene({
         path: { id }
-      }).catch(handleError);
+      }).catch(noop);
       await this.fetchScenes();
       this.loading = false;
     },
@@ -67,12 +65,12 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await applyScene({
         path: { id }
-      }).catch(handleError);
+      }).catch(noop);
       this.loading = false;
     },
     async clearScene() {
       this.loading = true;
-      await clearScene().catch(handleError);
+      await clearScene().catch(noop);
       this.loading = false;
     }
   }

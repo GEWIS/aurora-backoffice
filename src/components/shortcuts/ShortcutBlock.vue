@@ -41,12 +41,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { noop } from 'lodash';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useCenturionStore } from '@/stores/modes/centurion.store';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
-import { handleError } from '@/utils/errorHandler';
 import DashboardShortcutItem from '@/components/shortcuts/ShortcutItem.vue';
 import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
 import AppContainer from '@/layout/AppContainer.vue';
@@ -169,7 +169,7 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
                     timeTrailRaceModeStore.getTimeTrailMode()
                   ]);
                 })
-                .catch(handleError);
+                .catch(noop);
             }
           },
         showCenturion && {

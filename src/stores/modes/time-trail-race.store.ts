@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { noop } from 'lodash';
 import {
   disableTimeTrailRacing,
   enableTimeTrailRace,
@@ -20,7 +21,6 @@ import {
   type TimeTrailRaceState
 } from '@/api';
 import { useSocketStore } from '@/stores/socket.store';
-import { handleError } from '@/utils/errorHandler';
 
 /**
  * Time trail store
@@ -104,7 +104,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
           this.sessionName = sessionName;
           this.state = 'INITIALIZED' as TimeTrailRaceState;
         })
-        .catch(handleError);
+        .catch(noop);
 
       this.loading = false;
     },
@@ -118,7 +118,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
         body: params
       })
         .then((player) => this.handleRegisterPlayer(player.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**
@@ -138,7 +138,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
       await raceReady()
         .then((ready) => this.handleReady(ready.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**
@@ -157,7 +157,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
       await raceStart()
         .then((start) => this.handleStart(start.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**
@@ -177,7 +177,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
       await raceFinish()
         .then((finish) => this.handleFinish(finish.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**
@@ -197,7 +197,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
       await raceRevealScore()
         .then((score) => this.handleRevealScore(score.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**
@@ -218,7 +218,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       this.loading = true;
       await raceResetPlayer()
         .then((reset) => this.handleRevealScore(reset.data!))
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     async init() {

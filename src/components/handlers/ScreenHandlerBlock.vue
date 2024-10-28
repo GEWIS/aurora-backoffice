@@ -1,6 +1,7 @@
 <template>
   <AppContainer icon="pi-desktop" title="Screens">
     <div
+      v-if="handlersStore.fetchScreenHandlers.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
     >
       <div v-for="screen in subscriberStore.screens.value" :key="screen.id">
@@ -18,6 +19,7 @@
         />
       </div>
     </div>
+    <div v-else>Could not load screen handlers.</div>
   </AppContainer>
 </template>
 

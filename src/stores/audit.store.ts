@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
+import { noop } from 'lodash';
 import { type AuditLogEntryResponse, getAuditLogs } from '@/api';
-import { handleError } from '@/utils/errorHandler';
 import { useSocketStore } from '@/stores/socket.store';
 
 /**
@@ -53,7 +53,7 @@ export const useAuditStore = defineStore('audit', {
           this.dashboardEntries = logs.data!.records;
           this.count = logs.data!.pagination.count;
         })
-        .catch(handleError);
+        .catch(noop);
 
       this.loading = false;
       const socketStore = useSocketStore();
@@ -74,7 +74,7 @@ export const useAuditStore = defineStore('audit', {
           this.entries = logs.data!.records;
           this.count = logs.data!.pagination.count;
         })
-        .catch(handleError);
+        .catch(noop);
       this.loading = false;
     },
     /**

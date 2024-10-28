@@ -118,6 +118,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { noop } from 'lodash';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import {
@@ -125,7 +126,6 @@ import {
   freezeGroupMovingHeadWheel,
   freezeGroupPar,
   freezeLightsGroup,
-  type HttpApiException,
   type LightsGroupResponse,
   resetGroupMovingHeadRgb,
   resetGroupMovingHeadWheel,
@@ -138,7 +138,6 @@ import {
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastSuccess } from '@/utils/toastHandler';
 import AppContainer from '@/layout/AppContainer.vue';
-import { handleError } from '@/utils/errorHandler';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -162,69 +161,57 @@ const getGroupFixtures = (g: LightsGroupResponse) =>
   ].sort((a, b) => a.firstChannel - b.firstChannel);
 
 const handleFreeze = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await freezeGroupPar({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await freezeGroupMovingHeadRgb({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await freezeGroupMovingHeadWheel({ path: { id } });
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully froze fixture'
-    });
-  } catch (e: unknown) {
-    handleError(e as HttpApiException);
+  switch (type) {
+    case FixtureType.PAR:
+      await freezeGroupPar({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await freezeGroupMovingHeadRgb({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await freezeGroupMovingHeadWheel({ path: { id } }).catch(noop);
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully froze fixture'
+  });
 };
 
 const handleUnfreeze = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await unfreezeGroupPar({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await unfreezeMovingHeadRgb({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await unfreezeMovingHeadWheel({ path: { id } });
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully unfroze fixture'
-    });
-  } catch (e: unknown) {
-    handleError(e as HttpApiException);
+  switch (type) {
+    case FixtureType.PAR:
+      await unfreezeGroupPar({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await unfreezeMovingHeadRgb({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await unfreezeMovingHeadWheel({ path: { id } }).catch(noop);
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully unfroze fixture'
+  });
 };
 
 const handleHardwareReset = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await resetGroupPar({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await resetGroupMovingHeadRgb({ path: { id } });
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await resetGroupMovingHeadWheel({ path: { id } });
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully sent hardware reset signal'
-    });
-  } catch (e: unknown) {
-    handleError(e as HttpApiException);
+  switch (type) {
+    case FixtureType.PAR:
+      await resetGroupPar({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await resetGroupMovingHeadRgb({ path: { id } }).catch(noop);
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await resetGroupMovingHeadWheel({ path: { id } }).catch(noop);
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully sent hardware reset signal'
+  });
 };
 
 const getHandler = (groupId: number): string | undefined => {

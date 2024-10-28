@@ -1,15 +1,18 @@
 <template>
   <AppContainer icon="pi-volume-up" title="Audio">
     <div
+      v-if="handlersStore.fetchAudioHandlers.length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
     >
       <div v-for="audio in subscriberStore.audios.value" :key="audio.id">
         <SubscriberItemContent
           :current-handler="
-            handlersStore.audioHandlers.find((h) => !!h.entities.find((e) => e.id === audio.id))
+            handlersStore.fetchAudioHandlers.find(
+              (h) => !!h.entities.find((e) => e.id === audio.id)
+            )
           "
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
-          :loading="handlersStore.gettingAudio || handlersStore.settingAudio"
+          :loading="handlersStore.isGettingAudio || handlersStore.isSettingAudio"
           :possible-handlers="handlersStore.audioHandlers"
           :subscriber="audio"
           @change="
@@ -18,6 +21,7 @@
         />
       </div>
     </div>
+    <div v-else>Could not load audio handlers.</div>
   </AppContainer>
 </template>
 
@@ -29,9 +33,9 @@ import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.v
 import AppContainer from '@/layout/AppContainer.vue';
 import { useAuthStore } from '@/stores/auth.store';
 
+const authStore = useAuthStore();
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
-const authStore = useAuthStore();
 </script>
 
 <style scoped lang="scss"></style>

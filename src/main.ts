@@ -45,7 +45,7 @@ import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
 import router from './router';
 import App from './App.vue';
-import SetupInterceptors from '@/utils/fetchInterceptor';
+import '@/utils/fetchInterceptor';
 import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/services.gen';
@@ -74,8 +74,6 @@ app.use(ConfirmationService);
 client.setConfig({
   baseUrl: '/api'
 });
-
-SetupInterceptors();
 
 app.use(createPinia());
 await useAuthStore().init();

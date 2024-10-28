@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import { handleError } from '@/utils/errorHandler';
-
+import { noop } from 'lodash';
 import { useSocketStore } from '@/stores/socket.store';
 import {
   type AudioResponse,
@@ -10,7 +9,6 @@ import {
   type HandlerResponse_AudioResponse_,
   type HandlerResponse_LightsGroupResponse_,
   type HandlerResponse_ScreenResponse_,
-  type HttpApiException,
   type LightsGroupResponse,
   resetAllHandlersToDefaults,
   type ScreenResponse,
@@ -24,6 +22,18 @@ type Handler =
   | HandlerResponse_AudioResponse_
   | HandlerResponse_LightsGroupResponse_;
 
+/**
+ * HandlerStore
+ * @param audioHandlers - The audio handlers
+ * @param lightsHandlers - The lights handlers
+ * @param screenHandlers - The screen handlers
+ * @param gettingAudio - Whether getting the audio handlers
+ * @param settingAudio - Whether setting the audio handler
+ * @param gettingScreens - Whether getting the screen handlers
+ * @param settingScreens - Whether setting the screen handler
+ * @param gettingLights - Whether getting the lights handlers
+ * @param settingLights - Whether setting the lights handler
+ */
 interface HandlersStore {
   audioHandlers: HandlerResponse_AudioResponse_[];
   lightsHandlers: HandlerResponse_LightsGroupResponse_[];
@@ -49,27 +59,56 @@ export const useHandlersStore = defineStore('handlers', {
       gettingLights: false,
       settingLights: false
     }) as HandlersStore,
-  getters: {},
+  getters: {
+    fetchAudioHandlers: (state) => state.audioHandlers,
+    fetchLightsHandlers: (state) => state.lightsHandlers,
+    fetchScreenHandlers: (state) => state.screenHandlers,
+    isGettingAudio: (state) => state.gettingAudio,
+    isSettingAudio: (state) => state.settingAudio,
+    isGettingScreens: (state) => state.gettingScreens,
+    isSettingScreens: (state) => state.settingScreens,
+    isGettingLights: (state) => state.gettingLights,
+    isSettingLights: (state) => state.settingLights
+  },
   actions: {
+    /**
+     * Get the audio handlers
+     * In case error while fetching; set undefined
+     */
     async getAudioHandlers() {
       this.gettingAudio = true;
-      await getAudioHandlers().then((handlers) => (this.audioHandlers = handlers.data!));
+      await getAudioHandlers()
+        .then((handlers) => (this.audioHandlers = handlers.data!))
+        .catch(() => (this.audioHandlers = []));
       this.gettingAudio = false;
     },
+    /**
+     * Get the light handlers
+     * In case error while fetching; set undefined
+     */
     async getLightsHandlers() {
       this.gettingLights = true;
-      await getLightsHandlers().then((handlers) => (this.lightsHandlers = handlers.data!));
+      await getLightsHandlers()
+        .then((handlers) => (this.lightsHandlers = handlers.data!))
+        .catch(() => (this.lightsHandlers = []));
       this.gettingLights = false;
     },
+    /**
+     * Get the screen handlers
+     * In case error while fetching; set undefined
+     */
     async getScreenHandlers() {
       this.gettingScreens = true;
-      await getScreenHandlers().then((handlers) => (this.screenHandlers = handlers.data!));
+      await getScreenHandlers()
+        .then((handlers) => (this.screenHandlers = handlers.data!))
+        .catch(() => (this.screenHandlers = []));
       this.gettingScreens = false;
     },
+    /**
+     * Initialize the store
+     */
     async init(): Promise<void> {
-      this.gettingAudio = true;
-      this.gettingScreens = true;
-      this.gettingLights = true;
+      this.gettingAudio = this.gettingScreens = this.gettingLights = true;
       await this.getAudioHandlers();
       await this.getLightsHandlers();
       await this.getScreenHandlers();
@@ -82,118 +121,126 @@ export const useHandlersStore = defineStore('handlers', {
         this.getLightsHandlers.bind(this)
       );
 
-      this.gettingAudio = false;
-      this.gettingScreens = false;
-      this.gettingLights = false;
+      this.gettingAudio = this.gettingScreens = this.gettingLights = false;
     },
+    /**
+     * Set the audio handler
+     * @param id - id of the audio
+     * @param newHandler - new handler
+     */
     async setAudioHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
-      try {
-        this.settingAudio = true;
-        if (Array.isArray(id)) {
-          await Promise.all(
-            id.map((i) =>
-              setAudioHandler({
-                body: { name: newHandler != null ? newHandler : '' },
-                path: { id: i }
-              })
-            )
-          );
-        } else {
-          await setAudioHandler({
-            body: { name: newHandler != null ? newHandler : '' },
-            path: { id }
-          });
-        }
-        await getAudioHandlers().then((handlers) => (this.audioHandlers = handlers.data!));
-      } catch (e: unknown) {
-        handleError(e as HttpApiException);
+      this.settingAudio = true;
+      if (Array.isArray(id)) {
+        await Promise.all(
+          id.map((i) =>
+            setAudioHandler({
+              body: { name: newHandler != null ? newHandler : '' },
+              path: { id: i }
+            }).catch(noop)
+          )
+        );
+      } else {
+        await setAudioHandler({
+          body: { name: newHandler != null ? newHandler : '' },
+          path: { id }
+        }).catch(noop);
       }
       this.settingAudio = false;
-    },
-    async setLightsHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
-      try {
-        this.settingLights = true;
-        if (Array.isArray(id)) {
-          await Promise.all(
-            id.map((i) =>
-              setLightsHandler({
-                body: { name: newHandler != null ? newHandler : '' },
-                path: { id: i }
-              })
-            )
-          );
-        } else {
-          await setLightsHandler({
-            body: { name: newHandler != null ? newHandler : '' },
-            path: { id }
-          });
-        }
 
-        await getLightsHandlers().then((handlers) => (this.lightsHandlers = handlers.data!));
-      } catch (e: unknown) {
-        handleError(e as HttpApiException);
+      await this.getAudioHandlers();
+    },
+    /**
+     * Set the lights handler
+     * @param id - id of the lights group
+     * @param newHandler - new handler
+     */
+    async setLightsHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
+      this.settingLights = true;
+      if (Array.isArray(id)) {
+        await Promise.all(
+          id.map((i) =>
+            setLightsHandler({
+              body: { name: newHandler != null ? newHandler : '' },
+              path: { id: i }
+            })
+          )
+        ).catch(noop);
+      } else {
+        await setLightsHandler({
+          body: { name: newHandler != null ? newHandler : '' },
+          path: { id }
+        }).catch(noop);
       }
       this.settingLights = false;
-    },
-    async setScreenHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
-      try {
-        this.settingScreens = true;
-        if (Array.isArray(id)) {
-          await Promise.all(
-            id.map((i) =>
-              setScreenHandler({
-                body: { name: newHandler != null ? newHandler : '' },
-                path: { id: i }
-              })
-            )
-          );
-        } else {
-          await setScreenHandler({
-            body: { name: newHandler != null ? newHandler : '' },
-            path: { id }
-          });
-        }
 
-        await getScreenHandlers().then((handlers) => (this.screenHandlers = handlers.data!));
-      } catch (e: unknown) {
-        handleError(e as HttpApiException);
-      }
-      this.settingScreens = false;
+      await this.getLightsHandlers();
     },
+    /**
+     * Set the screen handler
+     * @param id - id of the screen
+     * @param newHandler - new handler
+     */
+    async setScreenHandler(id: number | number[], newHandler: string | null = null): Promise<void> {
+      this.settingScreens = true;
+      if (Array.isArray(id)) {
+        await Promise.all(
+          id.map((i) =>
+            setScreenHandler({
+              body: { name: newHandler != null ? newHandler : '' },
+              path: { id: i }
+            })
+          )
+        ).catch(noop);
+      } else {
+        await setScreenHandler({
+          body: { name: newHandler != null ? newHandler : '' },
+          path: { id }
+        }).catch(noop);
+      }
+
+      this.settingScreens = false;
+      await this.getScreenHandlers();
+    },
+    /**
+     * Get the registered audios
+     * @param handlerName
+     */
     getRegisteredAudios(handlerName?: string): AudioResponse[] {
       if (!handlerName) return this.audioHandlers.map((h) => h.entities).flat();
       const handler = this.audioHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
     },
+    /**
+     * Get the registered lights
+     * @param handlerName
+     */
     getRegisteredLights(handlerName?: string): LightsGroupResponse[] {
       if (!handlerName) return this.lightsHandlers.map((h) => h.entities).flat();
       const handler = this.lightsHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
     },
+    /**
+     * Get the registered screens
+     * @param handlerName
+     */
     getRegisteredScreens(handlerName?: string): ScreenResponse[] {
       if (!handlerName) return this.screenHandlers.map((h) => h.entities).flat();
       const handler = this.screenHandlers.find((h) => h.name === handlerName);
       if (!handler) return [];
       return handler.entities;
     },
+    /**
+     * Reset the store
+     */
     async reset() {
-      try {
-        this.gettingAudio = true;
-        this.gettingScreens = true;
-        this.gettingLights = true;
-        await resetAllHandlersToDefaults();
-
-        await this.getAudioHandlers();
-        await this.getLightsHandlers();
-        await this.getScreenHandlers();
-      } catch (e: unknown) {
-        handleError(e as HttpApiException);
-      }
-      this.gettingAudio = false;
-      this.gettingScreens = false;
-      this.gettingLights = false;
+      this.gettingAudio = this.gettingScreens = this.gettingLights = true;
+      await resetAllHandlersToDefaults().catch(noop);
+      await this.getAudioHandlers();
+      await this.getLightsHandlers();
+      await this.getScreenHandlers();
+      this.gettingAudio = this.gettingScreens = this.gettingLights = false;
     }
   }
 });
