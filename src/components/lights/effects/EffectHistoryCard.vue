@@ -1,6 +1,6 @@
 <template>
   <Panel :header="lightGroups.map((g) => g?.name).join(', ')" @click="setEffect()">
-    <div class="flex flex-column gap-2 justify-content-start">
+    <div class="flex flex-col gap-2 justify-start">
       <div class="font-italic">
         <timeago :auto-update="5" :datetime="effect.timestamp" />
       </div>

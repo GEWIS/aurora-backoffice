@@ -5,7 +5,7 @@
     </template>
 
     <!-- Light groups -->
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
       <Card class="w-full">
         <template #title> (1) Lights groups </template>
         <template #content>
@@ -26,16 +26,17 @@
                 Select all
               </Button>
             </div>
-            <div class="flex flex-row flex-wrap gap-5">
+            <div class="flex flex-col gap-5">
               <div v-for="group in activeLightGroups" :key="group.id">
                 <LightsGroupToggleButton
+                  class="w-full"
                   :enabled="effectsControllerStore.selectedLightsGroupIds.includes(group.id)"
                   :lights-group="group"
                   @click="() => effectsControllerStore.toggleLightsGroup(group.id)"
                 />
               </div>
               <div v-for="group in inactiveLightGroups" :key="group.id">
-                <LightsGroupToggleButton disabled :lights-group="group" />
+                <LightsGroupToggleButton class="w-full" disabled :lights-group="group" />
               </div>
             </div>
           </div>
@@ -47,14 +48,14 @@
         <template #title> (2) Create effects </template>
         <template #content>
           <h4 class="mt-0 mb-1">Colors</h4>
-          <div class="flex flex-row flex-wrap gap-5 mb-5">
+          <div class="flex flex-col gap-5 mb-5">
             <EffectBeatFadeOut />
             <EffectSparkle />
             <EffectStaticColor />
             <EffectWave />
           </div>
           <h4 class="mt-2 mb-1">Movement</h4>
-          <div class="flex flex-row flex-wrap gap-5">
+          <div class="flex flex-col gap-5">
             <EffectSearchLight />
             <EffectTableRotate />
             <EffectClassicRotate />
@@ -67,7 +68,7 @@
       <Card>
         <template #title> Other effects & settings </template>
         <template #content>
-          <div class="flex flex-row gap-1 flex-wrap justify-center">
+          <div class="flex flex-col gap-5">
             <StrobeButton />
             <Button
               :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
@@ -88,7 +89,9 @@
           </div>
         </template>
       </Card>
+    </div>
 
+    <div class="w-full">
       <Card>
         <template #title> Past effects </template>
         <template #content>
