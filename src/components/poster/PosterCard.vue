@@ -1,18 +1,12 @@
 <template>
-  <Card
-    :pt="{
-      body: { class: 'p-3 m-0' },
-      content: { class: 'p-0 m-0' }
-    }"
-    style="height: 100%"
-  >
-    <template v-if="poster.type == PosterType_IMAGE.IMG" #header>
-      <div class="full-width">
+  <AppBox class="h-full">
+    <div v-if="poster.type == PosterType_IMAGE.IMG">
+      <div class="w-full">
         <Carousel
           v-if="poster.source.length > 1"
           :autoplay-interval="3000"
           circular
-          class="left"
+          class="left rounded-lg"
           container-class="relative"
           :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
           :num-scroll="1"
@@ -24,8 +18,8 @@
           <template #item="slotProps">
             <Image
               :alt="poster.name"
-              class="full-width"
-              image-class="full-width"
+              class="w-full"
+              image-class="w-full rounded-lg"
               preview
               :src="slotProps.data"
             />
@@ -34,48 +28,45 @@
         <Image
           v-else
           :alt="poster.name"
-          class="full-width"
-          image-class="full-width"
+          class="w-full"
+          image-class="w-full rounded-lg"
           preview
           :src="poster.source[0]"
         />
       </div>
-    </template>
-    <template v-else #header>
-      <div
-        class="full-width flex justify-content-center align-items-center"
-        style="aspect-ratio: 16/9; background-color: silver"
-      >
-        <a v-if="poster.type === 'extern'" :href="poster.source[0]" target="_blank">
-          <Button outlined>
-            {{ capitalize(poster.type) }}
-          </Button>
-        </a>
-        <span v-else>
-          {{ capitalize(poster.type) }}
-        </span>
-      </div>
-    </template>
-    <template #content>
-      <div class="flex flex-column gap-1">
-        <div>{{ poster.label }}</div>
+    </div>
+    <div v-else-if="poster.type === PosterType_EXTERNAL.EXTERN">
+      <a :href="poster.source[0]" target="_blank">
         <div
-          class="font-bold text-overflow-ellipsis white-space-nowrap overflow-hidden"
-          :title="poster.name"
+          class="hover:brightness-50 transition duration-200 w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
         >
-          {{ poster.name }}
+          {{ capitalize(poster.type) }}
         </div>
-        <div class="text-sm mt-2 font-italic opacity-50">
-          <i class="pi pi-clock" />
-          {{ poster.timeout }} seconds
-        </div>
+      </a>
+    </div>
+    <div v-else>
+      <div
+        class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
+      >
+        {{ capitalize(poster.type) }}
       </div>
-    </template>
-  </Card>
+    </div>
+    <div class="flex flex-col gap-1">
+      <div>{{ poster.label }}</div>
+      <div class="font-bold text-ellipsis whitespace-nowrap overflow-hidden" :title="poster.name">
+        {{ poster.name }}
+      </div>
+      <div class="text-sm mt-2 italic opacity-50">
+        <i class="pi pi-clock" />
+        {{ poster.timeout }} seconds
+      </div>
+    </div>
+  </AppBox>
 </template>
 
 <script setup lang="ts">
-import { type Poster, PosterType_IMAGE } from '@/api';
+import { type Poster, PosterType_EXTERNAL, PosterType_IMAGE } from '@/api';
+import AppBox from '@/layout/AppBox.vue';
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);

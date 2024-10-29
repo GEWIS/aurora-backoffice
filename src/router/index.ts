@@ -135,6 +135,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // TODO; move some of this check away from router
   const layoutStore = useLayoutStore();
   layoutStore.init();
 
@@ -144,7 +145,7 @@ router.beforeEach(async (to, from, next) => {
     await authStore.MockLogin({
       id: 'dev',
       name: 'dev',
-      roles: [SecurityGroup.KEY_HOLDER]
+      roles: [SecurityGroup.ADMIN]
     });
     await authStore.initStores();
   }
