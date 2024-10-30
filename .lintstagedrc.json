@@ -1,4 +1,4 @@
 {
-  "./src/**/*.{ts,vue}": ["npm run format", "npm run lint"]
+  "./src/**/*.{ts,vue}": ["yarn format", "yarn lint"]
 
 }

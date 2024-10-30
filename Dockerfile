@@ -1,10 +1,10 @@
 # Build in a different image to keep the target image clean
 FROM node:20-alpine as build
 WORKDIR /usr/src/app
-COPY ./package.json ./package-lock.json ./
-RUN npm install
+COPY ./package.json ./yarn.lock ./
+RUN yarn
 COPY ./ ./
-RUN npm run build
+RUN yarn build
 
 # The target image that will be run
 FROM nginx:alpine as target

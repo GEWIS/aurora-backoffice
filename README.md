@@ -10,10 +10,10 @@ The backoffice repository should be cloned next to the core repository, so in th
 This is necessary to generate the required API client files (installation step 2).
 
 ## Installation
-1. Run `npm install`.
-2. Run `npm run gen-client` to generate the Typescript files required to communicate with the core.
-3. Run `npm run dev`.
-4. The application should now be running at http://localhost:8080.
+1. Run `yarn`.
+2. Run `yarn gen-client` to generate the Typescript files required to communicate with the core.
+3. Run `yarn dev`.
+4. The application is now running at http://localhost:8080.
 In a development environment with a local copy of Aurora Core, you should be logged in automatically.
 
 ## Deployment
