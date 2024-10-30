@@ -57,7 +57,6 @@ export const useCenturionStore = defineStore('centurion', {
      */
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
-      // TODO check if error handling is okay
       getCenturion()
         .then((tape) => (this.currentTape = tape.data!))
         .catch((e: HttpApiException | string) => {
@@ -96,12 +95,14 @@ export const useCenturionStore = defineStore('centurion', {
     /**
      * Initialize the centurion
      * @param tapeName - The name of the centurion tape
+     * @param tapeArtist
      * @param audioIds - The audio ids to use
      * @param screenIds - The screen ids to use
      * @param lightsGroupIds - The lights group ids to use
      */
     async initializeCenturion(
       tapeName: string,
+      tapeArtist: string,
       audioIds: number[],
       screenIds: number[],
       lightsGroupIds: number[]
@@ -111,6 +112,7 @@ export const useCenturionStore = defineStore('centurion', {
       await enableCenturion({
         body: {
           centurionName: tapeName,
+          centurionArtist: tapeArtist,
           audioIds: audioIds,
           screenIds: screenIds,
           lightsGroupIds: lightsGroupIds

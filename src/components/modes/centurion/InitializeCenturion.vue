@@ -120,6 +120,7 @@ const initializationSteps = computed<StepperStep[]>(() => [
 const initialize = async () => {
   await centurionStore.initializeCenturion(
     selectedTape.value!.name,
+    selectedTape.value!.artist,
     selectedAudios.value,
     selectedScreens.value,
     selectedLightGroups.value
