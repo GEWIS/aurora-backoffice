@@ -92,11 +92,7 @@ export const useAuthStore = defineStore('auth', {
      */
     async initStores(): Promise<void> {
       await useSocketStore().connect();
-      if (
-        this.isInSecurityGroup('handler', 'base') &&
-        this.isInSecurityGroup('handler', 'base') &&
-        this.isInSecurityGroup('handler', 'base')
-      ) {
+      if (this.isInSecurityGroup('handler', 'base')) {
         await useHandlersStore().init();
       }
       if (this.isInSecurityGroup('light', 'base')) {
