@@ -18,7 +18,7 @@ import {
   type RaceStartedEvent,
   type RegisterPlayerParams,
   type ScoreboardItem,
-  type TimeTrailRaceState
+  TimeTrailRaceState
 } from '@/api';
 import { useSocketStore } from '@/stores/socket.store';
 
@@ -102,7 +102,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       })
         .then(() => {
           this.sessionName = sessionName;
-          this.state = 'INITIALIZED' as TimeTrailRaceState;
+          this.state = TimeTrailRaceState.INITIALIZED;
         })
         .catch(noop);
 
@@ -114,11 +114,10 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async registerPlayer(params: RegisterPlayerParams) {
       this.loading = true;
-      await raceRegisterPlayer({
+      const register = await raceRegisterPlayer({
         body: params
-      })
-        .then((player) => this.handleRegisterPlayer(player.data!))
-        .catch(noop);
+      });
+      this.handleRegisterPlayer(register.data!);
       this.loading = false;
     },
     /**
@@ -136,9 +135,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async ready() {
       this.loading = true;
-      await raceReady()
-        .then((ready) => this.handleReady(ready.data!))
-        .catch(noop);
+      const ready = await raceReady();
+      this.handleReady(ready.data!);
       this.loading = false;
     },
     /**
@@ -155,9 +153,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async start() {
       this.loading = true;
-      await raceStart()
-        .then((start) => this.handleStart(start.data!))
-        .catch(noop);
+      const start = await raceStart();
+      this.handleStart(start.data!);
       this.loading = false;
     },
     /**
@@ -175,9 +172,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async finish() {
       this.loading = true;
-      await raceFinish()
-        .then((finish) => this.handleFinish(finish.data!))
-        .catch(noop);
+      const finish = await raceFinish();
+      this.handleFinish(finish.data!);
       this.loading = false;
     },
     /**
@@ -195,9 +191,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async revealScore() {
       this.loading = true;
-      await raceRevealScore()
-        .then((score) => this.handleRevealScore(score.data!))
-        .catch(noop);
+      const score = await raceRevealScore();
+      this.handleRevealScore(score.data!);
       this.loading = false;
     },
     /**
@@ -216,9 +211,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async resetPlayer() {
       this.loading = true;
-      await raceResetPlayer()
-        .then((reset) => this.handleRevealScore(reset.data!))
-        .catch(noop);
+      const reset = await raceResetPlayer();
+      this.handleRevealScore(reset.data!);
       this.loading = false;
     },
     async init() {
@@ -239,11 +233,10 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     async quit() {
       this.loading = true;
+      await disableTimeTrailRacing();
       this.state = undefined;
       this.sessionName = undefined;
       this.scoreboard = [];
-      // TODO; this should be done before methods above; but returns faulty json
-      await disableTimeTrailRacing();
       this.loading = false;
     },
     /**
