@@ -8,8 +8,8 @@
         :min="0"
         name="Wave size (ratio)"
         :step="0.05"
-        :value="size"
-        @update="(newVal: number) => (size = newVal)"
+        :value="nrWaves"
+        @update="(newVal: number) => (nrWaves = newVal)"
       />
       <SelectorRatioSlider
         id="waveCycleTime"
@@ -35,7 +35,7 @@ import { ColorEffects_Wave, RgbColor } from '@/api';
 const store = useEffectsControllerStore();
 
 const colors = ref<RgbColor[]>([]);
-const size = ref<number>(1);
+const nrWaves = ref<number>(1);
 const cycleTime = ref<number>(1000);
 
 const handleAddEffect = () => {
@@ -43,7 +43,7 @@ const handleAddEffect = () => {
     type: ColorEffects_Wave.WAVE,
     props: {
       color: colors.value[0],
-      size: size.value,
+      nrWaves: nrWaves.value,
       cycleTime: cycleTime.value
     }
   });

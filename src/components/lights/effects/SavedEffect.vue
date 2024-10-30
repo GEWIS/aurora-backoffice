@@ -37,9 +37,9 @@ defineEmits<{
 
 let colors: Array<RgbColor>;
 if ('colors' in props.effect.props) {
-  colors = props.effect.props.colors;
+  colors = props.effect.props.colors as unknown as RgbColor[];
 } else if ('color' in props.effect.props) {
-  colors = [props.effect.props.color];
+  colors = [props.effect.props.color] as unknown as RgbColor[];
 } else {
   colors = [];
 }
