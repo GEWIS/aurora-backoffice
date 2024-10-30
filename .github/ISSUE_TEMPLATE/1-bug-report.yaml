@@ -1,5 +1,5 @@
-name: "🐛 Bug Report"
-description: Report a bug found while using the Aurora Backoffice.
+name: "Bug Report"
+description: Report a ug found while using the Aurora Backoffice.
 title: "[Bug]: "
 labels: ["Type: Bug", "Status: Triage"]
 body:
