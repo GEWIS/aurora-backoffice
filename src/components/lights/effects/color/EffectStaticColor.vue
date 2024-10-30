@@ -4,31 +4,29 @@
     effect-name="StaticColor"
     @save="handleAddEffect"
   >
-    <div class="flex flex-col gap-5">
-      <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
-      <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
-      <Select
-        v-model="goboRotate"
-        :options="goboRotates"
-        placeholder="Select a gobo rotate effect"
-        show-clear
-      />
-      <SelectorBoolean
-        id="beat-toggle"
-        :checked="beatToggle"
-        name="Beat Toggle"
-        @click="beatToggle = !beatToggle"
-      />
-      <SelectorRatioSlider
-        id="relative-brightness"
-        :max="1"
-        :min="0"
-        name=""
-        :step="0.05"
-        :value="relativeBrightness"
-        @update="(newVal) => (relativeBrightness = newVal)"
-      />
-    </div>
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
+    <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
+    <Select
+      v-model="goboRotate"
+      :options="goboRotates"
+      placeholder="Select a gobo rotate effect"
+      show-clear
+    />
+    <SelectorBoolean
+      id="beat-toggle"
+      :checked="beatToggle"
+      name="Beat Toggle"
+      @click="beatToggle = !beatToggle"
+    />
+    <SelectorRatioSlider
+      id="relative-brightness"
+      :max="1"
+      :min="0"
+      name=""
+      :step="0.05"
+      :value="relativeBrightness"
+      @update="(newVal) => (relativeBrightness = newVal)"
+    />
   </EffectSettingsDialog>
 </template>
 

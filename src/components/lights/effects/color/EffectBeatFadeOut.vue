@@ -30,21 +30,19 @@ const handleAddEffect = () => {
     effect-name="BeatFadeOut"
     @save="handleAddEffect"
   >
-    <div class="flex flex-col gap-5">
-      <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
-      <SelectorBoolean
-        id="enableFade"
-        :checked="enableFade"
-        name="Enable fade"
-        @click="() => (enableFade = !enableFade)"
-      />
-      <SelectorBoolean
-        id="addBlacks"
-        :checked="addBlacks"
-        name="Add blacks"
-        @click="() => (addBlacks = !addBlacks)"
-      />
-    </div>
+    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorBoolean
+      id="enableFade"
+      :checked="enableFade"
+      name="Enable fade"
+      @click="() => (enableFade = !enableFade)"
+    />
+    <SelectorBoolean
+      id="addBlacks"
+      :checked="addBlacks"
+      name="Add blacks"
+      @click="() => (addBlacks = !addBlacks)"
+    />
   </EffectSettingsDialog>
 </template>
 

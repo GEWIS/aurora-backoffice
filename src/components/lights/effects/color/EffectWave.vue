@@ -1,26 +1,24 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length === 1" effect-name="Wave" @save="handleAddEffect">
-    <div class="flex flex-col gap-5">
-      <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
-      <SelectorRatioSlider
-        id="waveSize"
-        :max="1"
-        :min="0"
-        name="Wave size (ratio)"
-        :step="0.05"
-        :value="nrWaves"
-        @update="(newVal: number) => (nrWaves = newVal)"
-      />
-      <SelectorRatioSlider
-        id="waveCycleTime"
-        :max="5000"
-        :min="0"
-        name="Cycle time (in ms)"
-        :step="100"
-        :value="cycleTime"
-        @update="(newVal: number) => (cycleTime = newVal)"
-      />
-    </div>
+    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
+    <SelectorRatioSlider
+      id="waveSize"
+      :max="1"
+      :min="0"
+      name="Wave size (ratio)"
+      :step="0.05"
+      :value="nrWaves"
+      @update="(newVal: number) => (nrWaves = newVal)"
+    />
+    <SelectorRatioSlider
+      id="waveCycleTime"
+      :max="5000"
+      :min="0"
+      name="Cycle time (in ms)"
+      :step="100"
+      :value="cycleTime"
+      @update="(newVal: number) => (cycleTime = newVal)"
+    />
   </EffectSettingsDialog>
 </template>
 

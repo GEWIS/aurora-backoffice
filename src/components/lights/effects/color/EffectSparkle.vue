@@ -1,35 +1,33 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length > 0" effect-name="Sparkle" @save="handleAddEffect">
-    <div class="flex flex-col gap-5">
-      <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
-      <SelectorRatioSlider
-        id="sparkle-ratio"
-        :max="1"
-        :min="0"
-        name="Turn-on ratio (every cycle)"
-        :step="0.05"
-        :value="ratio"
-        @update="(newVal: number) => (ratio = newVal)"
-      />
-      <SelectorRatioSlider
-        id="sparkle-dimDuration"
-        :max="2000"
-        :min="0"
-        name="Turn-off time (in ms)"
-        :step="25"
-        :value="dimDuration"
-        @update="(newVal: number) => (dimDuration = newVal)"
-      />
-      <SelectorRatioSlider
-        id="sparkle-cycleTime"
-        :max="2000"
-        :min="0"
-        name="Cycle time (in ms)"
-        :step="25"
-        :value="cycleTime"
-        @update="(newVal: number) => (cycleTime = newVal)"
-      />
-    </div>
+    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorRatioSlider
+      id="sparkle-ratio"
+      :max="1"
+      :min="0"
+      name="Turn-on ratio (every cycle)"
+      :step="0.05"
+      :value="ratio"
+      @update="(newVal: number) => (ratio = newVal)"
+    />
+    <SelectorRatioSlider
+      id="sparkle-dimDuration"
+      :max="2000"
+      :min="0"
+      name="Turn-off time (in ms)"
+      :step="25"
+      :value="dimDuration"
+      @update="(newVal: number) => (dimDuration = newVal)"
+    />
+    <SelectorRatioSlider
+      id="sparkle-cycleTime"
+      :max="2000"
+      :min="0"
+      name="Cycle time (in ms)"
+      :step="25"
+      :value="cycleTime"
+      @update="(newVal: number) => (cycleTime = newVal)"
+    />
   </EffectSettingsDialog>
 </template>
 

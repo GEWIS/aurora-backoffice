@@ -32,7 +32,7 @@ const visible = ref<boolean>(false);
     modal
     :style="{ width: '50rem' }"
   >
-    <div class="flex flex-column w-100 gap-3">
+    <div class="flex flex-col w-100 gap-5">
       <slot />
     </div>
     <template #footer>
