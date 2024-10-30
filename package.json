@@ -13,7 +13,7 @@
     "lint-fix": "eslint src --fix",
     "format": "prettier --ignore-path .gitignore --check ./src/",
     "format-fix": "prettier --ignore-path .gitignore --write ./src/",
-    "gen-client": "openapi --input ../aurora-core/build/swagger.json --output src/api/",
+    "gen-client": "openapi-ts -o src/api/",
     "prepare": "husky"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^14.1.1",
     "@vue/tsconfig": "^0.5.1",
+    "@hey-api/openapi-ts": "^0.53.11",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
@@ -54,7 +55,6 @@
     "lint-staged": "^15.2.10",
     "lodash": "^4.17.21",
     "npm-run-all": "^4.1.5",
-    "openapi-typescript-codegen": "0.29.0",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "sass": "^1.80.2",
