@@ -29,7 +29,6 @@
 import { useRoute } from 'vue-router';
 import { useLayoutStore } from '@/stores/layout.store';
 
-// TODO move interfaces to separate files
 // eslint-disable-next-line import/exports-last
 export interface MenuItem {
   label: string;

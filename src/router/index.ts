@@ -66,7 +66,6 @@ const router = createRouter({
               path: 'centurion',
               component: () => import('@/views/Modes/CenturionModeView.vue'),
               name: 'centurionMode',
-              // TODO; change centurion to base?
               meta: {
                 securityGroup: 'centurion',
                 securitySection: 'privileged'
