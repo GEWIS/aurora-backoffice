@@ -118,7 +118,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { noop } from 'lodash';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import {
@@ -163,13 +162,13 @@ const getGroupFixtures = (g: LightsGroupResponse) =>
 const handleFreeze = async (type: FixtureType, id: number) => {
   switch (type) {
     case FixtureType.PAR:
-      await freezeGroupPar({ path: { id } }).catch(noop);
+      await freezeGroupPar({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_RGB:
-      await freezeGroupMovingHeadRgb({ path: { id } }).catch(noop);
+      await freezeGroupMovingHeadRgb({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_WHEEL:
-      await freezeGroupMovingHeadWheel({ path: { id } }).catch(noop);
+      await freezeGroupMovingHeadWheel({ path: { id } });
       break;
   }
   toastSuccess({
@@ -181,13 +180,13 @@ const handleFreeze = async (type: FixtureType, id: number) => {
 const handleUnfreeze = async (type: FixtureType, id: number) => {
   switch (type) {
     case FixtureType.PAR:
-      await unfreezeGroupPar({ path: { id } }).catch(noop);
+      await unfreezeGroupPar({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_RGB:
-      await unfreezeMovingHeadRgb({ path: { id } }).catch(noop);
+      await unfreezeMovingHeadRgb({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_WHEEL:
-      await unfreezeMovingHeadWheel({ path: { id } }).catch(noop);
+      await unfreezeMovingHeadWheel({ path: { id } });
       break;
   }
   toastSuccess({
@@ -199,13 +198,13 @@ const handleUnfreeze = async (type: FixtureType, id: number) => {
 const handleHardwareReset = async (type: FixtureType, id: number) => {
   switch (type) {
     case FixtureType.PAR:
-      await resetGroupPar({ path: { id } }).catch(noop);
+      await resetGroupPar({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_RGB:
-      await resetGroupMovingHeadRgb({ path: { id } }).catch(noop);
+      await resetGroupMovingHeadRgb({ path: { id } });
       break;
     case FixtureType.MOVING_HEAD_WHEEL:
-      await resetGroupMovingHeadWheel({ path: { id } }).catch(noop);
+      await resetGroupMovingHeadWheel({ path: { id } });
       break;
   }
   toastSuccess({

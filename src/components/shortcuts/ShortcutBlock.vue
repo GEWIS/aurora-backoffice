@@ -38,7 +38,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { noop } from 'lodash';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
@@ -159,14 +158,12 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
             label: 'Disable',
             icon: 'pi-power-off',
             command: () => {
-              disableAllModes()
-                .then(async () => {
-                  await Promise.all([
-                    centurionModeStore.getCurrentCenturion(),
-                    timeTrailRaceModeStore.getTimeTrailMode()
-                  ]);
-                })
-                .catch(noop);
+              disableAllModes().then(async () => {
+                await Promise.all([
+                  centurionModeStore.getCurrentCenturion(),
+                  timeTrailRaceModeStore.getTimeTrailMode()
+                ]);
+              });
             }
           },
         showCenturion && {

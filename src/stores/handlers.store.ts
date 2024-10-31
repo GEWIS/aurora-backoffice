@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { noop } from 'lodash';
 import { useSocketStore } from '@/stores/socket.store';
 import {
   type AudioResponse,
@@ -132,18 +131,19 @@ export const useHandlersStore = defineStore('handlers', {
       this.settingAudio = true;
       if (Array.isArray(id)) {
         await Promise.all(
-          id.map((i) =>
-            setAudioHandler({
-              body: { name: newHandler != null ? newHandler : '' },
-              path: { id: i }
-            }).catch(noop)
+          id.map(
+            async (i) =>
+              await setAudioHandler({
+                body: { name: newHandler != null ? newHandler : '' },
+                path: { id: i }
+              })
           )
         );
       } else {
         await setAudioHandler({
           body: { name: newHandler != null ? newHandler : '' },
           path: { id }
-        }).catch(noop);
+        });
       }
       this.settingAudio = false;
 
@@ -164,12 +164,12 @@ export const useHandlersStore = defineStore('handlers', {
               path: { id: i }
             })
           )
-        ).catch(noop);
+        );
       } else {
         await setLightsHandler({
           body: { name: newHandler != null ? newHandler : '' },
           path: { id }
-        }).catch(noop);
+        });
       }
       this.settingLights = false;
 
@@ -190,12 +190,12 @@ export const useHandlersStore = defineStore('handlers', {
               path: { id: i }
             })
           )
-        ).catch(noop);
+        );
       } else {
         await setScreenHandler({
           body: { name: newHandler != null ? newHandler : '' },
           path: { id }
-        }).catch(noop);
+        });
       }
 
       this.settingScreens = false;
@@ -236,7 +236,7 @@ export const useHandlersStore = defineStore('handlers', {
      */
     async reset() {
       this.gettingAudio = this.gettingScreens = this.gettingLights = true;
-      await resetAllHandlersToDefaults().catch(noop);
+      await resetAllHandlersToDefaults();
       await this.getAudioHandlers();
       await this.getLightsHandlers();
       await this.getScreenHandlers();

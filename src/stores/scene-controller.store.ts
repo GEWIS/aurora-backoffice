@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { noop } from 'lodash';
 import {
   type CreateSceneParams,
   type LightsSceneResponse,
@@ -25,20 +24,16 @@ export const useSceneControllerStore = defineStore('scene-controller', {
   getters: {},
   actions: {
     async init() {
-      await getAllScenes({
+      const scenes = await getAllScenes({
         query: { favorite: true }
-      })
-        .then((scenes) => (this.favoriteScenes = scenes.data!))
-        .catch(noop);
+      });
+      this.favoriteScenes = scenes.data!;
       this.loading = false;
     },
     async fetchScenes() {
-      await getAllScenes()
-        .then((scenes) => {
-          this.scenes = scenes.data!;
-          this.favoriteScenes = scenes.data!.filter((s) => s.favorite);
-        })
-        .catch(noop);
+      const scenes = await getAllScenes();
+      this.scenes = scenes.data!;
+      this.favoriteScenes = scenes.data!.filter((s) => s.favorite);
     },
     async initPage() {
       this.loading = true;
@@ -49,7 +44,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await createScene({
         body: body
-      }).catch(noop);
+      });
       await this.fetchScenes();
       this.loading = false;
     },
@@ -57,7 +52,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await deleteScene({
         path: { id }
-      }).catch(noop);
+      });
       await this.fetchScenes();
       this.loading = false;
     },
@@ -65,12 +60,12 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await applyScene({
         path: { id }
-      }).catch(noop);
+      });
       this.loading = false;
     },
     async clearScene() {
       this.loading = true;
-      await clearScene().catch(noop);
+      await clearScene();
       this.loading = false;
     }
   }

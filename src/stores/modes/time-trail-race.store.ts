@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { noop } from 'lodash';
 import {
   disableTimeTrailRacing,
   enableTimeTrailRace,
@@ -99,12 +98,10 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
           audioIds: audioIds,
           sessionName: sessionName
         }
-      })
-        .then(() => {
-          this.sessionName = sessionName;
-          this.state = TimeTrailRaceState.INITIALIZED;
-        })
-        .catch(noop);
+      }).then(() => {
+        this.sessionName = sessionName;
+        this.state = TimeTrailRaceState.INITIALIZED;
+      });
 
       this.loading = false;
     },
