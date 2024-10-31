@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import ColorBox from '@/components/ColorBox.vue';
+import ColorBox from '@/components/lights/effects/ColorBox.vue';
 import { useColorStore } from '@/stores/color.store';
 import {
   type LightsEffectsColorCreateParams,
@@ -37,9 +37,9 @@ defineEmits<{
 
 let colors: Array<RgbColor>;
 if ('colors' in props.effect.props) {
-  colors = props.effect.props.colors;
+  colors = props.effect.props.colors as unknown as RgbColor[];
 } else if ('color' in props.effect.props) {
-  colors = [props.effect.props.color];
+  colors = [props.effect.props.color] as unknown as RgbColor[];
 } else {
   colors = [];
 }

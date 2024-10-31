@@ -1,24 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DashboardLayout from '@/layout/DashboardLayout.vue';
-import AuthView from '@/views/AuthView.vue';
-import DashboardView from '@/views/DashboardView.vue';
-import RoomresponsibleView from '@/views/Infoscreen/RoomresponsibleView.vue';
-import SettingsView from '@/views/Infoscreen/SettingsView.vue';
-import PageNotFoundView from '@/views/PageNotFoundView.vue';
 import { useAuthStore } from '@/stores/auth.store';
-import UnauthorizedView from '@/views/UnauthorizedView.vue';
-import EffectsController from '@/views/Lights/EffectsController.vue';
-import CenturionModeView from '@/views/Modes/CenturionModeView.vue';
-import PosterList from '@/views/Poster/PosterList.vue';
-import TimeTrailRaceModeView from '@/views/Modes/TimeTrailRaceModeView.vue';
-import ScenesController from '@/views/Lights/ScenesController.vue';
-import AuditLogsView from '@/views/AuditLogsView.vue';
-import FixtureOverview from '@/views/Lights/FixtureOverview.vue';
+import AppLayout from '@/layout/AppLayout.vue';
+import { useLayoutStore } from '@/stores/layout.store';
+import { type ISecurityGroups, type ISecuritySections, SecurityGroup } from '@/api';
 
 declare module 'vue-router' {
   interface RouteMeta {
-    // must be declared by every route
-    requiresAuth?: boolean;
+    securityGroup: keyof ISecurityGroups;
+    securitySection: keyof ISecuritySections;
   }
 }
 
@@ -31,69 +20,65 @@ const router = createRouter({
         {
           path: '/auth',
           name: 'auth',
-          component: AuthView,
+          component: () => import('@/views/Base/AuthView.vue'),
           children: [
             {
               path: 'callback',
-              component: AuthView,
+              component: () => import('@/views/Base/AuthView.vue'),
               name: 'authCallback'
             }
           ]
         },
         {
           path: '/unauthorized',
-          component: UnauthorizedView,
+          component: () => import('@/views/Base/UnauthorizedView.vue'),
           name: 'unauthorized'
         }
       ]
     },
     {
       path: '',
-      component: DashboardLayout,
-      meta: { requiresAuth: true },
+      component: AppLayout,
       children: [
         {
           path: '',
-          component: DashboardView,
+          component: () => import('@/views/Base/DashboardView.vue'),
           name: 'dashboard'
-        },
-        {
-          path: '/infoscreen',
-          children: [
-            {
-              path: 'settings',
-              component: SettingsView,
-              name: 'infoscreenSettings'
-            },
-            {
-              path: 'roomresponsibles',
-              component: RoomresponsibleView,
-              name: 'infoscreenRoomresposibles'
-            }
-          ]
         },
         {
           path: '/poster',
           children: [
             {
               path: 'list',
-              component: PosterList,
+              component: () => import('@/views/Poster/PosterList.vue'),
               name: 'posterList'
             }
-          ]
+          ],
+          meta: {
+            securityGroup: 'poster',
+            securitySection: 'base'
+          }
         },
         {
           path: '/modes',
           children: [
             {
               path: 'centurion',
-              component: CenturionModeView,
-              name: 'centurionMode'
+              component: () => import('@/views/Modes/CenturionModeView.vue'),
+              name: 'centurionMode',
+              meta: {
+                securityGroup: 'centurion',
+                securitySection: 'privileged'
+              }
             },
             {
               path: 'timeTrailRace',
-              component: TimeTrailRaceModeView,
-              name: 'timeTrailRaceMode'
+              component: () => import('@/views/Modes/TimeTrailRaceModeView.vue'),
+              name: 'timeTrailRaceMode',
+              meta: {
+                securityGroup: 'timetrail',
+                securitySection: 'base'
+              }
             }
           ]
         },
@@ -101,57 +86,84 @@ const router = createRouter({
           path: '/lights',
           children: [
             {
-              path: 'effectsController',
-              component: EffectsController,
-              name: 'lightsEffectsController'
+              path: 'effects',
+              component: () => import('@/views/Lights/EffectsController.vue'),
+              name: 'lightEffects',
+              meta: {
+                securityGroup: 'effects',
+                securitySection: 'base'
+              }
             },
             {
               path: 'scenesController',
-              component: ScenesController,
-              name: 'lightsScenesController'
+              component: () => import('@/views/Lights/ScenesController.vue'),
+              name: 'lightsScenesController',
+              meta: {
+                securityGroup: 'scenes',
+                securitySection: 'base'
+              }
             },
             {
               path: 'fixtures',
-              component: FixtureOverview,
-              name: 'fixturesOverview'
+              component: () => import('@/views/Lights/FixtureOverview.vue'),
+              name: 'fixturesOverview',
+              meta: {
+                securityGroup: 'handler',
+                securitySection: 'base'
+              }
             }
           ]
         },
         {
           path: '/audit',
-          component: AuditLogsView,
-          name: 'AuditLogs'
+          component: () => import('@/views/Audit/AuditLogsView.vue'),
+          name: 'AuditLogs',
+          meta: {
+            securityGroup: 'audit',
+            securitySection: 'base'
+          }
         }
       ]
     },
     {
       path: '/:pathMatch(.*)*',
-      meta: { requiresAuth: true },
-      component: PageNotFoundView,
+      component: () => import('@/views/Base/NotFoundView.vue'),
       name: 'notFound'
     }
   ]
 });
 
 router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore();
-  // Automatically login using mock when in development mode
-  if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
-    await authStore.MockLogin();
-  }
-  const authenticated = authStore.isAuthenticated();
-  const hasRights = authStore.roles && authStore.roles.length > 0;
+  // TODO; move some of this check away from router
+  const layoutStore = useLayoutStore();
+  layoutStore.init();
 
-  if (to.meta?.requiresAuth && !authenticated) {
-    // If requires auth and not authenticated, redirect to login
+  const authStore = useAuthStore();
+  // Automatically login using mock when in devops mode
+  if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
+    await authStore.MockLogin({
+      id: 'dev',
+      name: 'dev',
+      roles: [SecurityGroup.ADMIN]
+    });
+    await authStore.initStores();
+  }
+
+  // Getting whether authenticated and has rights to access the route
+  const authenticated = authStore.isAuthenticated();
+  let hasRights = true;
+  if (to.meta.securityGroup && to.meta.securitySection) {
+    hasRights = authStore.isInSecurityGroup(to.meta.securityGroup, to.meta.securitySection);
+  }
+
+  if (!authenticated) {
+    // If not authenticated; redirect to login
     next({ name: 'auth', query: { path: to.fullPath } });
-  } else if (to.meta?.requiresAuth && authenticated && !hasRights) {
-    // If requires auth and is authenticated, but no rights
+  } else if (authenticated && !hasRights) {
+    // If authenticated, but does not have rights to access the route
     next({ name: 'unauthorized' });
-  } else if (!to.meta?.requiresAuth && authenticated && hasRights) {
-    // If the route doesn't require authentication and the user is authenticated, redirect to home
-    next({ name: 'dashboard' });
   } else {
+    // Default case
     next();
   }
 });

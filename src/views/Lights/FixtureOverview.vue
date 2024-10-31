@@ -1,16 +1,15 @@
 <template>
-  <div class="page-container">
-    <div class="page-title">Fixture Overview</div>
+  <AppContainer icon="pi pi-fw pi-bolt" title="Fixture Overview">
     <div>
       <DataTable
-        :value="subscriberStore.lightsGroups"
-        data-key="id"
         v-model:expanded-rows="expandedRows"
+        data-key="id"
+        :value="subscriberStore.lightsGroups"
       >
         <template #header>
-          <div class="flex flex-wrap justify-content-end gap-2">
-            <Button text icon="pi pi-plus" label="Expand All" @click="expandAll" />
-            <Button text icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
+          <div class="flex flex-wrap justify-end gap-5">
+            <Button icon="pi pi-plus" label="Expand All" text @click="expandAll" />
+            <Button icon="pi pi-minus" label="Collapse All" text @click="collapseAll" />
           </div>
         </template>
         <Column expander style="width: 5rem" />
@@ -34,12 +33,12 @@
           <template #body="slotProps">
             <div class="flex flex-row gap-1">
               <Button
+                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 size="small"
                 title="Freeze"
-                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
-                    await LightsService.freezeLightsGroup(slotProps.data.id);
+                    await freezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
                       body: `Successfully froze lights group '${slotProps.data.name}'`
@@ -47,15 +46,15 @@
                   }
                 "
               >
-                <FontAwesomeIcon :icon="faSnowflake" />
+                <i class="pi pi-pause" />
               </Button>
               <Button
+                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 size="small"
                 title="Unfreeze"
-                :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                 @click="
                   async () => {
-                    await LightsService.unfreezeLightsGroup(slotProps.data.id);
+                    await unfreezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
                       body: `Successfully unfroze lights group '${slotProps.data.name}'`
@@ -63,7 +62,7 @@
                   }
                 "
               >
-                <FontAwesomeIcon :icon="faFire" />
+                <i class="pi pi-play" />
               </Button>
             </div>
           </template>
@@ -81,31 +80,31 @@
               <template #body="slotProps2">
                 <div class="flex flex-row gap-1">
                   <Button
+                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     size="small"
                     title="Freeze"
-                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleFreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faSnowflake" />
+                    <i class="pi pi-pause" />
                   </Button>
                   <Button
+                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     size="small"
                     title="Unfreeze"
-                    :disabled="!activeLightsGroupIds.has(slotProps.data.id)"
                     @click="handleUnfreeze(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faFire" />
+                    <i class="pi pi-play" />
                   </Button>
                   <Button
-                    size="small"
-                    title="Hardware reset"
                     :disabled="
                       !activeLightsGroupIds.has(slotProps.data.id) ||
                       !slotProps2.data.fixture.canReset
                     "
+                    size="small"
+                    title="Hardware reset"
                     @click="handleHardwareReset(slotProps2.data.type, slotProps2.data.id)"
                   >
-                    <FontAwesomeIcon :icon="faArrowRotateLeft" />
+                    <i class="pi pi-sync" />
                   </Button>
                 </div>
               </template>
@@ -114,18 +113,30 @@
         </template>
       </DataTable>
     </div>
-  </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
-import { computed, ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faArrowRotateLeft, faFire, faSnowflake } from '@fortawesome/free-solid-svg-icons';
-import { type LightsGroupResponse, LightsService } from '@/api';
+import {
+  freezeGroupMovingHeadRgb,
+  freezeGroupMovingHeadWheel,
+  freezeGroupPar,
+  freezeLightsGroup,
+  type LightsGroupResponse,
+  resetGroupMovingHeadRgb,
+  resetGroupMovingHeadWheel,
+  resetGroupPar,
+  unfreezeGroupPar,
+  unfreezeLightsGroup,
+  unfreezeMovingHeadRgb,
+  unfreezeMovingHeadWheel
+} from '@/api';
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
-import { toastError, toastSuccess } from '@/utils/toastHandler';
+import { toastSuccess } from '@/utils/toastHandler';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
@@ -133,7 +144,7 @@ const subscriberStore = useSubscriberStore();
 const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
   expandedRows.value = subscriberStore.lightsGroups.reduce(
-    (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] = true) && rows,
+    (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] ? rows : {}),
     {}
   );
 };
@@ -149,69 +160,57 @@ const getGroupFixtures = (g: LightsGroupResponse) =>
   ].sort((a, b) => a.firstChannel - b.firstChannel);
 
 const handleFreeze = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await LightsService.freezeGroupPar(id);
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.freezeGroupMovingHeadRgb(id);
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.freezeGroupMovingHeadWheel(id);
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully froze fixture'
-    });
-  } catch (e: any) {
-    toastError(e.message);
+  switch (type) {
+    case FixtureType.PAR:
+      await freezeGroupPar({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await freezeGroupMovingHeadRgb({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await freezeGroupMovingHeadWheel({ path: { id } });
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully froze fixture'
+  });
 };
 
 const handleUnfreeze = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await LightsService.unfreezeGroupPar(id);
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.unfreezeMovingHeadRgb(id);
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.unfreezeMovingHeadWheel(id);
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully unfroze fixture'
-    });
-  } catch (e: any) {
-    toastError(e.message);
+  switch (type) {
+    case FixtureType.PAR:
+      await unfreezeGroupPar({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await unfreezeMovingHeadRgb({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await unfreezeMovingHeadWheel({ path: { id } });
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully unfroze fixture'
+  });
 };
 
 const handleHardwareReset = async (type: FixtureType, id: number) => {
-  try {
-    switch (type) {
-      case FixtureType.PAR:
-        await LightsService.resetGroupPar(id);
-        break;
-      case FixtureType.MOVING_HEAD_RGB:
-        await LightsService.resetGroupMovingHeadRgb(id);
-        break;
-      case FixtureType.MOVING_HEAD_WHEEL:
-        await LightsService.resetGroupMovingHeadWheel(id);
-        break;
-    }
-    toastSuccess({
-      title: 'Success',
-      body: 'Successfully sent hardware reset signal'
-    });
-  } catch (e: any) {
-    toastError(e.message);
+  switch (type) {
+    case FixtureType.PAR:
+      await resetGroupPar({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_RGB:
+      await resetGroupMovingHeadRgb({ path: { id } });
+      break;
+    case FixtureType.MOVING_HEAD_WHEEL:
+      await resetGroupMovingHeadWheel({ path: { id } });
+      break;
   }
+  toastSuccess({
+    title: 'Success',
+    body: 'Successfully sent hardware reset signal'
+  });
 };
 
 const getHandler = (groupId: number): string | undefined => {

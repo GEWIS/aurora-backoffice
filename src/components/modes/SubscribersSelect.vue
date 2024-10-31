@@ -1,49 +1,55 @@
 <template>
-  <div class="flex flex-column gap-2">
+  <div class="flex flex-col gap-2 w-full max-w-full">
     <MultiSelect
+      class="w-full sm:max-w-80 mx-auto"
+      filter
+      :max-selected-labels="2"
       :model-value="selectedAudios"
-      :options="store.audios"
       option-label="name"
       option-value="id"
-      placeholder="Select audio players..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:audios', value)"
+      :options="store.audios"
+      placeholder="Select audio"
       :title="
         store.audios
           .filter((a) => selectedAudios.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:audios', value)"
     />
     <MultiSelect
+      class="w-full sm:max-w-80 mx-auto"
+      filter
+      :max-selected-labels="2"
       :model-value="selectedScreens"
-      :options="store.screens"
       option-label="name"
       option-value="id"
-      placeholder="Select screens..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:screens', value)"
+      :options="store.screens"
+      placeholder="Select screens"
       :title="
         store.screens
           .filter((a) => selectedScreens.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:screens', value)"
     />
     <MultiSelect
+      class="w-full sm:max-w-80 mx-auto"
+      filter
+      :max-selected-labels="2"
       :model-value="selectedLightGroups"
-      :options="store.lightsGroups"
       option-label="name"
       option-value="id"
-      placeholder="Select lights groups..."
-      class="w-full"
-      @update:modelValue="(value) => $emit('update:light-groups', value)"
+      :options="store.lightsGroups"
+      placeholder="Select lights..."
       :title="
         store.lightsGroups
           .filter((a) => selectedLightGroups.includes(a.id))
           .map((a) => a.name)
           .join(', ')
       "
+      @update:model-value="(value: number[]) => $emit('update:light-groups', value)"
     />
   </div>
 </template>

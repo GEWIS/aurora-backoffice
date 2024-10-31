@@ -1,16 +1,12 @@
 /* eslint vue/multi-word-component-names: 0 */
 /* eslint vue/no-reserved-component-names: 0 */
-import 'primeflex/primeflex.scss';
-import './styles/themes/theme.scss';
-// import './styles/themes/lara-light/theme.scss';
 import 'primeicons/primeicons.css';
+import '@/assets/styles.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-// @ts-ignore package does exist
+// @ts-expect-error -- package does exist
 import timeago from 'vue-timeago3';
-import App from './App.vue';
-import router from './router';
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
@@ -19,13 +15,13 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import InputNumber from 'primevue/inputnumber';
 import Dialog from 'primevue/dialog';
-import Dropdown from 'primevue/dropdown';
+import Select from 'primevue/select';
 import Checkbox from 'primevue/checkbox';
-import TabView from 'primevue/tabview';
+import Tabs from 'primevue/tabs';
 import ScrollPanel from 'primevue/scrollpanel';
 import FileUpload from 'primevue/fileupload';
 import ProgressSpinner from 'primevue/progressspinner';
-import { useAuthStore } from '@/stores/auth.store';
+import ProgressBar from 'primevue/progressbar';
 import SelectButton from 'primevue/selectbutton';
 import ToggleButton from 'primevue/togglebutton';
 import Card from 'primevue/card';
@@ -33,7 +29,6 @@ import Chip from 'primevue/chip';
 import Slider from 'primevue/slider';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
-import SetupInterceptors from '@/utils/fetchInterceptor';
 import Toast from 'primevue/toast';
 import Menu from 'primevue/menu';
 import MultiSelect from 'primevue/multiselect';
@@ -43,13 +38,19 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import Image from 'primevue/image';
 import Carousel from 'primevue/carousel';
 import Stepper from 'primevue/stepper';
-import StepperPanel from 'primevue/stepperpanel';
-import InputSwitch from 'primevue/inputswitch';
+import StepPanel from 'primevue/steppanel';
+import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
-import InlineMessage from 'primevue/inlinemessage';
+import Message from 'primevue/message';
+import router from './router';
+import App from './App.vue';
+import '@/utils/fetchInterceptor';
+import { useAuthStore } from '@/stores/auth.store';
+import { AuraPreset } from '@/assets/preset';
+import { client } from '@/api/services.gen';
 
-export const app = createApp(App);
+const app = createApp(App);
 
 // define options
 const timeagoOptions = {
@@ -59,10 +60,20 @@ const timeagoOptions = {
 };
 
 app.use(router);
-app.use(PrimeVue);
+app.use(PrimeVue, {
+  theme: {
+    preset: AuraPreset,
+    options: {
+      darkModeSelector: '.dark-mode'
+    }
+  }
+});
 app.use(ToastService);
 app.use(ConfirmationService);
-SetupInterceptors();
+
+client.setConfig({
+  baseUrl: '/api'
+});
 
 app.use(createPinia());
 await useAuthStore().init();
@@ -83,12 +94,13 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('Paginator', Paginator);
 app.component('Dialog', Dialog);
-app.component('Dropdown', Dropdown);
+app.component('Select', Select);
 app.component('Checkbox', Checkbox);
-app.component('TabView', TabView);
+app.component('Tabs', Tabs);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
+app.component('ProgressBar', ProgressBar);
 app.component('Slider', Slider);
 app.component('Toast', Toast);
 app.component('MultiSelect', MultiSelect);
@@ -98,8 +110,10 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Image', Image);
 app.component('Carousel', Carousel);
 app.component('Stepper', Stepper);
-app.component('StepperPanel', StepperPanel);
-app.component('InputSwitch', InputSwitch);
-app.component('InlineMessage', InlineMessage);
+app.component('InlineMessage', Message);
+app.component('StepperPanel', StepPanel);
+app.component('ToggleSwitch', ToggleSwitch);
 
 app.mount('#app');
+
+export { app };

@@ -1,102 +1,115 @@
 <template>
-  <Panel :header="`Play - ${store.sessionName}`">
-    <template #header>
-      <div class="flex flex-row align-items-center w-full">
-        <div class="p-panel-title flex-1">{{ `Play - ${store.sessionName}` }}</div>
-        <div>
-          <TimeTrailRaceQuitButton />
-        </div>
-      </div>
+  <StepperWrapper :current-step="currentStep" :steps="timeTrailSteps">
+    <template #1>
+      <TimeTrailRaceRegisterPlayer ref="registerPlayer" @can-register="canRegister = $event" />
     </template>
-    <template #default v-if="store.sessionName != null && store.state != null">
-      <Button
-        class="w-full text-center mb-3"
-        outlined
-        :disabled="
-          store.state === TimeTrailRaceState.INITIALIZED ||
-          store.state === TimeTrailRaceState.SCOREBOARD
-        "
-        :loading="store.loading"
-        @click="store.resetPlayer()"
-      >
-        Reset player
-      </Button>
-      <Stepper orientation="vertical" :active-step="currentStep" linear>
-        <StepperPanel header="Register player">
-          <template #content>
-            <div class="p-3 w-full">
-              <TimeTrailRaceRegisterPlayer />
-            </div>
-          </template>
-        </StepperPanel>
-        <StepperPanel header="Preparation">
-          <template #content>
-            <div class="p-3 w-full">
-              <TimeTrailRaceReady />
-            </div>
-          </template>
-        </StepperPanel>
-        <StepperPanel header="Announce">
-          <template #content>
-            <div class="p-3 w-full">
-              <TimeTrailRaceAnnounce />
-            </div>
-          </template>
-        </StepperPanel>
-        <StepperPanel header="Playing">
-          <template #content>
-            <div class="p-3 w-full">
-              <TimeTrailRacePlaying />
-            </div>
-          </template>
-        </StepperPanel>
-        <StepperPanel header="Final score">
-          <template #content>
-            <div class="p-3 w-full">
-              <TimeTrailRaceScore />
-            </div>
-          </template>
-        </StepperPanel>
-      </Stepper>
+    <template #2 />
+    <template #3 />
+    <template #4>
+      <TimeTrailRacePlaying />
     </template>
-    <template #default v-else>
-      <div>
-        <p class="font-italic">The Spoelbakkenrace has not been initialized.</p>
-      </div>
+    <template #5>
+      <TimeTrailRaceScore />
     </template>
-  </Panel>
+  </StepperWrapper>
+
+  <ConfirmWrapper
+    ref="confirmRef"
+    message="Are you sure you want to reset this trail race?"
+    :on-accept="timeTrailStore.resetPlayer"
+  />
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { useTimeTrailRaceStore } from '@/stores/modes/time-trail-race.store';
 import { TimeTrailRaceState } from '@/api';
-import { computed } from 'vue';
-import TimeTrailRaceRegisterPlayer from '@/components/modes/time-trail-race/state/TimeTrailRaceRegisterPlayer.vue';
-import TimeTrailRaceReady from '@/components/modes/time-trail-race/state/TimeTrailRacePreparation.vue';
-import TimeTrailRaceAnnounce from '@/components/modes/time-trail-race/state/TimeTrailRaceAnnounce.vue';
-import TimeTrailRacePlaying from '@/components/modes/time-trail-race/state/TimeTrailRacePlaying.vue';
-import TimeTrailRaceScore from '@/components/modes/time-trail-race/state/TimeTrailRaceScore.vue';
-import TimeTrailRaceQuitButton from '@/components/modes/time-trail-race/TimeTrailRaceQuitButton.vue';
+import TimeTrailRaceRegisterPlayer from '@/components/modes/time-trail-race/PlayerRegister.vue';
+import TimeTrailRacePlaying from '@/components/modes/time-trail-race/PlayerTimer.vue';
+import TimeTrailRaceScore from '@/components/modes/time-trail-race/PlayerScore.vue';
+import StepperWrapper, { type StepperStep } from '@/components/prime/StepperWrapper.vue';
+import ConfirmWrapper from '@/components/prime/ConfirmWrapper.vue';
 
-const store = useTimeTrailRaceStore();
+const registerPlayer = ref();
+const confirmRef = ref();
+const canRegister = ref<boolean>(false);
+
+const timeTrailStore = useTimeTrailRaceStore();
+// Make sure that on reload you are always in correct state
+if (!timeTrailStore.getCurrentPlayer) {
+  timeTrailStore.resetPlayer();
+}
+
+const timeTrailSteps = computed<StepperStep[]>(() => [
+  {
+    value: 'Register',
+    nextText: 'Register player',
+    nextIcon: null,
+    nextDisabled: timeTrailStore.loading || currentStep.value != '1' || !canRegister.value,
+    nextFunction: registerPlayer.value?.registerPlayer
+  },
+  {
+    value: 'Ready',
+    previousIcon: 'pi pi-history',
+    previousDisabled: timeTrailStore.loading,
+    previousFunction: confirmRef.value?.confirmDialog,
+    overridePreviousFunction: true,
+    nextText: 'Player ready',
+    nextIcon: null,
+    nextDisabled: timeTrailStore.loading || currentStep.value != '2',
+    nextFunction: timeTrailStore.ready
+  },
+  {
+    value: 'Start',
+    previousIcon: 'pi pi-history',
+    previousDisabled: timeTrailStore.loading,
+    previousFunction: confirmRef.value?.confirmDialog,
+    overridePreviousFunction: true,
+    nextText: 'Start!',
+    nextIcon: null,
+    nextDisabled: timeTrailStore.loading || currentStep.value != '3',
+    nextFunction: timeTrailStore.start
+  },
+  {
+    value: 'Finish',
+    previousIcon: 'pi pi-history',
+    previousDisabled: timeTrailStore.loading,
+    previousFunction: confirmRef.value?.confirmDialog,
+    overridePreviousFunction: true,
+    nextText: 'Finish!',
+    nextIcon: null,
+    nextDisabled: timeTrailStore.loading || currentStep.value != '4',
+    nextFunction: timeTrailStore.finish
+  },
+  {
+    value: 'Reveal',
+    previousIcon: 'pi pi-history',
+    previousDisabled: timeTrailStore.loading,
+    previousFunction: confirmRef.value?.confirmDialog,
+    overridePreviousFunction: true,
+    confirmText: 'Reveal score',
+    confirmIcon: null,
+    confirmDisabled: timeTrailStore.loading || currentStep.value != '5',
+    confirmFunction: timeTrailStore.revealScore
+  }
+]);
+
 const currentStep = computed(() => {
-  switch (store.state) {
+  switch (timeTrailStore.getState) {
     case undefined:
     case TimeTrailRaceState.INITIALIZED:
     case TimeTrailRaceState.SCOREBOARD:
-      return 0;
+      return '1';
     case TimeTrailRaceState.PLAYER_REGISTERED:
-      return 1;
+      return '2';
     case TimeTrailRaceState.PLAYER_READY:
-      return 2;
+      return '3';
     case TimeTrailRaceState.STARTED:
-      return 3;
+      return '4';
     case TimeTrailRaceState.FINISHED:
-      return 4;
+      return '5';
     default:
-      return 0;
+      return '1';
   }
 });
 </script>
-
-<style scoped></style>

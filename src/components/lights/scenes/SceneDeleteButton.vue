@@ -1,15 +1,13 @@
 <template>
   <ConfirmDialog />
-  <Button size="small" severity="danger" title="Delete scene" @click="openDialog()">
-    <FontAwesomeIcon :icon="faTrash" />
+  <Button severity="danger" size="small" title="Delete scene" @click="openDialog()">
+    <i class="pi pi-trash" />
   </Button>
 </template>
 
 <script setup lang="ts">
 import { useConfirm } from 'primevue/useconfirm';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const props = defineProps<{
   id: number;

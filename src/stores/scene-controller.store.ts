@@ -1,7 +1,13 @@
 import { defineStore } from 'pinia';
-import type { CreateSceneParams, LightsSceneResponse } from '@/api';
-import { ApiError, HandlersService } from '@/api';
-import { handleError } from '@/utils/errorHandler';
+import {
+  type CreateSceneParams,
+  type LightsSceneResponse,
+  getAllScenes,
+  createScene,
+  deleteScene,
+  applyScene,
+  clearScene
+} from '@/api';
 
 interface SceneControllerStore {
   scenes: LightsSceneResponse[];
@@ -18,19 +24,16 @@ export const useSceneControllerStore = defineStore('scene-controller', {
   getters: {},
   actions: {
     async init() {
-      await HandlersService.getAllScenes(true)
-        .then((r: LightsSceneResponse[]) => (this.favoriteScenes = r))
-        .catch(handleError);
+      const scenes = await getAllScenes({
+        query: { favorite: true }
+      });
+      this.favoriteScenes = scenes.data!;
       this.loading = false;
     },
     async fetchScenes() {
-      try {
-        const scenes = await HandlersService.getAllScenes();
-        this.scenes = scenes;
-        this.favoriteScenes = scenes.filter((s) => s.favorite);
-      } catch (e) {
-        handleError(e as ApiError);
-      }
+      const scenes = await getAllScenes();
+      this.scenes = scenes.data!;
+      this.favoriteScenes = scenes.data!.filter((s) => s.favorite);
     },
     async initPage() {
       this.loading = true;
@@ -39,24 +42,30 @@ export const useSceneControllerStore = defineStore('scene-controller', {
     },
     async createScene(body: CreateSceneParams) {
       this.loading = true;
-      await HandlersService.createScene(body).catch(handleError);
+      await createScene({
+        body: body
+      });
       await this.fetchScenes();
       this.loading = false;
     },
     async deleteScene(id: number) {
       this.loading = true;
-      await HandlersService.deleteScene(id).catch(handleError);
+      await deleteScene({
+        path: { id }
+      });
       await this.fetchScenes();
       this.loading = false;
     },
     async applyScene(id: number) {
       this.loading = true;
-      await HandlersService.applyScene(id).catch(handleError);
+      await applyScene({
+        path: { id }
+      });
       this.loading = false;
     },
     async clearScene() {
       this.loading = true;
-      await HandlersService.clearScene().catch(handleError);
+      await clearScene();
       this.loading = false;
     }
   }

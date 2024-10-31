@@ -14,7 +14,6 @@ export const useMusicBeatStore = defineStore('music-beat', {
   getters: {},
   actions: {
     handleBeat() {
-      console.log('beat');
       this.beat = !this.beat;
     },
     init() {

@@ -1,7 +1,9 @@
 <template>
   <Panel :header="lightGroups.map((g) => g?.name).join(', ')" @click="setEffect()">
-    <div class="flex flex-column gap-2 justify-content-start">
-      <div class="font-italic"><timeago :datetime="effect.timestamp" :auto-update="5" /></div>
+    <div class="flex flex-col gap-2 justify-start">
+      <div class="font-italic">
+        <timeago :auto-update="5" :datetime="effect.timestamp" />
+      </div>
       <div>
         <SavedEffect v-if="effect.colorEffect !== undefined" :effect="effect.colorEffect" />
         <SavedEffect v-if="effect.movementEffect !== undefined" :effect="effect.movementEffect" />
@@ -26,7 +28,6 @@ const lightGroups = props.effect.lightGroupIds.map((id: number) =>
 const effectsControllerStore = useEffectsControllerStore();
 
 const setEffect = () => {
-  console.log(props.effect);
   if (props.effect.colorEffect !== undefined) {
     effectsControllerStore.setColorEffect(props.effect.colorEffect, props.effect.lightGroupIds);
   }

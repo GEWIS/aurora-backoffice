@@ -1,8 +1,16 @@
-import { type AuditLogEntryResponse, AuditLogsService } from '@/api';
 import { defineStore } from 'pinia';
-import { handleError } from '@/utils/errorHandler';
+import { type AuditLogEntryResponse, getAuditLogs } from '@/api';
 import { useSocketStore } from '@/stores/socket.store';
 
+/**
+ * Audit store
+ * @param dashboardEntries - The log entries shown on the dashboard
+ * @param entries - The log entries
+ * @param take - The number of entries to show
+ * @param skip - The number of entries to skip
+ * @param count - The total number of pages needed to show all entries
+ * @param loading - The loading state
+ */
 interface AuditStore {
   dashboardEntries: AuditLogEntryResponse[];
   entries: AuditLogEntryResponse[];
@@ -16,46 +24,85 @@ export const useAuditStore = defineStore('audit', {
   state: (): AuditStore => ({
     dashboardEntries: [],
     entries: [],
-    take: 20,
+    take: 5,
     skip: 0,
     count: 0,
     loading: true
   }),
   getters: {},
   actions: {
+    /**
+     * Handle the audit log addition
+     * @param log
+     */
     async handleAuditLogAddition(log: AuditLogEntryResponse) {
-      this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, 15);
+      this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, this.take);
     },
+    /**
+     * Initialize the store
+     */
     async init() {
-      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, 15)
-        .then((r) => {
-          this.dashboardEntries = r.records;
-          this.count = r.pagination.count;
-        })
-        .catch(handleError);
-      this.loading = false;
+      const logs = await getAuditLogs({
+        query: {
+          take: this.take,
+          skip: this.skip
+        }
+      });
+      this.dashboardEntries = logs.data!.records;
+      this.count = logs.data!.pagination.count;
 
+      this.loading = false;
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('audit_log_create', this.handleAuditLogAddition);
     },
+    /**
+     * Get the audit logs
+     */
     async getLogs() {
       this.loading = true;
-      await AuditLogsService.getAuditLogs(undefined, undefined, undefined, this.take, this.skip)
-        .then((r) => {
-          this.entries = r.records;
-          this.count = r.pagination.count;
-        })
-        .catch(handleError);
+      const logs = await getAuditLogs({
+        query: {
+          take: this.take,
+          skip: this.skip
+        }
+      });
+      this.entries = logs.data!.records;
+      this.count = logs.data!.pagination.count;
       this.loading = false;
     },
+    /**
+     * Set the skip value
+     * @param skip
+     */
     async setSkip(skip: number) {
       this.skip = skip;
       await this.getLogs();
     },
+    /**
+     * Set the take value
+     * @param take
+     */
     async setTake(take: number) {
       this.take = take;
       await this.getLogs();
     },
+    /**
+     * Set the skip and take values at once
+     * @param skip
+     * @param take
+     */
+    async setSkipTake(skip?: number, take?: number) {
+      if (skip) {
+        this.skip = skip;
+      }
+      if (take) {
+        this.take = take;
+      }
+      await this.getLogs();
+    },
+    /**
+     * Destroy the store
+     */
     async destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener('audit_log_create', this.handleAuditLogAddition);

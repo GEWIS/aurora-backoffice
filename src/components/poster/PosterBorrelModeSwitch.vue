@@ -1,9 +1,9 @@
 <template>
   <div class="h-full flex flex-row align-items-center justify-content-center gap-1">
     Borrel mode
-    <InputSwitch
+    <ToggleSwitch
       :disabled="store.loading"
-      :modelValue="store.borrelModeActive"
+      :model-value="store.borrelModeActive"
       @change="store.setBorrelMode(!store.borrelModeActive)"
     />
   </div>

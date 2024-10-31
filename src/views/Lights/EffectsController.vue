@@ -1,109 +1,114 @@
 <template>
-  <div class="page-container">
-    <div class="page-title flex flex-row align-items-center justify-content-between">
-      <span>Effects controller</span>
+  <AppContainer icon="pi-sparkles" title="Effects controller">
+    <template #header>
       <BeatVisualizer />
-    </div>
-    <div class="grid">
-      <div class="col-12 md:col-4 lg:col-3">
-        <Card class="w-full">
-          <template #title>(1) Lights groups</template>
-          <template #content>
-            <div class="flex flex-column gap-2 w-100">
-              <div class="flex flex-row gap-2 w-100">
-                <Button
-                  class="flex-1 text-center"
-                  severity="secondary"
-                  @click="effectsControllerStore.resetLightsGroupSelection()"
-                  >Reset</Button
-                >
-                <Button
-                  class="flex-1 text-center"
-                  severity="secondary"
-                  @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
-                  >Select all</Button
-                >
-              </div>
+    </template>
+
+    <!-- Light groups -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <Card class="w-full">
+        <template #title> (1) Lights groups </template>
+        <template #content>
+          <div class="flex flex-col gap-5 w-100">
+            <div class="flex flex-row gap-5 w-100">
+              <Button
+                class="w-1/2 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.resetLightsGroupSelection()"
+              >
+                Reset
+              </Button>
+              <Button
+                class="w-1/2 text-center"
+                severity="secondary"
+                @click="effectsControllerStore.selectAllLightsGroups(activeLightGroups)"
+              >
+                Select all
+              </Button>
+            </div>
+            <div class="flex flex-col gap-5">
               <div v-for="group in activeLightGroups" :key="group.id">
                 <LightsGroupToggleButton
-                  :lights-group="group"
+                  class="w-full"
                   :enabled="effectsControllerStore.selectedLightsGroupIds.includes(group.id)"
+                  :lights-group="group"
                   @click="() => effectsControllerStore.toggleLightsGroup(group.id)"
                 />
               </div>
               <div v-for="group in inactiveLightGroups" :key="group.id">
-                <LightsGroupToggleButton :lights-group="group" disabled />
+                <LightsGroupToggleButton class="w-full" disabled :lights-group="group" />
               </div>
             </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12 md:col-8 lg:col-6 flex flex-column gap-3">
-        <Card>
-          <template #title> (2) Create effects </template>
-          <template #content>
-            <h4 class="mt-0 mb-1">Colors</h4>
-            <div class="flex flex-row flex-wrap gap-2 mb-3">
-              <EffectBeatFadeOut />
-              <EffectSparkle />
-              <EffectStaticColor />
-              <EffectWave />
-            </div>
-            <h4 class="mt-2 mb-1">Movement</h4>
-            <div class="flex flex-row flex-wrap gap-2">
-              <EffectSearchLight />
-              <EffectTableRotate />
-              <EffectClassicRotate />
-              <EffectRandomPosition />
-            </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12 lg:col-3">
-        <Card class="w-100">
-          <template #title> Other effects & settings </template>
-          <template #content>
-            <div class="flex flex-row gap-2 flex-wrap justify-content-center">
-              <StrobeButton />
-              <Button
-                @click="() => effectsControllerStore.disableLightsColors()"
-                severity="secondary"
-                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
-              >
-                Disable colors
-              </Button>
-              <Button
-                @click="() => effectsControllerStore.disableLightsMovement()"
-                severity="secondary"
-                :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
-              >
-                Disable movement
-              </Button>
-              <Divider />
-              <ArtificialBeatDialog />
-            </div>
-          </template>
-        </Card>
-      </div>
-      <div class="col-12">
-        <Card class="w-100">
-          <template #title> Past effects </template>
-          <template #content>
-            <div class="overflow-y-scroll w-full">
-              <div class="flex flex-row gap-3">
-                <div
-                  v-for="effect in effectsControllerStore.pastPushedEffects"
-                  :key="effect.timestamp.getTime()"
-                >
-                  <EffectHistoryCard :effect="effect" />
-                </div>
-              </div>
-            </div>
-          </template>
-        </Card>
-      </div>
+          </div>
+        </template>
+      </Card>
+
+      <!-- Create effects -->
+      <Card>
+        <template #title> (2) Create effects </template>
+        <template #content>
+          <h4 class="mt-0 mb-1">Colors</h4>
+          <div class="flex flex-col gap-5 mb-5">
+            <EffectBeatFadeOut />
+            <EffectSparkle />
+            <EffectStaticColor />
+            <EffectWave />
+          </div>
+          <h4 class="mt-2 mb-1">Movement</h4>
+          <div class="flex flex-col gap-5">
+            <EffectSearchLight />
+            <EffectTableRotate />
+            <EffectClassicRotate />
+            <EffectRandomPosition />
+          </div>
+        </template>
+      </Card>
+
+      <!-- Other effects & settings -->
+      <Card>
+        <template #title> Other effects & settings </template>
+        <template #content>
+          <div class="flex flex-col gap-5">
+            <StrobeButton />
+            <Button
+              :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              severity="secondary"
+              @click="() => effectsControllerStore.disableLightsColors()"
+            >
+              Disable colors
+            </Button>
+            <Button
+              :disabled="effectsControllerStore.selectedLightsGroupIds.length === 0"
+              severity="secondary"
+              @click="() => effectsControllerStore.disableLightsMovement()"
+            >
+              Disable movement
+            </Button>
+            <Divider />
+            <ArtificialBeatDialog />
+          </div>
+        </template>
+      </Card>
     </div>
-  </div>
+
+    <div class="w-full">
+      <Card>
+        <template #title> Past effects </template>
+        <template #content>
+          <div class="overflow-y-scroll w-full">
+            <div class="flex flex-row gap-5">
+              <div
+                v-for="effect in effectsControllerStore.pastPushedEffects"
+                :key="effect.timestamp.getTime()"
+              >
+                <EffectHistoryCard :effect="effect" />
+              </div>
+            </div>
+          </div>
+        </template>
+      </Card>
+    </div>
+  </AppContainer>
 </template>
 
 <script setup lang="ts">
@@ -117,12 +122,13 @@ import EffectSparkle from '@/components/lights/effects/color/EffectSparkle.vue';
 import EffectStaticColor from '@/components/lights/effects/color/EffectStaticColor.vue';
 import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
-import BeatVisualizer from '@/components/BeatVisualizer.vue';
+import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
+import AppContainer from '@/layout/AppContainer.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

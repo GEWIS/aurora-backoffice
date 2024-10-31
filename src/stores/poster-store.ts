@@ -4,9 +4,17 @@ import {
   type MediaPoster,
   type PhotoPoster,
   type ErrorPoster,
-  HandlersService
+  getPosters,
+  setPosterBorrelMode,
+  forceUpdatePosters
 } from '@/api';
 
+/**
+ * Poster store
+ * @param posters - The posters
+ * @param borrelModeActive - Whether the borrel mode is active
+ * @param loading - Whether the poster store is loading
+ */
 interface PosterStore {
   posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster)[];
   borrelModeActive: boolean;
@@ -19,29 +27,50 @@ export const usePosterStore = defineStore('poster', {
     borrelModeActive: false,
     loading: true
   }),
-  getters: {},
+  getters: {
+    fetchPosters: (state) => state.posters,
+    isLoading: (state) => state.loading,
+    isBorrelModeActive: (state) => state.borrelModeActive
+  },
   actions: {
+    /**
+     * Get the posters
+     */
     async getPosters() {
-      await HandlersService.getPosters(true).then((p) => {
-        this.posters = p.posters;
-        this.borrelModeActive = p.borrelMode;
+      getPosters({
+        query: { alwaysReturnBorrelPosters: true }
+      }).then((posters) => {
+        this.posters = posters.data!.posters;
+        this.borrelModeActive = posters.data!.borrelMode;
       });
     },
+    /**
+     * Set the borrel mode
+     * @param enabled - Whether to enable or disable the borrel mode
+     */
     async setBorrelMode(enabled: boolean) {
       this.loading = true;
-      await HandlersService.setPosterBorrelMode({ enabled }).then(() => {
+      await setPosterBorrelMode({
+        body: { enabled }
+      }).then(() => {
         this.loading = false;
         this.borrelModeActive = enabled;
       });
     },
+    /**
+     * Initialize the store
+     */
     async init() {
       this.loading = true;
       await this.getPosters();
       this.loading = false;
     },
+    /**
+     * Reload the posters
+     */
     async reloadPosters() {
       this.loading = true;
-      await HandlersService.forceUpdatePosters();
+      await forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;
