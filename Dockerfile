@@ -1,13 +1,24 @@
 # Build in a different image to keep the target image clean
-FROM node:20-alpine as build
+FROM node:20-alpine AS build
+RUN apk add git
 WORKDIR /usr/src/app
-COPY ./package.json ./yarn.lock ./
+
+# Copy backoffice files
+COPY ./ ./aurora-backoffice
+
+# Fetch files from Aurora Core
+RUN git clone https://github.com/GEWIS/aurora-core.git
+WORKDIR /usr/src/app/aurora-core
 RUN yarn
-COPY ./ ./
+RUN yarn tsoa
+RUN yarn gen-client-backoffice
+
+WORKDIR /usr/src/app/aurora-backoffice
+RUN yarn
 RUN yarn build
 
 # The target image that will be run
-FROM nginx:alpine as target
+FROM nginx:alpine AS target
 WORKDIR /usr/src/app
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build --chown=nginx /usr/src/app/dist/ /usr/src/app
+COPY --from=build --chown=nginx /usr/src/app/aurora-backoffice/dist/ /usr/src/app
