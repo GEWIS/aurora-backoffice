@@ -29,7 +29,6 @@
 import { useRoute } from 'vue-router';
 import { useLayoutStore } from '@/stores/layout.store';
 
-// eslint-disable-next-line import/exports-last
 export interface MenuItem {
   label: string;
   icon?: string;
@@ -40,20 +39,20 @@ export interface MenuItem {
 defineProps({
   item: {
     type: Object as () => MenuItem,
-    default: () => ({})
+    default: () => ({}),
   },
   index: {
     type: Number,
-    default: 0
+    default: 0,
   },
   root: {
     type: Boolean,
-    default: true
+    default: true,
   },
   parentItemKey: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
 });
 
 const layoutStore = useLayoutStore();

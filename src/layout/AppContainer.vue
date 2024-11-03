@@ -2,9 +2,7 @@
   <Card>
     <template #title>
       <div class="flex justify-between mb-4 items-center">
-        <div class="uppercase mb-0">
-          <i :class="['pi mr-3', icon]" style="font-size: 1.25rem" />{{ title }}
-        </div>
+        <div class="uppercase mb-0"><i :class="['pi mr-3', icon]" style="font-size: 1.25rem" />{{ title }}</div>
         <slot name="header" />
       </div>
     </template>
@@ -18,12 +16,12 @@
 defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   icon: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 });
 </script>
 

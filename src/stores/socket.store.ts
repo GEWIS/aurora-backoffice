@@ -9,7 +9,7 @@ interface SocketStore {
 export const useSocketStore = defineStore('socket', {
   state: (): SocketStore => ({
     rootSocket: undefined,
-    backofficeSocket: undefined
+    backofficeSocket: undefined,
   }),
   getters: {},
   actions: {
@@ -19,6 +19,7 @@ export const useSocketStore = defineStore('socket', {
 
       const promise1 = new Promise<void>((resolve) => {
         rootSocket.on('connect', () => {
+          // eslint-disable-next-line
           console.info('SocketIO: connected to /');
           this.rootSocket = rootSocket;
           resolve();
@@ -26,12 +27,13 @@ export const useSocketStore = defineStore('socket', {
       });
       const promise2 = new Promise<void>((resolve) => {
         backofficeSocket.on('connect', () => {
+          // eslint-disable-next-line
           console.info('SocketIO: connected to /backoffice');
           this.backofficeSocket = backofficeSocket;
           resolve();
         });
       });
       return Promise.all([promise1, promise2]);
-    }
-  }
+    },
+  },
 });

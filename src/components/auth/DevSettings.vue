@@ -27,7 +27,7 @@ function updateLogin() {
   authStore.MockLogin({
     id: userId.value,
     name: userName.value,
-    roles: selectedRoles.value
+    roles: selectedRoles.value,
   });
 }
 </script>

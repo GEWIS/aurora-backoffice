@@ -18,18 +18,14 @@ const handleAddEffect = () => {
     props: {
       colors: colors.value,
       enableFade: enableFade.value,
-      nrBlacks: addBlacks.value ? 1 : 0
-    }
+      nrBlacks: addBlacks.value ? 1 : 0,
+    },
   });
 };
 </script>
 
 <template>
-  <EffectSettingsDialog
-    :can-save="colors.length > 0"
-    effect-name="BeatFadeOut"
-    @save="handleAddEffect"
-  >
+  <EffectSettingsDialog :can-save="colors.length > 0" effect-name="BeatFadeOut" @save="handleAddEffect">
     <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
     <SelectorBoolean
       id="enableFade"
@@ -37,12 +33,7 @@ const handleAddEffect = () => {
       name="Enable fade"
       @click="() => (enableFade = !enableFade)"
     />
-    <SelectorBoolean
-      id="addBlacks"
-      :checked="addBlacks"
-      name="Add blacks"
-      @click="() => (addBlacks = !addBlacks)"
-    />
+    <SelectorBoolean id="addBlacks" :checked="addBlacks" name="Add blacks" @click="() => (addBlacks = !addBlacks)" />
   </EffectSettingsDialog>
 </template>
 

@@ -22,6 +22,6 @@ const subscriberStore = storeToRefs(useSubscriberStore());
 const controllers = computed(() =>
   subscriberStore.lightsGroups.value
     .map((g) => g.controller)
-    .filter((c1, index, all) => index === all.findIndex((c2) => c1.id === c2.id))
+    .filter((c1, index, all) => index === all.findIndex((c2) => c1.id === c2.id)),
 );
 </script>

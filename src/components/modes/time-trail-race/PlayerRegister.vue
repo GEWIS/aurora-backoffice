@@ -31,7 +31,7 @@ const registerPlayer = () => {
   store.registerPlayer({
     name: playerName.value,
     alcoholFree: isAlcoholFree.value,
-    bac: isBac.value
+    bac: isBac.value,
   });
   playerName.value = '';
 };
@@ -42,7 +42,7 @@ watch(playerName, (newPlayerName) => {
 });
 
 defineExpose({
-  registerPlayer
+  registerPlayer,
 });
 </script>
 

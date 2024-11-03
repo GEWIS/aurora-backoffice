@@ -27,8 +27,8 @@ const handleAddEffect = () => {
   store.setColorEffect({
     type: ColorEffects_SingleFlood.SINGLE_FLOOD,
     props: {
-      dimMilliseconds: dimMilliseconds.value
-    }
+      dimMilliseconds: dimMilliseconds.value,
+    },
   });
 };
 </script>

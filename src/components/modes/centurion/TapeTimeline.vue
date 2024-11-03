@@ -67,7 +67,7 @@ const timelineItems = ref(
       disabled: computed(() => isDisabled()),
       command: async () => {
         await store.skipCenturion(event.timestamp);
-      }
+      },
     };
 
     if (event.type === 'horn') {
@@ -81,7 +81,7 @@ const timelineItems = ref(
 
     timelineItems.push(timelineItem);
     return timelineItems;
-  }, [] as Array<TimelineItem>) ?? []
+  }, [] as Array<TimelineItem>) ?? [],
 );
 </script>
 

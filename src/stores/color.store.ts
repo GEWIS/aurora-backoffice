@@ -7,7 +7,7 @@ interface ColorStore {
 
 export const useColorStore = defineStore('color', {
   state: (): ColorStore => ({
-    colors: []
+    colors: [],
   }),
   actions: {
     async init(): Promise<void> {
@@ -17,6 +17,6 @@ export const useColorStore = defineStore('color', {
       const color = this.colors.find((c1) => c1.color === c);
       if (!color) return '';
       return color.spec.hex;
-    }
-  }
+    },
+  },
 });

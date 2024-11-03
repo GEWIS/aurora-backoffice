@@ -27,8 +27,8 @@ const handleAddEffect = () => {
   store.setMovementEffect({
     type: MovementEffects_RandomPosition.RANDOM_POSITION,
     props: {
-      beatsToMove: beatsToMove.value
-    }
+      beatsToMove: beatsToMove.value,
+    },
   });
 };
 </script>

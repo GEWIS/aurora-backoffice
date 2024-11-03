@@ -10,7 +10,7 @@ interface CurrentlyPlayingStore {
 export const useCurrentlyPlayingStore = defineStore('currently-playing', {
   state: (): CurrentlyPlayingStore => ({
     currentlyPlaying: null,
-    initialized: false
+    initialized: false,
   }),
   getters: {},
   actions: {
@@ -34,6 +34,6 @@ export const useCurrentlyPlayingStore = defineStore('currently-playing', {
       if (!store.backofficeSocket) return;
 
       store.backofficeSocket.removeListener('beat', this.handleChangeTrack.bind(this));
-    }
-  }
+    },
+  },
 });

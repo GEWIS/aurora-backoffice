@@ -52,7 +52,7 @@ const connectedIcon = computed(() => {
     'pi-sort-alt': connected.value,
     'text-green-300': connected.value,
     'pi-sort-alt-slash': !connected.value,
-    'text-400': !connected.value
+    'text-400': !connected.value,
   };
 });
 </script>

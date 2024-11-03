@@ -7,10 +7,7 @@
       <div v-if="store.isLoading">
         <Spinner />
       </div>
-      <div
-        v-else
-        class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 pb-5"
-      >
+      <div v-else class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 pb-5">
         <div v-for="poster in store.fetchPosters" :key="poster.name">
           <PosterCard :poster="poster" />
         </div>

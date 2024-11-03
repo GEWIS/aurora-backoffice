@@ -5,9 +5,7 @@
       <div>
         <ul>
           <li>Pars: {{ lightsGroup.pars.length }}</li>
-          <li>
-            MH's: {{ lightsGroup.movingHeadRgbs.length + lightsGroup.movingHeadWheels.length }}
-          </li>
+          <li>MH's: {{ lightsGroup.movingHeadRgbs.length + lightsGroup.movingHeadWheels.length }}</li>
         </ul>
       </div>
     </div>

@@ -97,10 +97,7 @@
         <template #content>
           <div class="overflow-y-scroll w-full">
             <div class="flex flex-row gap-5">
-              <div
-                v-for="effect in effectsControllerStore.pastPushedEffects"
-                :key="effect.timestamp.getTime()"
-              >
+              <div v-for="effect in effectsControllerStore.pastPushedEffects" :key="effect.timestamp.getTime()">
                 <EffectHistoryCard :effect="effect" />
               </div>
             </div>
@@ -136,7 +133,7 @@ const subscriberStore = useSubscriberStore();
 
 const activeLightGroups = handlersStore.getRegisteredLights('SetEffectsHandler');
 const inactiveLightGroups = subscriberStore.lightsGroups.filter(
-  (l1) => !activeLightGroups.find((l2) => l1.id === l2.id)
+  (l1) => !activeLightGroups.find((l2) => l1.id === l2.id),
 );
 </script>
 

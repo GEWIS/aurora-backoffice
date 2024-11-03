@@ -46,7 +46,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Register player',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '1' || !canRegister.value,
-    nextFunction: registerPlayer.value?.registerPlayer
+    nextFunction: registerPlayer.value?.registerPlayer,
   },
   {
     value: 'Ready',
@@ -57,7 +57,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Player ready',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '2',
-    nextFunction: timeTrailStore.ready
+    nextFunction: timeTrailStore.ready,
   },
   {
     value: 'Start',
@@ -68,7 +68,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Start!',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '3',
-    nextFunction: timeTrailStore.start
+    nextFunction: timeTrailStore.start,
   },
   {
     value: 'Finish',
@@ -79,7 +79,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Finish!',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '4',
-    nextFunction: timeTrailStore.finish
+    nextFunction: timeTrailStore.finish,
   },
   {
     value: 'Reveal',
@@ -90,8 +90,8 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     confirmText: 'Reveal score',
     confirmIcon: null,
     confirmDisabled: timeTrailStore.loading || currentStep.value != '5',
-    confirmFunction: timeTrailStore.revealScore
-  }
+    confirmFunction: timeTrailStore.revealScore,
+  },
 ]);
 
 const currentStep = computed(() => {
