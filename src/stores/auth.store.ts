@@ -13,7 +13,7 @@ import {
   type ISecurityGroups,
   type ISecuritySections,
   type OidcParameters,
-  SecurityGroup
+  SecurityGroup,
 } from '@/api';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useAuditStore } from '@/stores/audit.store';
@@ -37,13 +37,13 @@ export const useAuthStore = defineStore('auth', {
     name: null,
     roles: [],
     development: false,
-    securityGroups: undefined
+    securityGroups: undefined,
   }),
   getters: {
     getName: (state) => state.name,
     getRoles: (state) => state.roles,
     getDevelopment: (state) => state.development,
-    getSecurityGroups: (state) => state.securityGroups
+    getSecurityGroups: (state) => state.securityGroups,
   },
   actions: {
     /**
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore('auth', {
      */
     async OIDCLogin(oidcParameters: OidcParameters): Promise<void> {
       authOidc({
-        body: oidcParameters
+        body: oidcParameters,
       }).then((user) => {
         this.name = user.data!.name;
         this.roles = user.data!.roles;
@@ -81,7 +81,7 @@ export const useAuthStore = defineStore('auth', {
     async MockLogin(user: AuthUser): Promise<void> {
       this.development = true;
       await authMock({
-        body: user
+        body: user,
       }).then((user) => {
         this.name = user.data!.name;
         this.roles = user.data!.roles;
@@ -125,6 +125,6 @@ export const useAuthStore = defineStore('auth', {
      */
     isInSecurityGroup(group: keyof ISecurityGroups, section: keyof ISecuritySections): boolean {
       return _.intersection(this.roles, this.securityGroups![group][section]).length > 0;
-    }
-  }
+    },
+  },
 });

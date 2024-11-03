@@ -53,8 +53,8 @@ const handleAddEffect = () => {
       colors: colors.value,
       ratio: ratio.value,
       dimDuration: dimDuration.value,
-      cycleTime: cycleTime.value
-    }
+      cycleTime: cycleTime.value,
+    },
   });
 };
 </script>

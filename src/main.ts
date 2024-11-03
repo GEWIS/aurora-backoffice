@@ -55,8 +55,8 @@ const app = createApp(App);
 // define options
 const timeagoOptions = {
   converterOptions: {
-    includeSeconds: true
-  }
+    includeSeconds: true,
+  },
 };
 
 app.use(router);
@@ -64,15 +64,15 @@ app.use(PrimeVue, {
   theme: {
     preset: AuraPreset,
     options: {
-      darkModeSelector: '.dark-mode'
-    }
-  }
+      darkModeSelector: '.dark-mode',
+    },
+  },
 });
 app.use(ToastService);
 app.use(ConfirmationService);
 
 client.setConfig({
-  baseUrl: '/api'
+  baseUrl: '/api',
 });
 
 app.use(createPinia());

@@ -11,14 +11,7 @@
           :model-value="value"
           @blur="(event) => handleNumberInputChange(event.value)"
         />
-        <Slider
-          class="w-full"
-          :max="max"
-          :min="min"
-          :model-value="value"
-          :step="step"
-          @change="onChange"
-        />
+        <Slider class="w-full" :max="max" :min="min" :model-value="value" :step="step" @change="onChange" />
       </div>
     </div>
   </div>

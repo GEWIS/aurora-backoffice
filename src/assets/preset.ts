@@ -14,7 +14,7 @@ export const AuraPreset = definePreset(Aura, {
       700: '{rose.700}',
       800: '{rose.800}',
       900: '{rose.900}',
-      950: '{rose.950}'
-    }
-  }
+      950: '{rose.950}',
+    },
+  },
 });

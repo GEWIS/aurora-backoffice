@@ -1,23 +1,9 @@
 <template>
-  <EffectSettingsDialog
-    :can-save="colors.length === 1"
-    effect-name="StaticColor"
-    @save="handleAddEffect"
-  >
+  <EffectSettingsDialog :can-save="colors.length === 1" effect-name="StaticColor" @save="handleAddEffect">
     <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
     <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
-    <Select
-      v-model="goboRotate"
-      :options="goboRotates"
-      placeholder="Select a gobo rotate effect"
-      show-clear
-    />
-    <SelectorBoolean
-      id="beat-toggle"
-      :checked="beatToggle"
-      name="Beat Toggle"
-      @click="beatToggle = !beatToggle"
-    />
+    <Select v-model="goboRotate" :options="goboRotates" placeholder="Select a gobo rotate effect" show-clear />
+    <SelectorBoolean id="beat-toggle" :checked="beatToggle" name="Beat Toggle" @click="beatToggle = !beatToggle" />
     <SelectorRatioSlider
       id="relative-brightness"
       :max="1"
@@ -71,8 +57,8 @@ const handleAddEffect = () => {
       gobo: gobo.value ? gobo.value : undefined,
       goboRotate: goboRotate.value ? goboRotate.value : undefined,
       beatToggle: beatToggle.value,
-      relativeBrightness: relativeBrightness.value
-    }
+      relativeBrightness: relativeBrightness.value,
+    },
   });
 };
 </script>

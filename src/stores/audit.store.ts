@@ -27,7 +27,7 @@ export const useAuditStore = defineStore('audit', {
     take: 5,
     skip: 0,
     count: 0,
-    loading: true
+    loading: true,
   }),
   getters: {},
   actions: {
@@ -45,8 +45,8 @@ export const useAuditStore = defineStore('audit', {
       const logs = await getAuditLogs({
         query: {
           take: this.take,
-          skip: this.skip
-        }
+          skip: this.skip,
+        },
       });
       this.dashboardEntries = logs.data!.records;
       this.count = logs.data!.pagination.count;
@@ -63,8 +63,8 @@ export const useAuditStore = defineStore('audit', {
       const logs = await getAuditLogs({
         query: {
           take: this.take,
-          skip: this.skip
-        }
+          skip: this.skip,
+        },
       });
       this.entries = logs.data!.records;
       this.count = logs.data!.pagination.count;
@@ -106,6 +106,6 @@ export const useAuditStore = defineStore('audit', {
     async destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener('audit_log_create', this.handleAuditLogAddition);
-    }
-  }
+    },
+  },
 });

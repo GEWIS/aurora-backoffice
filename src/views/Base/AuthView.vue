@@ -34,11 +34,7 @@ onMounted(async () => {
     }
 
     let queryParameters = new URLSearchParams(route.hash.substring(1));
-    if (
-      !queryParameters.get('code') ||
-      !queryParameters.get('state') ||
-      !queryParameters.get('session_state')
-    ) {
+    if (!queryParameters.get('code') || !queryParameters.get('state') || !queryParameters.get('session_state')) {
       await router.push({ name: 'auth' });
     }
 
@@ -56,7 +52,7 @@ onMounted(async () => {
       .OIDCLogin({
         code: queryParameters.get('code')!,
         state: queryParameters.get('state')!,
-        session_state: queryParameters.get('session_state')!
+        session_state: queryParameters.get('session_state')!,
       })
       .then(() => {
         router.push(url!);
@@ -77,7 +73,7 @@ onMounted(async () => {
       state: state,
       response_mode: 'fragment',
       response_type: 'code',
-      scope: 'openid'
+      scope: 'openid',
     });
 
     window.location.href = oidcParameters.data!.authUrl + '?' + queryParameters.toString();

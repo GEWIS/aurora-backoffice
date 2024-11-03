@@ -10,7 +10,7 @@ import {
   disableCenturion,
   startCenturion,
   stopCenturion,
-  skipCenturion
+  skipCenturion,
 } from '@/api';
 
 /**
@@ -35,7 +35,7 @@ export const useCenturionStore = defineStore('centurion', {
     tapes: null,
     loading: true,
     playing: false,
-    skipping: false
+    skipping: false,
   }),
   getters: {
     enabled(): boolean {
@@ -48,7 +48,7 @@ export const useCenturionStore = defineStore('centurion', {
     getTapes: (state) => state.tapes,
     isLoading: (state) => state.loading,
     isPlaying: (state) => state.playing,
-    isSkipping: (state) => state.skipping
+    isSkipping: (state) => state.skipping,
   },
   actions: {
     /**
@@ -77,20 +77,14 @@ export const useCenturionStore = defineStore('centurion', {
       this.playing = this.currentTape?.playing ?? false;
 
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.on(
-        'mode_centurion_update',
-        this.getCurrentCenturion.bind(this)
-      );
+      socketStore.backofficeSocket?.on('mode_centurion_update', this.getCurrentCenturion.bind(this));
     },
     /**
      * Destroy the store
      */
     async destroy() {
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.removeListener(
-        'mode_centurion_update',
-        this.getCurrentCenturion.bind(this)
-      );
+      socketStore.backofficeSocket?.removeListener('mode_centurion_update', this.getCurrentCenturion.bind(this));
     },
     /**
      * Initialize the centurion
@@ -105,7 +99,7 @@ export const useCenturionStore = defineStore('centurion', {
       tapeArtist: string,
       audioIds: number[],
       screenIds: number[],
-      lightsGroupIds: number[]
+      lightsGroupIds: number[],
     ) {
       this.loading = true;
 
@@ -115,8 +109,8 @@ export const useCenturionStore = defineStore('centurion', {
           centurionArtist: tapeArtist,
           audioIds: audioIds,
           screenIds: screenIds,
-          lightsGroupIds: lightsGroupIds
-        }
+          lightsGroupIds: lightsGroupIds,
+        },
       });
       await this.getCurrentCenturion(false);
       this.loading = false;
@@ -153,10 +147,10 @@ export const useCenturionStore = defineStore('centurion', {
       this.skipping = true;
       await skipCenturion({
         body: {
-          seconds: seconds
-        }
+          seconds: seconds,
+        },
       });
       this.skipping = false;
-    }
-  }
+    },
+  },
 });

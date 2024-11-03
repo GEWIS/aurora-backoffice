@@ -4,9 +4,7 @@
       {{ controller.name }}
       <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
     </h6>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5">
       <div v-for="group in lightsGroups" :key="group.id">
         <div class="mb-2">
           <h6 class="mb-0">
@@ -14,15 +12,11 @@
           </h6>
         </div>
         <SubscriberHandlerChangeSelect
-          :current-handler="
-            handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))
-          "
+          :current-handler="handlersStore.lightsHandlers.find((h) => !!h.entities.find((e) => e.id === group.id))"
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           :loading="handlersStore.gettingLights || handlersStore.settingLights"
           :possible-handlers="handlersStore.lightsHandlers"
-          @change="
-            (newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)
-          "
+          @change="(newHandler: string | null) => handlersStore.setLightsHandler(group.id, newHandler)"
         />
       </div>
     </div>
@@ -44,9 +38,7 @@ const props = defineProps<{
 }>();
 
 const subscriberStore = storeToRefs(useSubscriberStore());
-const lightsGroups = subscriberStore.lightsGroups.value.filter(
-  (g) => g.controller.id === props.controller.id
-);
+const lightsGroups = subscriberStore.lightsGroups.value.filter((g) => g.controller.id === props.controller.id);
 const handlersStore = useHandlersStore();
 const authStore = useAuthStore();
 
@@ -64,7 +56,7 @@ const connectedIcon = computed(() => {
     'pi-sort-alt': connected.value,
     'text-green-300': connected.value,
     'pi-sort-alt-slash': !connected.value,
-    'text-400': !connected.value
+    'text-400': !connected.value,
   };
 });
 </script>

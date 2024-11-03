@@ -17,7 +17,7 @@ import {
   type RaceStartedEvent,
   type RegisterPlayerParams,
   type ScoreboardItem,
-  TimeTrailRaceState
+  TimeTrailRaceState,
 } from '@/api';
 import { useSocketStore } from '@/stores/socket.store';
 
@@ -42,7 +42,7 @@ interface TimeTrailRaceStore {
 export const useTimeTrailRaceStore = defineStore('time-trail-race', {
   state: (): TimeTrailRaceStore => ({
     scoreboard: [],
-    loading: true
+    loading: true,
   }),
   getters: {
     enabled(): boolean {
@@ -56,7 +56,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     getScoreboard: (state) => state.scoreboard,
     getCurrentPlayer: (state) => state.currentPlayer,
     getLoading: (state) => state.loading,
-    getStartTime: (state) => state.startTime
+    getStartTime: (state) => state.startTime,
   },
   actions: {
     /**
@@ -87,7 +87,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       sessionName: string,
       audioIds: number[],
       screenIds: number[],
-      lightsGroupIds: number[]
+      lightsGroupIds: number[],
     ) {
       this.loading = true;
 
@@ -96,8 +96,8 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
           lightsGroupIds: lightsGroupIds,
           screenIds: screenIds,
           audioIds: audioIds,
-          sessionName: sessionName
-        }
+          sessionName: sessionName,
+        },
       }).then(() => {
         this.sessionName = sessionName;
         this.state = TimeTrailRaceState.INITIALIZED;
@@ -112,7 +112,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
     async registerPlayer(params: RegisterPlayerParams) {
       this.loading = true;
       const register = await raceRegisterPlayer({
-        body: params
+        body: params,
       });
       this.handleRegisterPlayer(register.data!);
       this.loading = false;
@@ -216,10 +216,7 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
       await this.getTimeTrailMode();
 
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.on(
-        'race-player-registered',
-        this.handleRegisterPlayer.bind(this)
-      );
+      socketStore.backofficeSocket?.on('race-player-registered', this.handleRegisterPlayer.bind(this));
       socketStore.backofficeSocket?.on('race-player-ready', this.handleReady.bind(this));
       socketStore.backofficeSocket?.on('race-player-start', this.handleStart.bind(this));
       socketStore.backofficeSocket?.on('race-player-finish', this.handleFinish.bind(this));
@@ -241,26 +238,11 @@ export const useTimeTrailRaceStore = defineStore('time-trail-race', {
      */
     destroy() {
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.removeListener(
-        'race-player-registered',
-        this.handleRegisterPlayer.bind(this)
-      );
-      socketStore.backofficeSocket?.removeListener(
-        'race-player-ready',
-        this.handleReady.bind(this)
-      );
-      socketStore.backofficeSocket?.removeListener(
-        'race-player-start',
-        this.handleStart.bind(this)
-      );
-      socketStore.backofficeSocket?.removeListener(
-        'race-player-finish',
-        this.handleFinish.bind(this)
-      );
-      socketStore.backofficeSocket?.removeListener(
-        'race-scoreboard',
-        this.handleRevealScore.bind(this)
-      );
-    }
-  }
+      socketStore.backofficeSocket?.removeListener('race-player-registered', this.handleRegisterPlayer.bind(this));
+      socketStore.backofficeSocket?.removeListener('race-player-ready', this.handleReady.bind(this));
+      socketStore.backofficeSocket?.removeListener('race-player-start', this.handleStart.bind(this));
+      socketStore.backofficeSocket?.removeListener('race-player-finish', this.handleFinish.bind(this));
+      socketStore.backofficeSocket?.removeListener('race-scoreboard', this.handleRevealScore.bind(this));
+    },
+  },
 });

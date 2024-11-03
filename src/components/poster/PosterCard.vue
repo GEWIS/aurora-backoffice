@@ -16,13 +16,7 @@
           :value="poster.source"
         >
           <template #item="slotProps">
-            <Image
-              :alt="poster.name"
-              class="w-full"
-              image-class="w-full rounded-lg"
-              preview
-              :src="slotProps.data"
-            />
+            <Image :alt="poster.name" class="w-full" image-class="w-full rounded-lg" preview :src="slotProps.data" />
           </template>
         </Carousel>
         <Image
@@ -45,9 +39,7 @@
       </a>
     </div>
     <div v-else>
-      <div
-        class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
-      >
+      <div class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast">
         {{ capitalize(poster.type) }}
       </div>
     </div>

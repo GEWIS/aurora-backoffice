@@ -24,7 +24,7 @@ const openDialog = () => {
     acceptLabel: 'Yes',
     accept() {
       store.deleteScene(props.id);
-    }
+    },
   });
 };
 </script>

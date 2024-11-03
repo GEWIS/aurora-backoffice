@@ -49,8 +49,8 @@ const handleAddEffect = () => {
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,
-      radiusFactor: radiusFactor.value
-    }
+      radiusFactor: radiusFactor.value,
+    },
   });
 };
 </script>

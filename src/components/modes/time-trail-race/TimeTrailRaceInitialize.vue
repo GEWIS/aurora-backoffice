@@ -27,9 +27,7 @@
     <template #3>
       <div class="flex flex-col gap-2 mt-3 sm:mt-0">
         <div class="max-w-lg mx-auto">
-          <div class="sm:text-lg text-center mb-3 font-semibold">
-            Confirm time trail race initialization
-          </div>
+          <div class="sm:text-lg text-center mb-3 font-semibold">Confirm time trail race initialization</div>
           <div class="text-justify">
             You are about to start to start a time trail race session called
             <span class="font-semibold">{{ sessionName }}</span
@@ -67,7 +65,7 @@ const confirmModalLoading = ref<boolean>(false);
 const initializationSteps = computed<StepperStep[]>(() => [
   { value: 'Session', nextDisabled: sessionName.value === '' },
   { value: 'Subscribers', nextDisabled: selectedAudios.value.length === 0 },
-  { value: 'Confirmation', confirmFunction: initialize }
+  { value: 'Confirmation', confirmFunction: initialize },
 ]);
 
 const initialize = async () => {
@@ -76,7 +74,7 @@ const initialize = async () => {
     sessionName.value,
     selectedAudios.value,
     selectedScreens.value,
-    selectedLightGroups.value
+    selectedLightGroups.value,
   );
   confirmModalOpen.value = false;
   confirmModalLoading.value = false;

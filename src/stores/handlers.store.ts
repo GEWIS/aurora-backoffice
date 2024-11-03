@@ -13,13 +13,10 @@ import {
   type ScreenResponse,
   setAudioHandler,
   setLightsHandler,
-  setScreenHandler
+  setScreenHandler,
 } from '@/api';
 
-type Handler =
-  | HandlerResponse_ScreenResponse_
-  | HandlerResponse_AudioResponse_
-  | HandlerResponse_LightsGroupResponse_;
+type Handler = HandlerResponse_ScreenResponse_ | HandlerResponse_AudioResponse_ | HandlerResponse_LightsGroupResponse_;
 
 /**
  * HandlerStore
@@ -56,7 +53,7 @@ export const useHandlersStore = defineStore('handlers', {
       gettingScreens: false,
       settingScreens: false,
       gettingLights: false,
-      settingLights: false
+      settingLights: false,
     }) as HandlersStore,
   getters: {
     fetchAudioHandlers: (state) => state.audioHandlers,
@@ -67,7 +64,7 @@ export const useHandlersStore = defineStore('handlers', {
     isGettingScreens: (state) => state.gettingScreens,
     isSettingScreens: (state) => state.settingScreens,
     isGettingLights: (state) => state.gettingLights,
-    isSettingLights: (state) => state.settingLights
+    isSettingLights: (state) => state.settingLights,
   },
   actions: {
     /**
@@ -115,10 +112,7 @@ export const useHandlersStore = defineStore('handlers', {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('handler_audio_update', this.getAudioHandlers.bind(this));
       socketStore.backofficeSocket?.on('handler_screen_update', this.getScreenHandlers.bind(this));
-      socketStore.backofficeSocket?.on(
-        'handler_lightsgroup_update',
-        this.getLightsHandlers.bind(this)
-      );
+      socketStore.backofficeSocket?.on('handler_lightsgroup_update', this.getLightsHandlers.bind(this));
 
       this.gettingAudio = this.gettingScreens = this.gettingLights = false;
     },
@@ -135,14 +129,14 @@ export const useHandlersStore = defineStore('handlers', {
             async (i) =>
               await setAudioHandler({
                 body: { name: newHandler != null ? newHandler : '' },
-                path: { id: i }
-              })
-          )
+                path: { id: i },
+              }),
+          ),
         );
       } else {
         await setAudioHandler({
           body: { name: newHandler != null ? newHandler : '' },
-          path: { id }
+          path: { id },
         });
       }
       this.settingAudio = false;
@@ -161,14 +155,14 @@ export const useHandlersStore = defineStore('handlers', {
           id.map((i) =>
             setLightsHandler({
               body: { name: newHandler != null ? newHandler : '' },
-              path: { id: i }
-            })
-          )
+              path: { id: i },
+            }),
+          ),
         );
       } else {
         await setLightsHandler({
           body: { name: newHandler != null ? newHandler : '' },
-          path: { id }
+          path: { id },
         });
       }
       this.settingLights = false;
@@ -187,14 +181,14 @@ export const useHandlersStore = defineStore('handlers', {
           id.map((i) =>
             setScreenHandler({
               body: { name: newHandler != null ? newHandler : '' },
-              path: { id: i }
-            })
-          )
+              path: { id: i },
+            }),
+          ),
         );
       } else {
         await setScreenHandler({
           body: { name: newHandler != null ? newHandler : '' },
-          path: { id }
+          path: { id },
         });
       }
 
@@ -241,8 +235,8 @@ export const useHandlersStore = defineStore('handlers', {
       await this.getLightsHandlers();
       await this.getScreenHandlers();
       this.gettingAudio = this.gettingScreens = this.gettingLights = false;
-    }
-  }
+    },
+  },
 });
 
 export { type Handler };
