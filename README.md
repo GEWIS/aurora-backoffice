@@ -4,7 +4,7 @@ The backoffice is primarily responsible for sending commands to the [core](https
 To see the current state of Aurora, the backoffice can also receive SocketIO messages.
 
 ## Prerequisites
-- NodeJS 20.
+- NodeJS 22.
 - A locally running copy of [aurora-core](https://github.com/gewis/aurora-core).
 The backoffice repository should be cloned next to the core repository, so in the folder `../aurora-core`.
 This is necessary to generate the required API client files (installation step 2).
