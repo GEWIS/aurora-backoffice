@@ -1,14 +1,20 @@
 name: Semantic release
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches: 
-    - main
+      - main
 
 jobs:
-  build-and-lint:
+  semantic-release:
     uses: GEWIS/actions/.github/workflows/semantic-release.yml@v0.0.2
     with:
-      projects: '["."]'
-      docker_registry: 'abc.docker-registry.gewis.nl'
-      docker_tag: 'nc/aurora/backoffice'
+      projects: "['.']"
+      docker_registry: "abc.docker-registry.gewis.nl"
+      docker_paths: "['nc/aurora/backoffice']"
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.SVC_GH_ABCNC_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.SVC_GH_ABCNC_PWD }}
