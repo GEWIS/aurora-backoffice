@@ -51,11 +51,13 @@ export const useAuthStore = defineStore('auth', {
      */
     async init(): Promise<void> {
       getInformation().then(async (user) => {
-        this.name = user.data!.name;
-        this.roles = user.data!.roles;
+        if (user.data) {
+          this.name = user.data!.name;
+          this.roles = user.data!.roles;
 
-        await useHandlersStore().init();
-        await useColorStore().init();
+          await useHandlersStore().init();
+          await useColorStore().init();
+        }
       });
 
       const securityGroups = await getSecurityGroups();
@@ -124,6 +126,7 @@ export const useAuthStore = defineStore('auth', {
      * @param section - The security group to check for
      */
     isInSecurityGroup(group: keyof ISecurityGroups, section: keyof ISecuritySections): boolean {
+      if (!this.securityGroups) return false;
       return _.intersection(this.roles, this.securityGroups![group][section]).length > 0;
     }
   }

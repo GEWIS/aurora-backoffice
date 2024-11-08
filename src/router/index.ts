@@ -139,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
   layoutStore.init();
 
   const authStore = useAuthStore();
-  // Automatically login using mock when in devops mode
+  // Automatically login using mock when in development mode
   if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
     await authStore.MockLogin({
       id: 'dev',
@@ -156,7 +156,7 @@ router.beforeEach(async (to, from, next) => {
     hasRights = authStore.isInSecurityGroup(to.meta.securityGroup, to.meta.securitySection);
   }
 
-  if (!authenticated) {
+  if (!authenticated && !to.path.startsWith('/auth')) {
     // If not authenticated; redirect to login
     next({ name: 'auth', query: { path: to.fullPath } });
   } else if (authenticated && !hasRights) {

@@ -59,7 +59,8 @@ onMounted(async () => {
         session_state: queryParameters.get('session_state')!
       })
       .then(() => {
-        router.push(url!);
+        authStore.init();
+        router.push(url ?? '/');
       })
       .catch(() => {
         router.push({ name: 'notFound' });
@@ -71,6 +72,9 @@ onMounted(async () => {
     sessionStorage.setItem('url', route.query.path as string);
 
     const oidcParameters = await getOidcParameters();
+    // If the oidc parameters are not available, retry auth
+    if (!oidcParameters.data) await router.push({ name: 'auth' });
+
     let queryParameters = new URLSearchParams({
       client_id: oidcParameters.data!.clientId,
       redirect_uri: oidcParameters.data!.redirectUri,
