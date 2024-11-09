@@ -4,9 +4,8 @@
       <Card>
         <template #content>
           <div class="w-full py-8 px-5 sm:px-8 flex flex-col align-items-center rounded-2xl">
-            <span class="font-bold text-3xl">403</span>
-            <h1 class="text-900 font-bold text-3xl lg:text-5xl mb-2">Unauthorized</h1>
-            <div class="text-600 mb-5">Requested resource is not available.</div>
+            <div class="text-900 font-bold text-3xl lg:text-5xl mb-2">Unauthorized</div>
+            <div class="text-600 mb-5">You do not have access to the requested resource.</div>
           </div>
         </template>
       </Card>

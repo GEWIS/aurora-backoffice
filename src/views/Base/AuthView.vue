@@ -4,11 +4,13 @@
       <Card>
         <template #content>
           <div class="w-full py-8 px-5 sm:px-8 flex flex-col align-items-center rounded-2xl">
+            <div v-if="authorizing" class="text-900 font-bold text-3xl lg:text-5xl mb-5">
+              Authorizing
+            </div>
+            <div v-else class="text-900 font-bold text-3xl lg:text-5xl mb-5">Connecting</div>
             <span class="font-bold text-3xl">
               <ProgressBar mode="indeterminate" style="height: 6px" />
             </span>
-            <h1 class="text-900 font-bold text-3xl lg:text-5xl mb-2">Loading</h1>
-            <div class="text-600 mb-5">Please wait</div>
           </div>
         </template>
       </Card>
@@ -17,18 +19,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { v4 as uuidv4 } from 'uuid';
 import { useAuthStore } from '@/stores/auth.store';
 import { getOidcParameters } from '@/api';
 
+const authorizing = ref<boolean>(true);
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 
 onMounted(async () => {
   if (route.path === '/auth/callback') {
+    authorizing.value = true;
     if (!route.hash) {
       await router.push({ name: 'auth' });
     }
@@ -55,18 +58,18 @@ onMounted(async () => {
         session_state: queryParameters.get('session_state')!,
       })
       .then(() => {
-        void authStore.init().then(() => {
-          void router.push(url ?? '/');
-        });
+        authStore.init();
+        if (url === '') url = { name: 'dashboard' };
+        router.push(url);
       })
       .catch(() => {
         void router.push({ name: 'notFound' });
       });
   } else {
-    // TODO replace with environment variables
-    const state = uuidv4();
+    authorizing.value = false;
+    let state = Math.random().toString(36).slice(2);
     sessionStorage.setItem('state', state);
-    sessionStorage.setItem('url', route.query.path as string);
+    sessionStorage.setItem('url', route.query.path ?? '');
 
     const oidcParameters = await getOidcParameters();
     // If the oidc parameters are not available, retry auth
@@ -81,6 +84,7 @@ onMounted(async () => {
       scope: 'openid',
     });
 
+    console.log(oidcParameters.data!.authUrl + '?' + queryParameters.toString());
     window.location.href = oidcParameters.data!.authUrl + '?' + queryParameters.toString();
   }
 });
