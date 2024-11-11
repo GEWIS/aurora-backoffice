@@ -20,7 +20,8 @@
             <div class="flex justify-center gap-5">
               <Button
                 v-if="index > 0 && !steps[index].previousHidden"
-                :disabled="steps[index].previousDisabled"
+                :disabled="steps[index].previousDisabled || steps[index].previousLoading"
+                :loading="steps[index].previousLoading"
                 :icon="
                   steps[index].previousIcon === null
                     ? ''
@@ -37,7 +38,8 @@
               />
               <Button
                 v-if="index < steps.length - 1 && !steps[index].nextHidden"
-                :disabled="steps[index].nextDisabled"
+                :disabled="steps[index].nextDisabled || steps[index].nextLoading"
+                :loading="steps[index].nextLoading"
                 :icon="
                   steps[index].nextIcon === null
                     ? ''
@@ -53,7 +55,8 @@
               />
               <Button
                 v-if="index === steps.length - 1 && !steps[index].confirmHidden"
-                :disabled="steps[index].confirmDisabled"
+                :disabled="steps[index].confirmDisabled || steps[index].confirmLoading"
+                :loading="steps[index].confirmLoading"
                 :icon="
                   steps[index].confirmIcon === null
                     ? ''
@@ -86,18 +89,21 @@ import { TailwindWidth, useLayoutStore } from '@/stores/layout.store';
 interface StepperStep {
   value: string;
   nextDisabled?: boolean;
+  nextLoading?: boolean;
   nextHidden?: boolean;
   nextIcon?: string | null;
   nextText?: string;
   nextFunction?: undefined | (() => void);
   overrideNextFunction?: boolean;
   previousDisabled?: boolean;
+  previousLoading?: boolean;
   previousHidden?: boolean;
   previousIcon?: string | null;
   previousText?: string;
   previousFunction?: undefined | (() => void);
   overridePreviousFunction?: boolean;
   confirmDisabled?: boolean;
+  confirmLoading?: boolean;
   confirmHidden?: boolean;
   confirmIcon?: string | null;
   confirmText?: string;

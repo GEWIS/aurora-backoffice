@@ -111,7 +111,7 @@ const availableTapes = computed<GroupedTape[] | undefined>(() => {
 const initializationSteps = computed<StepperStep[]>(() => [
   { value: 'Mixtape', nextDisabled: selectedTape.value === undefined },
   { value: 'Subscribers', nextDisabled: selectedAudios.value.length === 0 },
-  { value: 'Confirmation', confirmFunction: initialize },
+  { value: 'Confirmation', confirmFunction: initialize, confirmLoading: centurionStore.loading },
 ]);
 
 // Initialize the centurion
