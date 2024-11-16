@@ -27,7 +27,7 @@ export const useServerSettingsStore = defineStore('server-settings', {
     isFeatureFlag(setting: string | keyof ISettings): boolean {
       return this.featureFlags.some((f) => f.key === setting);
     },
-    featureEnabled(setting: keyof ISettings): boolean {
+    featureEnabled(setting: string | keyof ISettings): boolean {
       const match = this.featureFlags.find((f) => f.key === setting);
       if (!match) return true;
       return match.value;

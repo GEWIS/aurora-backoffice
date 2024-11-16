@@ -18,21 +18,21 @@
         <template #body="slotProps">
           <div v-if="typeof slotProps.node.data.value === 'boolean'">
             <ToggleSwitch
-              :disabled="!editing"
+              :disabled="!editing || !slotProps.node.data.canEdit"
               :model-value="slotProps.node.data.value"
               @update:model-value="(newValue: boolean) => store.setSetting(slotProps.node.key, newValue)"
             ></ToggleSwitch>
           </div>
           <div v-else-if="typeof slotProps.node.data.value === 'number'">
             <InputNumber
-              :disabled="!editing"
+              :disabled="!editing || !slotProps.node.data.canEdit"
               :model-value="slotProps.node.data.value"
               @update:model-value="(newValue: number) => store.setSetting(slotProps.node.key, newValue)"
             ></InputNumber>
           </div>
           <div v-else-if="typeof slotProps.node.data.value === 'string'">
             <InputText
-              :disabled="!editing"
+              :disabled="!editing || !slotProps.node.data.canEdit"
               :model-value="slotProps.node.data.value"
               @update:model-value="
                 (newValue?: string): void => {
@@ -49,10 +49,10 @@
       <Column field="isFeatureFlag" header="Feature flag">
         <template #body="slotProps">
           <div v-if="slotProps.node.data.isFeatureFlag && !!slotProps.node.data.value">
-            <i class="pi pi-flag-fill" title="Enabled"></i>
+            <i class="pi pi-flag-fill text-green-800" title="Enabled"></i>
           </div>
           <div v-else-if="slotProps.node.data.isFeatureFlag">
-            <i class="pi pi-flag" title="Disabled"></i>
+            <i class="pi pi-flag text-red-800" title="Disabled"></i>
           </div>
           <div v-else></div>
         </template>
@@ -78,7 +78,7 @@ const entries = computed(() => {
   if (!store.serverSettings) return [];
   const keys = Object.keys(store.serverSettings);
 
-  const createTreeNodes = (currentKey: string): TreeNode[] => {
+  const createTreeNodes = (currentKey: string, canEditParent = true): TreeNode[] => {
     const subKeys = keys.filter((k) => k.startsWith(currentKey));
 
     const usedKeys: string[] = [];
@@ -91,6 +91,9 @@ const entries = computed(() => {
         const nextKey = currentKey + remainder.split('.')[0] + '.';
         if (usedKeys.includes(nextKey)) return undefined;
 
+        // Current key ends with a dot, so we need to remove that dot
+        const canEdit = canEditParent && store.featureEnabled(currentKey.substring(0, currentKey.length - 1));
+
         usedKeys.push(nextKey);
         const setting = currentKey + remainder;
         const children: TreeNode[] = createTreeNodes(nextKey);
@@ -102,6 +105,7 @@ const entries = computed(() => {
             // @ts-expect-error I do not understand this and can't be bothered anymore
             value: store.serverSettings![setting],
             isFeatureFlag: store.isFeatureFlag(setting),
+            canEdit,
           },
           children: children.length > 0 ? children : undefined,
         };
