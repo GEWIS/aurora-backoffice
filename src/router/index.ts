@@ -115,12 +115,21 @@ const router = createRouter({
           ],
         },
         {
+          path: '/settings',
+          component: () => import('@/views/Base/ServerSettingsView.vue'),
+          name: 'ServerSettings',
+          meta: {
+            securityGroup: 'audit',
+            securitySection: 'base',
+          },
+        },
+        {
           path: '/audit',
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
           meta: {
-            securityGroup: 'audit',
-            securitySection: 'base',
+            securityGroup: 'serverSettings',
+            securitySection: 'privileged',
           },
         },
       ],

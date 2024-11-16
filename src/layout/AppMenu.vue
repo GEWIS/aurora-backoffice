@@ -24,6 +24,8 @@ const model = computed<MenuItem[]>(() => {
   const showScenes = authStore.isInSecurityGroup('scenes', 'base');
   const showFixtures = authStore.isInSecurityGroup('handler', 'base');
 
+  const showSettings = authStore.isInSecurityGroup('serverSettings', 'privileged');
+
   return [
     {
       label: 'Home',
@@ -58,6 +60,10 @@ const model = computed<MenuItem[]>(() => {
         },
         showCenturion && { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' },
       ].filter(Boolean),
+    },
+    showSettings && {
+      label: 'Settings',
+      items: [{ label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' }]
     },
   ].filter(Boolean) as MenuItem[];
 });

@@ -17,6 +17,7 @@ import {
 } from '@/api';
 import { useSceneControllerStore } from '@/stores/scene-controller.store';
 import { useAuditStore } from '@/stores/audit.store';
+import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 /**
  * Auth store
@@ -94,6 +95,7 @@ export const useAuthStore = defineStore('auth', {
      */
     async initStores(): Promise<void> {
       await useSocketStore().connect();
+      await useServerSettingsStore().init();
       if (this.isInSecurityGroup('handler', 'base')) {
         await useHandlersStore().init();
       }

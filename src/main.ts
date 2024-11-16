@@ -49,6 +49,7 @@ import '@/utils/fetchInterceptor';
 import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/services.gen';
+import { TreeTable } from 'primevue';
 
 const app = createApp(App);
 
@@ -91,6 +92,7 @@ app.component('Menu', Menu);
 app.component('Menubar', Menubar);
 app.component('Panel', Panel);
 app.component('DataTable', DataTable);
+app.component('TreeTable', TreeTable);
 app.component('Column', Column);
 app.component('Paginator', Paginator);
 app.component('Dialog', Dialog);
