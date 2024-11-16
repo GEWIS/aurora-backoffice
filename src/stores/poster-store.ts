@@ -6,7 +6,7 @@ import {
   type ErrorPoster,
   getPosters,
   setPosterBorrelMode,
-  forceUpdatePosters
+  forceUpdatePosters,
 } from '@/api';
 
 /**
@@ -25,12 +25,12 @@ export const usePosterStore = defineStore('poster', {
   state: (): PosterStore => ({
     posters: [],
     borrelModeActive: false,
-    loading: true
+    loading: true,
   }),
   getters: {
     fetchPosters: (state) => state.posters,
     isLoading: (state) => state.loading,
-    isBorrelModeActive: (state) => state.borrelModeActive
+    isBorrelModeActive: (state) => state.borrelModeActive,
   },
   actions: {
     /**
@@ -38,7 +38,7 @@ export const usePosterStore = defineStore('poster', {
      */
     async getPosters() {
       getPosters({
-        query: { alwaysReturnBorrelPosters: true }
+        query: { alwaysReturnBorrelPosters: true },
       }).then((posters) => {
         this.posters = posters.data!.posters;
         this.borrelModeActive = posters.data!.borrelMode;
@@ -51,7 +51,7 @@ export const usePosterStore = defineStore('poster', {
     async setBorrelMode(enabled: boolean) {
       this.loading = true;
       await setPosterBorrelMode({
-        body: { enabled }
+        body: { enabled },
       }).then(() => {
         this.loading = false;
         this.borrelModeActive = enabled;
@@ -74,6 +74,6 @@ export const usePosterStore = defineStore('poster', {
 
       await this.getPosters();
       this.loading = false;
-    }
-  }
+    },
+  },
 });

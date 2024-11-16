@@ -77,9 +77,9 @@ const sceneMenuItems = computed<IShortcutItem[]>(() =>
       command: async () => {
         await handlersStore.setLightsHandler(lightGroupIds, 'ScenesHandler');
         await sceneStore.applyScene(s.id);
-      }
+      },
     };
-  })
+  }),
 );
 
 // Add items based on the user's security groups
@@ -98,10 +98,10 @@ const defaults = computed<IShortcutItem[] | boolean>(() => {
           icon: 'pi-power-off',
           command: () => {
             handlersStore.reset();
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ].filter(Boolean) as IShortcutItem[];
 });
 
@@ -123,7 +123,7 @@ const lights = computed<IShortcutItem[] | boolean>(() => {
           command: () => {
             const ids = subscriberStore.lightsGroups.map((g) => g.id);
             handlersStore.setLightsHandler(ids);
-          }
+          },
         },
         ...sceneMenuItems.value,
         {
@@ -132,10 +132,10 @@ const lights = computed<IShortcutItem[] | boolean>(() => {
           command: () => {
             const ids = subscriberStore.lightsGroups.map((g) => g.id);
             handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   ].filter(Boolean) as IShortcutItem[];
 });
 
@@ -161,10 +161,10 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
               disableAllModes().then(async () => {
                 await Promise.all([
                   centurionModeStore.getCurrentCenturion(),
-                  timeTrailRaceModeStore.getTimeTrailMode()
+                  timeTrailRaceModeStore.getTimeTrailMode(),
                 ]);
               });
-            }
+            },
           },
         showCenturion && {
           label: 'Centurion',
@@ -172,7 +172,7 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
           route: '/modes/centurion',
           loading: centurionModeStore.loading,
           enabledIcon: centurionModeStore.enabled,
-          disabledIcon: centurionModeStore.disabled
+          disabledIcon: centurionModeStore.disabled,
         },
         showTimeTrail && {
           label: 'Spoelbakkenrace',
@@ -180,15 +180,15 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
           route: '/modes/timeTrailRace',
           loading: timeTrailRaceModeStore.loading,
           enabledIcon: timeTrailRaceModeStore.enabled,
-          disabledIcon: timeTrailRaceModeStore.disabled
-        }
-      ]
-    }
+          disabledIcon: timeTrailRaceModeStore.disabled,
+        },
+      ],
+    },
   ].filter(Boolean) as IShortcutItem[];
 });
 
 const menus = computed<Array<Array<IShortcutItem>>>(
-  () => [defaults.value, lights.value, modes.value].filter(Boolean) as Array<Array<IShortcutItem>>
+  () => [defaults.value, lights.value, modes.value].filter(Boolean) as Array<Array<IShortcutItem>>,
 );
 </script>
 

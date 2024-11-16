@@ -38,8 +38,8 @@ const handleAddEffect = () => {
     type: MovementEffects_TableRotate.TABLE_ROTATE,
     props: {
       cycleTime: cycleTime.value,
-      offsetFactor: offsetFactor.value
-    }
+      offsetFactor: offsetFactor.value,
+    },
   });
 };
 </script>

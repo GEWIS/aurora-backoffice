@@ -3,7 +3,7 @@
     class="layout-wrapper"
     :class="[
       'layout-static',
-      { 'layout-static-inactive': !menuDesktopActive, 'layout-mobile-active': menuMobileActive }
+      { 'layout-static-inactive': !menuDesktopActive, 'layout-mobile-active': menuMobileActive },
     ]"
   >
     <AppTopbar />
@@ -62,8 +62,7 @@ const isOutsideClicked = (event: Event) => {
   const sidebar = document.querySelector('.layout-sidebar');
   const sidebarButton = document.querySelector('.layout-topbar-button');
 
-  const isInside =
-    sidebar!.contains(event.target as Node) || sidebarButton!.contains(event.target as Node);
+  const isInside = sidebar!.contains(event.target as Node) || sidebarButton!.contains(event.target as Node);
 
   return !isInside;
 };

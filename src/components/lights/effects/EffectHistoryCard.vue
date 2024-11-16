@@ -23,7 +23,7 @@ const props = defineProps<{
 
 const store = useHandlersStore();
 const lightGroups = props.effect.lightGroupIds.map((id: number) =>
-  store.getRegisteredLights().find((g) => g.id === id)
+  store.getRegisteredLights().find((g) => g.id === id),
 );
 const effectsControllerStore = useEffectsControllerStore();
 
@@ -32,10 +32,7 @@ const setEffect = () => {
     effectsControllerStore.setColorEffect(props.effect.colorEffect, props.effect.lightGroupIds);
   }
   if (props.effect.movementEffect !== undefined) {
-    effectsControllerStore.setMovementEffect(
-      props.effect.movementEffect,
-      props.effect.lightGroupIds
-    );
+    effectsControllerStore.setMovementEffect(props.effect.movementEffect, props.effect.lightGroupIds);
   }
 };
 </script>

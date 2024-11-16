@@ -1,11 +1,7 @@
 <template>
   <AppContainer icon="pi pi-fw pi-bolt" title="Fixture Overview">
     <div>
-      <DataTable
-        v-model:expanded-rows="expandedRows"
-        data-key="id"
-        :value="subscriberStore.lightsGroups"
-      >
+      <DataTable v-model:expanded-rows="expandedRows" data-key="id" :value="subscriberStore.lightsGroups">
         <template #header>
           <div class="flex flex-wrap justify-end gap-5">
             <Button icon="pi pi-plus" label="Expand All" text @click="expandAll" />
@@ -24,9 +20,7 @@
             <span v-if="activeLightsGroupIds.has(slotProps.data.id)">
               {{ getHandler(slotProps.data.id) }}
             </span>
-            <InlineMessage v-else severity="warn">
-              No handler set, all actions disabled
-            </InlineMessage>
+            <InlineMessage v-else severity="warn"> No handler set, all actions disabled </InlineMessage>
           </template>
         </Column>
         <Column header="Actions">
@@ -41,7 +35,7 @@
                     await freezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
-                      body: `Successfully froze lights group '${slotProps.data.name}'`
+                      body: `Successfully froze lights group '${slotProps.data.name}'`,
                     });
                   }
                 "
@@ -57,7 +51,7 @@
                     await unfreezeLightsGroup({ path: { id: slotProps.data.id } });
                     toastSuccess({
                       title: 'Success',
-                      body: `Successfully unfroze lights group '${slotProps.data.name}'`
+                      body: `Successfully unfroze lights group '${slotProps.data.name}'`,
                     });
                   }
                 "
@@ -96,10 +90,7 @@
                     <i class="pi pi-play" />
                   </Button>
                   <Button
-                    :disabled="
-                      !activeLightsGroupIds.has(slotProps.data.id) ||
-                      !slotProps2.data.fixture.canReset
-                    "
+                    :disabled="!activeLightsGroupIds.has(slotProps.data.id) || !slotProps2.data.fixture.canReset"
                     size="small"
                     title="Hardware reset"
                     @click="handleHardwareReset(slotProps2.data.type, slotProps2.data.id)"
@@ -132,7 +123,7 @@ import {
   unfreezeGroupPar,
   unfreezeLightsGroup,
   unfreezeMovingHeadRgb,
-  unfreezeMovingHeadWheel
+  unfreezeMovingHeadWheel,
 } from '@/api';
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastSuccess } from '@/utils/toastHandler';
@@ -145,7 +136,7 @@ const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
   expandedRows.value = subscriberStore.lightsGroups.reduce(
     (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] ? rows : {}),
-    {}
+    {},
   );
 };
 const collapseAll = () => {
@@ -156,7 +147,7 @@ const getGroupFixtures = (g: LightsGroupResponse) =>
   [
     ...g.pars.map((p) => ({ ...p, type: FixtureType.PAR })),
     ...g.movingHeadRgbs.map((m) => ({ ...m, type: FixtureType.MOVING_HEAD_RGB })),
-    ...g.movingHeadWheels.map((m) => ({ ...m, type: FixtureType.MOVING_HEAD_WHEEL }))
+    ...g.movingHeadWheels.map((m) => ({ ...m, type: FixtureType.MOVING_HEAD_WHEEL })),
   ].sort((a, b) => a.firstChannel - b.firstChannel);
 
 const handleFreeze = async (type: FixtureType, id: number) => {
@@ -173,7 +164,7 @@ const handleFreeze = async (type: FixtureType, id: number) => {
   }
   toastSuccess({
     title: 'Success',
-    body: 'Successfully froze fixture'
+    body: 'Successfully froze fixture',
   });
 };
 
@@ -191,7 +182,7 @@ const handleUnfreeze = async (type: FixtureType, id: number) => {
   }
   toastSuccess({
     title: 'Success',
-    body: 'Successfully unfroze fixture'
+    body: 'Successfully unfroze fixture',
   });
 };
 
@@ -209,7 +200,7 @@ const handleHardwareReset = async (type: FixtureType, id: number) => {
   }
   toastSuccess({
     title: 'Success',
-    body: 'Successfully sent hardware reset signal'
+    body: 'Successfully sent hardware reset signal',
   });
 };
 

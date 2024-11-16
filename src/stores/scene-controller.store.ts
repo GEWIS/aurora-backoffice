@@ -6,7 +6,7 @@ import {
   createScene,
   deleteScene,
   applyScene,
-  clearScene
+  clearScene,
 } from '@/api';
 
 interface SceneControllerStore {
@@ -19,13 +19,13 @@ export const useSceneControllerStore = defineStore('scene-controller', {
   state: (): SceneControllerStore => ({
     scenes: [],
     favoriteScenes: [],
-    loading: true
+    loading: true,
   }),
   getters: {},
   actions: {
     async init() {
       const scenes = await getAllScenes({
-        query: { favorite: true }
+        query: { favorite: true },
       });
       this.favoriteScenes = scenes.data!;
       this.loading = false;
@@ -43,7 +43,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
     async createScene(body: CreateSceneParams) {
       this.loading = true;
       await createScene({
-        body: body
+        body: body,
       });
       await this.fetchScenes();
       this.loading = false;
@@ -51,7 +51,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
     async deleteScene(id: number) {
       this.loading = true;
       await deleteScene({
-        path: { id }
+        path: { id },
       });
       await this.fetchScenes();
       this.loading = false;
@@ -59,7 +59,7 @@ export const useSceneControllerStore = defineStore('scene-controller', {
     async applyScene(id: number) {
       this.loading = true;
       await applyScene({
-        path: { id }
+        path: { id },
       });
       this.loading = false;
     },
@@ -67,6 +67,6 @@ export const useSceneControllerStore = defineStore('scene-controller', {
       this.loading = true;
       await clearScene();
       this.loading = false;
-    }
-  }
+    },
+  },
 });

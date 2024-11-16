@@ -15,8 +15,8 @@
           'pi',
           {
             'pi-moon': !darkMode,
-            'pi-sun': darkMode
-          }
+            'pi-sun': darkMode,
+          },
         ]"
       />
     </div>

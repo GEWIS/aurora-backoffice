@@ -25,11 +25,11 @@ const confirmDialog = () => {
       if (props.onAccept) {
         props.onAccept();
       }
-    }
+    },
   });
 };
 
 defineExpose({
-  confirmDialog
+  confirmDialog,
 });
 </script>

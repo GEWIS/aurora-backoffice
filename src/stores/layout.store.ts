@@ -8,7 +8,7 @@ enum TailwindWidth {
   md = 768,
   lg = 992,
   xl = 1200,
-  xxl = 1600
+  xxl = 1600,
 }
 
 /**
@@ -47,13 +47,13 @@ export const useLayoutStore = defineStore('layout', {
     menuMobileActive: false,
     menuDesktopActive: false,
     darkMode: useDarkMode(),
-    windowWidth: window.innerWidth
+    windowWidth: window.innerWidth,
   }),
   getters: {
     getMenuMobileActive: (state) => state.menuMobileActive,
     getMenuDesktopActive: (state) => state.menuDesktopActive,
     getDarkMode: (state) => state.darkMode,
-    getWindowWidth: (state) => state.windowWidth
+    getWindowWidth: (state) => state.windowWidth,
   },
   actions: {
     /**
@@ -111,8 +111,8 @@ export const useLayoutStore = defineStore('layout', {
      */
     unmountResizeListener() {
       window.removeEventListener('resize', this.changeWidth);
-    }
-  }
+    },
+  },
 });
 
 export { TailwindWidth };

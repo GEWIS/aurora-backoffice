@@ -10,7 +10,7 @@ enum ToastSeverity {
   SUCCESS = 'success',
   INFO = 'info',
   WARN = 'warn',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 function toast(severity: ToastSeverity, message: ToastMessage) {
@@ -18,7 +18,7 @@ function toast(severity: ToastSeverity, message: ToastMessage) {
     severity: severity,
     summary: message.title,
     detail: message.body,
-    life: message.lifeTime ?? 5000
+    life: message.lifeTime ?? 5000,
   });
 }
 

@@ -1,8 +1,6 @@
 <template>
   <div v-if="store.getCurrentPlayer !== undefined" class="flex flex-col gap-2">
-    <div class="text-2xl text-center font-semibold">
-      {{ store.getCurrentPlayer.name }}'s final score
-    </div>
+    <div class="text-2xl text-center font-semibold">{{ store.getCurrentPlayer.name }}'s final score</div>
     <div class="w-max-lg mx-auto">
       <table>
         <tbody>

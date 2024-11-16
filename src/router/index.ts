@@ -25,16 +25,16 @@ const router = createRouter({
             {
               path: 'callback',
               component: () => import('@/views/Base/AuthView.vue'),
-              name: 'authCallback'
-            }
-          ]
+              name: 'authCallback',
+            },
+          ],
         },
         {
           path: '/unauthorized',
           component: () => import('@/views/Base/UnauthorizedView.vue'),
-          name: 'unauthorized'
-        }
-      ]
+          name: 'unauthorized',
+        },
+      ],
     },
     {
       path: '',
@@ -43,7 +43,7 @@ const router = createRouter({
         {
           path: '',
           component: () => import('@/views/Base/DashboardView.vue'),
-          name: 'dashboard'
+          name: 'dashboard',
         },
         {
           path: '/poster',
@@ -51,13 +51,13 @@ const router = createRouter({
             {
               path: 'list',
               component: () => import('@/views/Poster/PosterList.vue'),
-              name: 'posterList'
-            }
+              name: 'posterList',
+            },
           ],
           meta: {
             securityGroup: 'poster',
-            securitySection: 'base'
-          }
+            securitySection: 'base',
+          },
         },
         {
           path: '/modes',
@@ -68,8 +68,8 @@ const router = createRouter({
               name: 'centurionMode',
               meta: {
                 securityGroup: 'centurion',
-                securitySection: 'privileged'
-              }
+                securitySection: 'privileged',
+              },
             },
             {
               path: 'timeTrailRace',
@@ -77,10 +77,10 @@ const router = createRouter({
               name: 'timeTrailRaceMode',
               meta: {
                 securityGroup: 'timetrail',
-                securitySection: 'base'
-              }
-            }
-          ]
+                securitySection: 'base',
+              },
+            },
+          ],
         },
         {
           path: '/lights',
@@ -91,8 +91,8 @@ const router = createRouter({
               name: 'lightEffects',
               meta: {
                 securityGroup: 'effects',
-                securitySection: 'base'
-              }
+                securitySection: 'base',
+              },
             },
             {
               path: 'scenesController',
@@ -100,8 +100,8 @@ const router = createRouter({
               name: 'lightsScenesController',
               meta: {
                 securityGroup: 'scenes',
-                securitySection: 'base'
-              }
+                securitySection: 'base',
+              },
             },
             {
               path: 'fixtures',
@@ -109,28 +109,37 @@ const router = createRouter({
               name: 'fixturesOverview',
               meta: {
                 securityGroup: 'handler',
-                securitySection: 'base'
-              }
-            }
-          ]
+                securitySection: 'base',
+              },
+            },
+          ],
+        },
+        {
+          path: '/settings',
+          component: () => import('@/views/Base/ServerSettingsView.vue'),
+          name: 'ServerSettings',
+          meta: {
+            securityGroup: 'audit',
+            securitySection: 'base',
+          },
         },
         {
           path: '/audit',
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
           meta: {
-            securityGroup: 'audit',
-            securitySection: 'base'
-          }
-        }
-      ]
+            securityGroup: 'serverSettings',
+            securitySection: 'privileged',
+          },
+        },
+      ],
     },
     {
       path: '/:pathMatch(.*)*',
       component: () => import('@/views/Base/NotFoundView.vue'),
-      name: 'notFound'
-    }
-  ]
+      name: 'notFound',
+    },
+  ],
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -144,7 +153,7 @@ router.beforeEach(async (to, from, next) => {
     await authStore.MockLogin({
       id: 'dev',
       name: 'dev',
-      roles: [SecurityGroup.ADMIN]
+      roles: [SecurityGroup.ADMIN],
     });
     await authStore.initStores();
   }

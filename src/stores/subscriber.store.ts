@@ -7,7 +7,7 @@ import {
   getLightsGroups,
   getScreens,
   type LightsGroupResponse,
-  type ScreenResponse
+  type ScreenResponse,
 } from '@/api';
 
 interface SubscriberStore {
@@ -20,7 +20,7 @@ export const useSubscriberStore = defineStore('subscribers', {
   state: (): SubscriberStore => ({
     audios: [],
     screens: [],
-    lightsGroups: []
+    lightsGroups: [],
   }),
   getters: {},
   actions: {
@@ -40,6 +40,6 @@ export const useSubscriberStore = defineStore('subscribers', {
       socketStore.backofficeSocket?.on('connect_audio', this.getAudios.bind(this));
       socketStore.backofficeSocket?.on('connect_screen', this.getScreens.bind(this));
       socketStore.backofficeSocket?.on('connect_lightgroups', this.getLightGroups.bind(this));
-    }
-  }
+    },
+  },
 });

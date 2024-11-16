@@ -24,17 +24,19 @@ const model = computed<MenuItem[]>(() => {
   const showScenes = authStore.isInSecurityGroup('scenes', 'base');
   const showFixtures = authStore.isInSecurityGroup('handler', 'base');
 
+  const showSettings = authStore.isInSecurityGroup('serverSettings', 'privileged');
+
   return [
     {
       label: 'Home',
       items: [
         { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
-        showAudit && { label: 'Logs', icon: 'pi pi-fw pi-book', to: '/audit' }
-      ].filter(Boolean)
+        showAudit && { label: 'Logs', icon: 'pi pi-fw pi-book', to: '/audit' },
+      ].filter(Boolean),
     },
     showPosters && {
       label: 'Screens',
-      items: [{ label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/list' }]
+      items: [{ label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/list' }],
     },
     {
       label: 'Lights',
@@ -43,10 +45,10 @@ const model = computed<MenuItem[]>(() => {
         showScenes && {
           label: 'Scenes',
           icon: 'pi pi-fw pi-sliders-h',
-          to: '/lights/scenesController'
+          to: '/lights/scenesController',
         },
-        showFixtures && { label: 'Fixtures', icon: 'pi pi-fw pi-bolt', to: '/lights/fixtures' }
-      ].filter(Boolean)
+        showFixtures && { label: 'Fixtures', icon: 'pi pi-fw pi-bolt', to: '/lights/fixtures' },
+      ].filter(Boolean),
     },
     (showCenturion || showTimeTrail) && {
       label: 'Modes',
@@ -54,11 +56,15 @@ const model = computed<MenuItem[]>(() => {
         showTimeTrail && {
           label: 'Spoelbakkenrace',
           icon: 'pi pi-fw pi-hourglass',
-          to: '/modes/timetrailrace'
+          to: '/modes/timetrailrace',
         },
-        showCenturion && { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' }
-      ].filter(Boolean)
-    }
+        showCenturion && { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' },
+      ].filter(Boolean),
+    },
+    showSettings && {
+      label: 'Settings',
+      items: [{ label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' }],
+    },
   ].filter(Boolean) as MenuItem[];
 });
 </script>

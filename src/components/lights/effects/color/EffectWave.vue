@@ -42,8 +42,8 @@ const handleAddEffect = () => {
     props: {
       color: colors.value[0],
       nrWaves: nrWaves.value,
-      cycleTime: cycleTime.value
-    }
+      cycleTime: cycleTime.value,
+    },
   });
 };
 </script>

@@ -15,7 +15,7 @@ client.interceptors.response.use((response) => {
       .then((err: HttpApiException) => {
         toastError({
           title: err.name,
-          body: err.message
+          body: err.message,
         });
         httpException = err;
       });

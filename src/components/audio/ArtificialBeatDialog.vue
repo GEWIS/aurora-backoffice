@@ -16,9 +16,7 @@
         <Spinner />
       </div>
       <div class="flex flex-column gap-1">
-        <div
-          class="h-8rem border-1 flex flex-column flex-wrap justify-content-center align-items-center"
-        >
+        <div class="h-8rem border-1 flex flex-column flex-wrap justify-content-center align-items-center">
           <p v-if="getBpm() != null">{{ getBpm() }} BPM</p>
           <p v-else>Tap to set BPM</p>
           <span>
@@ -50,11 +48,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { splitArrayIntoChunks } from '@/utils/arrayUtils';
-import {
-  getArtificalBeatGenerator,
-  startArtificialBeatGenerator,
-  stopArtificialBeatGenerator
-} from '@/api';
+import { getArtificalBeatGenerator, startArtificialBeatGenerator, stopArtificialBeatGenerator } from '@/api';
 
 const visible = ref<boolean>(false);
 const taps = ref<Date[]>([]);

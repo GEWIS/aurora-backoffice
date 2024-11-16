@@ -6,7 +6,7 @@ import {
   enableStrobeOnLightsGroup,
   type LightsEffectsColorCreateParams,
   type LightsEffectsMovementCreateParams,
-  type LightsGroupResponse
+  type LightsGroupResponse,
 } from '@/api';
 
 interface PushedEffect {
@@ -24,7 +24,7 @@ interface EffectsControllerStore {
 export const useEffectsControllerStore = defineStore('effectsController', {
   state: (): EffectsControllerStore => ({
     selectedLightsGroupIds: [],
-    pastPushedEffects: []
+    pastPushedEffects: [],
   }),
   getters: {},
   actions: {
@@ -47,13 +47,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       ids.map(async (id) => {
         await applyLightsEffectColor({
           body: [effect],
-          path: { id }
+          path: { id },
         });
       });
       const pastEffect: PushedEffect = {
         colorEffect: { ...effect },
         lightGroupIds: [...ids],
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       this.pastPushedEffects = [pastEffect, ...this.pastPushedEffects.slice(0, 9)];
     },
@@ -62,13 +62,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       ids.map(async (id) => {
         await applyLightsEffectMovement({
           body: [effect],
-          path: { id }
+          path: { id },
         });
       });
       const pastEffect: PushedEffect = {
         movementEffect: { ...effect },
         lightGroupIds: [...ids],
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       this.pastPushedEffects = [pastEffect, ...this.pastPushedEffects.slice(0, 9)];
     },
@@ -76,18 +76,18 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
           return enableStrobeOnLightsGroup({
-            path: { id }
+            path: { id },
           });
-        })
+        }),
       );
     },
     async disableStrobe() {
       await Promise.all(
         this.selectedLightsGroupIds.map((id) => {
           return disableStrobeOnLightsGroup({
-            path: { id }
+            path: { id },
           });
-        })
+        }),
       );
     },
     async disableLightsColors() {
@@ -95,9 +95,9 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         this.selectedLightsGroupIds.map((id) => {
           return applyLightsEffectColor({
             body: [],
-            path: { id }
+            path: { id },
           });
-        })
+        }),
       );
     },
     async disableLightsMovement() {
@@ -105,12 +105,12 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         this.selectedLightsGroupIds.map((id) => {
           return applyLightsEffectMovement({
             body: [],
-            path: { id }
+            path: { id },
           });
-        })
+        }),
       );
-    }
-  }
+    },
+  },
 });
 
 export { type PushedEffect };

@@ -6,7 +6,7 @@
         <!-- prettier-ignore -->
         <div
           class="group absolute rounded-2xl top-0 w-full h-full flex justify-center items-center
-          hover:bg-black/40 hover:backdrop-blur-sm transition duration-200"
+          hover:bg-black/40 hover:backdrop-blur-sm transition duration-200 cursor-pointer"
           :class="{
             'bg-black/40': !store.playing,
             'backdrop-blur-sm': !store.playing

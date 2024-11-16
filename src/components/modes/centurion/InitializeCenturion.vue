@@ -40,9 +40,7 @@
     <template #3>
       <div class="flex flex-col gap-2 mt-3 sm:mt-0">
         <div class="max-w-lg mx-auto">
-          <div class="sm:text-lg text-center mb-3 font-semibold">
-            Confirm centurion initialization
-          </div>
+          <div class="sm:text-lg text-center mb-3 font-semibold">Confirm centurion initialization</div>
           <TapeDetails v-if="selectedTape" :tape="selectedTape" />
           <SubscriberDetails
             class="mt-3"
@@ -97,7 +95,7 @@ const availableTapes = computed<GroupedTape[] | undefined>(() => {
       accumulated[tape.artist] = {
         label: tape.artist,
         code: tape.artist,
-        items: []
+        items: [],
       };
     }
     accumulated[tape.artist].items.push(tape);
@@ -113,7 +111,7 @@ const availableTapes = computed<GroupedTape[] | undefined>(() => {
 const initializationSteps = computed<StepperStep[]>(() => [
   { value: 'Mixtape', nextDisabled: selectedTape.value === undefined },
   { value: 'Subscribers', nextDisabled: selectedAudios.value.length === 0 },
-  { value: 'Confirmation', confirmFunction: initialize }
+  { value: 'Confirmation', confirmFunction: initialize, confirmLoading: centurionStore.loading },
 ]);
 
 // Initialize the centurion
@@ -123,7 +121,7 @@ const initialize = async () => {
     selectedTape.value!.artist,
     selectedAudios.value,
     selectedScreens.value,
-    selectedLightGroups.value
+    selectedLightGroups.value,
   );
 };
 </script>
