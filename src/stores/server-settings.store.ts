@@ -3,24 +3,24 @@ import { type FeatureFlagResponse, type ISettings, setSetting } from '@/api';
 import { getFeatureFlags, getSettings } from '@/api';
 
 interface ServerSettingsStore {
-  serverSettings: ISettings;
+  serverSettings?: ISettings;
   featureFlags: FeatureFlagResponse;
   loading: boolean;
 }
 
 export const useServerSettingsStore = defineStore('server-settings', {
   state: (): ServerSettingsStore => ({
-    serverSettings: {},
-    featureFlags: {},
+    serverSettings: undefined,
+    featureFlags: [],
     loading: true,
   }),
   actions: {
     async init(): Promise<void> {
       await getSettings().then((res) => {
-        if (res) this.serverSettings = res.data;
+        if (res && res.data) this.serverSettings = res.data;
       });
       await getFeatureFlags().then((res) => {
-        if (res) this.featureFlags = res.data;
+        if (res && res.data) this.featureFlags = res.data;
       });
       this.loading = false;
     },
@@ -32,11 +32,13 @@ export const useServerSettingsStore = defineStore('server-settings', {
       if (!match) return true;
       return match.value;
     },
-    async setSetting(setting: keyof ISettings, value: ISettings[keyof ISettings]): void {
+    async setSetting(setting: keyof ISettings, value: ISettings[keyof ISettings]): Promise<void> {
+      if (!this.serverSettings) return;
+
       this.loading = true;
-      await setSetting({ body: { key: setting, value } })
-      this.serverSettings[setting] = value;
+      await setSetting({ body: { key: setting, value } });
+      this.serverSettings[setting] = value as never;
       this.loading = false;
-    }
+    },
   },
-})
+});

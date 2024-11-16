@@ -21,7 +21,6 @@
               <Button
                 v-if="index > 0 && !steps[index].previousHidden"
                 :disabled="steps[index].previousDisabled || steps[index].previousLoading"
-                :loading="steps[index].previousLoading"
                 :icon="
                   steps[index].previousIcon === null
                     ? ''
@@ -30,6 +29,7 @@
                       : 'pi pi-chevron-left'
                 "
                 :label="steps[index].previousText"
+                :loading="steps[index].previousLoading"
                 severity="secondary"
                 @click="
                   steps[index].previousFunction?.();
@@ -39,7 +39,6 @@
               <Button
                 v-if="index < steps.length - 1 && !steps[index].nextHidden"
                 :disabled="steps[index].nextDisabled || steps[index].nextLoading"
-                :loading="steps[index].nextLoading"
                 :icon="
                   steps[index].nextIcon === null
                     ? ''
@@ -48,6 +47,7 @@
                       : 'pi pi-chevron-right'
                 "
                 :label="steps[index].nextText"
+                :loading="steps[index].nextLoading"
                 @click="
                   steps[index].nextFunction?.();
                   steps[index].overrideNextFunction ? null : activateCallback((index + 2).toString());
@@ -56,7 +56,6 @@
               <Button
                 v-if="index === steps.length - 1 && !steps[index].confirmHidden"
                 :disabled="steps[index].confirmDisabled || steps[index].confirmLoading"
-                :loading="steps[index].confirmLoading"
                 :icon="
                   steps[index].confirmIcon === null
                     ? ''
@@ -65,6 +64,7 @@
                       : 'pi pi-check'
                 "
                 :label="steps[index].confirmText"
+                :loading="steps[index].confirmLoading"
                 @click="steps[index].confirmFunction"
               />
             </div>

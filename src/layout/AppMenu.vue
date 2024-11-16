@@ -63,7 +63,7 @@ const model = computed<MenuItem[]>(() => {
     },
     showSettings && {
       label: 'Settings',
-      items: [{ label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' }]
+      items: [{ label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' }],
     },
   ].filter(Boolean) as MenuItem[];
 });
