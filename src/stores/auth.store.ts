@@ -94,8 +94,11 @@ export const useAuthStore = defineStore('auth', {
      * Initialize the stores -- only those which the user has access to
      */
     async initStores(): Promise<void> {
+      await useServerSettingsStore().initFeatureFlags();
       await useSocketStore().connect();
-      await useServerSettingsStore().init();
+      if (this.isInSecurityGroup('serverSettings', 'privileged')) {
+        await useServerSettingsStore().initSettings();
+      }
       if (this.isInSecurityGroup('handler', 'base')) {
         await useHandlersStore().init();
       }

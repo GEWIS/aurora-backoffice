@@ -48,11 +48,13 @@ import { type IShortcutItem } from '@/components/shortcuts/IShortcutItem';
 import AppContainer from '@/layout/AppContainer.vue';
 import { disableAllModes } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
+import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
 const sceneStore = useSceneControllerStore();
 const authStore = useAuthStore();
+const settingsStore = useServerSettingsStore();
 
 const centurionModeStore = useCenturionStore();
 if (authStore.isInSecurityGroup('centurion', 'privileged')) {
@@ -141,9 +143,11 @@ const lights = computed<IShortcutItem[] | boolean>(() => {
 
 // Add items based on the user's security groups
 const modes = computed<IShortcutItem[] | boolean>(() => {
-  const showModes = authStore.isInSecurityGroup('mode', 'base');
-  const showCenturion = authStore.isInSecurityGroup('centurion', 'privileged');
-  const showTimeTrail = authStore.isInSecurityGroup('timetrail', 'base');
+  const showCenturion =
+    authStore.isInSecurityGroup('centurion', 'privileged') && settingsStore.featureEnabled('Centurion');
+  const showTimeTrail =
+    authStore.isInSecurityGroup('timetrail', 'base') && settingsStore.featureEnabled('TimeTrailRace');
+  const showModes = authStore.isInSecurityGroup('mode', 'base') && (showCenturion || showTimeTrail);
 
   if (!(showModes || showCenturion || showTimeTrail)) {
     return false;
@@ -182,7 +186,7 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
           enabledIcon: timeTrailRaceModeStore.enabled,
           disabledIcon: timeTrailRaceModeStore.disabled,
         },
-      ],
+      ].filter(Boolean),
     },
   ].filter(Boolean) as IShortcutItem[];
 });
