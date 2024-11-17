@@ -1,11 +1,9 @@
 <template>
-  <template v-if="authStore.getDevelopment">
+  <template v-if="development">
     <slot />
   </template>
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth.store';
-
-const authStore = useAuthStore();
+const development = !import.meta.env.PROD;
 </script>

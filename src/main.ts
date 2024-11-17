@@ -43,13 +43,12 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
+import { TreeTable } from 'primevue';
 import router from './router';
 import App from './App.vue';
 import '@/utils/fetchInterceptor';
-import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/services.gen';
-import { TreeTable } from 'primevue';
 
 const app = createApp(App);
 
@@ -77,8 +76,6 @@ client.setConfig({
 });
 
 app.use(createPinia());
-await useAuthStore().init();
-
 app.use(timeago, timeagoOptions);
 
 app.component('Button', Button);
