@@ -173,11 +173,12 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  // TODO; move some of this check away from router
   const layoutStore = useLayoutStore();
   layoutStore.init();
 
   const authStore = useAuthStore();
+  let authenticated = authStore.isAuthenticated();
+
   // Automatically login using mock when in development mode
   if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
     await authStore.MockLogin({
@@ -188,11 +189,16 @@ router.beforeEach(async (to, from, next) => {
     await authStore.initStores();
   }
 
+  // Check if user still has valid cookies
+  if (!authenticated) authenticated = await authStore.init();
+
   // Getting whether authenticated and has rights to access the route
-  const authenticated = authStore.isAuthenticated();
+  // Only necessary if the user is authenticated
   let hasRights = true;
-  if (to.meta.securityGroup && to.meta.securitySection) {
-    hasRights = authStore.isInSecurityGroup(to.meta.securityGroup, to.meta.securitySection);
+  if (authenticated) {
+    if (to.meta.securityGroup && to.meta.securitySection) {
+      hasRights = authStore.isInSecurityGroup(to.meta.securityGroup, to.meta.securitySection);
+    }
   }
 
   if (!authenticated && !to.path.startsWith('/auth')) {

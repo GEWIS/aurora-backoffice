@@ -61,7 +61,6 @@ import InputGroup from 'primevue/inputgroup';
 import router from './router';
 import App from './App.vue';
 import '@/utils/fetchInterceptor';
-import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/client.gen';
 
@@ -91,8 +90,6 @@ client.setConfig({
 });
 
 app.use(createPinia());
-await useAuthStore().init();
-
 app.use(timeago, timeagoOptions);
 
 app.component('Button', Button);

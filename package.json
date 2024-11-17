@@ -8,7 +8,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "type-check": "vue-tsc --build --force",
     "lint": "eslint src --max-warnings=1",
     "lint-fix": "eslint src --fix",
     "format": "prettier --ignore-path .gitignore --check ./src/",
@@ -60,6 +60,9 @@
     "vite": "^6.2.2",
     "vite-plugin-chunk-split": "^0.5.0",
     "vue-tsc": "^2.2.8"
+  },
+  "resolutions": {
+     "eslint": "9.14.0"
   },
   "engines": {
     "node": ">=22.0.0"
