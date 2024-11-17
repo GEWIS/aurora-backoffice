@@ -10,15 +10,19 @@
 import { computed } from 'vue';
 import AppMenuItem, { type MenuItem } from './AppMenuItem.vue';
 import { useAuthStore } from '@/stores/auth.store';
+import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 const authStore = useAuthStore();
+const settingsStore = useServerSettingsStore();
 
 // Calculate all items in the menu based on the user's security groups
 const model = computed<MenuItem[]>(() => {
   const showPosters = authStore.isInSecurityGroup('poster', 'base');
   const showAudit = authStore.isInSecurityGroup('audit', 'base');
-  const showCenturion = authStore.isInSecurityGroup('centurion', 'privileged');
-  const showTimeTrail = authStore.isInSecurityGroup('timetrail', 'base');
+  const showCenturion =
+    authStore.isInSecurityGroup('centurion', 'privileged') && settingsStore.featureEnabled('Centurion');
+  const showTimeTrail =
+    authStore.isInSecurityGroup('timetrail', 'base') && settingsStore.featureEnabled('TimeTrailRace');
 
   const showEffects = authStore.isInSecurityGroup('effects', 'base');
   const showScenes = authStore.isInSecurityGroup('scenes', 'base');

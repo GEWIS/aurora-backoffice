@@ -15,13 +15,15 @@ export const useServerSettingsStore = defineStore('server-settings', {
     loading: true,
   }),
   actions: {
-    async init(): Promise<void> {
-      await getSettings().then((res) => {
-        if (res && res.data) this.serverSettings = res.data;
-      });
-      await getFeatureFlags().then((res) => {
-        if (res && res.data) this.featureFlags = res.data;
-      });
+    async initFeatureFlags(): Promise<void> {
+      const res = await getFeatureFlags();
+      if (res && res.data) this.featureFlags = res.data;
+      this.loading = false;
+    },
+    async initSettings(): Promise<void> {
+      this.loading = true;
+      const res = await getSettings();
+      if (res && res.data) this.serverSettings = res.data;
       this.loading = false;
     },
     isFeatureFlag(setting: string | keyof ISettings): boolean {
