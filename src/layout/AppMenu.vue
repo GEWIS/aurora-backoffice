@@ -32,6 +32,11 @@ const model = computed<MenuItem[]>(() => {
 
   const showSettings = authStore.isInSecurityGroup('serverSettings', 'privileged');
 
+  const serverSettingsStore = useServerSettingsStore();
+
+  const GewisPosterLabel = serverSettingsStore.amountOfPosterScreenHandlers > 1 ? 'GEWIS Posters' : 'Posters';
+  const HubblePosterLabel = serverSettingsStore.amountOfPosterScreenHandlers > 1 ? 'Hubble Posters' : 'Posters';
+
   return [
     {
       label: 'Home',
@@ -43,8 +48,8 @@ const model = computed<MenuItem[]>(() => {
     showPosters && {
       label: 'Screens',
       items: [
-        showGewisPosters && { label: 'GEWIS Posters', icon: 'pi pi-fw pi-image', to: '/poster/gewis' },
-        showHubblePosters && { label: 'Hubble Posters', icon: 'pi pi-fw pi-image', to: '/poster/hubble' },
+        showGewisPosters && { label: GewisPosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/gewis' },
+        showHubblePosters && { label: HubblePosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/hubble' },
       ],
     },
     {
