@@ -14,6 +14,11 @@ export const useServerSettingsStore = defineStore('server-settings', {
     featureFlags: [],
     loading: true,
   }),
+  getters: {
+    amountOfPosterScreenHandlers: (state) => {
+      return state.featureFlags.filter((f) => f.key.includes('PosterScreenHandler') && f.value).length;
+    },
+  },
   actions: {
     async initFeatureFlags(): Promise<void> {
       const res = await getFeatureFlags();
