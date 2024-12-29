@@ -31,16 +31,18 @@
       </template>
     </Button>
     <div class="flex-1" />
-    <PosterBorrelModeSwitch />
+    <PosterBorrelModeSwitch v-if="store.isBorrelModeActive != undefined" :store="store" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { usePosterStore } from '@/stores/poster-store';
 import PosterBorrelModeSwitch from '@/components/poster/PosterBorrelModeSwitch.vue';
+import type BasePosterStore from '@/stores/poster/base-poster-store';
 
-const store = usePosterStore();
+defineProps<{
+  store: BasePosterStore;
+}>();
 
 const refreshLoading = ref(false);
 const updateLoading = ref(false);

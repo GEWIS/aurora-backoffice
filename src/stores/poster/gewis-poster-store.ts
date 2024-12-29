@@ -1,13 +1,6 @@
 import { defineStore } from 'pinia';
-import {
-  type LocalPoster,
-  type MediaPoster,
-  type PhotoPoster,
-  type ErrorPoster,
-  getPosters,
-  setPosterBorrelMode,
-  forceUpdatePosters,
-} from '@/api';
+import { getGewisPosters, setPosterBorrelMode, forceUpdateGewisPosters } from '@/api';
+import { type BasePosterState } from '@/stores/poster/base-poster-store';
 
 /**
  * Poster store
@@ -15,14 +8,12 @@ import {
  * @param borrelModeActive - Whether the borrel mode is active
  * @param loading - Whether the poster store is loading
  */
-interface PosterStore {
-  posters: (LocalPoster | MediaPoster | PhotoPoster | ErrorPoster)[];
+type GewisPosterState = BasePosterState & {
   borrelModeActive: boolean;
-  loading: boolean;
-}
+};
 
-export const usePosterStore = defineStore('poster', {
-  state: (): PosterStore => ({
+export const useGewisPosterStore = defineStore('gewis-poster', {
+  state: (): GewisPosterState => ({
     posters: [],
     borrelModeActive: false,
     loading: true,
@@ -37,7 +28,7 @@ export const usePosterStore = defineStore('poster', {
      * Get the posters
      */
     async getPosters() {
-      getPosters({
+      getGewisPosters({
         query: { alwaysReturnBorrelPosters: true },
       }).then((posters) => {
         this.posters = posters.data!.posters;
@@ -70,7 +61,7 @@ export const usePosterStore = defineStore('poster', {
      */
     async reloadPosters() {
       this.loading = true;
-      await forceUpdatePosters();
+      await forceUpdateGewisPosters();
 
       await this.getPosters();
       this.loading = false;
