@@ -43,13 +43,14 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
+import Tag from 'primevue/tag';
+import { Tooltip, TreeTable } from 'primevue';
 import router from './router';
 import App from './App.vue';
 import '@/utils/fetchInterceptor';
 import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
 import { client } from '@/api/services.gen';
-import { TreeTable } from 'primevue';
 
 const app = createApp(App);
 
@@ -115,6 +116,10 @@ app.component('Stepper', Stepper);
 app.component('InlineMessage', Message);
 app.component('StepperPanel', StepPanel);
 app.component('ToggleSwitch', ToggleSwitch);
+app.component('Tag', Tag);
+app.component('Message', Message);
+
+app.directive('tooltip', Tooltip);
 
 app.mount('#app');
 
