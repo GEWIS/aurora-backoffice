@@ -124,8 +124,17 @@ const router = createRouter({
           component: () => import('@/views/Base/ServerSettingsView.vue'),
           name: 'ServerSettings',
           meta: {
-            securityGroup: 'audit',
-            securitySection: 'base',
+            securityGroup: 'serverSettings',
+            securitySection: 'privileged',
+          },
+        },
+        {
+          path: '/timed-events',
+          component: () => import('@/views/Base/TimedEventsView.vue'),
+          name: 'TimedEvents',
+          meta: {
+            securityGroup: 'timedEvents',
+            securitySection: 'privileged',
           },
         },
         {
@@ -133,8 +142,8 @@ const router = createRouter({
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
           meta: {
-            securityGroup: 'serverSettings',
-            securitySection: 'privileged',
+            securityGroup: 'audit',
+            securitySection: 'base',
           },
         },
       ],

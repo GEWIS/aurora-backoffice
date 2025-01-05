@@ -282,7 +282,7 @@
     eslint-plugin-import "^2.31.0"
     eslint-plugin-jsx-a11y "^6.10.2"
     eslint-plugin-react "^7.37.2"
-    eslint-plugin-react-hooks "^5.0.0"
+    eslint-plugin-react-hooks "5.1.0-rc-7c8e5e7a-20241101"
     eslint-plugin-vue "^9.29.0"
     prettier "^3.3.3"
     typescript "^5.6.3"
@@ -1653,6 +1653,11 @@ cors@2.8.5:
     object-assign "^4"
     vary "^1"
 
+cronstrue@^2.52.0:
+  version "2.52.0"
+  resolved "https://registry.yarnpkg.com/cronstrue/-/cronstrue-2.52.0.tgz#00af1a8dcf76a1dece149e4416db823105b28cdb"
+  integrity sha512-NKgHbWkSZXJUcaBHSsyzC8eegD6bBd4O0oCI6XMIJ+y4Bq3v4w7sY3wfWoKPuVlq9pQHRB6od0lmKpIqi8TlKA==
+
 cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -2195,10 +2200,10 @@ eslint-plugin-prettier@^5.2.1:
     prettier-linter-helpers "^1.0.0"
     synckit "^0.9.1"
 
-eslint-plugin-react-hooks@5.1.0-rc-7c8e5e7a-20241101:
-  version "5.1.0-rc-7c8e5e7a-20241101"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-5.1.0-rc-7c8e5e7a-20241101.tgz#87d3e540c7bf455197bf36092aef2045db7a0370"
-  integrity sha512-90qwhATd1dlXHJ7uNmAIelLkfG3XnxR4vdbgG9WUbd81DT0Na+mXg9VVDYG+3/OQSdkAQlac24/hVQevRHMOpw==
+eslint-plugin-react-hooks@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-5.1.0.tgz#3d34e37d5770866c34b87d5b499f5f0b53bf0854"
+  integrity sha512-mpJRtPgHN2tNAvZ35AMfqeB3Xqeo273QxrHJsbBEPWODRM4r0yB6jfoROqKEYrOn27UtRPpcpHc2UqyBSuUNTw==
 
 eslint-plugin-react@^7.37.2:
   version "7.37.2"

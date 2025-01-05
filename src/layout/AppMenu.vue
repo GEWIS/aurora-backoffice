@@ -31,6 +31,7 @@ const model = computed<MenuItem[]>(() => {
   const showFixtures = authStore.isInSecurityGroup('handler', 'base');
 
   const showSettings = authStore.isInSecurityGroup('serverSettings', 'privileged');
+  const showTimedEvents = authStore.isInSecurityGroup('timedEvents', 'privileged');
 
   const serverSettingsStore = useServerSettingsStore();
 
@@ -75,9 +76,12 @@ const model = computed<MenuItem[]>(() => {
         showCenturion && { label: 'Centurion', icon: 'pi pi-fw pi-crown', to: '/modes/centurion' },
       ].filter(Boolean),
     },
-    showSettings && {
+    (showSettings || showTimedEvents) && {
       label: 'Settings',
-      items: [{ label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' }],
+      items: [
+        showSettings && { label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' },
+        showTimedEvents && { label: 'Timed Events', icon: 'pi pi-fw pi-calendar-clock', to: '/timed-events' },
+      ],
     },
   ].filter(Boolean) as MenuItem[];
 });
