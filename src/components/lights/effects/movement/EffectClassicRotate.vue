@@ -25,22 +25,25 @@
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { MovementEffects_ClassicRotate } from '@/api';
+import { type ClassicRotateProps } from '@/api';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  effectProps?: Partial<ClassicRotateProps>;
+}>();
 
-const cycleTime = ref<number>(10000);
-const offsetFactor = ref<number>(0);
+const emit = defineEmits<{
+  save: [props: ClassicRotateProps];
+}>();
+
+const cycleTime = ref<number>(props.effectProps?.cycleTime || 10000);
+const offsetFactor = ref<number>(props.effectProps?.offsetFactor || 0);
 
 const handleAddEffect = () => {
-  store.setMovementEffect({
-    type: MovementEffects_ClassicRotate.CLASSIC_ROTATE,
-    props: {
-      cycleTime: cycleTime.value,
-      offsetFactor: offsetFactor.value,
-    },
-  });
+  const payload: ClassicRotateProps = {
+    cycleTime: cycleTime.value,
+    offsetFactor: offsetFactor.value,
+  };
+  emit('save', payload);
 };
 </script>
 

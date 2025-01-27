@@ -34,24 +34,27 @@
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { MovementEffects_SearchLight } from '@/api';
+import { type SearchLightProps } from '@/api';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  effectProps?: Partial<SearchLightProps>;
+}>();
 
-const radiusFactor = ref<number>(1);
-const cycleTime = ref<number>(4000);
-const offsetFactor = ref<number>(0.25);
+const emit = defineEmits<{
+  save: [props: SearchLightProps];
+}>();
+
+const radiusFactor = ref<number>(props.effectProps?.radiusFactor || 1);
+const cycleTime = ref<number>(props.effectProps?.cycleTime || 4000);
+const offsetFactor = ref<number>(props.effectProps?.offsetFactor || 0.25);
 
 const handleAddEffect = () => {
-  store.setMovementEffect({
-    type: MovementEffects_SearchLight.SEARCH_LIGHT,
-    props: {
-      cycleTime: cycleTime.value,
-      offsetFactor: offsetFactor.value,
-      radiusFactor: radiusFactor.value,
-    },
-  });
+  const payload: SearchLightProps = {
+    cycleTime: cycleTime.value,
+    offsetFactor: offsetFactor.value,
+    radiusFactor: radiusFactor.value,
+  };
+  emit('save', payload);
 };
 </script>
 

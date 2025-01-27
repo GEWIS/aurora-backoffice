@@ -25,22 +25,25 @@
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { MovementEffects_TableRotate } from '@/api';
+import { type TableRotateProps } from '@/api';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  effectProps?: Partial<TableRotateProps>;
+}>();
 
-const cycleTime = ref<number>(10000);
-const offsetFactor = ref<number>(0.25);
+const emit = defineEmits<{
+  save: [props: TableRotateProps];
+}>();
+
+const cycleTime = ref<number>(props.effectProps?.cycleTime || 10000);
+const offsetFactor = ref<number>(props.effectProps?.offsetFactor || 0.25);
 
 const handleAddEffect = () => {
-  store.setMovementEffect({
-    type: MovementEffects_TableRotate.TABLE_ROTATE,
-    props: {
-      cycleTime: cycleTime.value,
-      offsetFactor: offsetFactor.value,
-    },
-  });
+  const payload: TableRotateProps = {
+    cycleTime: cycleTime.value,
+    offsetFactor: offsetFactor.value,
+  };
+  emit('save', payload);
 };
 </script>
 

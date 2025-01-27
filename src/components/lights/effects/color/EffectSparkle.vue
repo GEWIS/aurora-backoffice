@@ -1,6 +1,6 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length > 0" effect-name="Sparkle" @save="handleAddEffect">
-    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
+    <SelectorLightsColor v-if="showColors" @colors-updated="(c: RgbColor[]) => (colors = c)" />
     <SelectorRatioSlider
       id="sparkle-ratio"
       :max="1"
@@ -33,29 +33,33 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_Sparkle, RgbColor } from '@/api';
+import { RgbColor, type SparkleProps } from '@/api';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  showColors: boolean;
+  effectProps?: Partial<SparkleProps>;
+}>();
 
-const colors = ref<RgbColor[]>([]);
-const ratio = ref<number>(0.2);
-const dimDuration = ref<number>(800);
-const cycleTime = ref<number>(200);
+const emit = defineEmits<{
+  save: [props: SparkleProps];
+}>();
+
+const colors = ref<RgbColor[]>(props.effectProps?.colors || []);
+const ratio = ref<number>(props.effectProps?.ratio || 0.2);
+const dimDuration = ref<number>(props.effectProps?.dimDuration || 800);
+const cycleTime = ref<number>(props.effectProps?.cycleTime || 200);
 
 const handleAddEffect = () => {
-  store.setColorEffect({
-    type: ColorEffects_Sparkle.SPARKLE,
-    props: {
-      colors: colors.value,
-      ratio: ratio.value,
-      dimDuration: dimDuration.value,
-      cycleTime: cycleTime.value,
-    },
-  });
+  const payload: SparkleProps = {
+    colors: colors.value,
+    ratio: ratio.value,
+    dimDuration: dimDuration.value,
+    cycleTime: cycleTime.value,
+  };
+  emit('save', payload);
 };
 </script>
 

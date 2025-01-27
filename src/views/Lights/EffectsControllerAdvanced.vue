@@ -49,17 +49,60 @@
         <template #content>
           <h4 class="mt-0 mb-1">Colors</h4>
           <div class="flex flex-col gap-5 mb-5">
-            <EffectBeatFadeOut />
-            <EffectSparkle />
+            <EffectBeatFadeOut
+              show-colors
+              @save="
+                (props: BeatFadeOutProps) =>
+                  effectsControllerStore.setColorEffect({ type: ColorEffects_BeatFadeOut.BEAT_FADE_OUT, props })
+              "
+            />
+            <EffectSparkle
+              show-colors
+              @save="
+                (props: SparkleProps) =>
+                  effectsControllerStore.setColorEffect({ type: ColorEffects_Sparkle.SPARKLE, props })
+              "
+            />
             <EffectStaticColor />
-            <EffectWave />
+            <EffectWave
+              show-colors
+              @save="
+                (props: WaveProps) => effectsControllerStore.setColorEffect({ type: ColorEffects_Wave.WAVE, props })
+              "
+            />
           </div>
           <h4 class="mt-2 mb-1">Movement</h4>
           <div class="flex flex-col gap-5">
-            <EffectSearchLight />
-            <EffectTableRotate />
-            <EffectClassicRotate />
-            <EffectRandomPosition />
+            <EffectSearchLight
+              @save="
+                (props: SearchLightProps) =>
+                  effectsControllerStore.setMovementEffect({ type: MovementEffects_SearchLight.SEARCH_LIGHT, props })
+              "
+            />
+            <EffectTableRotate
+              @save="
+                (props: TableRotateProps) =>
+                  effectsControllerStore.setMovementEffect({ type: MovementEffects_TableRotate.TABLE_ROTATE, props })
+              "
+            />
+            <EffectClassicRotate
+              @save="
+                (props: ClassicRotateProps) =>
+                  effectsControllerStore.setMovementEffect({
+                    type: MovementEffects_ClassicRotate.CLASSIC_ROTATE,
+                    props,
+                  })
+              "
+            />
+            <EffectRandomPosition
+              @save="
+                (props: RandomPositionProps) =>
+                  effectsControllerStore.setMovementEffect({
+                    type: MovementEffects_RandomPosition.RANDOM_POSITION,
+                    props,
+                  })
+              "
+            />
           </div>
         </template>
       </Card>
@@ -126,6 +169,22 @@ import EffectTableRotate from '@/components/lights/effects/movement/EffectTableR
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
 import AppContainer from '@/layout/AppContainer.vue';
+import {
+  type BeatFadeOutProps,
+  type ClassicRotateProps,
+  ColorEffects_BeatFadeOut,
+  ColorEffects_Sparkle,
+  ColorEffects_Wave,
+  MovementEffects_ClassicRotate,
+  MovementEffects_RandomPosition,
+  MovementEffects_SearchLight,
+  MovementEffects_TableRotate,
+  type RandomPositionProps,
+  type SearchLightProps,
+  type SparkleProps,
+  type TableRotateProps,
+  type WaveProps,
+} from '@/api';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

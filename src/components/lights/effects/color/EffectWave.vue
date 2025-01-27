@@ -1,6 +1,6 @@
 <template>
   <EffectSettingsDialog :can-save="colors.length === 1" effect-name="Wave" @save="handleAddEffect">
-    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
+    <SelectorLightsColor v-if="showColors" single-color @colors-updated="(c) => (colors = c)" />
     <SelectorRatioSlider
       id="waveSize"
       :max="1"
@@ -24,27 +24,35 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_Wave, RgbColor } from '@/api';
+import { LightsEffectDirection, LightsEffectPattern, RgbColor, type WaveProps } from '@/api';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  showColors: boolean;
+  effectProps?: Partial<WaveProps>;
+}>();
 
-const colors = ref<RgbColor[]>([]);
-const nrWaves = ref<number>(1);
-const cycleTime = ref<number>(1000);
+const emit = defineEmits<{
+  save: [props: WaveProps];
+}>();
+
+const colors = ref<RgbColor[]>(props.effectProps?.colors || []);
+const nrWaves = ref<number>(props.effectProps?.nrWaves || 1);
+const cycleTime = ref<number>(props.effectProps?.cycleTime || 1000);
+const pattern = ref<LightsEffectPattern>(props.effectProps?.pattern || LightsEffectPattern.HORIZONTAL);
+const direction = ref<LightsEffectDirection>(props.effectProps?.direction || LightsEffectDirection.FORWARDS);
 
 const handleAddEffect = () => {
-  store.setColorEffect({
-    type: ColorEffects_Wave.WAVE,
-    props: {
-      color: colors.value[0],
-      nrWaves: nrWaves.value,
-      cycleTime: cycleTime.value,
-    },
-  });
+  const payload: WaveProps = {
+    colors: colors.value,
+    nrWaves: nrWaves.value,
+    cycleTime: cycleTime.value,
+    pattern: pattern.value,
+    direction: direction.value,
+  };
+  emit('save', payload);
 };
 </script>
 
