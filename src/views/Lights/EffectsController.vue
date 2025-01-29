@@ -18,6 +18,10 @@
 <script setup lang="ts">
 import EffectsControllerSimple from '@/views/Lights/EffectsControllerSimple.vue';
 import EffectsControllerAdvanced from '@/views/Lights/EffectsControllerAdvanced.vue';
+import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+
+const store = useEffectsControllerStore();
+store.init();
 </script>
 
 <style scoped></style>
