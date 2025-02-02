@@ -1,5 +1,5 @@
 <template>
-  <SelectorLightsColor v-if="showColors" single-color @colors-updated="(c) => (colors = c)" />
+  <SelectorLightsColor v-if="showColors" v-model="colors" single-color />
   <SelectorRatioSlider
     id="waveSize"
     :max="1"

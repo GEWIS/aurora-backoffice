@@ -1,5 +1,5 @@
 <template>
-  <SelectorLightsColor v-if="showColors" @colors-updated="(c: RgbColor[]) => (colors = c)" />
+  <SelectorLightsColor v-if="showColors" v-model="colors" />
   <SelectorPattern v-model="pattern" />
   <SelectorDirection v-model="direction" />
   <SelectorBoolean id="enableFade" :checked="enableFade" name="Enable fade" @click="() => (enableFade = !enableFade)" />

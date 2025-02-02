@@ -180,7 +180,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       }
       this.buttonEffects.sort((a, b) => a.buttonId - b.buttonId);
       for (let i = 1; i <= 64; i++) {
-        if (this.buttonEffects[i]?.buttonId !== i) {
+        if (this.buttonEffects[i - 1]?.buttonId !== i) {
           this.buttonEffects.splice(i, 0, {
             id: -1,
             createdAt: new Date().toISOString(),
@@ -196,7 +196,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     async createButtonEffect(params: LightsPredefinedEffectCreateParams) {
       const response = await createPredefinedLightsEffect({ body: params });
       if (response.response.ok && response.data) {
-        this.buttonEffects.push(response.data);
+        const index = this.buttonEffects.findIndex((e) => e.buttonId === response.data.buttonId);
+        if (index >= 0) {
+          this.buttonEffects.splice(index, 1, response.data);
+        } else {
+          this.buttonEffects.push(response.data);
+          this.buttonEffects.sort((a, b) => a.buttonId - b.buttonId);
+        }
       }
     },
     async updateButtonEffectProperties(id: number, properties: LightsPredefinedEffectProperties) {

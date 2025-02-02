@@ -11,7 +11,7 @@
     <div v-if="!editing" class="grid grid-cols-1 md:grid-cols-8 gap-5">
       <Button
         v-for="button in store.buttonEffects"
-        :key="button.id"
+        :key="button.buttonId"
         class="h-14"
         :disabled="button.properties.type === 'LightsButtonNull'"
         severity="secondary"
@@ -29,7 +29,7 @@
     <div v-else class="grid grid-cols-1 md:grid-cols-8 gap-5">
       <Button
         v-for="button in store.buttonEffects"
-        :key="button.id"
+        :key="button.buttonId"
         class="h-14"
         severity="secondary"
         variant="outlined"

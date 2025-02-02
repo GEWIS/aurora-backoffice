@@ -1,13 +1,36 @@
 <template>
-  <SelectorLightsColor @colors-updated="(c) => (colors = c)" />
+  <SelectorLightsColor v-model="colors" />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
-import { RgbColor } from '@/api';
+import { type LightsButtonColors, RgbColor } from '@/api';
 
-const colors = ref<RgbColor[]>([]);
+const props = defineProps<{
+  defaultProperties?: LightsButtonColors;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [properties: LightsButtonColors];
+  inputValid: [valid: boolean];
+}>();
+
+const colors = ref<RgbColor[]>(props.defaultProperties?.colors || []);
+
+const handleChange = () => {
+  const properties: LightsButtonColors = {
+    type: 'LightsButtonColors',
+    colors: colors.value,
+  };
+  const inputIsValid: boolean = colors.value.length > 0;
+
+  emit('update:modelValue', properties);
+  emit('inputValid', inputIsValid);
+};
+
+watch([colors], handleChange);
+onMounted(handleChange);
 </script>
 
 <style scoped></style>

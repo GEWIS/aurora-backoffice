@@ -32,12 +32,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import {
   ColorEffects_BeatFadeOut,
   ColorEffects_Sparkle,
   ColorEffects_StaticColor,
   ColorEffects_Wave,
+  type LightsButtonEffectColor,
   type LightsEffectsColorCreateParams,
 } from '@/api';
 import LightsGroupsSelect from '@/components/lights/effects/button/LightsGroupsSelect.vue';
@@ -46,9 +47,18 @@ import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectStaticColor from '@/components/lights/effects/color/EffectStaticColor.vue';
 import EffectSparkle from '@/components/lights/effects/color/EffectSparkle.vue';
 
-const chosenEffect = ref<LightsEffectsColorCreateParams['type']>();
-const effect = ref<LightsEffectsColorCreateParams>();
-const lightsGroupIds = ref<number[]>([]);
+const props = defineProps<{
+  defaultProperties?: LightsButtonEffectColor;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [properties: LightsButtonEffectColor];
+  inputValid: [valid: boolean];
+}>();
+
+const chosenEffect = ref<LightsEffectsColorCreateParams['type'] | undefined>(props.defaultProperties?.effectProps.type);
+const lightsGroupIds = ref<number[]>(props.defaultProperties?.lightsGroupIds || []);
+const effect = ref<LightsEffectsColorCreateParams | undefined>(props.defaultProperties?.effectProps || undefined);
 
 const effectOptions = computed(() => {
   return [
@@ -58,6 +68,22 @@ const effectOptions = computed(() => {
     { label: 'Wave', value: ColorEffects_Wave.WAVE },
   ];
 });
+
+const handleChange = () => {
+  const inputIsValid: boolean = chosenEffect.value !== undefined && lightsGroupIds.value.length > 0;
+  emit('inputValid', inputIsValid);
+
+  if (effect.value === undefined) return;
+  const properties: LightsButtonEffectColor = {
+    type: 'LightsButtonEffectColor',
+    lightsGroupIds: lightsGroupIds.value,
+    effectProps: effect.value,
+  };
+  emit('update:modelValue', properties);
+};
+
+watch([chosenEffect, lightsGroupIds, effect], handleChange);
+onMounted(handleChange);
 </script>
 
 <style scoped></style>

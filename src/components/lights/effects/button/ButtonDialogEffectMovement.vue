@@ -28,8 +28,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import {
+  type LightsButtonEffectMovement,
   type LightsEffectsMovementCreateParams,
   MovementEffects_ClassicRotate,
   MovementEffects_RandomPosition,
@@ -42,9 +43,20 @@ import EffectRandomPosition from '@/components/lights/effects/movement/EffectRan
 import EffectSearchLight from '@/components/lights/effects/movement/EffectSearchLight.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 
-const chosenEffect = ref<LightsEffectsMovementCreateParams['type']>();
-const effect = ref<LightsEffectsMovementCreateParams>();
-const lightsGroupIds = ref<number[]>([]);
+const props = defineProps<{
+  defaultProperties?: LightsButtonEffectMovement;
+}>();
+
+const emit = defineEmits<{
+  'update:modelValue': [properties: LightsButtonEffectMovement];
+  inputValid: [valid: boolean];
+}>();
+
+const chosenEffect = ref<LightsEffectsMovementCreateParams['type'] | undefined>(
+  props.defaultProperties?.effectProps.type,
+);
+const lightsGroupIds = ref<number[]>(props.defaultProperties?.lightsGroupIds || []);
+const effect = ref<LightsEffectsMovementCreateParams | undefined>(props.defaultProperties?.effectProps || undefined);
 
 const effectOptions = computed(() => {
   return [
@@ -54,6 +66,22 @@ const effectOptions = computed(() => {
     { label: 'TableRotate', value: MovementEffects_TableRotate.TABLE_ROTATE },
   ];
 });
+
+const handleChange = () => {
+  const inputIsValid: boolean = chosenEffect.value !== undefined && lightsGroupIds.value.length > 0;
+  emit('inputValid', inputIsValid);
+
+  if (effect.value === undefined) return;
+  const properties: LightsButtonEffectMovement = {
+    type: 'LightsButtonEffectMovement',
+    lightsGroupIds: lightsGroupIds.value,
+    effectProps: effect.value,
+  };
+  emit('update:modelValue', properties);
+};
+
+watch([chosenEffect, lightsGroupIds, effect], handleChange);
+onMounted(handleChange);
 </script>
 
 <style scoped></style>

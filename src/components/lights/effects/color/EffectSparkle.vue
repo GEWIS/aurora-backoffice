@@ -1,5 +1,5 @@
 <template>
-  <SelectorLightsColor v-if="showColors" @colors-updated="(c: RgbColor[]) => (colors = c)" />
+  <SelectorLightsColor v-if="showColors" v-model="colors" />
   <SelectorRatioSlider
     id="sparkle-ratio"
     :max="1"

@@ -1,5 +1,5 @@
 <template>
-  <SelectorLightsColor v-if="showColors" single-color @colors-updated="(c) => (colors = c)" />
+  <SelectorLightsColor v-if="showColors" v-model="colors" single-color />
   <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
   <Select v-model="goboRotate" :options="goboRotates" placeholder="Select a gobo rotate effect" show-clear />
   <SelectorBoolean id="beat-toggle" :checked="beatToggle" name="Beat Toggle" @click="beatToggle = !beatToggle" />
