@@ -2,7 +2,7 @@
   <SelectorLightsColor v-if="showColors" v-model="colors" single-color />
   <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
   <Select v-model="goboRotate" :options="goboRotates" placeholder="Select a gobo rotate effect" show-clear />
-  <SelectorBoolean id="beat-toggle" :checked="beatToggle" name="Beat Toggle" @click="beatToggle = !beatToggle" />
+  <SelectorBoolean id="beat-toggle" v-model="beatToggle" name="Beat Toggle" />
   <SelectorRatioSlider
     id="relative-brightness"
     :max="1"
@@ -40,18 +40,18 @@ const goboRotates: ComputedRef<string[]> = computed(() => {
 
 const props = defineProps<{
   showColors: boolean;
-  modelValue?: StaticColorCreateParams;
+  defaultModelValue?: StaticColorCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [params: StaticColorCreateParams];
 }>();
 
-const colors = ref<RgbColor[]>(props.modelValue ? [props.modelValue.props.color] : []);
-const gobo = ref<string>(props.modelValue?.props.gobo || '');
-const goboRotate = ref<string>(props.modelValue?.props.goboRotate || '');
-const beatToggle = ref<boolean>(props.modelValue?.props.beatToggle || false);
-const relativeBrightness = ref<number>(props.modelValue?.props.relativeBrightness || 1);
+const colors = ref<RgbColor[]>(props.defaultModelValue ? [props.defaultModelValue.props.color] : []);
+const gobo = ref<string>(props.defaultModelValue?.props.gobo || '');
+const goboRotate = ref<string>(props.defaultModelValue?.props.goboRotate || '');
+const beatToggle = ref<boolean>(props.defaultModelValue?.props.beatToggle || false);
+const relativeBrightness = ref<number>(props.defaultModelValue?.props.relativeBrightness || 1);
 
 const handleChange = () => {
   const payload: StaticColorCreateParams = {

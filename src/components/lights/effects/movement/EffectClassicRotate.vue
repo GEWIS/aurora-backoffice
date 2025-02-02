@@ -25,15 +25,15 @@ import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatio
 import { type ClassicRotateCreateParams, MovementEffects_ClassicRotate } from '@/api';
 
 const props = defineProps<{
-  modelValue?: ClassicRotateCreateParams;
+  defaultModelValue?: ClassicRotateCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [props: ClassicRotateCreateParams];
 }>();
 
-const cycleTime = ref<number>(props.modelValue?.props.cycleTime || 10000);
-const offsetFactor = ref<number>(props.modelValue?.props.offsetFactor || 0);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 10000);
+const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 0);
 
 const handleChange = () => {
   const payload: ClassicRotateCreateParams = {

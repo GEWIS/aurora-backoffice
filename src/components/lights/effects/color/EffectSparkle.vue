@@ -37,17 +37,17 @@ import { ColorEffects_Sparkle, RgbColor, type SparkleCreateParams } from '@/api'
 
 const props = defineProps<{
   showColors: boolean;
-  modelValue?: SparkleCreateParams;
+  defaultModelValue?: SparkleCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [params: SparkleCreateParams];
 }>();
 
-const colors = ref<RgbColor[]>(props.modelValue?.props.colors || []);
-const ratio = ref<number>(props.modelValue?.props.ratio || 0.2);
-const dimDuration = ref<number>(props.modelValue?.props.dimDuration || 800);
-const cycleTime = ref<number>(props.modelValue?.props.cycleTime || 200);
+const colors = ref<RgbColor[]>(props.defaultModelValue?.props.colors || []);
+const ratio = ref<number>(props.defaultModelValue?.props.ratio || 0.2);
+const dimDuration = ref<number>(props.defaultModelValue?.props.dimDuration || 800);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 200);
 
 const handleChange = () => {
   const payload: SparkleCreateParams = {

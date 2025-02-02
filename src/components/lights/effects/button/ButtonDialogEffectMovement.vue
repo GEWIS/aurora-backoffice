@@ -11,18 +11,38 @@
   <Divider />
   <EffectClassicRotate
     v-if="chosenEffect === MovementEffects_ClassicRotate.CLASSIC_ROTATE"
+    :default-model-value="
+      defaultProperties?.effectProps.type === MovementEffects_ClassicRotate.CLASSIC_ROTATE
+        ? defaultProperties.effectProps
+        : undefined
+    "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectRandomPosition
     v-if="chosenEffect === MovementEffects_RandomPosition.RANDOM_POSITION"
+    :default-model-value="
+      defaultProperties?.effectProps.type === MovementEffects_RandomPosition.RANDOM_POSITION
+        ? defaultProperties.effectProps
+        : undefined
+    "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectSearchLight
     v-if="chosenEffect === MovementEffects_SearchLight.SEARCH_LIGHT"
+    :default-model-value="
+      defaultProperties?.effectProps.type === MovementEffects_SearchLight.SEARCH_LIGHT
+        ? defaultProperties.effectProps
+        : undefined
+    "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectTableRotate
     v-if="chosenEffect === MovementEffects_TableRotate.TABLE_ROTATE"
+    :default-model-value="
+      defaultProperties?.effectProps.type === MovementEffects_TableRotate.TABLE_ROTATE
+        ? defaultProperties.effectProps
+        : undefined
+    "
     @update:model-value="(e) => (effect = e)"
   />
 </template>

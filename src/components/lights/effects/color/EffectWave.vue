@@ -28,18 +28,20 @@ import { ColorEffects_Wave, LightsEffectDirection, LightsEffectPattern, RgbColor
 
 const props = defineProps<{
   showColors: boolean;
-  modelValue?: WaveCreateParams;
+  defaultModelValue?: WaveCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [effect: WaveCreateParams];
 }>();
 
-const colors = ref<RgbColor[]>(props.modelValue?.props.colors || []);
-const nrWaves = ref<number>(props.modelValue?.props.nrWaves || 1);
-const cycleTime = ref<number>(props.modelValue?.props.cycleTime || 1000);
-const pattern = ref<LightsEffectPattern>(props.modelValue?.props.pattern || LightsEffectPattern.HORIZONTAL);
-const direction = ref<LightsEffectDirection>(props.modelValue?.props.direction || LightsEffectDirection.FORWARDS);
+const colors = ref<RgbColor[]>(props.defaultModelValue?.props.colors || []);
+const nrWaves = ref<number>(props.defaultModelValue?.props.nrWaves || 1);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 1000);
+const pattern = ref<LightsEffectPattern>(props.defaultModelValue?.props.pattern || LightsEffectPattern.HORIZONTAL);
+const direction = ref<LightsEffectDirection>(
+  props.defaultModelValue?.props.direction || LightsEffectDirection.FORWARDS,
+);
 
 const handleChange = () => {
   const payload: WaveCreateParams = {

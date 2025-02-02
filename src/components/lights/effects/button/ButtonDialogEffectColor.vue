@@ -11,21 +11,37 @@
   <Divider />
   <EffectBeatFadeOut
     v-if="chosenEffect === ColorEffects_BeatFadeOut.BEAT_FADE_OUT"
+    :default-model-value="
+      defaultProperties?.effectProps.type === ColorEffects_BeatFadeOut.BEAT_FADE_OUT
+        ? defaultProperties.effectProps
+        : undefined
+    "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
   />
   <EffectSparkle
     v-if="chosenEffect === ColorEffects_Sparkle.SPARKLE"
+    :default-model-value="
+      defaultProperties?.effectProps.type === ColorEffects_Sparkle.SPARKLE ? defaultProperties.effectProps : undefined
+    "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
   />
   <EffectStaticColor
     v-if="chosenEffect === ColorEffects_StaticColor.STATIC_COLOR"
+    :default-model-value="
+      defaultProperties?.effectProps.type === ColorEffects_StaticColor.STATIC_COLOR
+        ? defaultProperties.effectProps
+        : undefined
+    "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
   />
   <EffectWave
     v-if="chosenEffect === ColorEffects_Wave.WAVE"
+    :default-model-value="
+      defaultProperties?.effectProps.type === ColorEffects_Wave.WAVE ? defaultProperties.effectProps : undefined
+    "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
   />

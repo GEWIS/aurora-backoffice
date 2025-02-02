@@ -16,14 +16,14 @@ import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatio
 import { MovementEffects_RandomPosition, type RandomPositionCreateParams } from '@/api';
 
 const props = defineProps<{
-  modelValue?: RandomPositionCreateParams;
+  defaultModelValue?: RandomPositionCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [params: RandomPositionCreateParams];
 }>();
 
-const beatsToMove = ref<number>(props.modelValue?.props.beatsToMove || 1);
+const beatsToMove = ref<number>(props.defaultModelValue?.props.beatsToMove || 1);
 
 const handleChange = () => {
   const payload: RandomPositionCreateParams = {

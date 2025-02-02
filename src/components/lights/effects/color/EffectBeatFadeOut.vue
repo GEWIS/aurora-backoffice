@@ -2,8 +2,8 @@
   <SelectorLightsColor v-if="showColors" v-model="colors" />
   <SelectorPattern v-model="pattern" />
   <SelectorDirection v-model="direction" />
-  <SelectorBoolean id="enableFade" :checked="enableFade" name="Enable fade" @click="() => (enableFade = !enableFade)" />
-  <SelectorBoolean id="addBlacks" :checked="addBlacks" name="Add blacks" @click="() => (addBlacks = !addBlacks)" />
+  <SelectorBoolean id="enableFade" v-model="enableFade" name="Enable fade" />
+  <SelectorBoolean id="addBlacks" v-model="addBlacks" name="Add blacks" />
 </template>
 
 <script setup lang="ts">
@@ -22,18 +22,20 @@ import SelectorDirection from '@/components/lights/effects/props/SelectorDirecti
 
 const props = defineProps<{
   showColors: boolean;
-  modelValue?: BeatFadeOutCreateParams;
+  defaultModelValue?: BeatFadeOutCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: BeatFadeOutCreateParams];
 }>();
 
-const colors = ref<RgbColor[]>(props.modelValue?.props.colors || []);
-const enableFade = ref<boolean>(props.modelValue?.props.enableFade || false);
-const addBlacks = ref<boolean>(props.modelValue?.props.nrBlacks !== 0 || false);
-const pattern = ref<LightsEffectPattern>(props.modelValue?.props.pattern || LightsEffectPattern.HORIZONTAL);
-const direction = ref<LightsEffectDirection>(props.modelValue?.props.direction || LightsEffectDirection.FORWARDS);
+const colors = ref<RgbColor[]>(props.defaultModelValue?.props.colors || []);
+const enableFade = ref<boolean>(props.defaultModelValue?.props.enableFade || false);
+const addBlacks = ref<boolean>(props.defaultModelValue?.props.nrBlacks !== 0 || false);
+const pattern = ref<LightsEffectPattern>(props.defaultModelValue?.props.pattern || LightsEffectPattern.HORIZONTAL);
+const direction = ref<LightsEffectDirection>(
+  props.defaultModelValue?.props.direction || LightsEffectDirection.FORWARDS,
+);
 
 const handleChange = () => {
   const payload: BeatFadeOutCreateParams = {

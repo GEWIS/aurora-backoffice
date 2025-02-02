@@ -34,16 +34,16 @@ import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatio
 import { MovementEffects_SearchLight, type SearchLightCreateParams } from '@/api';
 
 const props = defineProps<{
-  modelValue?: SearchLightCreateParams;
+  defaultModelValue?: SearchLightCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [props: SearchLightCreateParams];
 }>();
 
-const radiusFactor = ref<number>(props.modelValue?.props.radiusFactor || 1);
-const cycleTime = ref<number>(props.modelValue?.props.cycleTime || 4000);
-const offsetFactor = ref<number>(props.modelValue?.props.offsetFactor || 0.25);
+const radiusFactor = ref<number>(props.defaultModelValue?.props.radiusFactor || 1);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 4000);
+const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 0.25);
 
 const handleChange = () => {
   const payload: SearchLightCreateParams = {

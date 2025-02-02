@@ -25,15 +25,15 @@ import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatio
 import { MovementEffects_TableRotate, type TableRotateCreateParams } from '@/api';
 
 const props = defineProps<{
-  modelValue?: TableRotateCreateParams;
+  defaultModelValue?: TableRotateCreateParams;
 }>();
 
 const emit = defineEmits<{
   'update:modelValue': [props: TableRotateCreateParams];
 }>();
 
-const cycleTime = ref<number>(props.modelValue?.props.cycleTime || 10000);
-const offsetFactor = ref<number>(props.modelValue?.props.offsetFactor || 0.25);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 10000);
+const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 0.25);
 
 const handleChange = () => {
   const payload: TableRotateCreateParams = {
