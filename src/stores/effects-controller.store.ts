@@ -157,12 +157,20 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     },
     async turnOnLightsSwitch(id: number) {
       await turnOnLightsSwitch({ path: { id } });
+      const index = this.lightsSwitches.findIndex((s) => s.id === id);
+      if (index >= 0) {
+        this.lightsSwitches[index].enabled = true;
+      }
     },
     async turnOnLightsSwitches(ids: number[]) {
       await Promise.all(ids.map((id) => turnOnLightsSwitch({ path: { id } })));
     },
     async turnOffLightsSwitch(id: number) {
       await turnOffLightsSwitch({ path: { id } });
+      const index = this.lightsSwitches.findIndex((s) => s.id === id);
+      if (index >= 0) {
+        this.lightsSwitches[index].enabled = false;
+      }
     },
     async turnOffLightsSwitches(ids: number[]) {
       await Promise.all(ids.map((id) => turnOffLightsSwitch({ path: { id } })));
@@ -200,9 +208,9 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         this.buttonEffects = response.data;
       }
       this.buttonEffects.sort((a, b) => a.buttonId - b.buttonId);
-      for (let i = 1; i <= 64; i++) {
-        if (this.buttonEffects[i - 1]?.buttonId !== i) {
-          this.buttonEffects.splice(i, 0, this.createNullButtonEffect(i));
+      for (let i = 0; i < 64; i++) {
+        if (this.buttonEffects[i]?.buttonId !== i + 1) {
+          this.buttonEffects.splice(i, 0, this.createNullButtonEffect(i + 1));
         }
       }
     },

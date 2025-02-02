@@ -1,7 +1,7 @@
 <template>
   <MultiSelect
+    v-model="switchIds"
     filter
-    :model-value="switchIds"
     option-label="name"
     option-value="id"
     :options="store.lightsSwitches"
