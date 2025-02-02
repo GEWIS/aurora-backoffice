@@ -125,9 +125,9 @@ const typeOptions = [
 
 const handleSave = async () => {
   if (!propertiesValid.value || !properties.value) return;
-  if (props.button.id < 0) {
+  if (!!props.button && props.button.id < 0) {
     await store.createButtonEffect({ properties: properties.value, buttonId: props.button.buttonId, name: name.value });
-  } else {
+  } else if (!!props.button && props.button?.id >= 0) {
     await store.updateButtonEffectProperties(props.button.id, properties.value);
   }
   emit('close');
