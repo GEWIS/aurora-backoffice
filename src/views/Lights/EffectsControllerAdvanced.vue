@@ -49,60 +49,17 @@
         <template #content>
           <h4 class="mt-0 mb-1">Colors</h4>
           <div class="flex flex-col gap-5 mb-5">
-            <EffectBeatFadeOut
-              show-colors
-              @save="
-                (props: BeatFadeOutProps) =>
-                  effectsControllerStore.setColorEffect({ type: ColorEffects_BeatFadeOut.BEAT_FADE_OUT, props })
-              "
-            />
-            <EffectSparkle
-              show-colors
-              @save="
-                (props: SparkleProps) =>
-                  effectsControllerStore.setColorEffect({ type: ColorEffects_Sparkle.SPARKLE, props })
-              "
-            />
-            <EffectStaticColor />
-            <EffectWave
-              show-colors
-              @save="
-                (props: WaveProps) => effectsControllerStore.setColorEffect({ type: ColorEffects_Wave.WAVE, props })
-              "
-            />
+            <EffectBeatFadeOutDialog @save="effectsControllerStore.setColorEffect" />
+            <EffectSparkleDialog @save="effectsControllerStore.setColorEffect" />
+            <EffectStaticColorDialog @save="effectsControllerStore.setColorEffect" />
+            <EffectWaveDialog @save="effectsControllerStore.setColorEffect" />
           </div>
           <h4 class="mt-2 mb-1">Movement</h4>
           <div class="flex flex-col gap-5">
-            <EffectSearchLight
-              @save="
-                (props: SearchLightProps) =>
-                  effectsControllerStore.setMovementEffect({ type: MovementEffects_SearchLight.SEARCH_LIGHT, props })
-              "
-            />
-            <EffectTableRotate
-              @save="
-                (props: TableRotateProps) =>
-                  effectsControllerStore.setMovementEffect({ type: MovementEffects_TableRotate.TABLE_ROTATE, props })
-              "
-            />
-            <EffectClassicRotate
-              @save="
-                (props: ClassicRotateProps) =>
-                  effectsControllerStore.setMovementEffect({
-                    type: MovementEffects_ClassicRotate.CLASSIC_ROTATE,
-                    props,
-                  })
-              "
-            />
-            <EffectRandomPosition
-              @save="
-                (props: RandomPositionProps) =>
-                  effectsControllerStore.setMovementEffect({
-                    type: MovementEffects_RandomPosition.RANDOM_POSITION,
-                    props,
-                  })
-              "
-            />
+            <EffectSearchLightDialog @save="effectsControllerStore.setMovementEffect" />
+            <EffectTableRotateDialog @save="effectsControllerStore.setMovementEffect" />
+            <EffectClassicRotateDialog @save="effectsControllerStore.setMovementEffect" />
+            <EffectRandomPositionDialog @save="effectsControllerStore.setMovementEffect" />
           </div>
         </template>
       </Card>
@@ -153,38 +110,22 @@
 
 <script setup lang="ts">
 import LightsGroupToggleButton from '@/components/lights/effects/LightsGroupToggleButton.vue';
-import EffectBeatFadeOut from '@/components/lights/effects/color/EffectBeatFadeOut.vue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import StrobeButton from '@/components/lights/effects/other/StrobeButton.vue';
-import EffectSearchLight from '@/components/lights/effects/movement/EffectSearchLight.vue';
-import EffectSparkle from '@/components/lights/effects/color/EffectSparkle.vue';
-import EffectStaticColor from '@/components/lights/effects/color/EffectStaticColor.vue';
-import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
 import EffectHistoryCard from '@/components/lights/effects/EffectHistoryCard.vue';
 import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
-import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
-import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
-import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
 import AppContainer from '@/layout/AppContainer.vue';
-import {
-  type BeatFadeOutProps,
-  type ClassicRotateProps,
-  ColorEffects_BeatFadeOut,
-  ColorEffects_Sparkle,
-  ColorEffects_Wave,
-  MovementEffects_ClassicRotate,
-  MovementEffects_RandomPosition,
-  MovementEffects_SearchLight,
-  MovementEffects_TableRotate,
-  type RandomPositionProps,
-  type SearchLightProps,
-  type SparkleProps,
-  type TableRotateProps,
-  type WaveProps,
-} from '@/api';
+import EffectBeatFadeOutDialog from '@/components/lights/effects/color/EffectBeatFadeOutDialog.vue';
+import EffectWaveDialog from '@/components/lights/effects/color/EffectWaveDialog.vue';
+import EffectStaticColorDialog from '@/components/lights/effects/color/EffectStaticColorDialog.vue';
+import EffectSparkleDialog from '@/components/lights/effects/color/EffectSparkleDialog.vue';
+import EffectSearchLightDialog from '@/components/lights/effects/movement/EffectSearchLightDialog.vue';
+import EffectTableRotateDialog from '@/components/lights/effects/movement/EffectTableRotateDialog.vue';
+import EffectClassicRotateDialog from '@/components/lights/effects/movement/EffectClassicRotateDialog.vue';
+import EffectRandomPositionDialog from '@/components/lights/effects/movement/EffectRandomPositionDialog.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

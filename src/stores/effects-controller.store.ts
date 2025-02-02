@@ -105,18 +105,20 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       };
       this.pastPushedEffects = [pastEffect, ...this.pastPushedEffects.slice(0, 9)];
     },
-    async enableStrobe() {
+    async enableStrobe(lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       await Promise.all(
-        this.selectedLightsGroupIds.map((id) => {
+        ids.map((id) => {
           return enableStrobeOnLightsGroup({
             path: { id },
           });
         }),
       );
     },
-    async disableStrobe() {
+    async disableStrobe(lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       await Promise.all(
-        this.selectedLightsGroupIds.map((id) => {
+        ids.map((id) => {
           return disableStrobeOnLightsGroup({
             path: { id },
           });
@@ -146,8 +148,14 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     async turnOnLightsSwitch(id: number) {
       await turnOnLightsSwitch({ path: { id } });
     },
+    async turnOnLightsSwitches(ids: number[]) {
+      await Promise.all(ids.map((id) => turnOnLightsSwitch({ path: { id } })));
+    },
     async turnOffLightsSwitch(id: number) {
       await turnOffLightsSwitch({ path: { id } });
+    },
+    async turnOffLightsSwitches(ids: number[]) {
+      await Promise.all(ids.map((id) => turnOffLightsSwitch({ path: { id } })));
     },
     async getLightsSwitches() {
       const response = await getAllLightsSwitches();
@@ -169,6 +177,20 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       const response = await getAllPredefinedLightsEffects();
       if (response.response.ok && response.data) {
         this.buttonEffects = response.data;
+      }
+      this.buttonEffects.sort((a, b) => a.buttonId - b.buttonId);
+      for (let i = 1; i <= 64; i++) {
+        if (this.buttonEffects[i]?.buttonId !== i) {
+          this.buttonEffects.splice(i, 0, {
+            id: -1,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            buttonId: i,
+            properties: {
+              type: 'LightsButtonNull',
+            },
+          });
+        }
       }
     },
     async createButtonEffect(params: LightsPredefinedEffectCreateParams) {
@@ -198,7 +220,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         this.buttonEffects.splice(index, 1);
       }
     },
-    async clickEffectButton(button: LightsPredefinedEffectResponse) {
+    async onEffectButtonPress(button: LightsPredefinedEffectResponse) {
       switch (button.properties.type) {
         case 'LightsButtonColors': {
           this.currentColors = button.properties.colors;
@@ -216,16 +238,31 @@ export const useEffectsControllerStore = defineStore('effectsController', {
           this.setMovementEffect(button.properties.effectProps, button.properties.lightsGroupIds);
           return;
         }
+        case 'LightsButtonStrobe': {
+          await this.enableStrobe(button.properties.lightsGroupIds);
+          return;
+        }
         case 'LightsButtonSwitch': {
-          const lightsSwitch: LightsSwitch | undefined = this.lightsSwitches.find(
-            (s) => s.id === (button.properties as LightsButtonSwitch).switchId,
+          const lightsSwitches = this.lightsSwitches.filter((s) =>
+            (button.properties as LightsButtonSwitch).switchIds.includes(s.id),
           );
-          if (!lightsSwitch) return;
-          if (lightsSwitch.enabled) {
-            await this.turnOffLightsSwitch(button.properties.switchId);
-          } else {
-            await this.turnOnLightsSwitch(button.properties.switchId);
-          }
+          await Promise.all(
+            lightsSwitches.map(async (lightsSwitch) => {
+              if (lightsSwitch.enabled) {
+                await this.turnOffLightsSwitch(lightsSwitch.id);
+              } else {
+                await this.turnOnLightsSwitch(lightsSwitch.id);
+              }
+            }),
+          );
+        }
+      }
+    },
+    async onEffectButtonRelease(button: LightsPredefinedEffectResponse) {
+      switch (button.properties.type) {
+        case 'LightsButtonStrobe': {
+          await this.disableStrobe(button.properties.lightsGroupIds);
+          return;
         }
       }
     },

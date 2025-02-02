@@ -1,32 +1,27 @@
 <template>
-  <EffectSettingsDialog :can-save="colors.length === 1" effect-name="StaticColor" @save="handleAddEffect">
-    <SelectorLightsColor single-color @colors-updated="(c) => (colors = c)" />
-    <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
-    <Select v-model="goboRotate" :options="goboRotates" placeholder="Select a gobo rotate effect" show-clear />
-    <SelectorBoolean id="beat-toggle" :checked="beatToggle" name="Beat Toggle" @click="beatToggle = !beatToggle" />
-    <SelectorRatioSlider
-      id="relative-brightness"
-      :max="1"
-      :min="0"
-      name=""
-      :step="0.05"
-      :value="relativeBrightness"
-      @update="(newVal) => (relativeBrightness = newVal)"
-    />
-  </EffectSettingsDialog>
+  <SelectorLightsColor v-if="showColors" single-color @colors-updated="(c) => (colors = c)" />
+  <Select v-model="gobo" :options="gobos" placeholder="Select a gobo" show-clear />
+  <Select v-model="goboRotate" :options="goboRotates" placeholder="Select a gobo rotate effect" show-clear />
+  <SelectorBoolean id="beat-toggle" :checked="beatToggle" name="Beat Toggle" @click="beatToggle = !beatToggle" />
+  <SelectorRatioSlider
+    id="relative-brightness"
+    :max="1"
+    :min="0"
+    name=""
+    :step="0.05"
+    :value="relativeBrightness"
+    @update="(newVal) => (relativeBrightness = newVal)"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed, type ComputedRef, ref } from 'vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
+import { computed, type ComputedRef, onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_StaticColor, RgbColor } from '@/api';
+import { ColorEffects_StaticColor, RgbColor, type StaticColorCreateParams } from '@/api';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 
-const store = useEffectsControllerStore();
 const subscriberStore = useSubscriberStore();
 const gobos: ComputedRef<string[]> = computed(() => {
   return subscriberStore.lightsGroups
@@ -43,14 +38,23 @@ const goboRotates: ComputedRef<string[]> = computed(() => {
     .filter((n1, index, all) => index === all.findIndex((n2) => n1 === n2));
 });
 
-const colors = ref<RgbColor[]>([]);
-const gobo = ref<string>('');
-const goboRotate = ref<string>('');
-const beatToggle = ref<boolean>(false);
-const relativeBrightness = ref<number>(1);
+const props = defineProps<{
+  showColors: boolean;
+  modelValue?: StaticColorCreateParams;
+}>();
 
-const handleAddEffect = () => {
-  store.setColorEffect({
+const emit = defineEmits<{
+  'update:modelValue': [params: StaticColorCreateParams];
+}>();
+
+const colors = ref<RgbColor[]>(props.modelValue ? [props.modelValue.props.color] : []);
+const gobo = ref<string>(props.modelValue?.props.gobo || '');
+const goboRotate = ref<string>(props.modelValue?.props.goboRotate || '');
+const beatToggle = ref<boolean>(props.modelValue?.props.beatToggle || false);
+const relativeBrightness = ref<number>(props.modelValue?.props.relativeBrightness || 1);
+
+const handleChange = () => {
+  const payload: StaticColorCreateParams = {
     type: ColorEffects_StaticColor.STATIC_COLOR,
     props: {
       color: colors.value[0],
@@ -59,8 +63,12 @@ const handleAddEffect = () => {
       beatToggle: beatToggle.value,
       relativeBrightness: relativeBrightness.value,
     },
-  });
+  };
+  emit('update:modelValue', payload);
 };
+
+watch([colors, gobo, goboRotate, beatToggle, relativeBrightness], handleChange);
+onMounted(handleChange);
 </script>
 
 <style scoped></style>

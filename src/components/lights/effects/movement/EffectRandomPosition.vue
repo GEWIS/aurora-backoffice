@@ -1,39 +1,42 @@
 <template>
-  <EffectSettingsDialog can-save effect-name="RandomPosition" @save="handleAddEffect">
-    <SelectorRatioSlider
-      id="beats-to-move"
-      :max="4"
-      :min="1"
-      name="Number of beats before changing position"
-      :step="1"
-      :value="beatsToMove"
-      @update="(newVal: number) => (beatsToMove = newVal)"
-    />
-  </EffectSettingsDialog>
+  <SelectorRatioSlider
+    id="beats-to-move"
+    :max="4"
+    :min="1"
+    name="Number of beats before changing position"
+    :step="1"
+    :value="beatsToMove"
+    @update="(newVal: number) => (beatsToMove = newVal)"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
+import { onMounted, ref, watch } from 'vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { type RandomPositionProps } from '@/api';
+import { MovementEffects_RandomPosition, type RandomPositionCreateParams } from '@/api';
 
 const props = defineProps<{
-  effectProps?: Partial<RandomPositionProps>;
+  modelValue?: RandomPositionCreateParams;
 }>();
 
 const emit = defineEmits<{
-  save: [props: RandomPositionProps];
+  'update:modelValue': [params: RandomPositionCreateParams];
 }>();
 
-const beatsToMove = ref<number>(props.effectProps?.beatsToMove || 1);
+const beatsToMove = ref<number>(props.modelValue?.props.beatsToMove || 1);
 
-const handleAddEffect = () => {
-  const payload: RandomPositionProps = {
-    beatsToMove: beatsToMove.value,
+const handleChange = () => {
+  const payload: RandomPositionCreateParams = {
+    type: MovementEffects_RandomPosition.RANDOM_POSITION,
+    props: {
+      beatsToMove: beatsToMove.value,
+    },
   };
-  emit('save', payload);
+  emit('update:modelValue', payload);
 };
+
+watch([beatsToMove], handleChange);
+onMounted(handleChange);
 </script>
 
 <style scoped></style>
