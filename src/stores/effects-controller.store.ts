@@ -125,9 +125,14 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         }),
       );
     },
-    async disableLightsColors() {
+    /**
+     * Remove all color effects from the given fixtures.
+     * Uses "selectedLightsGroupIds if none given"
+     */
+    async disableLightsColors(lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       await Promise.all(
-        this.selectedLightsGroupIds.map((id) => {
+        ids.map((id) => {
           return applyLightsEffectColor({
             body: [],
             path: { id },
@@ -135,9 +140,14 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         }),
       );
     },
-    async disableLightsMovement() {
+    /**
+     * Remove all movement effects from the given fixtures.
+     * Uses "selectedLightsGroupIds if none given"
+     */
+    async disableLightsMovement(lightGroupIds?: number[]) {
+      const ids = lightGroupIds ?? this.selectedLightsGroupIds;
       await Promise.all(
-        this.selectedLightsGroupIds.map((id) => {
+        ids.map((id) => {
           return applyLightsEffectMovement({
             body: [],
             path: { id },
@@ -239,6 +249,13 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         }
         case 'LightsButtonEffectMovement': {
           this.setMovementEffect(button.properties.effectProps, button.properties.lightsGroupIds);
+          return;
+        }
+        case 'LightsButtonReset': {
+          await Promise.all([
+            this.disableLightsColors(button.properties.lightsGroupIds),
+            this.disableLightsMovement(button.properties.lightsGroupIds),
+          ]);
           return;
         }
         case 'LightsButtonStrobe': {

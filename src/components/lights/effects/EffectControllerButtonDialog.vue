@@ -54,6 +54,14 @@
           @input-valid="(v) => (propertiesValid = v)"
           @update:model-value="(p) => (properties = p)"
         />
+        <ButtonDialogReset
+          v-if="type === ButtonTypes.LightsButtonReset"
+          :default-properties="
+            button?.properties.type === ButtonTypes.LightsButtonReset ? button.properties : undefined
+          "
+          @input-valid="(v) => (propertiesValid = v)"
+          @update:model-value="(p) => (properties = p)"
+        />
         <ButtonDialogStrobe
           v-if="type === ButtonTypes.LightsButtonStrobe"
           :default-properties="
@@ -106,12 +114,14 @@ import ButtonDialogStrobe from '@/components/lights/effects/button/ButtonDialogS
 import ButtonDialogSwitch from '@/components/lights/effects/button/ButtonDialogSwitch.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import IconSelector from '@/components/IconSelector.vue';
+import ButtonDialogReset from '@/components/lights/effects/button/ButtonDialogReset.vue';
 
 enum ButtonTypes {
   LightsButtonColors = 'LightsButtonColors',
   LightsButtonEffectColor = 'LightsButtonEffectColor',
   LightsButtonEffectMovement = 'LightsButtonEffectMovement',
   LightsButtonNull = 'LightsButtonNull',
+  LightsButtonReset = 'LightsButtonReset',
   LightsButtonStrobe = 'LightsButtonStrobe',
   LightsButtonSwitch = 'LightsButtonSwitch',
 }
