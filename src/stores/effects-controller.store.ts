@@ -13,8 +13,8 @@ import {
   type LightsEffectsMovementCreateParams,
   type LightsGroupResponse,
   type LightsPredefinedEffectCreateParams,
-  type LightsPredefinedEffectProperties,
   type LightsPredefinedEffectResponse,
+  type LightsPredefinedEffectUpdateParams,
   type LightsSwitchResponse,
   RgbColor,
   turnOffLightsSwitch,
@@ -173,6 +173,17 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         if (index >= 0) this.lightsSwitches[index].enabled = true;
       });
     },
+    createNullButtonEffect(buttonId: number): LightsPredefinedEffectResponse {
+      return {
+        id: -1,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        buttonId,
+        properties: {
+          type: 'LightsButtonNull',
+        },
+      };
+    },
     async getButtonEffects() {
       const response = await getAllPredefinedLightsEffects();
       if (response.response.ok && response.data) {
@@ -181,15 +192,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       this.buttonEffects.sort((a, b) => a.buttonId - b.buttonId);
       for (let i = 1; i <= 64; i++) {
         if (this.buttonEffects[i - 1]?.buttonId !== i) {
-          this.buttonEffects.splice(i, 0, {
-            id: -1,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            buttonId: i,
-            properties: {
-              type: 'LightsButtonNull',
-            },
-          });
+          this.buttonEffects.splice(i, 0, this.createNullButtonEffect(i));
         }
       }
     },
@@ -205,15 +208,8 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         }
       }
     },
-    async updateButtonEffectProperties(id: number, properties: LightsPredefinedEffectProperties) {
-      const response = await updatePredefinedLightsEffect({ path: { id }, body: { properties } });
-      if (response.response.ok && response.data) {
-        const index = this.buttonEffects.findIndex((g) => g.id === id);
-        this.buttonEffects.splice(index, 1, response.data);
-      }
-    },
-    async updateButtonEffectPosition(id: number, newButtonId: number) {
-      const response = await updatePredefinedLightsEffect({ path: { id }, body: { buttonId: newButtonId } });
+    async updateButtonEffect(id: number, body: LightsPredefinedEffectUpdateParams) {
+      const response = await updatePredefinedLightsEffect({ path: { id }, body });
       if (response.response.ok && response.data) {
         const index = this.buttonEffects.findIndex((g) => g.id === id);
         this.buttonEffects.splice(index, 1, response.data);
@@ -223,7 +219,8 @@ export const useEffectsControllerStore = defineStore('effectsController', {
       const response = await deletePredefinedLightsEffect({ path: { id } });
       if (response.response.ok) {
         const index = this.buttonEffects.findIndex((g) => g.id === id);
-        this.buttonEffects.splice(index, 1);
+        const oldEffect = this.buttonEffects[index];
+        this.buttonEffects.splice(index, 1, this.createNullButtonEffect(oldEffect.buttonId));
       }
     },
     async onEffectButtonPress(button: LightsPredefinedEffectResponse) {
@@ -271,6 +268,18 @@ export const useEffectsControllerStore = defineStore('effectsController', {
           return;
         }
       }
+    },
+    areSelectedColors(colors: RgbColor[]): boolean {
+      if (this.currentColors.length !== colors.length) {
+        return false;
+      }
+
+      for (let i = 0; i < colors.length; i++) {
+        // Colors should be in the same order
+        if (this.currentColors[i] !== colors[i]) return false;
+      }
+
+      return true;
     },
   },
 });

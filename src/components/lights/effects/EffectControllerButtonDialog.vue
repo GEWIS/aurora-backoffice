@@ -28,6 +28,7 @@
           <InputText id="lights-controller-button-name" v-model="name" autocomplete="off" class="w-full" />
           <label for="lights-controller-button-name">Name (optional)</label>
         </FloatLabel>
+        <IconSelector v-model="icon" />
         <Divider />
         <ButtonDialogColors
           v-if="type === ButtonTypes.LightsButtonColors"
@@ -73,8 +74,22 @@
     </template>
     <template #footer>
       <div class="flex flex-row gap-2">
-        <Button :disabled="!button || button.id < 0" icon="pi pi-trash" label="Delete" severity="danger" />
-        <Button :disabled="!propertiesValid" icon="pi pi-save" label="Save" severity="success" @click="handleSave" />
+        <Button
+          :disabled="!button || button.id < 0 || saveLoading"
+          icon="pi pi-trash"
+          label="Delete"
+          severity="danger"
+          @click="openDeleteDialog()"
+        />
+        <Button
+          :disabled="!propertiesValid || saveLoading"
+          icon="pi pi-save"
+          label="Save"
+          :loading="saveLoading"
+          severity="success"
+          @click="handleSave"
+        />
+        <ConfirmDialog />
       </div>
     </template>
   </Dialog>
@@ -82,6 +97,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { useConfirm } from 'primevue/useconfirm';
 import type { LightsPredefinedEffectProperties, LightsPredefinedEffectResponse } from '@/api';
 import ButtonDialogColors from '@/components/lights/effects/button/ButtonDialogColors.vue';
 import ButtonDialogEffectColor from '@/components/lights/effects/button/ButtonDialogEffectColor.vue';
@@ -89,6 +105,7 @@ import ButtonDialogEffectMovement from '@/components/lights/effects/button/Butto
 import ButtonDialogStrobe from '@/components/lights/effects/button/ButtonDialogStrobe.vue';
 import ButtonDialogSwitch from '@/components/lights/effects/button/ButtonDialogSwitch.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
+import IconSelector from '@/components/IconSelector.vue';
 
 enum ButtonTypes {
   LightsButtonColors = 'LightsButtonColors',
@@ -111,9 +128,11 @@ const emit = defineEmits<{
 const store = useEffectsControllerStore();
 
 const name = ref<string | undefined>();
+const icon = ref<string | undefined>('');
 const type = ref<ButtonTypes>(ButtonTypes.LightsButtonNull);
 const properties = ref<LightsPredefinedEffectProperties | undefined>();
 const propertiesValid = ref<boolean>(false);
+const saveLoading = ref<boolean>(false);
 
 const typeOptions = [
   { name: 'Colors', value: ButtonTypes.LightsButtonColors },
@@ -125,12 +144,35 @@ const typeOptions = [
 
 const handleSave = async () => {
   if (!propertiesValid.value || !properties.value) return;
+
+  saveLoading.value = true;
   if (!!props.button && props.button.id < 0) {
     await store.createButtonEffect({ properties: properties.value, buttonId: props.button.buttonId, name: name.value });
   } else if (!!props.button && props.button?.id >= 0) {
-    await store.updateButtonEffectProperties(props.button.id, properties.value);
+    await store.updateButtonEffect(props.button.id, {
+      name: name.value,
+      icon: icon.value,
+      properties: properties.value,
+    });
   }
+
   emit('close');
+  saveLoading.value = false;
+};
+
+const confirm = useConfirm();
+const openDeleteDialog = () => {
+  confirm.require({
+    message: 'Are you sure you want to delete this predefined effect?',
+    header: 'Are you sure?',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Yes',
+    accept() {
+      if (props.button && props.button?.id >= 0) {
+        store.deleteButtonEffect(props.button.id).then(() => emit('close'));
+      }
+    },
+  });
 };
 
 watch([props], () => {

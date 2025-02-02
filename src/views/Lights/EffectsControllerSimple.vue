@@ -14,7 +14,8 @@
         :key="button.buttonId"
         class="h-14"
         :disabled="button.properties.type === 'LightsButtonNull'"
-        severity="secondary"
+        raised
+        :severity="buttonActive(button) ? 'primary' : 'secondary'"
         @blur="store.onEffectButtonRelease(button)"
         @mousedown="store.onEffectButtonPress(button)"
         @mouseleave="store.onEffectButtonRelease(button)"
@@ -22,8 +23,7 @@
         @touchend="store.onEffectButtonRelease(button)"
         @touchstart="store.onEffectButtonPress(button)"
       >
-        <span v-if="button.icon" :class="['pi', button.icon]" />
-        {{ button.name }}
+        <EffectControllerButtonContent :button="button" :editing="editing" />
       </Button>
     </div>
     <div v-else class="grid grid-cols-1 md:grid-cols-8 gap-5">
@@ -31,6 +31,7 @@
         v-for="button in store.buttonEffects"
         :key="button.buttonId"
         class="h-14"
+        raised
         severity="secondary"
         variant="outlined"
         @click="
@@ -40,7 +41,7 @@
           }
         "
       >
-        <span class="pi pi-pencil" />
+        <EffectControllerButtonContent :button="button" :editing="editing" />
       </Button>
 
       <EffectControllerButtonDialog
@@ -58,13 +59,28 @@ import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectControllerButtonDialog from '@/components/lights/effects/EffectControllerButtonDialog.vue';
-import type { LightsPredefinedEffectResponse } from '@/api';
+import { type LightsButtonSwitch, type LightsPredefinedEffectResponse } from '@/api';
+import EffectControllerButtonContent from '@/components/lights/effects/EffectControllerButtonContent.vue';
 
 const store = useEffectsControllerStore();
 
 const editing = ref(false);
 const editingButton = ref<LightsPredefinedEffectResponse>();
 const editingDialogOpen = ref(false);
+
+const buttonActive = (button: LightsPredefinedEffectResponse) => {
+  if (button.properties.type === 'LightsButtonColors') {
+    return store.areSelectedColors(button.properties.colors);
+  }
+  if (button.properties.type === 'LightsButtonSwitch') {
+    const storedSwitches = store.lightsSwitches.filter((s) =>
+      (button.properties as LightsButtonSwitch).switchIds.includes(s.id),
+    );
+    const enabledSwitches = storedSwitches.filter((s) => s.enabled);
+    return enabledSwitches.length > 0;
+  }
+  return false;
+};
 </script>
 
 <style scoped></style>
