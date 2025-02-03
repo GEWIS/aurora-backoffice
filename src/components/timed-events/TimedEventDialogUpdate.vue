@@ -18,7 +18,7 @@ const open = ref<boolean>(false);
 const store = useTimedEventsStore();
 
 const onSave = async (params: CreateTimedEventRequest, skipNext?: boolean) => {
-  if (!skipNext) throw new Error('"skipNext" is required.');
+  if (skipNext == undefined) throw new Error('"skipNext" is required.');
   return store.updateTimedEvent(props.timedEvent.id, { ...params, skipNext });
 };
 </script>
