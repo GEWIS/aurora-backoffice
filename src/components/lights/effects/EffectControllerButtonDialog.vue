@@ -137,8 +137,8 @@ const emit = defineEmits<{
 
 const store = useEffectsControllerStore();
 
-const name = ref<string | undefined>();
-const icon = ref<string | undefined>('');
+const name = ref<string>('');
+const icon = ref<string>('');
 const type = ref<ButtonTypes>(ButtonTypes.LightsButtonNull);
 const properties = ref<LightsPredefinedEffectProperties | undefined>();
 const propertiesValid = ref<boolean>(false);
@@ -189,11 +189,13 @@ watch([props], () => {
   // Reset the form to default values
   propertiesValid.value = false;
   if (props.button) {
-    name.value = props.button.name;
+    name.value = props.button.name || '';
+    icon.value = props.button.icon || '';
     type.value = props.button.properties.type as ButtonTypes;
     properties.value = props.button.properties;
   } else {
-    name.value = undefined;
+    name.value = '';
+    icon.value = '';
     type.value = ButtonTypes.LightsButtonNull;
     properties.value = undefined;
   }

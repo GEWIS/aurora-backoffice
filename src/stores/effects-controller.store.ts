@@ -8,6 +8,7 @@ import {
   enableStrobeOnLightsGroup,
   getAllLightsSwitches,
   getAllPredefinedLightsEffects,
+  type LightsButtonColors,
   type LightsButtonSwitch,
   type LightsEffectsColorCreateParams,
   type LightsEffectsMovementCreateParams,
@@ -19,6 +20,7 @@ import {
   RgbColor,
   turnOffLightsSwitch,
   turnOnLightsSwitch,
+  updateLightsEffectColorColors,
   updatePredefinedLightsEffect,
 } from '@/api';
 
@@ -244,7 +246,12 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     async onEffectButtonPress(button: LightsPredefinedEffectResponse) {
       switch (button.properties.type) {
         case 'LightsButtonColors': {
-          this.currentColors = button.properties.colors;
+          const properties = button.properties as LightsButtonColors;
+          this.currentColors = properties.colors;
+          const promises = button.properties.lightsGroupIds?.map(async (id) => {
+            await updateLightsEffectColorColors({ path: { id }, body: { colors: properties.colors } });
+          });
+          if (promises) await Promise.all(promises);
           return;
         }
         case 'LightsButtonEffectColor': {

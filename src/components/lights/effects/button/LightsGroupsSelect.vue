@@ -1,7 +1,6 @@
 <template>
   <MultiSelect
     filter
-    :max-selected-labels="2"
     :model-value="modelValue"
     option-label="name"
     option-value="id"
