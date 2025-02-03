@@ -150,6 +150,7 @@ const typeOptions = [
   { name: 'Movement effect', value: ButtonTypes.LightsButtonEffectMovement },
   { name: 'Strobe', value: ButtonTypes.LightsButtonStrobe },
   { name: 'Switch', value: ButtonTypes.LightsButtonSwitch },
+  { name: 'Reset', value: ButtonTypes.LightsButtonReset },
 ];
 
 const handleSave = async () => {
