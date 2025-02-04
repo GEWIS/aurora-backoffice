@@ -8,7 +8,7 @@
       }
     "
   >
-    <EffectStaticColor show-colors />
+    <EffectStaticColor v-model="effect" show-colors />
   </EffectSettingsDialog>
 </template>
 
