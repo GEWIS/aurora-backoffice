@@ -49,7 +49,9 @@
         <template #content>
           <h4 class="mt-0 mb-1">Colors</h4>
           <div class="flex flex-col gap-5 mb-5">
+            <EffectBackgroundPulseDialog @save="effectsControllerStore.setColorEffect" />
             <EffectBeatFadeOutDialog @save="effectsControllerStore.setColorEffect" />
+            <EffectRandomColorDialog @save="effectsControllerStore.setColorEffect" />
             <EffectSparkleDialog @save="effectsControllerStore.setColorEffect" />
             <EffectStaticColorDialog @save="effectsControllerStore.setColorEffect" />
             <EffectWaveDialog @save="effectsControllerStore.setColorEffect" />
@@ -60,6 +62,7 @@
             <EffectTableRotateDialog @save="effectsControllerStore.setMovementEffect" />
             <EffectClassicRotateDialog @save="effectsControllerStore.setMovementEffect" />
             <EffectRandomPositionDialog @save="effectsControllerStore.setMovementEffect" />
+            <EffectZigZagDialog @save="effectsControllerStore.setMovementEffect" />
           </div>
         </template>
       </Card>
@@ -126,6 +129,9 @@ import EffectSearchLightDialog from '@/components/lights/effects/movement/Effect
 import EffectTableRotateDialog from '@/components/lights/effects/movement/EffectTableRotateDialog.vue';
 import EffectClassicRotateDialog from '@/components/lights/effects/movement/EffectClassicRotateDialog.vue';
 import EffectRandomPositionDialog from '@/components/lights/effects/movement/EffectRandomPositionDialog.vue';
+import EffectBackgroundPulseDialog from '@/components/lights/effects/color/EffectBackgroundPulseDialog.vue';
+import EffectRandomColorDialog from '@/components/lights/effects/color/EffectRandomColorDialog.vue';
+import EffectZigZagDialog from '@/components/lights/effects/movement/EffectZigZagDialog.vue';
 
 const handlersStore = useHandlersStore();
 const effectsControllerStore = useEffectsControllerStore();

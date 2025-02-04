@@ -45,6 +45,13 @@
     "
     @update:model-value="(e) => (effect = e)"
   />
+  <EffectZigZag
+    v-if="chosenEffect === MovementEffects_ZigZag.ZIG_ZAG"
+    :default-model-value="
+      defaultProperties?.effectProps.type === MovementEffects_ZigZag.ZIG_ZAG ? defaultProperties.effectProps : undefined
+    "
+    @update:model-value="(e) => (effect = e)"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -56,12 +63,14 @@ import {
   MovementEffects_RandomPosition,
   MovementEffects_SearchLight,
   MovementEffects_TableRotate,
+  MovementEffects_ZigZag,
 } from '@/api';
 import LightsGroupsSelect from '@/components/lights/effects/button/LightsGroupsSelect.vue';
 import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
 import EffectRandomPosition from '@/components/lights/effects/movement/EffectRandomPosition.vue';
 import EffectSearchLight from '@/components/lights/effects/movement/EffectSearchLight.vue';
 import EffectTableRotate from '@/components/lights/effects/movement/EffectTableRotate.vue';
+import EffectZigZag from '@/components/lights/effects/movement/EffectZigZag.vue';
 
 const props = defineProps<{
   defaultProperties?: LightsButtonEffectMovement;
@@ -84,6 +93,7 @@ const effectOptions = computed(() => {
     { label: 'RandomPosition', value: MovementEffects_RandomPosition.RANDOM_POSITION },
     { label: 'SearchLight', value: MovementEffects_SearchLight.SEARCH_LIGHT },
     { label: 'TableRotate', value: MovementEffects_TableRotate.TABLE_ROTATE },
+    { label: 'ZigZag', value: MovementEffects_ZigZag.ZIG_ZAG },
   ];
 });
 
