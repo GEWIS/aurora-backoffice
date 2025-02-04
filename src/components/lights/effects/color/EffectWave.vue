@@ -2,10 +2,10 @@
   <SelectorLightsColor v-if="showColors" v-model="colors" single-color />
   <SelectorRatioSlider
     id="waveSize"
-    :max="1"
-    :min="0"
-    name="Wave size (ratio)"
-    :step="0.05"
+    :max="8"
+    :min="1"
+    name="Number of waves"
+    :step="1"
     :value="nrWaves"
     @update="(newVal: number) => (nrWaves = newVal)"
   />
