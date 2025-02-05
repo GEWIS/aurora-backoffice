@@ -1,5 +1,7 @@
 <template>
   <SelectorLightsColor v-if="showColors" v-model="colors" single-color />
+  <SelectorPattern v-model="pattern" />
+  <SelectorDirection v-model="direction" />
   <SelectorRatioSlider
     id="waveSize"
     :max="8"
@@ -25,6 +27,8 @@ import { onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 import { ColorEffects_Wave, LightsEffectDirection, LightsEffectPattern, RgbColor, type WaveCreateParams } from '@/api';
+import SelectorDirection from '@/components/lights/effects/props/SelectorDirection.vue';
+import SelectorPattern from '@/components/lights/effects/props/SelectorPattern.vue';
 
 const props = defineProps<{
   showColors: boolean;
