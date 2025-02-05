@@ -1,40 +1,58 @@
+<template>
+  <SelectorLightsColor v-if="showColors" v-model="colors" />
+  <SelectorPattern v-model="pattern" />
+  <SelectorDirection v-model="direction" />
+  <SelectorBoolean id="enableFade" v-model="enableFade" name="Enable fade" />
+  <SelectorBoolean id="addBlacks" v-model="addBlacks" name="Add blacks" />
+</template>
+
 <script setup lang="ts">
-import { ref } from 'vue';
-import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
+import { onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
-import { useEffectsControllerStore } from '@/stores/effects-controller.store';
-import { ColorEffects_BeatFadeOut, RgbColor } from '@/api';
+import {
+  type BeatFadeOutCreateParams,
+  ColorEffects_BeatFadeOut,
+  LightsEffectDirection,
+  LightsEffectPattern,
+  RgbColor,
+} from '@/api';
+import SelectorPattern from '@/components/lights/effects/props/SelectorPattern.vue';
+import SelectorDirection from '@/components/lights/effects/props/SelectorDirection.vue';
 
-const store = useEffectsControllerStore();
+const props = defineProps<{
+  showColors: boolean;
+  defaultModelValue?: BeatFadeOutCreateParams;
+}>();
 
-const colors = ref<RgbColor[]>([]);
-const enableFade = ref<boolean>(false);
-const addBlacks = ref<boolean>(false);
+const emit = defineEmits<{
+  'update:modelValue': [modelValue: BeatFadeOutCreateParams];
+}>();
 
-const handleAddEffect = () => {
-  store.setColorEffect({
+const colors = ref<RgbColor[]>(props.defaultModelValue?.props.colors || []);
+const enableFade = ref<boolean>(props.defaultModelValue?.props.enableFade || false);
+const addBlacks = ref<boolean>(props.defaultModelValue?.props.nrBlacks !== 0 || false);
+const pattern = ref<LightsEffectPattern>(props.defaultModelValue?.props.pattern || LightsEffectPattern.HORIZONTAL);
+const direction = ref<LightsEffectDirection>(
+  props.defaultModelValue?.props.direction || LightsEffectDirection.FORWARDS,
+);
+
+const handleChange = () => {
+  const payload: BeatFadeOutCreateParams = {
     type: ColorEffects_BeatFadeOut.BEAT_FADE_OUT,
     props: {
       colors: colors.value,
       enableFade: enableFade.value,
       nrBlacks: addBlacks.value ? 1 : 0,
+      pattern: pattern.value,
+      direction: direction.value,
     },
-  });
+  };
+  emit('update:modelValue', payload);
 };
-</script>
 
-<template>
-  <EffectSettingsDialog :can-save="colors.length > 0" effect-name="BeatFadeOut" @save="handleAddEffect">
-    <SelectorLightsColor @colors-updated="(c: RgbColor[]) => (colors = c)" />
-    <SelectorBoolean
-      id="enableFade"
-      :checked="enableFade"
-      name="Enable fade"
-      @click="() => (enableFade = !enableFade)"
-    />
-    <SelectorBoolean id="addBlacks" :checked="addBlacks" name="Add blacks" @click="() => (addBlacks = !addBlacks)" />
-  </EffectSettingsDialog>
-</template>
+watch([colors, enableFade, addBlacks, pattern, direction], handleChange);
+onMounted(handleChange);
+</script>
 
 <style scoped></style>

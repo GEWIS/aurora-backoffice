@@ -6,7 +6,7 @@
         v-for="color in colors"
         :key="color"
         class="p-button-secondary"
-        :model-value="selectedColors.includes(color as RgbColor)"
+        :model-value="modelValue.includes(color as RgbColor)"
         :off-label="color"
         :on-label="color"
         @click="handleColorClick(color as RgbColor)"
@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from 'vue';
 import { useColorStore } from '@/stores/color.store';
 import ColorBox from '@/components/lights/effects/ColorBox.vue';
 import { RgbColor } from '@/api';
@@ -31,24 +30,25 @@ const store = useColorStore();
 
 const props = defineProps<{
   singleColor?: boolean;
+  modelValue: RgbColor[];
 }>();
 const emit = defineEmits<{
-  colorsUpdated: [colors: RgbColor[]];
+  'update:modelValue': [colors: RgbColor[]];
 }>();
 
 const colors = Object.values(RgbColor);
-const selectedColors: Ref<RgbColor[]> = ref([]);
 
 const handleColorClick = (color: RgbColor) => {
-  const i = selectedColors.value.findIndex((c) => c === color);
+  let selectedColors = [...props.modelValue];
+  const i = selectedColors.findIndex((c) => c === color);
   if (props.singleColor) {
-    selectedColors.value = [color];
+    selectedColors = [color];
   } else if (i < 0) {
-    selectedColors.value.push(color);
+    selectedColors.push(color);
   } else {
-    selectedColors.value.splice(i, 1);
+    selectedColors.splice(i, 1);
   }
-  emit('colorsUpdated', selectedColors.value);
+  emit('update:modelValue', selectedColors);
 };
 </script>
 

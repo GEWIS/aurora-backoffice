@@ -44,7 +44,7 @@ import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
 import Tag from 'primevue/tag';
-import { Tooltip, TreeTable } from 'primevue';
+import { FloatLabel, Tab, TabList, TabPanel, TabPanels, Tooltip, TreeTable } from 'primevue';
 import router from './router';
 import App from './App.vue';
 import '@/utils/fetchInterceptor';
@@ -100,6 +100,10 @@ app.component('Dialog', Dialog);
 app.component('Select', Select);
 app.component('Checkbox', Checkbox);
 app.component('Tabs', Tabs);
+app.component('TabList', TabList);
+app.component('Tab', Tab);
+app.component('TabPanels', TabPanels);
+app.component('TabPanel', TabPanel);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
@@ -118,6 +122,7 @@ app.component('StepperPanel', StepPanel);
 app.component('ToggleSwitch', ToggleSwitch);
 app.component('Tag', Tag);
 app.component('Message', Message);
+app.component('FloatLabel', FloatLabel);
 
 app.directive('tooltip', Tooltip);
 

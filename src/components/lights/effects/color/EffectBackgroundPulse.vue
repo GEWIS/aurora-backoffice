@@ -1,29 +1,29 @@
 <template>
   <SelectorLightsColor v-if="showColors" v-model="colors" />
   <SelectorRatioSlider
-    id="sparkle-ratio"
+    id="background-pulse-ratio"
     :max="1"
     :min="0"
     name="Turn-on ratio (every cycle)"
-    :step="0.05"
+    :step="0.01"
     :value="ratio"
     @update="(newVal: number) => (ratio = newVal)"
   />
   <SelectorRatioSlider
-    id="sparkle-dimDuration"
-    :max="2000"
+    id="background-pulse-duration"
+    :max="20000"
     :min="0"
-    name="Turn-off time (in ms)"
-    :step="25"
-    :value="dimDuration"
-    @update="(newVal: number) => (dimDuration = newVal)"
+    name="Pulse duration (in ms)"
+    :step="1000"
+    :value="pulseDuration"
+    @update="(newVal: number) => (pulseDuration = newVal)"
   />
   <SelectorRatioSlider
-    id="sparkle-cycleTime"
-    :max="2000"
+    id="background-pulse-cycle-time"
+    :max="10000"
     :min="0"
     name="Cycle time (in ms)"
-    :step="25"
+    :step="100"
     :value="cycleTime"
     @update="(newVal: number) => (cycleTime = newVal)"
   />
@@ -31,38 +31,38 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
+import { type BackgroundPulseCreateParams, ColorEffects_BackgroundPulse, RgbColor } from '@/api';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_Sparkle, RgbColor, type SparkleCreateParams } from '@/api';
 
 const props = defineProps<{
   showColors: boolean;
-  defaultModelValue?: SparkleCreateParams;
+  defaultModelValue?: BackgroundPulseCreateParams;
 }>();
 
 const emit = defineEmits<{
-  'update:modelValue': [params: SparkleCreateParams];
+  'update:modelValue': [modelValue: BackgroundPulseCreateParams];
 }>();
 
 const colors = ref<RgbColor[]>(props.defaultModelValue?.props.colors || []);
-const ratio = ref<number>(props.defaultModelValue?.props.ratio || 0.2);
-const dimDuration = ref<number>(props.defaultModelValue?.props.dimDuration || 800);
-const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 200);
+const ratio = ref<number>(props.defaultModelValue?.props.ratio || 0.05);
+const pulseDuration = ref<number>(props.defaultModelValue?.props.pulseDuration || 8000);
+const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 800);
 
 const handleChange = () => {
-  const payload: SparkleCreateParams = {
-    type: ColorEffects_Sparkle.SPARKLE,
+  const payload: BackgroundPulseCreateParams = {
+    type: ColorEffects_BackgroundPulse.BACKGROUND_PULSE,
     props: {
       colors: colors.value,
       ratio: ratio.value,
-      dimDuration: dimDuration.value,
+      pulseDuration: pulseDuration.value,
       cycleTime: cycleTime.value,
     },
   };
   emit('update:modelValue', payload);
 };
 
-watch([colors, ratio, dimDuration, cycleTime], handleChange);
+watch([colors, ratio, pulseDuration, cycleTime], handleChange);
 onMounted(handleChange);
 </script>
 
