@@ -3,10 +3,7 @@ name: Semantic release
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches: 
-      - main
+      - master
 
 jobs:
   versioning:
@@ -14,6 +11,8 @@ jobs:
 
   release:
     uses: GEWIS/actions/.github/workflows/docker-release.yml@v1
+    needs: versioning
+    if: ${{ needs.versioning.outputs.next-version != '' }}
     with:
       projects: "['.']"
       version: ${{ needs.versioning.outputs.next-version }}
