@@ -58,6 +58,12 @@
               >
                 <i class="pi pi-play" />
               </Button>
+              <Button
+                icon="pi pi-sun"
+                size="small"
+                title="Set brightness"
+                @click="handleLightsGroupBrightness($event, slotProps.data)"
+              />
             </div>
           </template>
         </Column>
@@ -103,12 +109,20 @@
           </DataTable>
         </template>
       </DataTable>
+      <Popover ref="brightnessPopoverOp" @hide="selectedGroupBrightnessPopover = undefined">
+        <BrightnessSlider
+          v-if="selectedGroupBrightnessPopover"
+          :lights-group="selectedGroupBrightnessPopover"
+          @close="brightnessPopoverOp?.hide()"
+        />
+      </Popover>
     </div>
   </AppContainer>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
+import type { PopoverMethods } from 'primevue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import {
@@ -128,9 +142,13 @@ import {
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastSuccess } from '@/utils/toastHandler';
 import AppContainer from '@/layout/AppContainer.vue';
+import BrightnessSlider from '@/components/lights/fixtures/BrightnessSlider.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
+
+const brightnessPopoverOp = ref<PopoverMethods>();
+const selectedGroupBrightnessPopover = ref<LightsGroupResponse | undefined>();
 
 const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
@@ -202,6 +220,18 @@ const handleHardwareReset = async (type: FixtureType, id: number) => {
     title: 'Success',
     body: 'Successfully sent hardware reset signal',
   });
+};
+
+const handleLightsGroupBrightness = (event: Event, lightsGroup: LightsGroupResponse) => {
+  brightnessPopoverOp.value?.hide();
+
+  if (selectedGroupBrightnessPopover.value?.id !== lightsGroup.id) {
+    selectedGroupBrightnessPopover.value = lightsGroup;
+
+    nextTick(() => {
+      brightnessPopoverOp.value?.show(event);
+    });
+  }
 };
 
 const getHandler = (groupId: number): string | undefined => {

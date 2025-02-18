@@ -6,6 +6,7 @@ import {
   getAudios,
   getLightsGroups,
   getScreens,
+  getSingleLightsGroup,
   type LightsGroupResponse,
   type ScreenResponse,
 } from '@/api';
@@ -32,6 +33,20 @@ export const useSubscriberStore = defineStore('subscribers', {
     },
     async getLightGroups() {
       await getLightsGroups().then((lightsGroups) => (this.lightsGroups = lightsGroups.data!));
+    },
+    async updateLightsGroupInStore(id: number) {
+      const res = await getSingleLightsGroup({ path: { id } });
+      if (!res.response.ok || !res.data) {
+        return;
+      }
+
+      const updatedLightsGroup = res.data;
+      const index = this.lightsGroups.findIndex((g) => g.id === updatedLightsGroup.id);
+      if (index >= 0) {
+        this.lightsGroups.splice(index, 1, updatedLightsGroup);
+      } else {
+        this.lightsGroups.push(updatedLightsGroup);
+      }
     },
     async init(): Promise<void> {
       await Promise.all([this.getAudios(), this.getScreens(), this.getLightGroups()]);

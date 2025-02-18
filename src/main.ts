@@ -44,7 +44,7 @@ import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import Message from 'primevue/message';
 import Tag from 'primevue/tag';
-import { FloatLabel, Tab, TabList, TabPanel, TabPanels, Tooltip, TreeTable } from 'primevue';
+import { FloatLabel, Popover, Tab, TabList, TabPanel, TabPanels, Tooltip, TreeTable } from 'primevue';
 import router from './router';
 import App from './App.vue';
 import '@/utils/fetchInterceptor';
@@ -123,6 +123,7 @@ app.component('ToggleSwitch', ToggleSwitch);
 app.component('Tag', Tag);
 app.component('Message', Message);
 app.component('FloatLabel', FloatLabel);
+app.component('Popover', Popover);
 
 app.directive('tooltip', Tooltip);
 
