@@ -10,6 +10,24 @@
         </template>
         <Column expander style="width: 5rem" />
         <Column field="name" header="Group name" />
+        <Column header="Organization">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.gridSizeY > 0">
+              Grid
+              <span
+                v-tooltip="{ value: 'All fixtures are placed in a grid (two dimensional).' }"
+                class="pi pi-question-circle"
+              ></span>
+            </span>
+            <span v-else>
+              Line
+              <span
+                v-tooltip="{ value: 'All fixtures are placed on a line (one dimensional).' }"
+                class="pi pi-question-circle"
+              ></span>
+            </span>
+          </template>
+        </Column>
         <Column header="Controller">
           <template #body="slotProps">
             {{ slotProps.data.controller.name }}
@@ -58,6 +76,12 @@
               >
                 <i class="pi pi-play" />
               </Button>
+              <Button
+                icon="pi pi-sun"
+                size="small"
+                title="Set brightness"
+                @click="handleLightsGroupBrightness($event, slotProps.data)"
+              />
             </div>
           </template>
         </Column>
@@ -68,6 +92,11 @@
               <template #body="slotProps2">
                 {{ slotProps2.data.fixture.name }}
               </template>
+            </Column>
+            <Column field="positionX" header="Position X" />
+            <Column v-if="slotProps.data.gridSizeY > 0" field="positionY" header="Position Y" />
+            <Column field="relativeBrightness" header="Brightness">
+              <template #body="slotProps2"> {{ slotProps2.data.masterDimmer * 100 }}% </template>
             </Column>
             <Column field="firstChannel" header="DMX Channel" />
             <Column header="Actions">
@@ -103,12 +132,20 @@
           </DataTable>
         </template>
       </DataTable>
+      <Popover ref="brightnessPopoverOp" @hide="selectedGroupBrightnessPopover = undefined">
+        <BrightnessSlider
+          v-if="selectedGroupBrightnessPopover"
+          :lights-group="selectedGroupBrightnessPopover"
+          @close="brightnessPopoverOp?.hide()"
+        />
+      </Popover>
     </div>
   </AppContainer>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
+import type { PopoverMethods } from 'primevue';
 import { useHandlersStore } from '@/stores/handlers.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import {
@@ -128,9 +165,13 @@ import {
 import { FixtureType } from '@/components/lights/fixtures/FixtureType';
 import { toastSuccess } from '@/utils/toastHandler';
 import AppContainer from '@/layout/AppContainer.vue';
+import BrightnessSlider from '@/components/lights/fixtures/BrightnessSlider.vue';
 
 const handlersStore = useHandlersStore();
 const subscriberStore = useSubscriberStore();
+
+const brightnessPopoverOp = ref<PopoverMethods>();
+const selectedGroupBrightnessPopover = ref<LightsGroupResponse | undefined>();
 
 const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
@@ -202,6 +243,18 @@ const handleHardwareReset = async (type: FixtureType, id: number) => {
     title: 'Success',
     body: 'Successfully sent hardware reset signal',
   });
+};
+
+const handleLightsGroupBrightness = (event: Event, lightsGroup: LightsGroupResponse) => {
+  brightnessPopoverOp.value?.hide();
+
+  if (selectedGroupBrightnessPopover.value?.id !== lightsGroup.id) {
+    selectedGroupBrightnessPopover.value = lightsGroup;
+
+    nextTick(() => {
+      brightnessPopoverOp.value?.show(event);
+    });
+  }
 };
 
 const getHandler = (groupId: number): string | undefined => {
