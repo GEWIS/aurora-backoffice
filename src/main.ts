@@ -107,6 +107,7 @@ app.component('TabPanel', TabPanel);
 app.component('ScrollPanel', ScrollPanel);
 app.component('FileUpload', FileUpload);
 app.component('Spinner', ProgressSpinner);
+app.component('ProgressSpinner', ProgressSpinner);
 app.component('ProgressBar', ProgressBar);
 app.component('Slider', Slider);
 app.component('Toast', Toast);
