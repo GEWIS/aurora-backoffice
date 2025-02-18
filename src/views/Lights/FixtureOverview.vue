@@ -10,6 +10,24 @@
         </template>
         <Column expander style="width: 5rem" />
         <Column field="name" header="Group name" />
+        <Column header="Organization">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.gridSizeY > 0">
+              Grid
+              <span
+                v-tooltip="{ value: 'All fixtures are placed in a grid (two dimensional).' }"
+                class="pi pi-question-circle"
+              ></span>
+            </span>
+            <span v-else>
+              Line
+              <span
+                v-tooltip="{ value: 'All fixtures are placed on a line (one dimensional).' }"
+                class="pi pi-question-circle"
+              ></span>
+            </span>
+          </template>
+        </Column>
         <Column header="Controller">
           <template #body="slotProps">
             {{ slotProps.data.controller.name }}
@@ -74,6 +92,11 @@
               <template #body="slotProps2">
                 {{ slotProps2.data.fixture.name }}
               </template>
+            </Column>
+            <Column field="positionX" header="Position X" />
+            <Column v-if="slotProps.data.gridSizeY > 0" field="positionY" header="Position Y" />
+            <Column field="relativeBrightness" header="Brightness">
+              <template #body="slotProps2"> {{ slotProps2.data.masterDimmer * 100 }}% </template>
             </Column>
             <Column field="firstChannel" header="DMX Channel" />
             <Column header="Actions">
