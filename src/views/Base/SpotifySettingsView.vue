@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-    <AppContainer icon="pi-users" title="Spotify Settings">
+    <AppContainer icon="pi-users" title="Spotify Users">
       <template #header>
         <Button
           as="a"
@@ -22,13 +22,7 @@
           <Column>
             <template #body="slotProps">
               <div class="flex justify-end gap-2">
-                <Button
-                  :disabled="slotProps.data.active"
-                  icon="pi pi-user-plus"
-                  severity="success"
-                  size="small"
-                  :title="slotProps.data.active ? 'User already active' : 'Make user active'"
-                />
+                <SpotifyUserSwitchButton :user="slotProps.data" />
                 <SpotifyUserDeleteButton :user="slotProps.data" />
               </div>
             </template>
@@ -47,6 +41,7 @@ import SpotifyCurrentlyPlaying from '@/components/audio/SpotifyCurrentlyPlaying.
 import { useSpotifyStore } from '@/stores/spotify.store';
 import SpotifyCallbackDialog from '@/components/audio/SpotifyCallbackDialog.vue';
 import SpotifyUserDeleteButton from '@/components/audio/SpotifyUserDeleteButton.vue';
+import SpotifyUserSwitchButton from '@/components/audio/SpotifyUserSwitchButton.vue';
 
 const store = useSpotifyStore();
 store.init();

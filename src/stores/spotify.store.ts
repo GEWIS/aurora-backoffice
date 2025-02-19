@@ -2,9 +2,11 @@ import { defineStore } from 'pinia';
 import {
   deleteSpotifyUser,
   getAllSpotifyUsers,
+  getSpotifyProfile,
   spotifyLoginCallback,
   type SpotifyUserProfile,
   type SpotifyUserResponse,
+  switchToSpotifyUser,
 } from '@/api';
 
 interface SpotifyStore {
@@ -25,7 +27,14 @@ export const useSpotifyStore = defineStore('spotify', {
       if (res.response.ok && res.data) {
         this.spotifyUsers = res.data;
       }
+      await this.fetchCurrentSpotifyProfile();
       this.loading = false;
+    },
+    async fetchCurrentSpotifyProfile() {
+      const res = await getSpotifyProfile();
+      if (res.response.ok && res.data) {
+        this.currentSpotifyProfile = res.data;
+      }
     },
     async deleteSpotifyUser(id: number) {
       const res = await deleteSpotifyUser({ path: { id } });
@@ -49,6 +58,24 @@ export const useSpotifyStore = defineStore('spotify', {
           success: true,
           error: '',
         };
+      }
+    },
+    async makeUserActive(spotifyUser: SpotifyUserResponse) {
+      if (spotifyUser.spotifyId === this.currentSpotifyProfile?.id) {
+        // User already active
+        return;
+      }
+
+      const res = await switchToSpotifyUser({ path: { id: spotifyUser.id } });
+      if (res.response.ok) {
+        this.spotifyUsers.forEach((u) => {
+          u.active = false;
+        });
+        const index = this.spotifyUsers.findIndex((u) => u.id === spotifyUser.id);
+        if (index >= 0) {
+          this.spotifyUsers[index].active = true;
+        }
+        await this.fetchCurrentSpotifyProfile();
       }
     },
   },

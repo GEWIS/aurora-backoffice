@@ -11,7 +11,6 @@
       <div class="flex flex-col gap-1 h-100 justify-content-center">
         <span class="text-xl">{{ store.currentlyPlaying?.title }}</span>
         <span class="text-lg">{{ store.currentlyPlaying?.artists.join(', ') }}</span>
-        <span class="material-icons">arrow_drop_down</span>
       </div>
     </div>
     <div v-else>
