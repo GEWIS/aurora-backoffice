@@ -52,6 +52,7 @@ const model = computed<MenuItem[]>(() => {
       items: [
         showGewisPosters && { label: GewisPosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/gewis' },
         showHubblePosters && { label: HubblePosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/hubble' },
+        { label: 'Static Posters', icon: 'pi pi-fw pi-image', to: '/poster/static' },
       ],
     },
     {

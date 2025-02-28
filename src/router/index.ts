@@ -58,6 +58,11 @@ const router = createRouter({
               component: () => import('@/views/Poster/HubblePosterList.vue'),
               name: 'hubblePosterList',
             },
+            {
+              path: 'static',
+              component: () => import('@/views/Poster/StaticPosterView.vue'),
+              name: 'staticPoster',
+            },
           ],
           meta: {
             securityGroup: 'poster',
