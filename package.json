@@ -37,7 +37,7 @@
     "@gewis/eslint-config": "github:GEWIS/eslint-config#v1.2.0",
     "@hey-api/openapi-ts": "^0.54.2",
     "@tsconfig/node22": "^22.0.0",
-    "@types/lodash": "^4.17.13",
+    "@types/lodash": "^4.17.15",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
