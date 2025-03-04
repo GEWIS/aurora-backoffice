@@ -7,7 +7,7 @@
       <div v-if="store.loading">
         <ProgressSpinner />
       </div>
-      <div v-else class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div v-else class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         <div v-for="poster in store.staticPosters" :key="poster.id">
           <div class="rounded-lg p-5 mt-3 border border-surface shadow-md bg-re">
             <div class="flex flex-col gap-4">

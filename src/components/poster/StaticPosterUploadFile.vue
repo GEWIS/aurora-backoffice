@@ -1,9 +1,16 @@
 <template>
-  <FileUpload accept="image/*,video/*" auto class="w-full" custom-upload mode="basic" @select="onFileSelect" />
+  <input
+    id="static-poster-file-upload"
+    ref="fileSelector"
+    accept="image/*, video/*"
+    hidden
+    type="file"
+    @change="handleFileSelect"
+  />
+  <Button icon="pi pi-plus" label="Upload file" :loading="loading" @click="fileSelector?.click()" />
 </template>
 
 <script lang="ts" setup>
-import type { FileUploadSelectEvent } from 'primevue';
 import { ref } from 'vue';
 import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
 
@@ -13,12 +20,13 @@ const emit = defineEmits<{
   close: [];
 }>();
 
+const fileSelector = ref();
 const loading = ref<boolean>(false);
 
-const onFileSelect = async (event: FileUploadSelectEvent) => {
-  if (event.files.length > 0) {
+const handleFileSelect = async (event: Event) => {
+  if (event.target && 'files' in event.target && Array.isArray(event.target.files) && event.target.files[0]) {
     loading.value = true;
-    await store.addPoster(event.files[0]);
+    await store.addPoster(event.target.files[0]);
     emit('close');
     loading.value = false;
   }
