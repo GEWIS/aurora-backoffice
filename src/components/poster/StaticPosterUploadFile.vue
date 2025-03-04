@@ -26,7 +26,7 @@ const loading = ref<boolean>(false);
 const handleFileSelect = async (event: Event) => {
   if (event.target && 'files' in event.target && Array.isArray(event.target.files) && event.target.files[0]) {
     loading.value = true;
-    await store.addPoster(event.target.files[0]);
+    await store.addPosterFile(event.target.files[0]);
     emit('close');
     loading.value = false;
   }

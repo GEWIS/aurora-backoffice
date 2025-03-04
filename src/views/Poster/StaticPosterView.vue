@@ -22,6 +22,18 @@
               <video v-else-if="getPosterType(poster) === 'video'" class="w-full" controls muted>
                 <source :src="getUrl(poster)" />
               </video>
+              <div v-else class="w-full">
+                <a :href="getUrl(poster)" target="_blank">
+                  <div
+                    class="hover:brightness-50 transition duration-200 w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast p-3"
+                    :title="getUrl(poster)"
+                  >
+                    <span class="whitespace-nowrap text-ellipsis overflow-hidden">
+                      {{ getUrl(poster) }}
+                    </span>
+                  </div>
+                </a>
+              </div>
               <div class="flex flex-row gap-2">
                 <StaticPosterButtonDelete :poster="poster" />
                 <StaticPosterButtonShow :poster="poster" />

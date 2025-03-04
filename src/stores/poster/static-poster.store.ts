@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import {
-  createStaticPoster,
+  createStaticPosterUrl,
+  createStaticPosterFile,
   deleteStaticPoster,
   getAllStaticPosters,
   getStaticPosterHandlerState,
@@ -53,8 +54,14 @@ export const useStaticPosterStore = defineStore('static-poster', {
       }
       if (updateLoading) this.loading = false;
     },
-    async addPoster(file: Blob) {
-      const res = await createStaticPoster({ body: { file } });
+    async addPosterFile(file: Blob) {
+      const res = await createStaticPosterFile({ body: { file } });
+      if (res.response.ok && res.data) {
+        this.staticPosters.push(res.data);
+      }
+    },
+    async addPosterUrl(url: string) {
+      const res = await createStaticPosterUrl({ body: { url } });
       if (res.response.ok && res.data) {
         this.staticPosters.push(res.data);
       }
