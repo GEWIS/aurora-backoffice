@@ -34,7 +34,7 @@
     "vue-timeago3": "^2.3.2"
   },
   "devDependencies": {
-    "@gewis/eslint-config": "github:GEWIS/eslint-config#v1.2.0",
+    "@gewis/eslint-config": "github:GEWIS/eslint-config#v2.2.3",
     "@hey-api/openapi-ts": "^0.54.2",
     "@tsconfig/node22": "^22.0.0",
     "@types/lodash": "^4.17.15",
