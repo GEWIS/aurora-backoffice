@@ -1,11 +1,17 @@
 <template>
   <AppContainer icon="pi-image" title="Static Posters">
     <template #header>
-      <StaticPosterUploadDialog />
+      <div class="flex flex-row gap-6 justify-center">
+        <div class="flex flex-row gap-3 justify-center">
+          <StaticPosterButtonClear />
+          <StaticPosterUploadDialog />
+        </div>
+        <StaticPosterClockToggle />
+      </div>
     </template>
     <template #default>
       <div v-if="store.loading">
-        <ProgressSpinner />
+        <Spinner />
       </div>
       <div v-else class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         <div v-for="poster in store.staticPosters" :key="poster.id">
@@ -53,6 +59,8 @@ import type { LocalPosterResponse } from '@/api';
 import StaticPosterButtonDelete from '@/components/poster/StaticPosterButtonDelete.vue';
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 import StaticPosterUploadDialog from '@/components/poster/StaticPosterUploadDialog.vue';
+import StaticPosterClockToggle from '@/components/poster/StaticPosterClockToggle.vue';
+import StaticPosterButtonClear from '@/components/poster/StaticPosterButtonClear.vue';
 
 const store = useStaticPosterStore();
 store.init();

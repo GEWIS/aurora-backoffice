@@ -8,6 +8,7 @@ import {
   type LocalPosterResponse,
   setStaticPosterClock,
   showStaticPoster,
+  hideStaticPoster,
 } from '@/api';
 
 interface StaticPosterStore {
@@ -84,6 +85,9 @@ export const useStaticPosterStore = defineStore('static-poster', {
       if (res.response.ok) {
         this.clockVisible = visible;
       }
+    },
+    async clearActivePoster() {
+      await hideStaticPoster();
     },
   },
 });
