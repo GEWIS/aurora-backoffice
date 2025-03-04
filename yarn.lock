@@ -542,13 +542,6 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
 
-"@primeuix/styled@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@primeuix/styled/-/styled-0.3.0.tgz#d48ca35b5a6129e465da9baedc2c721728ec646d"
-  integrity sha512-XsLbmyM1u50A0EDATIHyqm5O/zOCSyNKPk4pNN8HFvEPehbsjf4tkXcRZAyaVvntSCLpV4XGAj7v5EDCQkBRlg==
-  dependencies:
-    "@primeuix/utils" "^0.3.0"
-
 "@primeuix/styled@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@primeuix/styled/-/styled-0.5.0.tgz#90fc8a0930732c91a2ffacc489b3ddd5b7eccf60"
@@ -563,10 +556,12 @@
   dependencies:
     "@primeuix/styled" "^0.5.0"
 
-"@primeuix/utils@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@primeuix/utils/-/utils-0.3.0.tgz#7e49c8bf6f97af7740902d51cdefd497ea13fdc0"
-  integrity sha512-d6ymWez1n+iqwzAVhyOTmrOHl5qnSX2oGlTy97qGuA15gLai+MQaxONHFNdDia8Q7o396v7KK9IvhAx9VET/+A==
+"@primeuix/themes@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@primeuix/themes/-/themes-1.0.0.tgz#5af2a2d1593503ca4a0f82d04ff9e946dd269362"
+  integrity sha512-fxUgcAP9H6FeytbE8c4QvRt8aBnoyZJqvtnnVwHT8PHr1dNSnC1nYKGrXpebcx3SpNy9Hp9oVidGsl6u61+pXQ==
+  dependencies:
+    "@primeuix/styled" "^0.5.0"
 
 "@primeuix/utils@^0.5.0", "@primeuix/utils@^0.5.1":
   version "0.5.1"
@@ -589,12 +584,13 @@
     "@primeuix/utils" "^0.5.1"
     "@primevue/core" "4.3.1"
 
-"@primevue/themes@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@primevue/themes/-/themes-4.2.1.tgz#c4f361202133e2f816ed49aa6b4ec3f97b6665eb"
-  integrity sha512-byp4YejyVdrOpRRbq5vBtaDBFHUq7Wc0aGWwII1fliYbwQ+WXn/hCAYhaXwRrwweHpTiobiWWsS+PRLWJ7fBRw==
+"@primevue/themes@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@primevue/themes/-/themes-4.3.1.tgz#a283b34a511f30e9c2c8286ee339854efffaa01d"
+  integrity sha512-aC7V5BkMoMxEMoq7hIf+PNEaY/AS5EAgVg96Gf3bvV1JqZ36hSQ2CV1SfuNsWeEvIPF/u4L5qvjwC/LGjT4qgw==
   dependencies:
-    "@primeuix/styled" "^0.3.0"
+    "@primeuix/styled" "^0.5.0"
+    "@primeuix/themes" "^1.0.0"
 
 "@rollup/rollup-android-arm-eabi@4.24.3":
   version "4.24.3"
