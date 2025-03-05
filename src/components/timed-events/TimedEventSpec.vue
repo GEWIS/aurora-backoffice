@@ -39,6 +39,11 @@
     description=""
     :label="`Remove handler for screen '${getScreenName(props.eventSpec.params.id)}'`"
   />
+  <TimedEventTag
+    v-else-if="props.eventSpec.type === 'timed-event-set-static-poster'"
+    description="Change the poster on screen for all screens using the StaticPosterHandler"
+    label="Set static poster"
+  />
 </template>
 
 <script setup lang="ts">

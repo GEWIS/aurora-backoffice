@@ -16,15 +16,10 @@ import { computed } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import TimedEventParamsHandler from '@/components/timed-events/types/TimedEventParamsHandler.vue';
-import type { CreateTimedEventRequest, SwitchHandlerParams } from '@/api';
+import type { SwitchHandlerParams } from '@/api';
+import type { TimedEventParamsProps } from '@/components/timed-events/types/TimedEventParamsProps';
 
-defineProps<{
-  originalEventSpecParams?: SwitchHandlerParams;
-  cronExpression: string;
-  cronValid: boolean;
-  skipNext?: boolean;
-  onSave: (params: CreateTimedEventRequest, skipNext?: boolean) => Promise<void>;
-}>();
+defineProps<TimedEventParamsProps<SwitchHandlerParams>>();
 
 const subscriberStore = useSubscriberStore();
 const handlersStore = useHandlersStore();
