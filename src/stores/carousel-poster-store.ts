@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { setPosterBorrelMode, forceUpdatePosters, getPosters, type Poster } from '@/api';
+import { setPosterBorrelMode, forceUpdatePosters, getPosters, type Poster, getPosterBorrelMode } from '@/api';
 
 /**
  * Poster store
@@ -38,6 +38,13 @@ export const useCarouselPosterStore = defineStore('carousel-poster', {
         this.borrelModeActive = posters.data!.borrelMode;
       });
     },
+    async getBorrelMode() {
+      const res = await getPosterBorrelMode();
+      if (res.response.ok && res.data) {
+        this.borrelModePresent = res.data.present;
+        this.borrelModeActive = res.data.enabled;
+      }
+    },
     /**
      * Set the borrel mode
      * @param enabled - Whether to enable or disable the borrel mode
@@ -57,6 +64,7 @@ export const useCarouselPosterStore = defineStore('carousel-poster', {
     async init() {
       this.loading = true;
       await this.getPosters();
+      await this.getBorrelMode();
       this.loading = false;
     },
     /**
