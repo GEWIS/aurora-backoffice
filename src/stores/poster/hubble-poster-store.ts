@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { forceUpdateHubblePosters, getHubblePosters } from '@/api';
+import { forceUpdatePosters, getPosters } from '@/api';
 import { type BasePosterState } from '@/stores/poster/base-poster-store';
 
 export const useHubblePosterStore = defineStore('poster', {
@@ -16,7 +16,7 @@ export const useHubblePosterStore = defineStore('poster', {
      * Get the posters
      */
     async getPosters() {
-      getHubblePosters().then((posters) => {
+      getPosters().then((posters) => {
         this.posters = posters.data!.posters;
       });
     },
@@ -33,7 +33,7 @@ export const useHubblePosterStore = defineStore('poster', {
      */
     async reloadPosters() {
       this.loading = true;
-      await forceUpdateHubblePosters();
+      await forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;

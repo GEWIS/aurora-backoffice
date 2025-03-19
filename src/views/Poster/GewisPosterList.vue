@@ -4,11 +4,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useGewisPosterStore } from '@/stores/poster/gewis-poster-store';
+import { useCarouselPosterStore } from '@/stores/carousel-poster-store';
 import BasePosterList from '@/views/Poster/BasePosterList.vue';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
 
-const store = useGewisPosterStore();
+const store = useCarouselPosterStore();
 store.init();
 
 const serverSettingsStore = useServerSettingsStore();

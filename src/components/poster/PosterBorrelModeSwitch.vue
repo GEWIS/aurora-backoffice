@@ -10,11 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import type BasePosterStore from '@/stores/poster/base-poster-store';
+import { useCarouselPosterStore } from '@/stores/carousel-poster-store';
 
-defineProps<{
-  store: BasePosterStore;
-}>();
+const store = useCarouselPosterStore();
 </script>
 
 <style scoped></style>
