@@ -2,11 +2,11 @@ name: Lint and build
 
 on:
   push:
-    branches: 
-    - develop
+    branches-ignore: 
+    - main
   pull_request:
-    branches: 
-    - develop
+    branches-ignore: 
+    - main
 
 jobs:
   generate-client-files:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: gewis/aurora-core
-          ref: master
+          ref: develop
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
