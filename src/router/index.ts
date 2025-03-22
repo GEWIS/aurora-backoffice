@@ -138,6 +138,22 @@ const router = createRouter({
           },
         },
         {
+          path: '/spotify',
+          component: () => import('@/views/Base/SpotifySettingsView.vue'),
+          name: 'SpotifySettings',
+          meta: {
+            securityGroup: 'spotify',
+            securitySection: 'privileged',
+          },
+          children: [
+            {
+              path: 'callback',
+              component: () => import('@/views/Base/SpotifySettingsView.vue'),
+              name: 'SpotifyLoginCallback',
+            },
+          ],
+        },
+        {
           path: '/audit',
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
