@@ -49,14 +49,9 @@ const router = createRouter({
           path: '/poster',
           children: [
             {
-              path: 'gewis',
-              component: () => import('@/views/Poster/GewisPosterList.vue'),
-              name: 'gewisPosterList',
-            },
-            {
-              path: 'hubble',
-              component: () => import('@/views/Poster/HubblePosterList.vue'),
-              name: 'hubblePosterList',
+              path: 'carousel',
+              component: () => import('@/views/Poster/CarouselPosterList.vue'),
+              name: 'carouselPosterList',
             },
             {
               path: 'static',

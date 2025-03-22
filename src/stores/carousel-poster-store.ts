@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import { getGewisPosters, setPosterBorrelMode, forceUpdateGewisPosters } from '@/api';
-import { type BasePosterState } from '@/stores/poster/base-poster-store';
+import { setPosterBorrelMode, forceUpdatePosters, getPosters, type Poster, getPosterBorrelMode } from '@/api';
 
 /**
  * Poster store
@@ -8,13 +7,17 @@ import { type BasePosterState } from '@/stores/poster/base-poster-store';
  * @param borrelModeActive - Whether the borrel mode is active
  * @param loading - Whether the poster store is loading
  */
-type GewisPosterState = BasePosterState & {
+type CarouselPosterState = {
+  posters: Poster[];
+  loading: boolean;
+  borrelModePresent: boolean;
   borrelModeActive: boolean;
 };
 
-export const useGewisPosterStore = defineStore('gewis-poster', {
-  state: (): GewisPosterState => ({
+export const useCarouselPosterStore = defineStore('carousel-poster', {
+  state: (): CarouselPosterState => ({
     posters: [],
+    borrelModePresent: false,
     borrelModeActive: false,
     loading: true,
   }),
@@ -28,12 +31,19 @@ export const useGewisPosterStore = defineStore('gewis-poster', {
      * Get the posters
      */
     async getPosters() {
-      getGewisPosters({
+      getPosters({
         query: { alwaysReturnBorrelPosters: true },
       }).then((posters) => {
         this.posters = posters.data!.posters;
         this.borrelModeActive = posters.data!.borrelMode;
       });
+    },
+    async getBorrelMode() {
+      const res = await getPosterBorrelMode();
+      if (res.response.ok && res.data) {
+        this.borrelModePresent = res.data.present;
+        this.borrelModeActive = res.data.enabled;
+      }
     },
     /**
      * Set the borrel mode
@@ -54,6 +64,7 @@ export const useGewisPosterStore = defineStore('gewis-poster', {
     async init() {
       this.loading = true;
       await this.getPosters();
+      await this.getBorrelMode();
       this.loading = false;
     },
     /**
@@ -61,7 +72,7 @@ export const useGewisPosterStore = defineStore('gewis-poster', {
      */
     async reloadPosters() {
       this.loading = true;
-      await forceUpdateGewisPosters();
+      await forceUpdatePosters();
 
       await this.getPosters();
       this.loading = false;

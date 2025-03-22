@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { type FeatureFlagResponse, type ISettings, setSetting } from '@/api';
+import { clearSettingsFile, type FeatureFlagResponse, type ISettings, setSetting, setSettingFile } from '@/api';
 import { getFeatureFlags, getSettings } from '@/api';
 
 interface ServerSettingsStore {
@@ -45,6 +45,26 @@ export const useServerSettingsStore = defineStore('server-settings', {
       this.loading = true;
       await setSetting({ body: { key: setting, value } });
       this.serverSettings[setting] = value as never;
+      this.loading = false;
+    },
+    async setSettingFile(setting: keyof ISettings, file: Blob): Promise<void> {
+      if (!this.serverSettings) return;
+
+      this.loading = true;
+      const res = await setSettingFile({ body: { key: setting, file } });
+      if (res.response.ok && res.data) {
+        this.serverSettings[setting] = res.data.value as never;
+      }
+      this.loading = false;
+    },
+    async clearSettingFile(setting: keyof ISettings): Promise<void> {
+      if (!this.serverSettings) return;
+
+      this.loading = true;
+      const res = await clearSettingsFile({ body: { key: setting } });
+      if (res.response.ok && res.data) {
+        this.serverSettings[setting] = res.data.value as never;
+      }
       this.loading = false;
     },
   },

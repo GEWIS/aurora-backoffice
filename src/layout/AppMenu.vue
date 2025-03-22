@@ -17,9 +17,7 @@ const settingsStore = useServerSettingsStore();
 
 // Calculate all items in the menu based on the user's security groups
 const model = computed<MenuItem[]>(() => {
-  const showPosters = authStore.isInSecurityGroup('poster', 'base');
-  const showGewisPosters = settingsStore.featureEnabled('GewisPosterScreenHandler');
-  const showHubblePosters = settingsStore.featureEnabled('HubblePosterScreenHandler');
+  const showPosters = authStore.isInSecurityGroup('poster', 'base') && settingsStore.featureEnabled('Poster');
   const showAudit = authStore.isInSecurityGroup('audit', 'base');
   const showCenturion =
     authStore.isInSecurityGroup('centurion', 'privileged') && settingsStore.featureEnabled('Centurion');
@@ -34,11 +32,6 @@ const model = computed<MenuItem[]>(() => {
   const showTimedEvents = authStore.isInSecurityGroup('timedEvents', 'privileged');
   const showSpotifySettings = authStore.isInSecurityGroup('spotify', 'privileged');
 
-  const serverSettingsStore = useServerSettingsStore();
-
-  const GewisPosterLabel = serverSettingsStore.amountOfPosterScreenHandlers > 1 ? 'GEWIS Posters' : 'Posters';
-  const HubblePosterLabel = serverSettingsStore.amountOfPosterScreenHandlers > 1 ? 'Hubble Posters' : 'Posters';
-
   return [
     {
       label: 'Home',
@@ -50,8 +43,7 @@ const model = computed<MenuItem[]>(() => {
     showPosters && {
       label: 'Screens',
       items: [
-        showGewisPosters && { label: GewisPosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/gewis' },
-        showHubblePosters && { label: HubblePosterLabel, icon: 'pi pi-fw pi-image', to: '/poster/hubble' },
+        { label: 'Poster Carousel', icon: 'pi pi-fw pi-image', to: '/poster/carousel' },
         { label: 'Static Posters', icon: 'pi pi-fw pi-image', to: '/poster/static' },
       ],
     },

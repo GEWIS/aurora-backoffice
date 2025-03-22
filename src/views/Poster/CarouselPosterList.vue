@@ -1,5 +1,5 @@
 <template>
-  <AppContainer icon="pi-image" :title="title">
+  <AppContainer icon="pi-image" title="Carousel Posters">
     <template #header>
       <PosterOperations :store="posterStore" />
     </template>
@@ -20,12 +20,10 @@
 import PosterOperations from '@/components/poster/PosterOperations.vue';
 import PosterCard from '@/components/poster/PosterCard.vue';
 import AppContainer from '@/layout/AppContainer.vue';
-import type BasePosterStore from '@/stores/poster/base-poster-store';
+import { useCarouselPosterStore } from '@/stores/carousel-poster-store';
 
-defineProps<{
-  title: string;
-  posterStore: BasePosterStore;
-}>();
+const posterStore = useCarouselPosterStore();
+posterStore.init();
 </script>
 
 <style scoped></style>
