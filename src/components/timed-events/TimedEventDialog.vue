@@ -77,6 +77,18 @@
         "
         :skip-next="skipNext"
       />
+      <TimedEventParamsStaticPoster
+        v-else-if="selectedType === 'timed-event-set-static-poster'"
+        :cron-expression="cronExpression"
+        :cron-valid="!cronInvalid"
+        :on-save="onSaveWrapper"
+        :original-event-spec-params="
+          originalTimedEvent?.eventSpec.type === 'timed-event-set-static-poster'
+            ? originalTimedEvent?.eventSpec.params
+            : undefined
+        "
+        :skip-next="skipNext"
+      />
       <TimedEventDialogSaveButton
         v-else
         :disabled="loading || cronInvalid || selectedType === ''"
@@ -97,6 +109,7 @@ import TimedEventParamsHandlerScreen from '@/components/timed-events/types/Timed
 import TimedEventParamsHandlerAudio from '@/components/timed-events/types/TimedEventParamsHandlerAudio.vue';
 import TimedEventParamsHandlerLights from '@/components/timed-events/types/TimedEventParamsHandlerLights.vue';
 import TimedEventDialogSaveButton from '@/components/timed-events/types/TimedEventDialogSaveButton.vue';
+import TimedEventParamsStaticPoster from '@/components/timed-events/types/TimedEventParamsStaticPoster.vue';
 
 const props = defineProps<{
   originalTimedEvent?: TimedEventResponse;
@@ -128,6 +141,7 @@ const possibleTypes: Ref<{ name: EventSpec['type']; label: string }[]> = ref([
   { name: 'switch-handler-audio', label: 'Switch handler audio' },
   { name: 'switch-handler-lights', label: 'Switch handler lights group' },
   { name: 'switch-handler-screen', label: 'Switch handler screen' },
+  { name: 'timed-event-set-static-poster', label: 'Set static poster' },
 ] as { name: EventSpec['type']; label: string }[]);
 
 const skipNext = ref<boolean>(false);
