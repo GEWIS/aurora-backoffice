@@ -1,5 +1,6 @@
-import { client, type HttpApiException } from '@/api';
+import { type HttpApiException } from '@/api';
 import { toastError } from '@/utils/toastHandler';
+import { client } from '@/api/client.gen.ts';
 
 /**
  * Fetch interceptor

@@ -5,9 +5,9 @@ import {
   getAudioHandlers,
   getLightsHandlers,
   getScreenHandlers,
-  type HandlerResponse_AudioResponse_,
-  type HandlerResponse_LightsGroupResponse_,
-  type HandlerResponse_ScreenResponse_,
+  type HandlerResponseAudioResponse,
+  type HandlerResponseLightsGroupResponse,
+  type HandlerResponseScreenResponse,
   type LightsGroupResponse,
   resetAllHandlersToDefaults,
   type ScreenResponse,
@@ -16,7 +16,7 @@ import {
   setScreenHandler,
 } from '@/api';
 
-type Handler = HandlerResponse_ScreenResponse_ | HandlerResponse_AudioResponse_ | HandlerResponse_LightsGroupResponse_;
+type Handler = HandlerResponseAudioResponse | HandlerResponseLightsGroupResponse | HandlerResponseScreenResponse;
 
 /**
  * HandlerStore
@@ -31,9 +31,9 @@ type Handler = HandlerResponse_ScreenResponse_ | HandlerResponse_AudioResponse_ 
  * @param settingLights - Whether setting the lights handler
  */
 interface HandlersStore {
-  audioHandlers: HandlerResponse_AudioResponse_[];
-  lightsHandlers: HandlerResponse_LightsGroupResponse_[];
-  screenHandlers: HandlerResponse_ScreenResponse_[];
+  audioHandlers: HandlerResponseAudioResponse[];
+  lightsHandlers: HandlerResponseLightsGroupResponse[];
+  screenHandlers: HandlerResponseScreenResponse[];
   gettingAudio: boolean;
   settingAudio: boolean;
   gettingScreens: boolean;

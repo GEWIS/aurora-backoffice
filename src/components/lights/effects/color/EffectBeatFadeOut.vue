@@ -12,7 +12,7 @@ import SelectorLightsColor from '@/components/lights/effects/props/SelectorLight
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import {
   type BeatFadeOutCreateParams,
-  ColorEffects_BeatFadeOut,
+  ColorEffectsBeatFadeOut,
   LightsEffectDirection,
   LightsEffectPattern,
   RgbColor,
@@ -39,7 +39,7 @@ const direction = ref<LightsEffectDirection>(
 
 const handleChange = () => {
   const payload: BeatFadeOutCreateParams = {
-    type: ColorEffects_BeatFadeOut.BEAT_FADE_OUT,
+    type: ColorEffectsBeatFadeOut.BEAT_FADE_OUT,
     props: {
       colors: colors.value,
       enableFade: enableFade.value,

@@ -4,9 +4,7 @@
       <div class="flex max-w-full w-full overflow-hidden">
         <h6 class="mb-0 overflow-hidden white-space-nowrap text-overflow-ellipsis">
           {{ subscriber.name }}
-        </h6>
-        <h6 class="m-0 white-space-nowrap">
-          <i :class="['pi text-sm ml-3', connectedIcon]" :title="connectedText" />
+          <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
         </h6>
       </div>
     </div>

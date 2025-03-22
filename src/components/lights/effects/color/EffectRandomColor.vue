@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { ColorEffects_RandomColor, type RandomColorCreateParams, RgbColor } from '@/api';
+import { ColorEffectsRandomColor, type RandomColorCreateParams, RgbColor } from '@/api';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 
@@ -23,7 +23,7 @@ const addBlacks = ref<boolean>(props.defaultModelValue?.props.nrBlacks !== 0 || 
 
 const handleChange = () => {
   const payload: RandomColorCreateParams = {
-    type: ColorEffects_RandomColor.RANDOM_COLOR,
+    type: ColorEffectsRandomColor.RANDOM_COLOR,
     props: {
       colors: colors.value,
       nrBlacks: addBlacks.value ? 1 : 0,

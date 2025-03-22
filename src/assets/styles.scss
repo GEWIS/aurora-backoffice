@@ -1,6 +1,9 @@
 @use '@/assets/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@use 'tailwindcss';
+@use 'tailwindcss-primeui';
+
+//@tailwind base;
+//@tailwind components;
+//@tailwind utilities;

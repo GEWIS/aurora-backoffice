@@ -117,8 +117,9 @@ import TreeTable from 'primevue/treetable';
 import type { TreeNode } from 'primevue/treenode';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
-import { type ISettings, ISettingsSchema } from '@/api';
+import { type ISettings } from '@/api';
 import ServerSettingsFileUpload from '@/components/settings/ServerSettingsFileUpload.vue';
+import { ISettingsSchema } from '@/api/schemas.gen.ts';
 
 const store = useServerSettingsStore();
 

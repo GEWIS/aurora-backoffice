@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { MovementEffects_RandomPosition, type RandomPositionCreateParams } from '@/api';
+import { MovementEffectsRandomPosition, type RandomPositionCreateParams } from '@/api';
 
 const props = defineProps<{
   defaultModelValue?: RandomPositionCreateParams;
@@ -27,7 +27,7 @@ const beatsToMove = ref<number>(props.defaultModelValue?.props.beatsToMove || 1)
 
 const handleChange = () => {
   const payload: RandomPositionCreateParams = {
-    type: MovementEffects_RandomPosition.RANDOM_POSITION,
+    type: MovementEffectsRandomPosition.RANDOM_POSITION,
     props: {
       beatsToMove: beatsToMove.value,
     },
