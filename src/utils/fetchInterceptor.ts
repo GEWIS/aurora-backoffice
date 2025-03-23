@@ -1,6 +1,6 @@
 import { type HttpApiException } from '@/api';
 import { toastError } from '@/utils/toastHandler';
-import { client } from '@/api/client.gen.ts';
+import { client } from '@/api/client.gen';
 
 /**
  * Fetch interceptor
@@ -10,7 +10,7 @@ client.interceptors.response.use((response) => {
   // Let toast implicitly handle each error
   if (response.status >= 400) {
     let httpException: HttpApiException | undefined;
-    response
+    void response
       .clone()
       .json()
       .then((err: HttpApiException) => {
@@ -21,7 +21,7 @@ client.interceptors.response.use((response) => {
         httpException = err;
       });
     if (httpException) {
-      throw httpException;
+      throw new Error(httpException.message);
     }
   }
   // The only responsibility of a promise is now to "clean up" any side effects of errors

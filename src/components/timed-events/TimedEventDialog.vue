@@ -158,14 +158,15 @@ const saveEvent = () => {
 
   switch (selectedType.value) {
     case 'system-reset':
-      onSaveWrapper({ cronExpression: cronExpression.value, eventSpec: { type: 'system-reset' } }, skipNext.value).then(
-        () => {
-          loading.value = false;
-        },
-      );
+      void onSaveWrapper(
+        { cronExpression: cronExpression.value, eventSpec: { type: 'system-reset' } },
+        skipNext.value,
+      ).then(() => {
+        loading.value = false;
+      });
       return;
     case 'clean-audit-logs':
-      onSaveWrapper(
+      void onSaveWrapper(
         { cronExpression: cronExpression.value, eventSpec: { type: 'clean-audit-logs' } },
         skipNext.value,
       ).then(() => {

@@ -23,7 +23,7 @@ const openDialog = () => {
     rejectLabel: 'Cancel',
     acceptLabel: 'Yes',
     accept() {
-      store.deleteScene(props.id);
+      void store.deleteScene(props.id);
     },
   });
 };

@@ -27,12 +27,12 @@ const lightGroups = props.effect.lightGroupIds.map((id: number) =>
 );
 const effectsControllerStore = useEffectsControllerStore();
 
-const setEffect = () => {
+const setEffect = async () => {
   if (props.effect.colorEffect !== undefined) {
-    effectsControllerStore.setColorEffect(props.effect.colorEffect, props.effect.lightGroupIds);
+    await effectsControllerStore.setColorEffect(props.effect.colorEffect, props.effect.lightGroupIds);
   }
   if (props.effect.movementEffect !== undefined) {
-    effectsControllerStore.setMovementEffect(props.effect.movementEffect, props.effect.lightGroupIds);
+    await effectsControllerStore.setMovementEffect(props.effect.movementEffect, props.effect.lightGroupIds);
   }
 };
 </script>

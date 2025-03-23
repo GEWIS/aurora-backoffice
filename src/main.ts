@@ -62,7 +62,7 @@ import App from './App.vue';
 import '@/utils/fetchInterceptor';
 import { useAuthStore } from '@/stores/auth.store';
 import { AuraPreset } from '@/assets/preset';
-import { client } from '@/api/client.gen.ts';
+import { client } from '@/api/client.gen';
 
 const app = createApp(App);
 

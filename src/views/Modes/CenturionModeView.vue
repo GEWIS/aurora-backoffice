@@ -38,12 +38,12 @@ import ConfirmWrapper from '@/components/prime/ConfirmWrapper.vue';
 const confirmRef = ref();
 const centurionStore = useCenturionStore();
 const layoutStore = useLayoutStore();
-centurionStore.init();
+void centurionStore.init();
 
 onMounted(() => layoutStore.mountResizeListener());
 onUnmounted(() => {
   layoutStore.unmountResizeListener();
-  centurionStore.destroy();
+  void centurionStore.destroy();
 });
 
 const currentTape = computed<MixTapeResponse | undefined>(() => {

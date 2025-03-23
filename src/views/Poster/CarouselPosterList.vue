@@ -23,7 +23,7 @@ import AppContainer from '@/layout/AppContainer.vue';
 import { useCarouselPosterStore } from '@/stores/carousel-poster-store';
 
 const posterStore = useCarouselPosterStore();
-posterStore.init();
+void posterStore.init();
 </script>
 
 <style scoped></style>

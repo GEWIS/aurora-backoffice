@@ -251,7 +251,7 @@ const handleLightsGroupBrightness = (event: Event, lightsGroup: LightsGroupRespo
   if (selectedGroupBrightnessPopover.value?.id !== lightsGroup.id) {
     selectedGroupBrightnessPopover.value = lightsGroup;
 
-    nextTick(() => {
+    void nextTick(() => {
       brightnessPopoverOp.value?.show(event);
     });
   }

@@ -44,7 +44,7 @@ import SpotifyUserDeleteButton from '@/components/audio/SpotifyUserDeleteButton.
 import SpotifyUserSwitchButton from '@/components/audio/SpotifyUserSwitchButton.vue';
 
 const store = useSpotifyStore();
-store.init();
+void store.init();
 </script>
 
 <style scoped></style>

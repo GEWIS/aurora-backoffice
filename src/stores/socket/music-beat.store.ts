@@ -22,14 +22,14 @@ export const useMusicBeatStore = defineStore('music-beat', {
       const store = useSocketStore();
       if (!store.backofficeSocket) return;
 
-      store.backofficeSocket.on('beat', this.handleBeat);
+      store.backofficeSocket.on('beat', this.handleBeat.bind(this));
       this.initialized = true;
     },
     destroy() {
       const store = useSocketStore();
       if (!store.backofficeSocket) return;
 
-      store.backofficeSocket.removeListener('beat', this.handleBeat);
+      store.backofficeSocket.removeListener('beat', this.handleBeat.bind(this));
       this.initialized = false;
     },
   },

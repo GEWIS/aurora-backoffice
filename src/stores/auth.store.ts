@@ -51,10 +51,10 @@ export const useAuthStore = defineStore('auth', {
      * Initialize the store
      */
     async init(): Promise<void> {
-      getInformation().then(async (user) => {
+      void getInformation().then(async (user) => {
         if (user.data) {
-          this.name = user.data!.name;
-          this.roles = user.data!.roles;
+          this.name = user.data.name;
+          this.roles = user.data.roles;
 
           await useHandlersStore().init();
           await useColorStore().init();
@@ -69,12 +69,13 @@ export const useAuthStore = defineStore('auth', {
      * @param oidcParameters - The OIDC parameters
      */
     async OIDCLogin(oidcParameters: OidcParameters): Promise<void> {
-      authOidc({
+      const res = await authOidc({
         body: oidcParameters,
-      }).then((user) => {
-        this.name = user.data!.name;
-        this.roles = user.data!.roles;
       });
+      if (res.response.ok && res.data) {
+        this.name = res.data.name;
+        this.roles = res.data.roles;
+      }
       await this.initStores();
     },
     /**
@@ -132,7 +133,7 @@ export const useAuthStore = defineStore('auth', {
      */
     isInSecurityGroup(group: keyof ISecurityGroups, section: keyof ISecuritySections): boolean {
       if (!this.securityGroups) return false;
-      return _.intersection(this.roles, this.securityGroups![group][section]).length > 0;
+      return _.intersection(this.roles, this.securityGroups[group][section]).length > 0;
     },
   },
 });

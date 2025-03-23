@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg">
     <InputGroup>
-      <Button icon="pi pi-check" severity="danger" @click="updateLogin" />
+      <Button icon="pi pi-check" :loading="loading" severity="danger" @click="updateLogin" />
       <InputText v-model="userName" placeholder="Name" />
       <InputText v-model="userId" placeholder="ID" />
       <MultiSelect v-model="selectedRoles" :options="availableRoles" />
@@ -20,14 +20,20 @@ const authStore = useAuthStore();
 const selectedRoles = ref(authStore.getRoles);
 const userName = ref('dev');
 const userId = ref('dev');
+const loading = ref(false);
 
 const availableRoles = ref(Object.values(SecurityGroup));
 
-function updateLogin() {
-  authStore.MockLogin({
-    id: userId.value,
-    name: userName.value,
-    roles: selectedRoles.value,
-  });
+async function updateLogin() {
+  loading.value = true;
+  await authStore
+    .MockLogin({
+      id: userId.value,
+      name: userName.value,
+      roles: selectedRoles.value,
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 </script>

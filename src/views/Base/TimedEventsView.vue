@@ -52,7 +52,7 @@ import TimedEventDialogCreate from '@/components/timed-events/TimedEventDialogCr
 import TimedEventDialogUpdate from '@/components/timed-events/TimedEventDialogUpdate.vue';
 
 const store = useTimedEventsStore();
-store.init();
+void store.init();
 </script>
 
 <style scoped></style>

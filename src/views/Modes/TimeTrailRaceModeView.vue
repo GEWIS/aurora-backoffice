@@ -43,7 +43,7 @@ const confirmRef = ref();
 
 const layoutStore = useLayoutStore();
 const timeTrailStore = useTimeTrailRaceStore();
-timeTrailStore.init();
+void timeTrailStore.init();
 
 const timeTrailInitialized = computed(() => {
   return timeTrailStore.getSessionName !== undefined && timeTrailStore.getState !== undefined;

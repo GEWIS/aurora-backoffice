@@ -37,7 +37,7 @@ const canRegister = ref<boolean>(false);
 const timeTrailStore = useTimeTrailRaceStore();
 // Make sure that on reload you are always in correct state
 if (!timeTrailStore.getCurrentPlayer) {
-  timeTrailStore.resetPlayer();
+  void timeTrailStore.resetPlayer();
 }
 
 const timeTrailSteps = computed<StepperStep[]>(() => [
@@ -57,7 +57,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Player ready',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '2',
-    nextFunction: timeTrailStore.ready,
+    nextFunction: timeTrailStore.ready.bind(timeTrailStore),
   },
   {
     value: 'Start',
@@ -68,7 +68,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Start!',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '3',
-    nextFunction: timeTrailStore.start,
+    nextFunction: timeTrailStore.start.bind(timeTrailStore),
   },
   {
     value: 'Finish',
@@ -79,7 +79,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     nextText: 'Finish!',
     nextIcon: null,
     nextDisabled: timeTrailStore.loading || currentStep.value != '4',
-    nextFunction: timeTrailStore.finish,
+    nextFunction: timeTrailStore.finish.bind(timeTrailStore),
   },
   {
     value: 'Reveal',
@@ -90,7 +90,7 @@ const timeTrailSteps = computed<StepperStep[]>(() => [
     confirmText: 'Reveal score',
     confirmIcon: null,
     confirmDisabled: timeTrailStore.loading || currentStep.value != '5',
-    confirmFunction: timeTrailStore.revealScore,
+    confirmFunction: timeTrailStore.revealScore.bind(timeTrailStore),
   },
 ]);
 

@@ -22,7 +22,12 @@
 import { computed, type ComputedRef } from 'vue';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import type { Handler } from '@/stores/handlers.store';
-import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
+import type {
+  AudioResponse,
+  LightsControllerResponse,
+  PartialRecordSocketioNamespacesString,
+  ScreenResponse,
+} from '@/api';
 
 const props = defineProps<{
   subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;
@@ -37,8 +42,8 @@ defineEmits<{
 }>();
 
 const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.subscriber.socketIds as never | undefined;
-  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+  const socketIds = props.subscriber.socketIds as PartialRecordSocketioNamespacesString;
+  return socketIds && Object.keys(socketIds).some((key) => key in socketIds);
 });
 
 const connectedText = computed(() => {
