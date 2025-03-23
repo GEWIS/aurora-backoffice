@@ -22,9 +22,7 @@
         <Message v-if="cronInvalid" severity="error" size="small" variant="simple"
           >Please type a valid cron expression</Message
         >
-        <Message v-else severity="secondary" size="small" variant="simple">{{
-          cronstrue.toString(cronExpression)
-        }}</Message>
+        <Message v-else severity="secondary" size="small" variant="simple">{{ cronToString(cronExpression) }}</Message>
       </div>
       <div class="flex flex-col gap-2">
         <label for="event-type">Event type</label>
@@ -103,7 +101,7 @@
 
 <script setup lang="ts">
 import { computed, type ComputedRef, type Ref, ref } from 'vue';
-import cronstrue from 'cronstrue';
+import { toString as cronToString } from 'cronstrue';
 import type { CreateTimedEventRequest, EventSpec, TimedEventResponse } from '@/api';
 import TimedEventParamsHandlerScreen from '@/components/timed-events/types/TimedEventParamsHandlerScreen.vue';
 import TimedEventParamsHandlerAudio from '@/components/timed-events/types/TimedEventParamsHandlerAudio.vue';
@@ -126,7 +124,7 @@ const loading = ref<boolean>(false);
 const cronExpression = ref<string>(props.originalTimedEvent?.cronExpression ?? '');
 const cronInvalid: ComputedRef<boolean> = computed(() => {
   try {
-    cronstrue.toString(cronExpression.value);
+    cronToString(cronExpression.value);
     return false;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {

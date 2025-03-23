@@ -18,3 +18,5 @@ export const AuraPreset = definePreset(Aura, {
     },
   },
 });
+
+export default AuraPreset;
