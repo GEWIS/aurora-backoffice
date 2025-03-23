@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const handleShow = () => {
   loading.value = true;
-  store.setActivePoster(props.poster.id).finally(() => {
+  void store.setActivePoster(props.poster.id).finally(() => {
     loading.value = false;
   });
 };

@@ -21,7 +21,7 @@ import EffectsControllerAdvanced from '@/views/Lights/EffectsControllerAdvanced.
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 
 const store = useEffectsControllerStore();
-store.init();
+void store.init();
 </script>
 
 <style scoped></style>

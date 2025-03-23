@@ -10,45 +10,45 @@
   <LightsGroupsSelect v-model="lightsGroupIds" />
   <Divider />
   <EffectClassicRotate
-    v-if="chosenEffect === MovementEffects_ClassicRotate.CLASSIC_ROTATE"
+    v-if="chosenEffect === MovementEffectsClassicRotate.CLASSIC_ROTATE"
     :default-model-value="
-      defaultProperties?.effectProps.type === MovementEffects_ClassicRotate.CLASSIC_ROTATE
+      defaultProperties?.effectProps.type === MovementEffectsClassicRotate.CLASSIC_ROTATE
         ? defaultProperties.effectProps
         : undefined
     "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectRandomPosition
-    v-if="chosenEffect === MovementEffects_RandomPosition.RANDOM_POSITION"
+    v-if="chosenEffect === MovementEffectsRandomPosition.RANDOM_POSITION"
     :default-model-value="
-      defaultProperties?.effectProps.type === MovementEffects_RandomPosition.RANDOM_POSITION
+      defaultProperties?.effectProps.type === MovementEffectsRandomPosition.RANDOM_POSITION
         ? defaultProperties.effectProps
         : undefined
     "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectSearchLight
-    v-if="chosenEffect === MovementEffects_SearchLight.SEARCH_LIGHT"
+    v-if="chosenEffect === MovementEffectsSearchLight.SEARCH_LIGHT"
     :default-model-value="
-      defaultProperties?.effectProps.type === MovementEffects_SearchLight.SEARCH_LIGHT
+      defaultProperties?.effectProps.type === MovementEffectsSearchLight.SEARCH_LIGHT
         ? defaultProperties.effectProps
         : undefined
     "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectTableRotate
-    v-if="chosenEffect === MovementEffects_TableRotate.TABLE_ROTATE"
+    v-if="chosenEffect === MovementEffectsTableRotate.TABLE_ROTATE"
     :default-model-value="
-      defaultProperties?.effectProps.type === MovementEffects_TableRotate.TABLE_ROTATE
+      defaultProperties?.effectProps.type === MovementEffectsTableRotate.TABLE_ROTATE
         ? defaultProperties.effectProps
         : undefined
     "
     @update:model-value="(e) => (effect = e)"
   />
   <EffectZigZag
-    v-if="chosenEffect === MovementEffects_ZigZag.ZIG_ZAG"
+    v-if="chosenEffect === MovementEffectsZigZag.ZIG_ZAG"
     :default-model-value="
-      defaultProperties?.effectProps.type === MovementEffects_ZigZag.ZIG_ZAG ? defaultProperties.effectProps : undefined
+      defaultProperties?.effectProps.type === MovementEffectsZigZag.ZIG_ZAG ? defaultProperties.effectProps : undefined
     "
     @update:model-value="(e) => (effect = e)"
   />
@@ -59,11 +59,11 @@ import { computed, onMounted, ref, watch } from 'vue';
 import {
   type LightsButtonEffectMovement,
   type LightsEffectsMovementCreateParams,
-  MovementEffects_ClassicRotate,
-  MovementEffects_RandomPosition,
-  MovementEffects_SearchLight,
-  MovementEffects_TableRotate,
-  MovementEffects_ZigZag,
+  MovementEffectsClassicRotate,
+  MovementEffectsRandomPosition,
+  MovementEffectsSearchLight,
+  MovementEffectsTableRotate,
+  MovementEffectsZigZag,
 } from '@/api';
 import LightsGroupsSelect from '@/components/lights/effects/button/LightsGroupsSelect.vue';
 import EffectClassicRotate from '@/components/lights/effects/movement/EffectClassicRotate.vue';
@@ -89,11 +89,11 @@ const effect = ref<LightsEffectsMovementCreateParams | undefined>(props.defaultP
 
 const effectOptions = computed(() => {
   return [
-    { label: 'ClassicRotate', value: MovementEffects_ClassicRotate.CLASSIC_ROTATE },
-    { label: 'RandomPosition', value: MovementEffects_RandomPosition.RANDOM_POSITION },
-    { label: 'SearchLight', value: MovementEffects_SearchLight.SEARCH_LIGHT },
-    { label: 'TableRotate', value: MovementEffects_TableRotate.TABLE_ROTATE },
-    { label: 'ZigZag', value: MovementEffects_ZigZag.ZIG_ZAG },
+    { label: 'ClassicRotate', value: MovementEffectsClassicRotate.CLASSIC_ROTATE },
+    { label: 'RandomPosition', value: MovementEffectsRandomPosition.RANDOM_POSITION },
+    { label: 'SearchLight', value: MovementEffectsSearchLight.SEARCH_LIGHT },
+    { label: 'TableRotate', value: MovementEffectsTableRotate.TABLE_ROTATE },
+    { label: 'ZigZag', value: MovementEffectsZigZag.ZIG_ZAG },
   ];
 });
 

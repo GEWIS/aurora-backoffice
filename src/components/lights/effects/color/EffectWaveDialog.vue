@@ -8,14 +8,14 @@
 import { ref } from 'vue';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import EffectWave from '@/components/lights/effects/color/EffectWave.vue';
-import { ColorEffects_Wave, LightsEffectDirection, LightsEffectPattern, type WaveCreateParams } from '@/api';
+import { ColorEffectsWave, LightsEffectDirection, LightsEffectPattern, type WaveCreateParams } from '@/api';
 
 defineEmits<{
   save: [effect: WaveCreateParams];
 }>();
 
 const effect = ref<WaveCreateParams>({
-  type: ColorEffects_Wave.WAVE,
+  type: ColorEffectsWave.WAVE,
   props: {
     colors: [],
     nrWaves: 1,

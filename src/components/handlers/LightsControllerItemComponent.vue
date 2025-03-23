@@ -29,7 +29,7 @@ import { computed, type ComputedRef } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
-import type { LightsControllerResponse } from '@/api';
+import type { LightsControllerResponse, PartialRecordSocketioNamespacesString } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
 import AppBox from '@/layout/AppBox.vue';
 
@@ -43,8 +43,8 @@ const handlersStore = useHandlersStore();
 const authStore = useAuthStore();
 
 const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.controller.socketIds as never | undefined;
-  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+  const socketIds = props.controller.socketIds as PartialRecordSocketioNamespacesString;
+  return socketIds && Object.keys(socketIds).some((key) => key in socketIds);
 });
 
 const connectedText = computed(() => {

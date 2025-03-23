@@ -4,9 +4,7 @@
       <div class="flex max-w-full w-full overflow-hidden">
         <h6 class="mb-0 overflow-hidden white-space-nowrap text-overflow-ellipsis">
           {{ subscriber.name }}
-        </h6>
-        <h6 class="m-0 white-space-nowrap">
-          <i :class="['pi text-sm ml-3', connectedIcon]" :title="connectedText" />
+          <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
         </h6>
       </div>
     </div>
@@ -24,7 +22,12 @@
 import { computed, type ComputedRef } from 'vue';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
 import type { Handler } from '@/stores/handlers.store';
-import type { AudioResponse, LightsControllerResponse, ScreenResponse } from '@/api';
+import type {
+  AudioResponse,
+  LightsControllerResponse,
+  PartialRecordSocketioNamespacesString,
+  ScreenResponse,
+} from '@/api';
 
 const props = defineProps<{
   subscriber: AudioResponse | ScreenResponse | LightsControllerResponse;
@@ -39,8 +42,8 @@ defineEmits<{
 }>();
 
 const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.subscriber.socketIds as never | undefined;
-  return socketIds != null && Object.keys(socketIds).some((key) => socketIds[key] != null);
+  const socketIds = props.subscriber.socketIds as PartialRecordSocketioNamespacesString;
+  return socketIds && Object.keys(socketIds).some((key) => key in socketIds);
 });
 
 const connectedText = computed(() => {

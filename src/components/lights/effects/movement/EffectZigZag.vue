@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { MovementEffects_ZigZag, type ZigZagCreateParams } from '@/api';
+import { MovementEffectsZigZag, type ZigZagCreateParams } from '@/api';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 
 const props = defineProps<{
@@ -57,7 +57,7 @@ const verticalRadiusFactor = ref<number>(props.defaultModelValue?.props.vertical
 
 const handleChange = () => {
   const payload: ZigZagCreateParams = {
-    type: MovementEffects_ZigZag.ZIG_ZAG,
+    type: MovementEffectsZigZag.ZIG_ZAG,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,

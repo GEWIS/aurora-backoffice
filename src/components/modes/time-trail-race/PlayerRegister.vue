@@ -28,7 +28,7 @@ const isAlcoholFree = ref<boolean>(false);
 const isBac = ref<boolean>(false);
 
 const registerPlayer = () => {
-  store.registerPlayer({
+  void store.registerPlayer({
     name: playerName.value,
     alcoholFree: isAlcoholFree.value,
     bac: isBac.value,

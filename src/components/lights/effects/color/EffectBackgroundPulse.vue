@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { type BackgroundPulseCreateParams, ColorEffects_BackgroundPulse, RgbColor } from '@/api';
+import { type BackgroundPulseCreateParams, ColorEffectsBackgroundPulse, RgbColor } from '@/api';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
 
@@ -51,7 +51,7 @@ const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 800);
 
 const handleChange = () => {
   const payload: BackgroundPulseCreateParams = {
-    type: ColorEffects_BackgroundPulse.BACKGROUND_PULSE,
+    type: ColorEffectsBackgroundPulse.BACKGROUND_PULSE,
     props: {
       colors: colors.value,
       ratio: ratio.value,

@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { MovementEffects_TableRotate, type TableRotateCreateParams } from '@/api';
+import { MovementEffectsTableRotate, type TableRotateCreateParams } from '@/api';
 
 const props = defineProps<{
   defaultModelValue?: TableRotateCreateParams;
@@ -37,7 +37,7 @@ const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 
 
 const handleChange = () => {
   const payload: TableRotateCreateParams = {
-    type: MovementEffects_TableRotate.TABLE_ROTATE,
+    type: MovementEffectsTableRotate.TABLE_ROTATE,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,

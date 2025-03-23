@@ -31,12 +31,13 @@ export const useCarouselPosterStore = defineStore('carousel-poster', {
      * Get the posters
      */
     async getPosters() {
-      getPosters({
+      const res = await getPosters({
         query: { alwaysReturnBorrelPosters: true },
-      }).then((posters) => {
-        this.posters = posters.data!.posters;
-        this.borrelModeActive = posters.data!.borrelMode;
       });
+      if (res.response.ok && res.data) {
+        this.posters = res.data.posters;
+        this.borrelModeActive = res.data.borrelMode;
+      }
     },
     async getBorrelMode() {
       const res = await getPosterBorrelMode();

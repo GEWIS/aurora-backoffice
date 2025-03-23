@@ -51,7 +51,7 @@ const props = defineProps<{
 }>();
 
 const getTracks = (event: SongEvent): Array<SongData> => {
-  let tracks = event.data as SongData | Array<SongData>;
+  let tracks = event.data;
   if (!Array.isArray(tracks)) tracks = [tracks];
   return tracks;
 };

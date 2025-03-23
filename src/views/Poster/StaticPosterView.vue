@@ -41,7 +41,7 @@ import StaticPosterButtonClear from '@/components/poster/StaticPosterButtonClear
 import StaticPosterPreview from '@/components/poster/StaticPosterPreview.vue';
 
 const store = useStaticPosterStore();
-store.init();
+void store.init();
 </script>
 
 <style scoped></style>

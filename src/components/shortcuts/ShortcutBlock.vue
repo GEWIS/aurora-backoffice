@@ -58,11 +58,11 @@ const settingsStore = useServerSettingsStore();
 
 const centurionModeStore = useCenturionStore();
 if (authStore.isInSecurityGroup('centurion', 'privileged')) {
-  centurionModeStore.getCurrentCenturion(true);
+  void centurionModeStore.getCurrentCenturion(true);
 }
 const timeTrailRaceModeStore = useTimeTrailRaceStore();
 if (authStore.isInSecurityGroup('timetrail', 'base')) {
-  timeTrailRaceModeStore.getTimeTrailMode();
+  void timeTrailRaceModeStore.getTimeTrailMode();
 }
 
 // TODO why does this reactivity not work as expected?
@@ -98,8 +98,8 @@ const defaults = computed<IShortcutItem[] | boolean>(() => {
         {
           label: 'Reset to defaults',
           icon: 'pi-power-off',
-          command: () => {
-            handlersStore.reset();
+          command: async () => {
+            await handlersStore.reset();
           },
         },
       ],
@@ -122,18 +122,18 @@ const lights = computed<IShortcutItem[] | boolean>(() => {
         {
           label: 'Disable',
           icon: 'pi-power-off',
-          command: () => {
+          command: async () => {
             const ids = subscriberStore.lightsGroups.map((g) => g.id);
-            handlersStore.setLightsHandler(ids);
+            await handlersStore.setLightsHandler(ids);
           },
         },
         ...sceneMenuItems.value,
         {
           label: 'Random effects',
           icon: 'pi-sparkles',
-          command: () => {
+          command: async () => {
             const ids = subscriberStore.lightsGroups.map((g) => g.id);
-            handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
+            await handlersStore.setLightsHandler(ids, 'RandomEffectsHandler');
           },
         },
       ],
@@ -161,13 +161,9 @@ const modes = computed<IShortcutItem[] | boolean>(() => {
           authStore.isInSecurityGroup('mode', 'base') && {
             label: 'Disable',
             icon: 'pi-power-off',
-            command: () => {
-              disableAllModes().then(async () => {
-                await Promise.all([
-                  centurionModeStore.getCurrentCenturion(),
-                  timeTrailRaceModeStore.getTimeTrailMode(),
-                ]);
-              });
+            command: async () => {
+              await disableAllModes();
+              await Promise.all([centurionModeStore.getCurrentCenturion(), timeTrailRaceModeStore.getTimeTrailMode()]);
             },
           },
         showCenturion && {

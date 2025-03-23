@@ -180,7 +180,7 @@ const openDeleteDialog = () => {
     acceptLabel: 'Yes',
     accept() {
       if (props.button && props.button?.id >= 0) {
-        store.deleteButtonEffect(props.button.id).then(() => emit('close'));
+        void store.deleteButtonEffect(props.button.id).then(() => emit('close'));
       }
     },
   });

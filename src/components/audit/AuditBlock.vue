@@ -20,7 +20,7 @@
 import { useAuditStore } from '@/stores/audit.store';
 import AppContainer from '@/layout/AppContainer.vue';
 const store = useAuditStore();
-store.setSkipTake(0, 5);
+void store.setSkipTake(0, 5);
 </script>
 
 <style lang="scss">

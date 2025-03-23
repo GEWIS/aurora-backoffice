@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { MovementEffects_SearchLight, type SearchLightCreateParams } from '@/api';
+import { MovementEffectsSearchLight, type SearchLightCreateParams } from '@/api';
 
 const props = defineProps<{
   defaultModelValue?: SearchLightCreateParams;
@@ -47,7 +47,7 @@ const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 
 
 const handleChange = () => {
   const payload: SearchLightCreateParams = {
-    type: MovementEffects_SearchLight.SEARCH_LIGHT,
+    type: MovementEffectsSearchLight.SEARCH_LIGHT,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,

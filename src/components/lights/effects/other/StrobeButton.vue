@@ -21,12 +21,12 @@ const enabled = ref<boolean>(false);
 
 const enableStrobe = () => {
   enabled.value = true;
-  store.enableStrobe();
+  void store.enableStrobe();
 };
 
 const disableStrobe = () => {
   if (!enabled.value) return;
-  store.disableStrobe();
+  void store.disableStrobe();
   enabled.value = false;
 };
 </script>

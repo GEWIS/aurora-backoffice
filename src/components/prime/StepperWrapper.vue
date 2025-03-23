@@ -116,7 +116,11 @@ defineProps<{
 }>();
 
 const layoutStore = useLayoutStore();
-const vertical = computed(() => layoutStore.getWindowWidth < TailwindWidth.sm);
+const vertical = computed((): boolean => {
+  const windowWidth: number = layoutStore.windowWidth;
+  const limit: number = TailwindWidth.sm;
+  return windowWidth < limit;
+});
 
 export type { StepperStep };
 </script>

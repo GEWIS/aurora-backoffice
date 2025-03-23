@@ -33,14 +33,14 @@ onMounted(async () => {
       await router.push({ name: 'auth' });
     }
 
-    let queryParameters = new URLSearchParams(route.hash.substring(1));
+    const queryParameters = new URLSearchParams(route.hash.substring(1));
     if (!queryParameters.get('code') || !queryParameters.get('state') || !queryParameters.get('session_state')) {
       await router.push({ name: 'auth' });
     }
 
     // Get and clear sessionStorage
-    let state = sessionStorage.getItem('state');
-    let url = sessionStorage.getItem('url');
+    const state = sessionStorage.getItem('state');
+    const url = sessionStorage.getItem('url');
     sessionStorage.clear();
 
     // Check if the state is still the same, if not require to re-authenticate
@@ -55,15 +55,16 @@ onMounted(async () => {
         session_state: queryParameters.get('session_state')!,
       })
       .then(() => {
-        authStore.init();
-        router.push(url ?? '/');
+        void authStore.init().then(() => {
+          void router.push(url ?? '/');
+        });
       })
       .catch(() => {
-        router.push({ name: 'notFound' });
+        void router.push({ name: 'notFound' });
       });
   } else {
     // TODO replace with environment variables
-    let state = uuidv4();
+    const state = uuidv4();
     sessionStorage.setItem('state', state);
     sessionStorage.setItem('url', route.query.path as string);
 
@@ -71,7 +72,7 @@ onMounted(async () => {
     // If the oidc parameters are not available, retry auth
     if (!oidcParameters.data) await router.push({ name: 'auth' });
 
-    let queryParameters = new URLSearchParams({
+    const queryParameters = new URLSearchParams({
       client_id: oidcParameters.data!.clientId,
       redirect_uri: oidcParameters.data!.redirectUri,
       state: state,

@@ -25,7 +25,7 @@ import { useCurrentlyPlayingStore } from '@/stores/socket/currently-playing.stor
 import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useCurrentlyPlayingStore();
-store.init();
+void store.init();
 
 onUnmounted(() => {
   store.destroy();

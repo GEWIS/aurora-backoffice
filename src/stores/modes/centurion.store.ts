@@ -57,7 +57,7 @@ export const useCenturionStore = defineStore('centurion', {
      */
     async getCurrentCenturion(handleLoading = true) {
       if (handleLoading) this.loading = true;
-      getCenturion()
+      await getCenturion()
         .then((tape) => (this.currentTape = tape.data!))
         .catch((e: HttpApiException | string) => {
           if ((typeof e !== 'string' && e.statusCode === 404) || e === 'Centurion not enabled') {
@@ -82,7 +82,7 @@ export const useCenturionStore = defineStore('centurion', {
     /**
      * Destroy the store
      */
-    async destroy() {
+    destroy() {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.removeListener('mode_centurion_update', this.getCurrentCenturion.bind(this));
     },

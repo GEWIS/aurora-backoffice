@@ -35,7 +35,7 @@ export const useAuditStore = defineStore('audit', {
      * Handle the audit log addition
      * @param log
      */
-    async handleAuditLogAddition(log: AuditLogEntryResponse) {
+    handleAuditLogAddition(log: AuditLogEntryResponse) {
       this.dashboardEntries = [log, ...this.dashboardEntries].slice(0, this.take);
     },
     /**
@@ -53,7 +53,7 @@ export const useAuditStore = defineStore('audit', {
 
       this.loading = false;
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.on('audit_log_create', this.handleAuditLogAddition);
+      socketStore.backofficeSocket?.on('audit_log_create', this.handleAuditLogAddition.bind(this));
     },
     /**
      * Get the audit logs
@@ -103,9 +103,9 @@ export const useAuditStore = defineStore('audit', {
     /**
      * Destroy the store
      */
-    async destroy() {
+    destroy() {
       const socketStore = useSocketStore();
-      socketStore.backofficeSocket?.removeListener('audit_log_create', this.handleAuditLogAddition);
+      socketStore.backofficeSocket?.removeListener('audit_log_create', this.handleAuditLogAddition.bind(this));
     },
   },
 });

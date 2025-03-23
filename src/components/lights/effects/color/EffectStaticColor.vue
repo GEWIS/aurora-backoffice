@@ -19,7 +19,7 @@ import { computed, type ComputedRef, onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorBoolean from '@/components/lights/effects/props/SelectorBoolean.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_StaticColor, RgbColor, type StaticColorCreateParams } from '@/api';
+import { ColorEffectsStaticColor, RgbColor, type StaticColorCreateParams } from '@/api';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 
 const subscriberStore = useSubscriberStore();
@@ -55,7 +55,7 @@ const relativeBrightness = ref<number>(props.defaultModelValue?.props.relativeBr
 
 const handleChange = () => {
   const payload: StaticColorCreateParams = {
-    type: ColorEffects_StaticColor.STATIC_COLOR,
+    type: ColorEffectsStaticColor.STATIC_COLOR,
     props: {
       color: colors.value[0],
       gobo: gobo.value ? gobo.value : undefined,

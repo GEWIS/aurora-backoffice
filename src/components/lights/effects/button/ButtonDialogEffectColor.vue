@@ -10,9 +10,9 @@
   <LightsGroupsSelect v-model="lightsGroupIds" />
   <Divider />
   <EffectBackgroundPulse
-    v-if="chosenEffect === ColorEffects_BackgroundPulse.BACKGROUND_PULSE"
+    v-if="chosenEffect === ColorEffectsBackgroundPulse.BACKGROUND_PULSE"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_BackgroundPulse.BACKGROUND_PULSE
+      defaultProperties?.effectProps.type === ColorEffectsBackgroundPulse.BACKGROUND_PULSE
         ? defaultProperties.effectProps
         : undefined
     "
@@ -20,9 +20,9 @@
     @update:model-value="(e) => (effect = e)"
   />
   <EffectBeatFadeOut
-    v-if="chosenEffect === ColorEffects_BeatFadeOut.BEAT_FADE_OUT"
+    v-if="chosenEffect === ColorEffectsBeatFadeOut.BEAT_FADE_OUT"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_BeatFadeOut.BEAT_FADE_OUT
+      defaultProperties?.effectProps.type === ColorEffectsBeatFadeOut.BEAT_FADE_OUT
         ? defaultProperties.effectProps
         : undefined
     "
@@ -30,9 +30,9 @@
     @update:model-value="(e) => (effect = e)"
   />
   <EffectRandomColor
-    v-if="chosenEffect === ColorEffects_RandomColor.RANDOM_COLOR"
+    v-if="chosenEffect === ColorEffectsRandomColor.RANDOM_COLOR"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_RandomColor.RANDOM_COLOR
+      defaultProperties?.effectProps.type === ColorEffectsRandomColor.RANDOM_COLOR
         ? defaultProperties.effectProps
         : undefined
     "
@@ -40,17 +40,17 @@
     @update:model-value="(e) => (effect = e)"
   />
   <EffectSparkle
-    v-if="chosenEffect === ColorEffects_Sparkle.SPARKLE"
+    v-if="chosenEffect === ColorEffectsSparkle.SPARKLE"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_Sparkle.SPARKLE ? defaultProperties.effectProps : undefined
+      defaultProperties?.effectProps.type === ColorEffectsSparkle.SPARKLE ? defaultProperties.effectProps : undefined
     "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
   />
   <EffectStaticColor
-    v-if="chosenEffect === ColorEffects_StaticColor.STATIC_COLOR"
+    v-if="chosenEffect === ColorEffectsStaticColor.STATIC_COLOR"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_StaticColor.STATIC_COLOR
+      defaultProperties?.effectProps.type === ColorEffectsStaticColor.STATIC_COLOR
         ? defaultProperties.effectProps
         : undefined
     "
@@ -58,9 +58,9 @@
     @update:model-value="(e) => (effect = e)"
   />
   <EffectWave
-    v-if="chosenEffect === ColorEffects_Wave.WAVE"
+    v-if="chosenEffect === ColorEffectsWave.WAVE"
     :default-model-value="
-      defaultProperties?.effectProps.type === ColorEffects_Wave.WAVE ? defaultProperties.effectProps : undefined
+      defaultProperties?.effectProps.type === ColorEffectsWave.WAVE ? defaultProperties.effectProps : undefined
     "
     :show-colors="false"
     @update:model-value="(e) => (effect = e)"
@@ -70,12 +70,12 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import {
-  ColorEffects_BackgroundPulse,
-  ColorEffects_BeatFadeOut,
-  ColorEffects_RandomColor,
-  ColorEffects_Sparkle,
-  ColorEffects_StaticColor,
-  ColorEffects_Wave,
+  ColorEffectsBackgroundPulse,
+  ColorEffectsBeatFadeOut,
+  ColorEffectsRandomColor,
+  ColorEffectsSparkle,
+  ColorEffectsStaticColor,
+  ColorEffectsWave,
   type LightsButtonEffectColor,
   type LightsEffectsColorCreateParams,
 } from '@/api';
@@ -102,12 +102,12 @@ const effect = ref<LightsEffectsColorCreateParams | undefined>(props.defaultProp
 
 const effectOptions = computed(() => {
   return [
-    { label: 'Background pulse', value: ColorEffects_BackgroundPulse.BACKGROUND_PULSE },
-    { label: 'BeatFadeOut', value: ColorEffects_BeatFadeOut.BEAT_FADE_OUT },
-    { label: 'Random color', value: ColorEffects_RandomColor.RANDOM_COLOR },
-    { label: 'Sparkle', value: ColorEffects_Sparkle.SPARKLE },
-    { label: 'Static color', value: ColorEffects_StaticColor.STATIC_COLOR },
-    { label: 'Wave', value: ColorEffects_Wave.WAVE },
+    { label: 'Background pulse', value: ColorEffectsBackgroundPulse.BACKGROUND_PULSE },
+    { label: 'BeatFadeOut', value: ColorEffectsBeatFadeOut.BEAT_FADE_OUT },
+    { label: 'Random color', value: ColorEffectsRandomColor.RANDOM_COLOR },
+    { label: 'Sparkle', value: ColorEffectsSparkle.SPARKLE },
+    { label: 'Static color', value: ColorEffectsStaticColor.STATIC_COLOR },
+    { label: 'Wave', value: ColorEffectsWave.WAVE },
   ];
 });
 

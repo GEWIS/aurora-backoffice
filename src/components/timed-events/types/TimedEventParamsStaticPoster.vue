@@ -42,7 +42,7 @@ import type { TimedEventParamsProps } from '@/components/timed-events/types/Time
 const props = defineProps<TimedEventParamsProps<TimedEventSetStaticPoster['params']>>();
 
 const posterStore = useStaticPosterStore();
-posterStore.init();
+void posterStore.init();
 
 const selectedPosterId = ref<number | undefined>(props.originalEventSpecParams?.posterId ?? undefined);
 const selectedPoster = computed(() => {
@@ -55,7 +55,7 @@ const inputInvalid = computed(() => {
   return loading.value || !props.cronValid || selectedPosterId.value === undefined;
 });
 
-const handleSave = () => {
+const handleSave = async () => {
   if (inputInvalid.value || !selectedPosterId.value) return;
 
   loading.value = true;
@@ -71,7 +71,7 @@ const handleSave = () => {
     eventSpec,
   };
 
-  props.onSave(params, props.skipNext).finally(() => {
+  await props.onSave(params, props.skipNext).finally(() => {
     loading.value = false;
   });
 };

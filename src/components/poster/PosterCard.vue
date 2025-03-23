@@ -1,6 +1,6 @@
 <template>
   <AppBox class="h-full">
-    <div v-if="poster.type == PosterType_IMAGE.IMG">
+    <div v-if="poster.type == PosterTypeImage.IMG">
       <div class="w-full">
         <Carousel
           v-if="poster.source.length > 1"
@@ -29,7 +29,7 @@
         />
       </div>
     </div>
-    <div v-else-if="poster.type === PosterType_EXTERNAL.EXTERN">
+    <div v-else-if="poster.type === PosterTypeExternal.EXTERN">
       <a :href="poster.source[0]" target="_blank">
         <div
           class="hover:brightness-50 transition duration-200 w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Poster, PosterType_EXTERNAL, PosterType_IMAGE } from '@/api';
+import { type Poster, PosterTypeExternal, PosterTypeImage } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
 
 const capitalize = (text: string) => {

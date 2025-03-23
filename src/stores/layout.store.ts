@@ -53,7 +53,7 @@ export const useLayoutStore = defineStore('layout', {
     getMenuMobileActive: (state) => state.menuMobileActive,
     getMenuDesktopActive: (state) => state.menuDesktopActive,
     getDarkMode: (state) => state.darkMode,
-    getWindowWidth: (state) => state.windowWidth,
+    getWindowWidth: (state): number => state.windowWidth,
   },
   actions: {
     /**
@@ -104,13 +104,13 @@ export const useLayoutStore = defineStore('layout', {
      * Mount the resize listener to the window
      */
     mountResizeListener() {
-      window.addEventListener('resize', this.changeWidth);
+      window.addEventListener('resize', this.changeWidth.bind(this));
     },
     /**
      * Unmount the resize listener from the window
      */
     unmountResizeListener() {
-      window.removeEventListener('resize', this.changeWidth);
+      window.removeEventListener('resize', this.changeWidth.bind(this));
     },
   },
 });

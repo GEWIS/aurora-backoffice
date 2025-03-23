@@ -64,8 +64,8 @@ const renderTaps = () => {
   return chunks.map((c) => c.join('')).join(' ');
 };
 
-const fetchCurrentBpm = () => {
-  getArtificalBeatGenerator()
+const fetchCurrentBpm = async () => {
+  await getArtificalBeatGenerator()
     .then((beats) => {
       currentBpm.value = beats.data!.bpm;
     })
@@ -81,23 +81,23 @@ const getBpm = () => {
   return Math.round(bpm);
 };
 
-const onDialogShow = () => {
+const onDialogShow = async () => {
   currentBpmLoading.value = true;
-  fetchCurrentBpm();
+  await fetchCurrentBpm();
 };
 
-const setArtificialBeats = () => {
+const setArtificialBeats = async () => {
   const bpm = getBpm();
   if (bpm == null) return;
   savingBpmLoading.value = true;
-  startArtificialBeatGenerator({ body: { bpm: bpm } })
+  await startArtificialBeatGenerator({ body: { bpm: bpm } })
     .then(() => (visible.value = false))
     .finally(() => (savingBpmLoading.value = false));
 };
 
-const stopArtificialBeats = () => {
+const stopArtificialBeats = async () => {
   stopBpmLoading.value = true;
-  stopArtificialBeatGenerator()
+  await stopArtificialBeatGenerator()
     .then(() => (visible.value = false))
     .finally(() => (stopBpmLoading.value = false));
 };

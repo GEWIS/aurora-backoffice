@@ -17,15 +17,15 @@ import { ref } from 'vue';
 import { useEffectsControllerStore } from '@/stores/effects-controller.store';
 import EffectSettingsDialog from '@/components/lights/effects/EffectSettingsDialog.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_SingleFlood } from '@/api';
+import { ColorEffectsSingleFlood } from '@/api';
 
 const store = useEffectsControllerStore();
 
 const dimMilliseconds = ref<number>(500);
 
-const handleAddEffect = () => {
-  store.setColorEffect({
-    type: ColorEffects_SingleFlood.SINGLE_FLOOD,
+const handleAddEffect = async () => {
+  await store.setColorEffect({
+    type: ColorEffectsSingleFlood.SINGLE_FLOOD,
     props: {
       dimMilliseconds: dimMilliseconds.value,
     },

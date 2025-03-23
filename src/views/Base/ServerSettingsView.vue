@@ -117,8 +117,9 @@ import TreeTable from 'primevue/treetable';
 import type { TreeNode } from 'primevue/treenode';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
-import { type ISettings, ISettingsSchema } from '@/api';
+import { type ISettings } from '@/api';
 import ServerSettingsFileUpload from '@/components/settings/ServerSettingsFileUpload.vue';
+import { ISettingsSchema } from '@/api/schemas.gen';
 
 const store = useServerSettingsStore();
 
@@ -142,7 +143,8 @@ const entries = computed(() => {
         if (usedKeys.includes(nextKey)) return undefined;
 
         // Current key ends with a dot, so we need to remove that dot
-        const canEdit = canEditParent && store.featureEnabled(currentKey.substring(0, currentKey.length - 1));
+        const canEdit =
+          canEditParent && store.featureEnabled(currentKey.substring(0, currentKey.length - 1) as keyof ISettings);
 
         usedKeys.push(nextKey);
         const setting = currentKey + remainder;
@@ -194,14 +196,13 @@ const entries = computed(() => {
             description,
             // @ts-expect-error I do not understand this and can't be bothered anymore
             value: store.serverSettings![setting],
-            isFeatureFlag: store.isFeatureFlag(setting),
+            isFeatureFlag: store.isFeatureFlag(setting as keyof ISettings),
             canEdit,
           },
           children: children.length > 0 ? children : undefined,
         };
       })
-      .filter((x) => x != undefined)
-      .map((x) => x!);
+      .filter((x) => x != undefined);
   };
   return createTreeNodes('');
 });

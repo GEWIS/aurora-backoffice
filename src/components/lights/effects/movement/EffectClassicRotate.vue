@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { type ClassicRotateCreateParams, MovementEffects_ClassicRotate } from '@/api';
+import { type ClassicRotateCreateParams, MovementEffectsClassicRotate } from '@/api';
 
 const props = defineProps<{
   defaultModelValue?: ClassicRotateCreateParams;
@@ -37,7 +37,7 @@ const offsetFactor = ref<number>(props.defaultModelValue?.props.offsetFactor || 
 
 const handleChange = () => {
   const payload: ClassicRotateCreateParams = {
-    type: MovementEffects_ClassicRotate.CLASSIC_ROTATE,
+    type: MovementEffectsClassicRotate.CLASSIC_ROTATE,
     props: {
       cycleTime: cycleTime.value,
       offsetFactor: offsetFactor.value,

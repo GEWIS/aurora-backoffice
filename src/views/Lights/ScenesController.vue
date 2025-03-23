@@ -38,7 +38,7 @@ import SceneDeleteButton from '@/components/lights/scenes/SceneDeleteButton.vue'
 import AppContainer from '@/layout/AppContainer.vue';
 
 const store = useSceneControllerStore();
-store.initPage();
+void store.initPage();
 </script>
 
 <style lang="scss">

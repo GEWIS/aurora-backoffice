@@ -105,7 +105,7 @@ const onSave = () => {
   }
 
   if (!params) return;
-  props.onSave(params, props.skipNext).finally(() => {
+  void props.onSave(params, props.skipNext).finally(() => {
     loading.value = false;
   });
 };

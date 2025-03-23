@@ -33,7 +33,7 @@
 import { onMounted, ref, watch } from 'vue';
 import SelectorLightsColor from '@/components/lights/effects/props/SelectorLightsColor.vue';
 import SelectorRatioSlider from '@/components/lights/effects/props/SelectorRatioSlider.vue';
-import { ColorEffects_Sparkle, RgbColor, type SparkleCreateParams } from '@/api';
+import { ColorEffectsSparkle, RgbColor, type SparkleCreateParams } from '@/api';
 
 const props = defineProps<{
   showColors: boolean;
@@ -51,7 +51,7 @@ const cycleTime = ref<number>(props.defaultModelValue?.props.cycleTime || 200);
 
 const handleChange = () => {
   const payload: SparkleCreateParams = {
-    type: ColorEffects_Sparkle.SPARKLE,
+    type: ColorEffectsSparkle.SPARKLE,
     props: {
       colors: colors.value,
       ratio: ratio.value,

@@ -31,10 +31,10 @@ export const useServerSettingsStore = defineStore('server-settings', {
       if (res && res.data) this.serverSettings = res.data;
       this.loading = false;
     },
-    isFeatureFlag(setting: string | keyof ISettings): boolean {
+    isFeatureFlag(setting: keyof ISettings): boolean {
       return this.featureFlags.some((f) => f.key === setting);
     },
-    featureEnabled(setting: string | keyof ISettings): boolean {
+    featureEnabled(setting: keyof ISettings): boolean {
       const match = this.featureFlags.find((f) => f.key === setting);
       if (!match) return true;
       return match.value;
