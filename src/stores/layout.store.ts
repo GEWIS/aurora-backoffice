@@ -61,6 +61,12 @@ export const useLayoutStore = defineStore('layout', {
      */
     init() {
       this.applyTheme();
+
+      // Open the main menu by default if the screen is large enough
+      const bound: number = TailwindWidth.xxl;
+      if (this.windowWidth > bound) {
+        this.menuDesktopActive = true;
+      }
     },
     /**
      * Toggle the menu on mobile
