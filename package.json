@@ -17,6 +17,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@gewis/splash": "^2.4.0",
     "@hey-api/client-fetch": "^0.8.3",
     "@primevue/themes": "^4.3.2",
     "@tailwindcss/postcss": "^4.0.15",
