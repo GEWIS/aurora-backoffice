@@ -260,11 +260,6 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@9.22.0":
-  version "9.22.0"
-  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.22.0.tgz#4ff53649ded7cbce90b444b494c234137fa1aa3d"
-  integrity sha512-vLFajx9o8d1/oL2ZkpMYbkLv8nDB6yaIwFNt7nI4+I80U/z03SxmfOMsLbvWr3p7C+Wnoh//aOu2pQW8cS0HCQ==
-
 "@eslint/js@9.23.0":
   version "9.23.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.23.0.tgz#c09ded4f3dc63b40b933bcaeb853fceddb64da30"
@@ -283,21 +278,21 @@
     "@eslint/core" "^0.12.0"
     levn "^0.4.1"
 
-"@gewis/eslint-config-typescript@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gewis/eslint-config-typescript/-/eslint-config-typescript-2.3.0.tgz#019c09f3fa8f16e39e196f3ac31c4cc39851cc90"
-  integrity sha512-zY6cunsYvYax3OUS0nTME06GowgUJOfXy5D12PQMDnfLt+H3yQusTSDYwmA2bCAlqFa+VGBPaq9lxzCAo7qDug==
+"@gewis/eslint-config-typescript@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@gewis/eslint-config-typescript/-/eslint-config-typescript-2.4.0.tgz#aa674d58114a70e7feb2a9055a2334b707e71674"
+  integrity sha512-OWi+7BQDUJgmbNSHygUN8We0RRx5EpclbZNAjUiPNedFdE5GpkVa6zSYrdxFzbd/Rwv3vp0pc0pMjt9M0S+/mw==
   dependencies:
     "@eslint/compat" "^1.2.7"
-    "@eslint/js" "9.22.0"
+    "@eslint/js" "9.23.0"
     eslint-import-resolver-typescript "^3.8.3"
     eslint-plugin-import "^2.31.0"
     typescript-eslint "^8.25.0"
 
-"@gewis/eslint-config-vue@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@gewis/eslint-config-vue/-/eslint-config-vue-2.3.0.tgz#aed515b97666b1c5644d3e51606698c8b9ecea09"
-  integrity sha512-1Ug9cvo6ds5h6GFgHCTw5qlo9HksY3vASU+AihCsHuJni04GUXwrBlZqt28OBak+kd1BCICT/kZgCL0z6hFcNQ==
+"@gewis/eslint-config-vue@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@gewis/eslint-config-vue/-/eslint-config-vue-2.4.0.tgz#e337d364f5d8f2d421dec4f71bd253f97099bc63"
+  integrity sha512-Irn9uy3Hesyv+RK3HK3KRB/+eC7hBs4/bPnFW67adhyGwVVEQDG5ycKi6IchxWyLgSLHz8XLscJlNAYlpGMXfQ==
   dependencies:
     "@vue/eslint-config-typescript" "^14.4.0"
     eslint-plugin-vue "^9.32.0"
@@ -322,21 +317,21 @@
   resolved "https://registry.yarnpkg.com/@hey-api/client-fetch/-/client-fetch-0.8.3.tgz#704adf5a4813e8181daa983a0f1e6c72a8128b01"
   integrity sha512-EBVa8wwUMyBSeQ32PtCz6u5bFQZIMAufvwCT1ZtpjqT3caJQEza4NokbGU50q1ZVrMsM5Ot6GuDNJOF3TMo26Q==
 
-"@hey-api/json-schema-ref-parser@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@hey-api/json-schema-ref-parser/-/json-schema-ref-parser-1.0.3.tgz#d20ed12edcbe679540af2647fb28ed61b7fbca7e"
-  integrity sha512-jgyNFPUReGpdB0ihWv6m+Q3dcawtXx4t6cvi0NS4xxblulcCfEjThP5xVwShFiTRScckIQ/GsuZv20arRTIDkg==
+"@hey-api/json-schema-ref-parser@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@hey-api/json-schema-ref-parser/-/json-schema-ref-parser-1.0.4.tgz#818010c11f5790c406704f8743cf3538af10dbbb"
+  integrity sha512-IaJ4yFgU5r63KZyeySHRKSM1bavFIda8KdwCFi5BxQCIklltzEByBksNOPms+yHXpWWfR+OopIusVZV8roycYg==
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
     "@types/json-schema" "^7.0.15"
     js-yaml "^4.1.0"
 
-"@hey-api/openapi-ts@^0.64.13":
-  version "0.64.13"
-  resolved "https://registry.yarnpkg.com/@hey-api/openapi-ts/-/openapi-ts-0.64.13.tgz#e66b0bf5270ec5215d8b16284a980e297d360510"
-  integrity sha512-KOf/bQ9JbGJFsdQjUrne3ZttoJm/68kG00oc/5VovduMAoX0gUyGNpZ+yppvUdLvmxL1GvaGut2JFk0XSZxIlw==
+"@hey-api/openapi-ts@^0.65.0":
+  version "0.65.0"
+  resolved "https://registry.yarnpkg.com/@hey-api/openapi-ts/-/openapi-ts-0.65.0.tgz#52700793a1e371f6e1df1dca7595746f57859b2e"
+  integrity sha512-FieuDilgG8sVgykNQa2x/rREt77n0QjOam47h+qxcogb+m6AME1DrD3ZRJINtN8Xqi/qwxlG3dMqzD7tPQFiig==
   dependencies:
-    "@hey-api/json-schema-ref-parser" "1.0.3"
+    "@hey-api/json-schema-ref-parser" "1.0.4"
     c12 "2.0.1"
     commander "13.0.0"
     handlebars "4.7.8"
@@ -756,10 +751,10 @@
     postcss "^8.4.41"
     tailwindcss "4.0.15"
 
-"@tsconfig/node22@^22.0.0":
-  version "22.0.0"
-  resolved "https://registry.yarnpkg.com/@tsconfig/node22/-/node22-22.0.0.tgz#0bdaf702f2b7594383d24d7b2b8d557dcfdca1ed"
-  integrity sha512-twLQ77zevtxobBOD4ToAtVmuYrpeYUh3qh+TEp+08IWhpsrIflVHqQ1F1CiPxQGL7doCdBIOOCF+1Tm833faNg==
+"@tsconfig/node22@^22.0.1":
+  version "22.0.1"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node22/-/node22-22.0.1.tgz#27e3ee9b359e31e5b94690bf2bad5a923c1d57d0"
+  integrity sha512-VkgOa3n6jvs1p+r3DiwBqeEwGAwEvnVCg/hIjiANl5IEcqP3G0u5m8cBJspe1t9qjZRlZ7WFgqq5bJrGdgAKMg==
 
 "@tybys/wasm-util@^0.9.0":
   version "0.9.0"
@@ -4263,10 +4258,10 @@ safe-regex-test@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.86.0:
-  version "1.86.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.86.0.tgz#f49464fb6237a903a93f4e8760ef6e37a5030114"
-  integrity sha512-zV8vGUld/+mP4KbMLJMX7TyGCuUp7hnkOScgCMsWuHtns8CWBoz+vmEhoGMXsaJrbUP8gj+F1dLvVe79sK8UdA==
+sass@^1.86.1:
+  version "1.86.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.86.1.tgz#862c7fc9d30ffb9bf616fa20e50c033cb1bee4dc"
+  integrity sha512-Yaok4XELL1L9Im/ZUClKu//D2OP1rOljKj0Gf34a+GzLbMveOzL7CfqYo+JUa5Xt1nhTCW+OcKp/FtR7/iqj1w==
   dependencies:
     chokidar "^4.0.0"
     immutable "^5.0.2"
@@ -4713,10 +4708,15 @@ tailwindcss-primeui@^0.5.1:
   resolved "https://registry.yarnpkg.com/tailwindcss-primeui/-/tailwindcss-primeui-0.5.1.tgz#c4faed1056be609716d80a176b6dfb50c7a53af1"
   integrity sha512-zNqp62N4c+pwBVkVJd8ByvujepVKAMxZBdYy5MzIDi/Zb2p8wTGo4RrQaqLQazm3teOWVmttzZYPH/GlOB3lgw==
 
-tailwindcss@4.0.15, tailwindcss@^4.0.15:
+tailwindcss@4.0.15:
   version "4.0.15"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-4.0.15.tgz#73933640624b4188fedb07492cd9b354643e6cb3"
   integrity sha512-6ZMg+hHdMJpjpeCCFasX7K+U615U9D+7k5/cDK/iRwl6GptF24+I/AbKgOnXhVKePzrEyIXutLv36n4cRsq3Sg==
+
+tailwindcss@^4.0.17:
+  version "4.0.17"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-4.0.17.tgz#44332e28d4213385727b6199e07ab296d8bdfa42"
+  integrity sha512-OErSiGzRa6rLiOvaipsDZvLMSpsBZ4ysB4f0VKGXUrjw2jfkJRd6kjRKV2+ZmTCNvwtvgdDam5D7w6WXsdLJZw==
 
 tapable@^2.2.0:
   version "2.2.1"
@@ -5007,10 +5007,10 @@ vite-plugin-chunk-split@^0.5.0:
     import-meta-resolve "^4.0.0"
     magic-string "^0.30.5"
 
-vite@^6.2.2:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.2.tgz#8098b12a6bfd95abe39399aa7d5faa56545d7a1a"
-  integrity sha512-yW7PeMM+LkDzc7CgJuRLMW2Jz0FxMOsVJ8Lv3gpgW9WLcb9cTW+121UEr1hvmfR7w3SegR5ItvYyzVz1vxNJgQ==
+vite@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-6.2.4.tgz#05809de3f918fded87f73a838761995a4d66a680"
+  integrity sha512-veHMSew8CcRzhL5o8ONjy8gkfmFJAd5Ac16oxBUjlwgX3Gq2Wqr+qNC3TjPIpy7TPV/KporLga5GT9HqdrCizw==
   dependencies:
     esbuild "^0.25.0"
     postcss "^8.5.3"
