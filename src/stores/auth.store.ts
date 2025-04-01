@@ -53,13 +53,21 @@ export const useAuthStore = defineStore('auth', {
     async init(): Promise<boolean> {
       this.authenticating = true;
       const user = await getInformation();
+      if (!user.data) {
+        this.authenticating = false;
+        return false;
+      }
+
       const securityGroups = await getSecurityGroups();
-      this.authenticating = false;
-      if (!user.data || !securityGroups.data) return false;
+      if (!securityGroups.data) {
+        this.authenticating = false;
+        return false;
+      }
 
       this.name = user.data.name;
       this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
+      this.authenticating = false;
       return true;
     },
     /**
@@ -72,13 +80,21 @@ export const useAuthStore = defineStore('auth', {
         body: oidcParameters,
       });
 
+      if (!user.data) {
+        this.authenticating = false;
+        return false;
+      }
+
       const securityGroups = await getSecurityGroups();
-      this.authenticating = false;
-      if (!user.data || !securityGroups.data) return false;
+      if (!securityGroups.data) {
+        this.authenticating = false;
+        return false;
+      }
 
       this.name = user.data.name;
       this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
+      this.authenticating = false;
 
       await this.initStores();
       return true;
@@ -96,10 +112,9 @@ export const useAuthStore = defineStore('auth', {
       const securityGroups = await getSecurityGroups();
       this.authenticating = false;
       if (!user.data || !securityGroups.data) return false;
-      const userData = user.data as AuthUser;
 
-      this.name = userData.name;
-      this.roles = userData.roles;
+      this.name = user.data.name;
+      this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
       return true;
     },

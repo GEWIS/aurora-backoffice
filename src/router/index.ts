@@ -34,6 +34,11 @@ const router = createRouter({
           component: () => import('@/views/Base/UnauthorizedView.vue'),
           name: 'unauthorized',
         },
+        {
+          path: '/error',
+          component: () => import('@/views/Base/InternalErrorView.vue'),
+          name: 'error',
+        },
       ],
     },
     {
@@ -172,7 +177,7 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   const layoutStore = useLayoutStore();
   layoutStore.init();
 
@@ -180,7 +185,7 @@ router.beforeEach(async (to, from, next) => {
   let authenticated = authStore.isAuthenticated();
 
   // Automatically login using mock when in development mode
-  if (!import.meta.env.PROD && !authStore.isAuthenticated()) {
+  if (import.meta.env.VITE_NODE_ENV === 'development' && !authenticated) {
     await authStore.MockLogin({
       id: 'dev',
       name: 'dev',
@@ -189,8 +194,10 @@ router.beforeEach(async (to, from, next) => {
     await authStore.initStores();
   }
 
-  // Check if user still has valid cookies
-  if (!authenticated) authenticated = await authStore.init();
+  // Check if user still has valid cookies - ignore if specific request to /auth
+  if (!authenticated && !to.path.startsWith('/auth')) {
+    authenticated = await authStore.init();
+  }
 
   // Getting whether authenticated and has rights to access the route
   // Only necessary if the user is authenticated
@@ -203,13 +210,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (!authenticated && !to.path.startsWith('/auth')) {
     // If not authenticated; redirect to login
-    next({ name: 'auth', query: { path: to.fullPath } });
+    return { name: 'auth', query: { path: to.fullPath } };
   } else if (authenticated && !hasRights) {
     // If authenticated, but does not have rights to access the route
-    next({ name: 'unauthorized' });
-  } else {
-    // Default case
-    next();
+    return { name: 'unauthorized' };
   }
 });
 

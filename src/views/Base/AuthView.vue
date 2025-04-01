@@ -18,22 +18,21 @@ onMounted(async () => {
   if (route.path === '/auth/callback') {
     authorizing.value = true;
     if (!route.hash) {
-      await router.push({ name: 'auth' });
+      await router.push({ name: 'error' });
     }
 
     const queryParameters = new URLSearchParams(route.hash.substring(1));
     if (!queryParameters.get('code') || !queryParameters.get('state') || !queryParameters.get('session_state')) {
-      await router.push({ name: 'auth' });
+      await router.push({ name: 'error' });
     }
 
     // Get and clear sessionStorage
     const state = sessionStorage.getItem('state');
     const url = sessionStorage.getItem('url');
-    sessionStorage.clear();
 
     // Check if the state is still the same, if not require to re-authenticate
     if (state !== queryParameters.get('state')) {
-      await router.push({ name: 'auth' });
+      await router.push({ name: 'error' });
     }
 
     const authenticated = await authStore.OIDCLogin({
@@ -45,7 +44,7 @@ onMounted(async () => {
     if (authenticated) {
       await router.push(url === null || url === '' ? { name: 'dashboard' } : url);
     } else {
-      await router.push({ name: 'unauthorized' });
+      await router.push({ name: 'error' });
     }
   } else {
     authorizing.value = false;

@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-const development = !import.meta.env.PROD;
+const development = import.meta.env.VITE_NODE_ENV === 'development';
 </script>
