@@ -5,6 +5,7 @@ import '@/assets/styles.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import '@gewis/splash';
 // @ts-expect-error -- package does exist
 import timeago from 'vue-timeago3';
 import PrimeVue from 'primevue/config';
