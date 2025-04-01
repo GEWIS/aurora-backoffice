@@ -49,7 +49,7 @@ onMounted(async () => {
     }
   } else {
     authorizing.value = false;
-    let state = Math.random().toString(36).slice(2);
+    const state = Math.random().toString(36).slice(2);
     sessionStorage.setItem('state', state);
     sessionStorage.setItem('url', route.query.path as string);
 

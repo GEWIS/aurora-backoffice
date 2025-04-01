@@ -57,8 +57,8 @@ export const useAuthStore = defineStore('auth', {
       this.authenticating = false;
       if (!user.data || !securityGroups.data) return false;
 
-      this.name = user.data!.name;
-      this.roles = user.data!.roles;
+      this.name = user.data.name;
+      this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
       return true;
     },
@@ -76,8 +76,8 @@ export const useAuthStore = defineStore('auth', {
       this.authenticating = false;
       if (!user.data || !securityGroups.data) return false;
 
-      this.name = user.data!.name;
-      this.roles = user.data!.roles;
+      this.name = user.data.name;
+      this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
 
       await this.initStores();
@@ -96,9 +96,10 @@ export const useAuthStore = defineStore('auth', {
       const securityGroups = await getSecurityGroups();
       this.authenticating = false;
       if (!user.data || !securityGroups.data) return false;
+      const userData = user.data as AuthUser;
 
-      this.name = user.data!.name;
-      this.roles = user.data!.roles;
+      this.name = userData.name;
+      this.roles = userData.roles;
       this.securityGroups = securityGroups.data;
       return true;
     },
