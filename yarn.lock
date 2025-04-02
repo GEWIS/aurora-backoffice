@@ -312,10 +312,10 @@
   resolved "https://registry.yarnpkg.com/@gewis/splash/-/splash-2.4.0.tgz#0e34476e871c6222d9cc980c1f416a5e5cbd973c"
   integrity sha512-MdxN/hF2nZSf7OMY3fUAYArMjz+3tav9FNQ7ukEFmJZyDu/eMs/h6n6D3MYCND5yG9WmYJ6DYJq8VU0AWAV1/Q==
 
-"@hey-api/client-fetch@^0.8.3":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@hey-api/client-fetch/-/client-fetch-0.8.4.tgz#2dc2d368b4dd2137789f46adcae68ccd04ea2adb"
-  integrity sha512-SWtUjVEFIUdiJGR2NiuF0njsSrSdTe7WHWkp3BLH3DEl2bRhiflOnBo29NSDdrY90hjtTQiTQkBxUgGOF29Xzg==
+"@hey-api/client-fetch@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@hey-api/client-fetch/-/client-fetch-0.10.0.tgz#d11016a3b4cff249f57eb6a323dc001a2c203848"
+  integrity sha512-C7vzj4t52qPiHCqjn1l8cRTI2p4pZCd7ViLtJDTHr5ZwI4sWOYC1tmv6bd529qqY6HFFbhGCz4TAZSwKAMJncg==
 
 "@hey-api/json-schema-ref-parser@1.0.3":
   version "1.0.3"
