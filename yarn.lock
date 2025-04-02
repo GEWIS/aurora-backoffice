@@ -4712,10 +4712,10 @@ tailwind@^4.0.0:
     uuidv4 "3.0.1"
     ws "6.2.0"
 
-tailwindcss-primeui@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/tailwindcss-primeui/-/tailwindcss-primeui-0.5.1.tgz#c4faed1056be609716d80a176b6dfb50c7a53af1"
-  integrity sha512-zNqp62N4c+pwBVkVJd8ByvujepVKAMxZBdYy5MzIDi/Zb2p8wTGo4RrQaqLQazm3teOWVmttzZYPH/GlOB3lgw==
+tailwindcss-primeui@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss-primeui/-/tailwindcss-primeui-0.6.1.tgz#fcb74738e80d4253c14521114773f5ce638c6ee8"
+  integrity sha512-T69Rylcrmnt8zy9ik+qZvsLuRIrS9/k6rYJSIgZ1trnbEzGDDQSCIdmfyZknevqiHwpSJHSmQ9XT2C+S/hJY4A==
 
 tailwindcss@4.0.17, tailwindcss@^4.0.15:
   version "4.0.17"
