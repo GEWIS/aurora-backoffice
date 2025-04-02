@@ -29,67 +29,94 @@ import { useServerSettingsStore } from '@/stores/server-settings.store';
 interface AuthStore {
   name: string | null;
   roles: SecurityGroup[];
-  development: boolean;
   securityGroups?: ISecurityGroups;
+  authenticating: boolean;
 }
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthStore => ({
     name: null,
     roles: [],
-    development: false,
     securityGroups: undefined,
+    authenticating: false,
   }),
   getters: {
     getName: (state) => state.name,
     getRoles: (state) => state.roles,
-    getDevelopment: (state) => state.development,
     getSecurityGroups: (state) => state.securityGroups,
+    getAuthenticating: (state) => state.authenticating,
   },
   actions: {
     /**
      * Initialize the store
      */
-    async init(): Promise<void> {
-      void getInformation().then(async (user) => {
-        if (user.data) {
-          this.name = user.data.name;
-          this.roles = user.data.roles;
-
-          await useHandlersStore().init();
-          await useColorStore().init();
-        }
-      });
+    async init(): Promise<boolean> {
+      this.authenticating = true;
+      const user = await getInformation();
+      if (!user.data) {
+        this.authenticating = false;
+        return false;
+      }
 
       const securityGroups = await getSecurityGroups();
+      if (!securityGroups.data) {
+        this.authenticating = false;
+        return false;
+      }
+
+      this.name = user.data.name;
+      this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
+      this.authenticating = false;
+      return true;
     },
     /**
      * Login a user using OIDC
      * @param oidcParameters - The OIDC parameters
      */
-    async OIDCLogin(oidcParameters: OidcParameters): Promise<void> {
-      const res = await authOidc({
+    async OIDCLogin(oidcParameters: OidcParameters): Promise<boolean> {
+      this.authenticating = true;
+      const user = await authOidc({
         body: oidcParameters,
       });
-      if (res.response.ok && res.data) {
-        this.name = res.data.name;
-        this.roles = res.data.roles;
+
+      if (!user.data) {
+        this.authenticating = false;
+        return false;
       }
+
+      const securityGroups = await getSecurityGroups();
+      if (!securityGroups.data) {
+        this.authenticating = false;
+        return false;
+      }
+
+      this.name = user.data.name;
+      this.roles = user.data.roles;
+      this.securityGroups = securityGroups.data;
+      this.authenticating = false;
+
       await this.initStores();
+      return true;
     },
     /**
      * Login a user using any possible data
-     * @param user - The user to login as
+     * @param authUser
      */
-    async MockLogin(user: AuthUser): Promise<void> {
-      this.development = true;
-      await authMock({
-        body: user,
-      }).then((user) => {
-        this.name = user.data!.name;
-        this.roles = user.data!.roles;
+    async MockLogin(authUser: AuthUser): Promise<boolean> {
+      this.authenticating = true;
+      const user = await authMock({
+        body: authUser,
       });
+
+      const securityGroups = await getSecurityGroups();
+      this.authenticating = false;
+      if (!user.data || !securityGroups.data) return false;
+
+      this.name = user.data.name;
+      this.roles = user.data.roles;
+      this.securityGroups = securityGroups.data;
+      return true;
     },
     /**
      * Initialize the stores -- only those which the user has access to

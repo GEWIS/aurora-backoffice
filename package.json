@@ -8,7 +8,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "type-check": "vue-tsc --noEmit",
     "lint": "eslint src --max-warnings=1",
     "lint-fix": "eslint src --fix",
     "format": "prettier --ignore-path .gitignore --check ./src/",
