@@ -15,14 +15,14 @@ export interface IntegrationUser extends IntegrationUserResponse {
   apiKey?: string;
 }
 
-interface IntegrationUserStore {
+interface IntegrationsStore {
   integrationUsers: IntegrationUser[];
   integrationEndpoints: string[];
   loading: boolean;
 }
 
-export const useIntegrationUserStore = defineStore('integration-users', {
-  state: (): IntegrationUserStore => ({
+export const useIntegrationsStore = defineStore('integration-users', {
+  state: (): IntegrationsStore => ({
     integrationUsers: [],
     integrationEndpoints: [],
     loading: true,
