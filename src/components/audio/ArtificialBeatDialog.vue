@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { splitArrayIntoChunks } from '@/utils/arrayUtils';
-import { getArtificalBeatGenerator, startArtificialBeatGenerator, stopArtificialBeatGenerator } from '@/api';
+import { getArtificialBeatGenerator, startArtificialBeatGenerator, stopArtificialBeatGenerator } from '@/api';
 
 const visible = ref<boolean>(false);
 const taps = ref<Date[]>([]);
@@ -65,7 +65,7 @@ const renderTaps = () => {
 };
 
 const fetchCurrentBpm = async () => {
-  await getArtificalBeatGenerator()
+  await getArtificialBeatGenerator()
     .then((beats) => {
       currentBpm.value = beats.data!.bpm;
     })
