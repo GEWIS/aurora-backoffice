@@ -7,7 +7,19 @@
     </template>
     <DataTable :loading="store.loading" :value="store.integrationUsers">
       <Column field="name" header="Name"></Column>
-      <Column field="endpoints" header="Endpoints"></Column>
+      <Column field="endpoints" header="Endpoints">
+        <template #body="slotProps">
+          <div class="flex flex-wrap gap-1">
+            <Chip v-for="endpoint in slotProps.data.endpoints" :key="endpoint">{{ endpoint }}</Chip>
+          </div>
+        </template>
+      </Column>
+      <Column field="lastSeen" header="Last Seen">
+        <template #body="slotProps">
+          <div v-if="slotProps.data.lastSeen">{{ new Date(slotProps.data.lastSeen).toLocaleString() }}</div>
+          <div v-else class="italic">-</div>
+        </template>
+      </Column>
       <Column header="API key">
         <template #body="slotProps">
           <IntegrationUserApiKey :integration-user="slotProps.data" />
