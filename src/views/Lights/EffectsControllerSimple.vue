@@ -16,12 +16,21 @@
         :disabled="button.properties.type === 'LightsButtonNull'"
         raised
         :severity="buttonActive(button) ? 'primary' : 'secondary'"
-        @blur="store.onEffectButtonRelease(button)"
-        @mousedown="store.onEffectButtonPress(button)"
-        @mouseleave="store.onEffectButtonRelease(button)"
-        @mouseup="store.onEffectButtonRelease(button)"
-        @touchend="store.onEffectButtonRelease(button)"
-        @touchstart="store.onEffectButtonPress(button)"
+        @pointercancel="
+          () => {
+            store.onEffectButtonCancel(button);
+          }
+        "
+        @pointerdown="
+          () => {
+            store.onEffectButtonPress(button);
+          }
+        "
+        @pointerup="
+          () => {
+            store.onEffectButtonRelease(button);
+          }
+        "
       >
         <EffectControllerButtonContent :button="button" :editing="editing" />
       </Button>
