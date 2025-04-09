@@ -159,6 +159,15 @@ const router = createRouter({
           ],
         },
         {
+          path: '/integrations',
+          component: () => import('@/views/Base/IntegrationsView.vue'),
+          name: 'Integrations',
+          meta: {
+            securityGroup: 'integrationUsers',
+            securitySection: 'privileged',
+          },
+        },
+        {
           path: '/audit',
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
