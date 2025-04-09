@@ -8,7 +8,7 @@
           :style="{ width: '100%', borderRadius: '5px' }"
         />
       </div>
-      <div class="flex flex-col gap-1 h-100 justify-content-center">
+      <div class="flex flex-col gap-1 justify-content-center">
         <span class="text-xl">{{ store.currentlyPlaying?.title }}</span>
         <span class="text-lg">{{ store.currentlyPlaying?.artists.join(', ') }}</span>
       </div>

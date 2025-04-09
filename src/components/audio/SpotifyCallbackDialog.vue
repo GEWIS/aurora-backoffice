@@ -17,11 +17,12 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useSpotifyStore } from '@/stores/spotify.store';
 
 const store = useSpotifyStore();
 const route = useRoute();
+const router = useRouter();
 
 const open = ref<boolean>(false);
 const loading = ref<boolean>(true);
@@ -40,10 +41,13 @@ onMounted(async () => {
     const code = Array.isArray(route.query.code) ? route.query.code.join(',') : route.query.code;
     const error = Array.isArray(route.query.error) ? route.query.error.join(',') : route.query.error;
     const res = await store.loginCallback(state ?? '', code ?? undefined, error ?? undefined);
-    if (!res.success) {
+    if (res.success) {
+      void store.init();
+    } else {
       errorMessage.value = res.error;
     }
     loading.value = false;
+    await router.replace('/spotify');
   }
 });
 </script>
