@@ -267,6 +267,14 @@ export const useEffectsControllerStore = defineStore('effectsController', {
     },
     async onEffectButtonPress(button: LightsPredefinedEffectResponse) {
       switch (button.properties.type) {
+        case 'LightsButtonStrobe': {
+          await this.enableStrobe(button.properties.lightsGroupIds);
+          return;
+        }
+      }
+    },
+    async onEffectButtonRelease(button: LightsPredefinedEffectResponse) {
+      switch (button.properties.type) {
         case 'LightsButtonColors': {
           const properties = button.properties;
           this.currentColors = properties.colors;
@@ -302,7 +310,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
           return;
         }
         case 'LightsButtonStrobe': {
-          await this.enableStrobe(button.properties.lightsGroupIds);
+          await this.disableStrobe(button.properties.lightsGroupIds);
           return;
         }
         case 'LightsButtonSwitch': {
@@ -321,7 +329,7 @@ export const useEffectsControllerStore = defineStore('effectsController', {
         }
       }
     },
-    async onEffectButtonRelease(button: LightsPredefinedEffectResponse) {
+    async onEffectButtonCancel(button: LightsPredefinedEffectResponse) {
       switch (button.properties.type) {
         case 'LightsButtonStrobe': {
           await this.disableStrobe(button.properties.lightsGroupIds);
