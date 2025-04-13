@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 interface SocketStore {
   rootSocket?: Socket;
   backofficeSocket?: Socket;
+  backofficeBeatSocket?: Socket;
 }
 
 export const useSocketStore = defineStore('socket', {
@@ -32,6 +33,25 @@ export const useSocketStore = defineStore('socket', {
         });
       });
       return Promise.all([promise1, promise2]);
+    },
+    async connectBeat() {
+      const beatSocket = io('/backoffice-beat', { path: '/socket.io/' });
+      return new Promise<void>((resolve) => {
+        beatSocket.on('connect', () => {
+          console.info('SocketIO: connected to /backoffice-beat');
+          this.backofficeBeatSocket = beatSocket;
+          resolve();
+        });
+      });
+    },
+    disconnectBeat() {
+      if (!this.backofficeBeatSocket) {
+        console.error('SocketIO: Already disconnected from /backoffice-beat!');
+        return;
+      }
+      this.backofficeBeatSocket.removeAllListeners();
+      this.backofficeBeatSocket.disconnect();
+      this.backofficeBeatSocket = undefined;
     },
   },
 });

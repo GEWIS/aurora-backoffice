@@ -10,10 +10,10 @@ import { onUnmounted } from 'vue';
 import { useMusicBeatStore } from '@/stores/socket/music-beat.store';
 
 const store = useMusicBeatStore();
-store.init();
+store.initBeat();
 
 onUnmounted(() => {
-  store.destroy();
+  store.destroyBeat();
 });
 </script>
 
