@@ -30,13 +30,13 @@ export const useMusicBeatStore = defineStore('music-beat', {
     handlePrecedenceBeat() {
       this.beat = !this.beat;
     },
-    handleGeneratorBeat([event]: GeneratorBeatEvent[]) {
+    handleGeneratorBeat(event: GeneratorBeatEvent) {
       const index = this.generators.findIndex((g) => g.id === event.id);
       if (index >= 0) {
         this.generators[index].beat = !this.generators[index].beat;
       }
     },
-    handleGeneratorAdd([event]: BeatGeneratorResponse[]) {
+    handleGeneratorAdd(event: BeatGeneratorResponse) {
       if (event.hasPrecedence) {
         for (const g of this.generators) {
           g.hasPrecedence = false;
@@ -49,7 +49,7 @@ export const useMusicBeatStore = defineStore('music-beat', {
         beat: false,
       });
     },
-    handleGeneratorRemove([event]: BeatGeneratorResponse[]) {
+    handleGeneratorRemove(event: BeatGeneratorResponse) {
       const index = this.generators.findIndex((g) => g.id === event.id);
       if (index >= 0) {
         const hasPrecedence = this.generators[index].hasPrecedence;
@@ -94,12 +94,12 @@ export const useMusicBeatStore = defineStore('music-beat', {
             // Remove this generator from the list of all not-seen generators
             notSeenGenerators = notSeenGenerators.filter((g) => g.id !== generator.id);
           } else {
-            this.handleGeneratorAdd([generator]);
+            this.handleGeneratorAdd(generator);
           }
         });
 
         notSeenGenerators.forEach((g) => {
-          this.handleGeneratorRemove([g]);
+          this.handleGeneratorRemove(g);
         });
       } else if (res.response.ok && res.data) {
         this.generators = res.data.map((g) => ({
