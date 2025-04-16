@@ -4,10 +4,14 @@ import AppLayout from '@/layout/AppLayout.vue';
 import { useLayoutStore } from '@/stores/layout.store';
 import { type ISecurityGroups, type ISecuritySections, SecurityGroup } from '@/api';
 
+interface SecurityRole {
+  securityGroup: keyof ISecurityGroups;
+  securitySection: keyof ISecuritySections;
+}
+
 declare module 'vue-router' {
   interface RouteMeta {
-    securityGroup: keyof ISecurityGroups;
-    securitySection: keyof ISecuritySections;
+    security: SecurityRole | SecurityRole[];
   }
 }
 
@@ -65,8 +69,10 @@ const router = createRouter({
             },
           ],
           meta: {
-            securityGroup: 'poster',
-            securitySection: 'base',
+            security: {
+              securityGroup: 'poster',
+              securitySection: 'base',
+            },
           },
         },
         {
@@ -77,8 +83,10 @@ const router = createRouter({
               component: () => import('@/views/Modes/CenturionModeView.vue'),
               name: 'centurionMode',
               meta: {
-                securityGroup: 'centurion',
-                securitySection: 'privileged',
+                security: {
+                  securityGroup: 'centurion',
+                  securitySection: 'privileged',
+                },
               },
             },
             {
@@ -86,8 +94,10 @@ const router = createRouter({
               component: () => import('@/views/Modes/TimeTrailRaceModeView.vue'),
               name: 'timeTrailRaceMode',
               meta: {
-                securityGroup: 'timetrail',
-                securitySection: 'base',
+                security: {
+                  securityGroup: 'timetrail',
+                  securitySection: 'base',
+                },
               },
             },
           ],
@@ -100,8 +110,10 @@ const router = createRouter({
               component: () => import('@/views/Lights/EffectsController.vue'),
               name: 'lightEffects',
               meta: {
-                securityGroup: 'effects',
-                securitySection: 'base',
+                security: {
+                  securityGroup: 'effects',
+                  securitySection: 'base',
+                },
               },
             },
             {
@@ -109,8 +121,10 @@ const router = createRouter({
               component: () => import('@/views/Lights/ScenesController.vue'),
               name: 'lightsScenesController',
               meta: {
-                securityGroup: 'scenes',
-                securitySection: 'base',
+                security: {
+                  securityGroup: 'scenes',
+                  securitySection: 'base',
+                },
               },
             },
             {
@@ -118,8 +132,10 @@ const router = createRouter({
               component: () => import('@/views/Lights/FixtureOverview.vue'),
               name: 'fixturesOverview',
               meta: {
-                securityGroup: 'handler',
-                securitySection: 'base',
+                security: {
+                  securityGroup: 'handler',
+                  securitySection: 'base',
+                },
               },
             },
           ],
@@ -129,8 +145,10 @@ const router = createRouter({
           component: () => import('@/views/Base/ServerSettingsView.vue'),
           name: 'ServerSettings',
           meta: {
-            securityGroup: 'serverSettings',
-            securitySection: 'privileged',
+            security: {
+              securityGroup: 'serverSettings',
+              securitySection: 'privileged',
+            },
           },
         },
         {
@@ -138,23 +156,38 @@ const router = createRouter({
           component: () => import('@/views/Base/TimedEventsView.vue'),
           name: 'TimedEvents',
           meta: {
-            securityGroup: 'timedEvents',
-            securitySection: 'privileged',
+            security: {
+              securityGroup: 'timedEvents',
+              securitySection: 'privileged',
+            },
           },
         },
         {
-          path: '/spotify',
-          component: () => import('@/views/Base/SpotifySettingsView.vue'),
-          name: 'SpotifySettings',
+          path: '/music',
+          component: () => import('@/views/Base/MusicSettingsView.vue'),
+          name: 'MusicSettings',
           meta: {
-            securityGroup: 'spotify',
-            securitySection: 'privileged',
+            security: [
+              {
+                securityGroup: 'spotify',
+                securitySection: 'privileged',
+              },
+              {
+                securityGroup: 'beats',
+                securitySection: 'privileged',
+              },
+            ],
           },
           children: [
             {
-              path: 'callback',
-              component: () => import('@/views/Base/SpotifySettingsView.vue'),
-              name: 'SpotifyLoginCallback',
+              path: 'spotify',
+              children: [
+                {
+                  path: 'callback',
+                  component: () => import('@/views/Base/MusicSettingsView.vue'),
+                  name: 'SpotifyLoginCallback',
+                },
+              ],
             },
           ],
         },
@@ -163,8 +196,10 @@ const router = createRouter({
           component: () => import('@/views/Base/IntegrationsView.vue'),
           name: 'Integrations',
           meta: {
-            securityGroup: 'integrationUsers',
-            securitySection: 'privileged',
+            security: {
+              securityGroup: 'integrationUsers',
+              securitySection: 'privileged',
+            },
           },
         },
         {
@@ -172,8 +207,10 @@ const router = createRouter({
           component: () => import('@/views/Audit/AuditLogsView.vue'),
           name: 'AuditLogs',
           meta: {
-            securityGroup: 'audit',
-            securitySection: 'base',
+            security: {
+              securityGroup: 'audit',
+              securitySection: 'base',
+            },
           },
         },
       ],
@@ -212,8 +249,13 @@ router.beforeEach(async (to) => {
   // Only necessary if the user is authenticated
   let hasRights = true;
   if (authenticated) {
-    if (to.meta.securityGroup && to.meta.securitySection) {
-      hasRights = authStore.isInSecurityGroup(to.meta.securityGroup, to.meta.securitySection);
+    if (to.meta.security && Array.isArray(to.meta.security)) {
+      // If the security metadata is an array, the user needs to have one of the roles
+      hasRights = to.meta.security.some(({ securityGroup, securitySection }) =>
+        authStore.isInSecurityGroup(securityGroup, securitySection),
+      );
+    } else if (to.meta.security) {
+      hasRights = authStore.isInSecurityGroup(to.meta.security.securityGroup, to.meta.security.securitySection);
     }
   }
 

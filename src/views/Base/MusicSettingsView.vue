@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
     <div class="flex flex-col gap-6">
-      <AppContainer icon="pi-users" title="Spotify Users">
+      <AppContainer v-if="authStore.isInSecurityGroup('spotify', 'privileged')" icon="pi-users" title="Spotify Users">
         <template #header>
           <Button
             as="a"
@@ -39,7 +39,7 @@
       </AppContainer>
       <SpotifyCurrentlyPlaying />
     </div>
-    <BeatGenerators />
+    <BeatGenerators v-if="authStore.isInSecurityGroup('beats', 'privileged')" />
   </div>
   <SpotifyCallbackDialog />
 </template>
@@ -53,7 +53,9 @@ import SpotifyCallbackDialog from '@/components/audio/SpotifyCallbackDialog.vue'
 import SpotifyUserDeleteButton from '@/components/audio/SpotifyUserDeleteButton.vue';
 import SpotifyUserSwitchButton from '@/components/audio/SpotifyUserSwitchButton.vue';
 import BeatGenerators from '@/components/audio/BeatGenerators.vue';
+import { useAuthStore } from '@/stores/auth.store';
 
+const authStore = useAuthStore();
 const store = useSpotifyStore();
 void store.init();
 
