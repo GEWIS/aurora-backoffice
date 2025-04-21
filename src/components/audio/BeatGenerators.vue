@@ -1,7 +1,10 @@
 <template>
   <AppContainer icon="pi pi-database" title="Active Beat Generators">
     <template #header>
-      <BeatVisualizer />
+      <div class="flex flex-row gap-5 items-center">
+        <ArtificialBeatDialog />
+        <BeatVisualizer />
+      </div>
     </template>
     <div class="flex flex-col gap-3">
       <Message icon="pi pi-info-circle" severity="info">
@@ -38,6 +41,7 @@ import { computed, onUnmounted, ref } from 'vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useMusicBeatStore } from '@/stores/socket/music-beat.store';
 import BeatVisualizer from '@/components/audio/BeatVisualizer.vue';
+import ArtificialBeatDialog from '@/components/audio/ArtificialBeatDialog.vue';
 
 const loading = ref<boolean>(true);
 
