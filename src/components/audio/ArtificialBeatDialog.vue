@@ -9,21 +9,24 @@
     @after-hide="taps = []"
     @show="onDialogShow"
   >
-    <div class="flex flex-column gap-3 justify-content-center">
+    <div class="flex flex-col gap-3 justify-center">
       <div v-if="!currentBpmLoading && currentBpm != null">Current BPM: {{ currentBpm }}</div>
       <div v-else-if="!currentBpmLoading">Artificial Beat Generator is inactive</div>
       <div v-else>
         <Spinner />
       </div>
-      <div class="flex flex-column gap-1">
-        <div class="h-8rem border-1 flex flex-column flex-wrap justify-content-center align-items-center">
-          <p v-if="getBpm() != null">{{ getBpm() }} BPM</p>
-          <p v-else>Tap to set BPM</p>
-          <span>
+      <div class="flex flex-col gap-1 items-center justify-center">
+        <div class="m-2 p-2 min-h-[8rem] w-[16rem] border-1 flex flex-col justify-center items-center">
+          <span v-if="getBpm() != null">{{ getBpm() }} BPM</span>
+          <span v-else>Tap to set BPM</span>
+          <span class="inline-block text-wrap text-center">
+            {{ renderTaps() }}
+            {{ renderTaps() }}
+            {{ renderTaps() }}
             {{ renderTaps() }}
           </span>
         </div>
-        <div class="flex flex-row gap-1 justify-content-center">
+        <div class="flex flex-row gap-1 justify-center">
           <Button label="Tap" @click="taps.push(new Date())" />
           <Button label="Reset" severity="secondary" @click="taps = []" />
         </div>
