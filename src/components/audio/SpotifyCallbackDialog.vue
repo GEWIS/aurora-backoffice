@@ -35,7 +35,7 @@ const handleClose = () => {
 };
 
 onMounted(async () => {
-  if (route.path === '/spotify/callback') {
+  if (route.path === '/music/spotify/callback') {
     open.value = true;
     const state = Array.isArray(route.query.state) ? route.query.state.join(',') : route.query.state;
     const code = Array.isArray(route.query.code) ? route.query.code.join(',') : route.query.code;
@@ -47,7 +47,7 @@ onMounted(async () => {
       errorMessage.value = res.error;
     }
     loading.value = false;
-    await router.replace('/spotify');
+    await router.replace('/music');
   }
 });
 </script>

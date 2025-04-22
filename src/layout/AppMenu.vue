@@ -31,6 +31,7 @@ const model = computed<MenuItem[]>(() => {
   const showSettings = authStore.isInSecurityGroup('serverSettings', 'privileged');
   const showTimedEvents = authStore.isInSecurityGroup('timedEvents', 'privileged');
   const showSpotifySettings = authStore.isInSecurityGroup('spotify', 'privileged');
+  const showBeatSettings = authStore.isInSecurityGroup('beats', 'privileged');
   const showIntegrationUsers = authStore.isInSecurityGroup('integrationUsers', 'privileged');
 
   return [
@@ -76,7 +77,11 @@ const model = computed<MenuItem[]>(() => {
       items: [
         showSettings && { label: 'Server Settings', icon: 'pi pi-fw pi-cog', to: '/settings' },
         showTimedEvents && { label: 'Timed Events', icon: 'pi pi-fw pi-calendar-clock', to: '/timed-events' },
-        showSpotifySettings && { label: 'Spotify Settings', icon: 'pi pi-headphones', to: '/spotify' },
+        (showSpotifySettings || showBeatSettings) && {
+          label: 'Music Settings',
+          icon: 'pi pi-headphones',
+          to: '/music',
+        },
         showIntegrationUsers && { label: 'Integrations', icon: 'pi pi-share-alt', to: '/integrations' },
       ],
     },
