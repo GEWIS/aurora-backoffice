@@ -1725,10 +1725,10 @@ cors@2.8.5:
     object-assign "^4"
     vary "^1"
 
-cronstrue@^2.56.0:
-  version "2.57.0"
-  resolved "https://registry.yarnpkg.com/cronstrue/-/cronstrue-2.57.0.tgz#6144c140d9bc8cdc52cc8bc3712328c54fbdb9fb"
-  integrity sha512-gQOfxJa1RA9uDT4hx37NshhX4dW9t9zTCtIYu15LUziH+mkpuLXYcSEyM8ZewMJ2p8UVuHGjI3n4hGpu3HtCbg==
+cronstrue@^2.59.0:
+  version "2.59.0"
+  resolved "https://registry.yarnpkg.com/cronstrue/-/cronstrue-2.59.0.tgz#a250b2b04eebabf35518725018e501ff94370fb1"
+  integrity sha512-YKGmAy84hKH+hHIIER07VCAHf9u0Ldelx1uU6EBxsRPDXIA1m5fsKmJfyC3xBhw6cVC/1i83VdbL4PvepTrt8A==
 
 cross-spawn@^6.0.5:
   version "6.0.6"
