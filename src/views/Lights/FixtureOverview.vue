@@ -1,13 +1,11 @@
 <template>
   <AppContainer icon="pi pi-fw pi-bolt" title="Fixture Overview">
     <div>
+      <div class="w-full mb-1 flex flex-wrap justify-end gap-5">
+        <Button icon="pi pi-plus" label="Expand All" text variant="outlined" @click="expandAll" />
+        <Button icon="pi pi-minus" label="Collapse All" text variant="outlined" @click="collapseAll" />
+      </div>
       <DataTable v-model:expanded-rows="expandedRows" data-key="id" :value="subscriberStore.lightsGroups">
-        <template #header>
-          <div class="flex flex-wrap justify-end gap-5">
-            <Button icon="pi pi-plus" label="Expand All" text @click="expandAll" />
-            <Button icon="pi pi-minus" label="Collapse All" text @click="collapseAll" />
-          </div>
-        </template>
         <Column expander style="width: 5rem" />
         <Column field="name" header="Group name" />
         <Column header="Organization">
@@ -176,7 +174,7 @@ const selectedGroupBrightnessPopover = ref<LightsGroupResponse | undefined>();
 const expandedRows = ref<Record<number, boolean> | null>({});
 const expandAll = () => {
   expandedRows.value = subscriberStore.lightsGroups.reduce(
-    (rows: Record<number, boolean>, group: LightsGroupResponse) => (rows[group.id] ? rows : {}),
+    (rows: Record<number, boolean>, group: LightsGroupResponse) => ({ ...rows, [group.id]: true }),
     {},
   );
 };

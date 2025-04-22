@@ -1,5 +1,5 @@
 <template>
-  <Button icon="pi pi-plus" label="Create new integration" severity="success" @click="open = true" />
+  <Button icon="pi pi-plus" label="Create new integration" @click="open = true" />
   <IntegrationDialog v-model:visible="open" header="Create new integration" :on-save="onSave" />
 </template>
 

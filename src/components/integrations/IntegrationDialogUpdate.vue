@@ -1,5 +1,5 @@
 <template>
-  <Button icon="pi pi-pen-to-square" severity="secondary" @click="open = true" />
+  <Button icon="pi pi-pen-to-square" @click="open = true" />
   <IntegrationDialog
     v-model:visible="open"
     :header="`Update ${integrationUser.name}`"
