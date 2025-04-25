@@ -1,5 +1,5 @@
 <template>
-  <Button icon="pi pi-trash" severity="danger" size="small" @click="confirmRef?.confirmDialog" />
+  <Button icon="pi pi-times" severity="danger" @click="confirmRef?.confirmDialog" />
   <ConfirmWrapper
     ref="confirmRef"
     delete

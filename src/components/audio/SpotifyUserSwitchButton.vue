@@ -3,8 +3,6 @@
     :disabled="user.active || loading"
     icon="pi pi-user-plus"
     :loading="loading"
-    severity="success"
-    size="small"
     :title="user.active ? 'User already active' : 'Make user active'"
     @click="handleClick()"
   />

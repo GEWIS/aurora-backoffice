@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-lg">
     <InputGroup>
-      <Button icon="pi pi-check" :loading="loading" severity="danger" @click="updateLogin" />
+      <Button icon="pi pi-check" :loading="loading" @click="updateLogin" />
       <InputText v-model="userName" placeholder="Name" />
       <InputText v-model="userId" placeholder="ID" />
       <MultiSelect v-model="selectedRoles" :options="availableRoles" />
