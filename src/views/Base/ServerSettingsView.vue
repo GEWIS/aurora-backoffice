@@ -163,9 +163,7 @@ const entries = computed(() => {
 
         let spec;
         if (setting in ISettingsSchema.properties) {
-          // @ts-expect-error Hey-API needs to export a schema interface...
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          spec = ISettingsSchema.properties[setting as any] as any;
+          spec = ISettingsSchema.properties[setting as keyof ISettings];
         } else {
           throw new Error(`Unknown setting in schema: "${setting}"`);
         }
