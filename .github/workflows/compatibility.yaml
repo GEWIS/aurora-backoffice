@@ -11,7 +11,7 @@ jobs:
   update-table:
     runs-on: ubuntu-latest
     needs: versioning
-    if: ${{ needs.versioning.outputs.next_version != '' }}
+    if: ${{ needs.versioning.outputs.next-version != '' }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
 
-      - run: python ./source/compatibility-table.py --source-version ${{ needs.versioning.outputs.next_version }} -d ./dependency -r ./source/README.md
+      - run: python ./source/compatibility-table.py --source-version ${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
 
       - name: Commit changes
         working-directory: ./source
