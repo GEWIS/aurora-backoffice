@@ -67,7 +67,7 @@ if dependency_version is None:
 
 print('Dependency version: {}'.format(dependency_version))
 
-with open(args.readme, 'r') as f:
+with open(args.readme, 'r', newline='') as f:
     readme_contents = f.readlines()
 
 table_line = next(i for i, v in enumerate(readme_contents) if re.search(r'<!-- COMPATIBILITY_TABLE skip:\d+ -->', v))
@@ -76,11 +76,21 @@ print('Found compatibility marker on line {} in {}'.format(table_line + 1, args.
 
 marker_substring = '<!-- COMPATIBILITY_TABLE skip:'
 skip_lines = int(readme_contents[table_line][len(marker_substring):].split(' ')[0])
-add_line = table_line + skip_lines + 1
-line_contents = '| {} | {}+ |'.format(source_version, dependency_version)
-print('Insert "{}" at line {} in {}'.format(line_contents, add_line, args.readme))
+add_line_index = table_line + skip_lines + 1
 
-readme_contents.insert(add_line, '{}\n'.format(line_contents))
+# Find the latest version number of the source repo in the table
+last_line_contents = readme_contents[add_line_index]
+# Line is a table row
+if last_line_contents[0] == '|':
+    last_line_version = last_line_contents[2:].split(' | ')[0]
+    if last_line_version == source_version:
+        print('Most recent version in compatibility table is already {}'.format(last_line_version))
+        sys.exit(1)
 
-with open(args.readme, 'w') as f:
+new_line_contents = '| {} | {}+ |'.format(source_version, dependency_version)
+print('Insert "{}" at line {} in {}'.format(new_line_contents, add_line_index, args.readme))
+
+readme_contents.insert(add_line_index, '{}\n'.format(new_line_contents))
+
+with open(args.readme, 'w', newline='') as f:
     f.writelines(readme_contents)
