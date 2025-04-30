@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(prog="Compatibility Table",
 parser.add_argument('-s', '--source-repo',
                     help="Source git repository, probably the repository of the Readme file (mutually exclusive with --source-version)")
 parser.add_argument('--source-version', help="Source version (mutually exclusive with -s)")
-parser.add_argument('-r', '--readme', nargs=1, help="Readme file that needs to be updated", default="README.md")
+parser.add_argument('-r', '--readme', help="Readme file that needs to be updated", default="README.md")
 parser.add_argument('-d', '--dependency-repo',
                     help="Dependency git repository: the one's whose version you want to know (mutually exclusive with --dependency-version)")
 parser.add_argument('--dependency-version', help="Dependency version (mutually exclusive with -d)")
@@ -50,6 +50,7 @@ def get_version_from_git_repo(path: str) -> str:
     if p.returncode != 0 or not out[0]:
         print('Getting latest tag from git repo "{}" failed with exit code {}:'.format(path, p.returncode))
         print(out)
+        sys.exit(1)
 
     out = out[0].strip()
     return out

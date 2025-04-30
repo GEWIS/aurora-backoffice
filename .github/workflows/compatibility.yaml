@@ -21,12 +21,17 @@ jobs:
       - name: Checkout dependency
         uses: actions/checkout@v4
         with:
+          repository: GEWIS/aurora-core
           path: dependency
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-      - run: python ./source/compatibility-table.py --source-version ${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
+      - name: Update compatibility table
+        run: python ./source/compatibility-table.py --source-version v${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
 
       - name: Commit changes
         working-directory: ./source
