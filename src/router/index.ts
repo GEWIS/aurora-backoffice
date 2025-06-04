@@ -232,12 +232,12 @@ router.beforeEach(async (to) => {
 
   // Automatically login using mock when in development mode
   if (import.meta.env.VITE_NODE_ENV === 'development' && !authenticated) {
+    console.info('Backoffice is in development mode: mocking auth...');
     await authStore.MockLogin({
       id: 'dev',
       name: 'dev',
       roles: [SecurityGroup.ADMIN],
     });
-    await authStore.initStores();
   }
 
   // Check if user still has valid cookies - ignore if specific request to /auth
