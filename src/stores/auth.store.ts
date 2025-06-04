@@ -68,6 +68,8 @@ export const useAuthStore = defineStore('auth', {
       this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
       this.authenticating = false;
+
+      await this.initStores();
       return true;
     },
     /**
@@ -116,6 +118,8 @@ export const useAuthStore = defineStore('auth', {
       this.name = user.data.name;
       this.roles = user.data.roles;
       this.securityGroups = securityGroups.data;
+
+      await this.initStores();
       return true;
     },
     /**
