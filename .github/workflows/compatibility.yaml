@@ -25,13 +25,18 @@ jobs:
           path: dependency
           fetch-depth: 0
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.13'
+          node-version: "22.x"
+
+      - name: Install dependencies
+        uses: borales/actions-yarn@v5
+        with:
+          cmd: install
 
       - name: Update compatibility table
-        run: python ./source/compatibility-table.py --source-version v${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
+        run: node ./source/compatibility-table.mjs --source-version v${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
 
       - name: Commit changes
         working-directory: ./source
