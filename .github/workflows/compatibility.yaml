@@ -34,6 +34,7 @@ jobs:
         uses: borales/actions-yarn@v5
         with:
           cmd: install
+          dir: source
 
       - name: Update compatibility table
         run: node ./source/compatibility-table.mjs --source-version v${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
