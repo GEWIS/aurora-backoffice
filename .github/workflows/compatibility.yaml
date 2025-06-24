@@ -27,11 +27,11 @@ jobs:
 
       - name: Update compatibility table
 #        run: node ./source/compatibility-table.mjs --source-version v${{ needs.versioning.outputs.next-version }} -d ./dependency -r ./source/README.md
-        uses: GEWIS/action-compatibility-table/action.yml
+        uses: GEWIS/compatibility-table-action@v1
         with:
           source-version: v${{ needs.versioning.outputs.next-version }}
           dependency-repo: ./dependency
-          readme-file: ./source/README.md
+          readme: ./source/README.md
 
       - name: Commit changes
         working-directory: ./source
