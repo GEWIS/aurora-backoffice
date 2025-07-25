@@ -22,7 +22,6 @@
     "@primevue/themes": "^4.3.2",
     "@tailwindcss/postcss": "^4.1.4",
     "@vee-validate/yup": "^4.15.0",
-    "commander": "^14.0.0",
     "cronstrue": "^2.59.0",
     "dotenv": "^16.5.0",
     "pinia": "^3.0.2",
