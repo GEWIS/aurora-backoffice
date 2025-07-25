@@ -8,10 +8,56 @@ on:
 jobs:
   versioning:
     uses: GEWIS/actions/.github/workflows/versioning.yml@v1
+    name: Find new version tag
+    with:
+      dry-run: 'true'
+
+  update-compatibility-table:
+    runs-on: ubuntu-latest
+    needs: versioning
+    name: Update compatibility table in README
+    if: ${{ needs.versioning.outputs.next-version != '' }}
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Checkout dependency
+        uses: actions/checkout@v4
+        with:
+          repository: GEWIS/aurora-core
+          path: dependency
+          fetch-depth: 0
+
+      - name: Update compatibility table
+        uses: GEWIS/compatibility-table-action@v1
+        with:
+          source-version: v${{ needs.versioning.outputs.next-version }}
+          dependency-repo: ./dependency
+          readme: ./source/README.md
+
+      - name: Commit changes
+        working-directory: ./source
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add ./README.md
+          git commit --no-verify -m "docs: update compatibility table"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # We need to run the versioning job again, so the new commit with the compatibility table update is part of the
+  # release.
+  versioning-2:
+    uses: GEWIS/actions/.github/workflows/versioning.yml@v1
+    if: ${{ needs.versioning.outputs.next-version != '' }}
+    name: Versioning
 
   release:
     uses: GEWIS/actions/.github/workflows/docker-release.yml@v1
-    needs: versioning
+    needs: update-compatibility-table
     if: ${{ needs.versioning.outputs.next-version != '' }}
     with:
       projects: "['.']"
