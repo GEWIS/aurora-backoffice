@@ -20,7 +20,7 @@
     "@gewis/splash": "^2.4.0",
     "@hey-api/client-fetch": "^0.10.0",
     "@primevue/themes": "^4.3.6",
-    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.14",
     "@vee-validate/yup": "^4.15.1",
     "cronstrue": "^2.61.0",
     "dotenv": "^16.6.1",
@@ -31,7 +31,7 @@
     "tailwind": "^4.0.0",
     "tailwindcss-primeui": "^0.6.1",
     "uuid": "^11.1.0",
-    "vue": "^3.5.17",
+    "vue": "^3.5.22",
     "vue-router": "^4.5.1",
     "vue-timeago3": "^2.3.2",
     "yup": "^1.6.1"
