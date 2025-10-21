@@ -4,7 +4,17 @@
       <DataTable data-key="id" :value="store.entries">
         <Column field="createdAt" header="Timestamp">
           <template #body="slotProps">
-            {{ new Date(slotProps.data.createdAt).toLocaleString() }}
+            {{
+              new Date(slotProps.data.createdAt).toLocaleString('en-GB', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+              })
+            }}
           </template>
         </Column>
         <Column field="userName" header="Name" />
