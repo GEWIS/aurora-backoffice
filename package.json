@@ -20,7 +20,7 @@
     "@gewis/splash": "^2.4.0",
     "@hey-api/client-fetch": "^0.10.0",
     "@primevue/themes": "^4.3.6",
-    "@tailwindcss/postcss": "^4.1.14",
+    "@tailwindcss/postcss": "^4.1.16",
     "@vee-validate/yup": "^4.15.1",
     "cronstrue": "^2.61.0",
     "dotenv": "^16.6.1",
