@@ -9,6 +9,7 @@
     ref="confirmRef"
     :loading="loading"
     message="Are you sure you want to delete this integration?"
+    acceptLabel="Delete"
     :on-accept="
       () => {
         loading = true;

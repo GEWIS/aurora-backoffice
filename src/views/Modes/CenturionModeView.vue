@@ -8,6 +8,7 @@
           <ConfirmWrapper
             ref="confirmRef"
             message="Are you sure you want to quit this centurion?"
+            acceptLabel="Quit"
             :on-accept="centurionStore.quitCenturion"
           />
         </div>

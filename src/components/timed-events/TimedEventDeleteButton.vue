@@ -4,6 +4,7 @@
     ref="confirmRef"
     :loading="loading"
     message="Are you sure you want to delete this timed event?"
+    acceptLabel="Delete"
     :on-accept="
       () => {
         loading = true;

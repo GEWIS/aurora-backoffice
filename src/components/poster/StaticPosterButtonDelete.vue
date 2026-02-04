@@ -4,6 +4,7 @@
     ref="confirmRef"
     :loading="loading"
     message="Are you sure you want to delete this poster?"
+    acceptLabel="Delete"
     :on-accept="
       async () => {
         loading = true;
