@@ -6,7 +6,12 @@ To see the current state of Aurora, the backoffice can also receive SocketIO mes
 ## Prerequisites
 - NodeJS 22.
 - A locally running copy of [aurora-core](https://github.com/gewis/aurora-core).
-The backoffice repository should be cloned next to the core repository, so in the folder `../aurora-core`.
+The backoffice repository should be cloned next to the core repository, like the following:
+```
+parent-dir/
+├── aurora-core/
+└── aurora-backoffice/
+```
 This is necessary to generate the required API client files (installation step 2).
 
 ## Installation
