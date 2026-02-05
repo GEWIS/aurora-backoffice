@@ -20,6 +20,24 @@ In a development environment with a local copy of Aurora Core, you should be log
 Deployment is done using Docker-compose in the core repository.
 This should work out of the box if you meet the prerequisites.
 
+### Compatibility table
+The following table describes which version of Aurora Backoffice are compatible with which
+version of Aurora Core. The contents of this table is determined by: If Aurora Backoffice
+version X is released at a certain point in time, what was the most recent version of
+Aurora Core at that same time? These two versions are guaranteed to work together. You can
+use newer versions of the core than listed in the table row, but no newer than the next row,
+as the new version might include changes from the core.
+
+<!-- COMPATIBILITY_TABLE skip:2 -->
+| Aurora Backoffice | Aurora Core |
+|-------------------|-------------|
+| v1.4.0 | v2.1.0+ |
+| v1.3.0 | v2.0.0+ |
+| v1.2.0 | v1.4.0+ |
+| v1.1.0 | v1.2.0+ |
+| v1.0.1 | v1.0.0+ |
+| v1.0.0 | v1.0.0+ |
+
 ## Copyright
 Copyright © 2023-2024 Study Association GEWIS - Some rights reserved.
 You can use our software freely within the limits of our license.
