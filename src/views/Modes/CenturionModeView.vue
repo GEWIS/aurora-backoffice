@@ -7,8 +7,8 @@
           <Button icon="pi pi-times" @click="confirmRef?.confirmDialog" />
           <ConfirmWrapper
             ref="confirmRef"
+            accept-label="Quit"
             message="Are you sure you want to quit this centurion?"
-            acceptLabel="Quit"
             :on-accept="centurionStore.quitCenturion"
           />
         </div>

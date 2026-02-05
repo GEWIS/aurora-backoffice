@@ -2,10 +2,10 @@
   <Button icon="pi pi-times" severity="danger" @click="confirmRef?.confirmDialog" />
   <ConfirmWrapper
     ref="confirmRef"
+    accept-label="Delete"
     delete
     :loading="loading"
     :message="confirmMessage"
-    acceptLabel="Delete"
     :on-accept="
       () => {
         loading = true;

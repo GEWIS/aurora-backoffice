@@ -7,9 +7,9 @@
   />
   <ConfirmWrapper
     ref="confirmRef"
+    accept-label="Delete"
     :loading="loading"
     message="Are you sure you want to delete this integration?"
-    acceptLabel="Delete"
     :on-accept="
       () => {
         loading = true;

@@ -2,9 +2,9 @@
   <Button class="flex-1" icon="pi pi-trash" severity="danger" @click="confirmRef?.confirmDialog" />
   <ConfirmWrapper
     ref="confirmRef"
+    accept-label="Delete"
     :loading="loading"
     message="Are you sure you want to delete this poster?"
-    acceptLabel="Delete"
     :on-accept="
       async () => {
         loading = true;
