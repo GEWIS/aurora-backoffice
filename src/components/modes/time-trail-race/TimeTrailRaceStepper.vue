@@ -16,6 +16,7 @@
   <ConfirmWrapper
     ref="confirmRef"
     message="Are you sure you want to reset this trail race?"
+    acceptLabel="Reset"
     :on-accept="timeTrailStore.resetPlayer"
   />
 </template>

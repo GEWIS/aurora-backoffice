@@ -7,6 +7,7 @@ import { useConfirm } from 'primevue/useconfirm';
 
 const props = defineProps<{
   message: string;
+  acceptLabel: string;
   loading?: boolean;
   onAccept?: () => void;
   onReject?: () => void;
@@ -19,7 +20,7 @@ const confirmDialog = () => {
     header: 'Confirm',
     rejectClass: 'p-button-secondary',
     rejectLabel: 'Cancel',
-    acceptLabel: 'Quit',
+    acceptLabel: props.acceptLabel,
     reject() {
       if (props.onReject) {
         props.onReject();

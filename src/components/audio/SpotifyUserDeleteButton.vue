@@ -5,6 +5,7 @@
     delete
     :loading="loading"
     :message="confirmMessage"
+    acceptLabel="Delete"
     :on-accept="
       () => {
         loading = true;

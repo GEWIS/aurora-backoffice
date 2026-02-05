@@ -9,9 +9,10 @@
       <template #header>
         <div v-if="timeTrailInitialized">
           <Button icon="pi pi-times" @click="confirmRef?.confirmDialog" />
-          <DialogWrapper
+          <ConfirmWrapper
             ref="confirmRef"
             message="Are you sure you want to quit this spoelbakkenrace?"
+            acceptLabel="Quit"
             :on-accept="timeTrailStore.quit"
           />
         </div>
@@ -36,7 +37,7 @@ import TimeTrailRaceInitialize from '@/components/modes/time-trail-race/TimeTrai
 import TimeTrailRaceStepper from '@/components/modes/time-trail-race/TimeTrailRaceStepper.vue';
 import TimeTrailRaceScoreboard from '@/components/modes/time-trail-race/TimeTrailRaceScoreboard.vue';
 import AppContainer from '@/layout/AppContainer.vue';
-import DialogWrapper from '@/components/prime/ConfirmWrapper.vue';
+import ConfirmWrapper from '@/components/prime/ConfirmWrapper.vue';
 import { useLayoutStore } from '@/stores/layout.store';
 
 const confirmRef = ref();
