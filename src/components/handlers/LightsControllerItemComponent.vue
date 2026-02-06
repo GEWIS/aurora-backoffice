@@ -1,9 +1,15 @@
 <template>
   <AppBox>
-    <h6 class="mb-4">
-      {{ controller.name }}
-      <i :class="['pi text-sm ml-2', connectedIcon]" :title="connectedText" />
-    </h6>
+    <div class="flex max-w-full w-full">
+      <h6 class="mb-4">
+        {{ controller.name }}
+      </h6>
+      <StatusIcon
+        class="ml-2"
+        :status="statusStore.lightControllerStatus.get(controller.id)"
+        :subscriber="controller"
+      />
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 xxl:grid-cols-3 gap-5">
       <div v-for="group in lightsGroups" :key="group.id">
         <div class="mb-2">
@@ -25,12 +31,13 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { computed, type ComputedRef } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber.store';
 import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberHandlerChangeSelect from '@/components/handlers/SubscriberHandlerChangeSelect.vue';
-import type { LightsControllerResponse, PartialRecordSocketioNamespacesString } from '@/api';
+import StatusIcon from '@/components/handlers/StatusIcon.vue';
+import type { LightsControllerResponse } from '@/api';
 import { useAuthStore } from '@/stores/auth.store';
+import { useStatusStore } from '@/stores/status.store';
 import AppBox from '@/layout/AppBox.vue';
 
 const props = defineProps<{
@@ -41,24 +48,7 @@ const subscriberStore = storeToRefs(useSubscriberStore());
 const lightsGroups = subscriberStore.lightsGroups.value.filter((g) => g.controller.id === props.controller.id);
 const handlersStore = useHandlersStore();
 const authStore = useAuthStore();
-
-const connected: ComputedRef<boolean> = computed(() => {
-  const socketIds = props.controller.socketIds as PartialRecordSocketioNamespacesString;
-  return socketIds && Object.keys(socketIds).some((key) => key in socketIds);
-});
-
-const connectedText = computed(() => {
-  return connected.value ? 'connected' : 'disconnected';
-});
-
-const connectedIcon = computed(() => {
-  return {
-    'pi-sort-alt': connected.value,
-    'text-green-300': connected.value,
-    'pi-sort-alt-slash': !connected.value,
-    'text-400': !connected.value,
-  };
-});
+const statusStore = useStatusStore();
 </script>
 
 <style lang="scss"></style>
