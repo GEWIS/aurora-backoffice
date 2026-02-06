@@ -4,6 +4,7 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import { useColorStore } from '@/stores/color.store';
 import { useSocketStore } from '@/stores/socket.store';
 import { useSubscriberStore } from '@/stores/subscriber.store';
+import { useStatusStore } from '@/stores/status.store';
 import {
   authMock,
   authOidc,
@@ -143,6 +144,7 @@ export const useAuthStore = defineStore('auth', {
         this.isInSecurityGroup('screen', 'base')
       ) {
         await useSubscriberStore().init();
+        useStatusStore().init();
       }
       if (this.isInSecurityGroup('scenes', 'base')) {
         await useSceneControllerStore().init();
