@@ -54,7 +54,7 @@ export const useSubscriberStore = defineStore('subscribers', {
       const socketStore = useSocketStore();
       socketStore.backofficeSocket?.on('connect_audio', this.getAudios.bind(this));
       socketStore.backofficeSocket?.on('connect_screen', this.getScreens.bind(this));
-      socketStore.backofficeSocket?.on('connect_lightgroups', this.getLightGroups.bind(this));
+      socketStore.backofficeSocket?.on('connect_lightsgroup', this.getLightGroups.bind(this));
     },
   },
 });
