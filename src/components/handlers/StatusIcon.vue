@@ -36,48 +36,45 @@ const connected: ComputedRef<boolean> = computed(() => {
 });
 
 const timeDrift: ComputedRef<number> = computed(() => {
-  if (!props.status?.coreTimestamp || !props.status?.systemTimestamp) return 0;
-  return Math.round((props.status.coreTimestamp - props.status.systemTimestamp) / 1000);
+  const { coreTimestamp, systemTimestamp } = props.status ?? {};
+  if (!coreTimestamp || !systemTimestamp) return 0;
+  return Math.round((coreTimestamp - systemTimestamp) / 1000);
 });
 
 const isSynced: ComputedRef<boolean> = computed(() => {
-  return timeDrift.value === 0 && (props.status?.latencyMilliseconds ?? 0) < 100;
+  const latency = props.status?.latencyMilliseconds ?? Infinity;
+  return timeDrift.value === 0 && latency < 100;
 });
 
 const timeStatus: ComputedRef<string> = computed(() => {
-  if (!props.status?.systemTimestamp) return 'N/A';
+  const systemTimestamp = props.status?.systemTimestamp;
+  if (!systemTimestamp) return 'N/A';
 
-  const systemTime = new Date(props.status.systemTimestamp).toLocaleTimeString();
-
+  const systemTime = new Date(systemTimestamp).toLocaleTimeString();
   const drift = timeDrift.value;
+
   if (drift === 0) {
     return `${systemTime} (synchronized)`;
-  } else {
-    const absDrift = Math.abs(drift);
-    const direction = drift > 0 ? 'behind' : 'ahead';
-    return `${systemTime} (${absDrift}s ${direction})`;
   }
+
+  const direction = drift > 0 ? 'behind' : 'ahead';
+  return `${systemTime} (${Math.abs(drift)}s ${direction})`;
 });
 
-const latency: ComputedRef<string> = computed(() => {
-  if (props.status?.latencyMilliseconds === undefined) return 'N/A';
-  return `${props.status?.latencyMilliseconds}ms`;
-});
+const latency: ComputedRef<string> = computed(() =>
+  props.status?.latencyMilliseconds != null ? `${props.status.latencyMilliseconds}ms` : 'N/A',
+);
 
-const uptime: ComputedRef<string> = computed(() => {
-  if (props.status?.uptimeSeconds === undefined) return 'N/A';
-  const seconds = props.status.uptimeSeconds;
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-  return `${hours}h ${minutes}m ${remainingSeconds}s`;
-});
+const uptime: ComputedRef<string> = computed(() =>
+  props.status?.uptimeSeconds != null ? formatDuration(props.status.uptimeSeconds) : 'N/A',
+);
 
 const statusIcon: ComputedRef<string[]> = computed(() => {
   if (!connected.value) return ['pi-sort-alt-slash', 'text-gray-500'];
-  return !props.status || isSynced.value
-    ? ['pi-sort-alt', 'text-green-300']
-    : ['pi-exclamation-triangle', 'text-yellow-300'];
+  if (!props.status || isSynced.value) {
+    return ['pi-sort-alt', 'text-green-300'];
+  }
+  return ['pi-exclamation-triangle', 'text-yellow-300'];
 });
 
 const statusText: ComputedRef<string> = computed(() => {
@@ -85,6 +82,21 @@ const statusText: ComputedRef<string> = computed(() => {
   if (!props.status) return 'status unavailable';
   return 'connected';
 });
+
+function formatDuration(totalSeconds: number): string {
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const parts = [];
+  if (days) parts.push(`${days}d`);
+  if (hours) parts.push(`${hours}h`);
+  if (minutes) parts.push(`${minutes}m`);
+  if (seconds || parts.length === 0) parts.push(`${seconds}s`);
+
+  return parts.join(' ');
+}
 </script>
 
 <style lang="scss">
