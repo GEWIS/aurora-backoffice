@@ -8,12 +8,13 @@ COPY ./ ./aurora-backoffice
 # Fetch files from Aurora Core
 RUN git clone https://github.com/GEWIS/aurora-core.git
 WORKDIR /usr/src/app/aurora-core
+RUN corepack enable
 RUN yarn
 RUN yarn tsoa
-RUN yarn gen-client-backoffice
 
 WORKDIR /usr/src/app/aurora-backoffice
 RUN yarn
+RUN yarn gen-client
 RUN yarn build
 
 # The target image that will be run
