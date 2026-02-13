@@ -10,6 +10,7 @@
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           :loading="handlersStore.gettingScreens || handlersStore.settingScreens"
           :possible-handlers="handlersStore.screenHandlers"
+          :status="statusStore.screenStatus.get(screen.id)"
           :subscriber="screen"
           @change="(newHandler: string | null) => handlersStore.setScreenHandler(screen.id, newHandler)"
         />
@@ -26,10 +27,12 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useAuthStore } from '@/stores/auth.store';
+import { useStatusStore } from '@/stores/status.store';
 
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
 const authStore = useAuthStore();
+const statusStore = useStatusStore();
 </script>
 
 <style scoped lang="scss"></style>

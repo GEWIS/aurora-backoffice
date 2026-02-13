@@ -10,6 +10,7 @@
           :disabled="!authStore.isInSecurityGroup('handler', 'privileged')"
           :loading="handlersStore.isGettingAudio || handlersStore.isSettingAudio"
           :possible-handlers="handlersStore.audioHandlers"
+          :status="statusStore.audioStatus.get(audio.id)"
           :subscriber="audio"
           @change="(newHandler: string | null) => handlersStore.setAudioHandler(audio.id, newHandler)"
         />
@@ -26,10 +27,12 @@ import { useHandlersStore } from '@/stores/handlers.store';
 import SubscriberItemContent from '@/components/handlers/SubscriberItemContent.vue';
 import AppContainer from '@/layout/AppContainer.vue';
 import { useAuthStore } from '@/stores/auth.store';
+import { useStatusStore } from '@/stores/status.store';
 
 const authStore = useAuthStore();
 const subscriberStore = storeToRefs(useSubscriberStore());
 const handlersStore = useHandlersStore();
+const statusStore = useStatusStore();
 </script>
 
 <style scoped lang="scss"></style>
