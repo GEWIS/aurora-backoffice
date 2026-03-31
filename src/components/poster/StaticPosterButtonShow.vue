@@ -5,13 +5,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
-import type { LocalPosterResponse } from '@/api';
+import type { StaticPosterResponse } from '@/api';
 
 const store = useStaticPosterStore();
 
 const loading = ref<boolean>(false);
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: StaticPosterResponse;
 }>();
 
 const handleShow = () => {

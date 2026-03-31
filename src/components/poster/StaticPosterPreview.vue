@@ -26,20 +26,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { LocalPosterResponse } from '@/api';
+import type { StaticPosterResponse } from '@/api';
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: StaticPosterResponse;
   class?: string | undefined;
 }>();
 
 const previewClass = computed(() => props.class);
 
-const getUrl = (poster: LocalPosterResponse) => {
+const getUrl = (poster: StaticPosterResponse) => {
   return poster.file?.location ?? poster.uri ?? '';
 };
 
-const getPosterType = (poster: LocalPosterResponse): 'external' | 'image' | 'video' => {
+const getPosterType = (poster: StaticPosterResponse): 'external' | 'image' | 'video' => {
   const url = getUrl(poster);
 
   if (url === '') return 'external';

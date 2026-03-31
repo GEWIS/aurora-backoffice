@@ -5,14 +5,14 @@ import {
   deleteStaticPoster,
   getAllStaticPosters,
   getStaticPosterHandlerState,
-  type LocalPosterResponse,
+  type StaticPosterResponse,
   setStaticPosterClock,
   showStaticPoster,
   hideStaticPoster,
 } from '@/api';
 
 interface StaticPosterStore {
-  staticPosters: LocalPosterResponse[];
+  staticPosters: StaticPosterResponse[];
   activePosterId: number | null;
   loading: boolean;
   clockVisible: boolean;

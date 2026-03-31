@@ -19,12 +19,12 @@
 import { ref } from 'vue';
 import ConfirmWrapper from '@/components/prime/ConfirmWrapper.vue';
 import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
-import type { LocalPosterResponse } from '@/api';
+import type { StaticPosterResponse } from '@/api';
 
 const store = useStaticPosterStore();
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: StaticPosterResponse;
 }>();
 
 const confirmRef = ref();
