@@ -32,15 +32,15 @@
 
 <script setup lang="ts">
 import AppContainer from '@/layout/AppContainer.vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
 import StaticPosterButtonDelete from '@/components/poster/StaticPosterButtonDelete.vue';
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 import StaticPosterUploadDialog from '@/components/poster/StaticPosterUploadDialog.vue';
 import StaticPosterClockToggle from '@/components/poster/StaticPosterClockToggle.vue';
 import StaticPosterButtonClear from '@/components/poster/StaticPosterButtonClear.vue';
 import StaticPosterPreview from '@/components/poster/StaticPosterPreview.vue';
+import { usePosterStore } from '@/stores/poster/poster.store';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 void store.init();
 </script>
 

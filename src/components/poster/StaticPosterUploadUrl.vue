@@ -7,9 +7,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
+import { usePosterStore } from '@/stores/poster/poster.store';
+import { type ExternalPosterRequest, PosterTypeExternal } from '@/api';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 
 const emit = defineEmits<{
   close: [];
@@ -24,7 +25,12 @@ const onSave = async (e: Event) => {
   try {
     const parsedUrl = new URL(url.value);
     loading.value = true;
-    await store.addPosterUrl(parsedUrl.toString());
+    const params: ExternalPosterRequest = {
+      name: parsedUrl.toString(),
+      type: PosterTypeExternal.EXTERN,
+      uri: parsedUrl.toString(),
+    };
+    await store.createPoster(params);
     emit('close');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {

@@ -11,15 +11,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
+import { usePosterStore } from '@/stores/poster/poster.store';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 
 const loading = ref<boolean>(false);
 
 const handleClick = async () => {
   loading.value = true;
-  await store.clearActivePoster();
+  await store.clearStaticActivePoster();
   loading.value = false;
 };
 </script>

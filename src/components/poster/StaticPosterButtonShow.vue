@@ -4,19 +4,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
-import type { StaticPosterResponse } from '@/api';
+import type { LocalPosterResponse } from '@/api';
+import { usePosterStore } from '@/stores/poster/poster.store';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 
 const loading = ref<boolean>(false);
 const props = defineProps<{
-  poster: StaticPosterResponse;
+  poster: LocalPosterResponse;
 }>();
 
 const handleShow = () => {
   loading.value = true;
-  void store.setActivePoster(props.poster.id).finally(() => {
+  void store.setStaticActivePoster(props.poster.id).finally(() => {
     loading.value = false;
   });
 };

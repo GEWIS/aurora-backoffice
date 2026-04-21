@@ -12,9 +12,10 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
+import { usePosterStore } from '@/stores/poster/poster.store';
+import { type MediaPosterRequest, PosterTypeImage, PosterTypeVideo } from '@/api';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 
 const emit = defineEmits<{
   close: [];
@@ -44,7 +45,11 @@ const handleFileSelect = async (event: Event) => {
   }
 
   loading.value = true;
-  await store.addPosterFile(file);
+  const params: MediaPosterRequest = {
+    name: file.name,
+    type: file.type.startsWith('image/') ? PosterTypeImage.IMG : PosterTypeVideo.VIDEO,
+  };
+  await store.createPosterMedia(params, file);
   emit('close');
   loading.value = false;
 };

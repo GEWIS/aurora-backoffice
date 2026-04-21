@@ -4,7 +4,7 @@
     <ToggleSwitch
       id="static-poster-clock-toggle"
       :disabled="loading"
-      :model-value="store.clockVisible"
+      :model-value="store.static.clockVisible"
       @click="handleClick"
     />
   </div>
@@ -12,15 +12,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useStaticPosterStore } from '@/stores/poster/static-poster.store';
+import { usePosterStore } from '@/stores/poster/poster.store';
 
-const store = useStaticPosterStore();
+const store = usePosterStore();
 
 const loading = ref<boolean>(false);
 
 const handleClick = async () => {
   loading.value = true;
-  await store.setClockVisibility(!store.clockVisible);
+  await store.setStaticClockVisibility(!store.static.clockVisible);
   loading.value = false;
 };
 </script>

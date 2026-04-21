@@ -1,42 +1,29 @@
 <template>
   <AppBox class="h-full">
-    <div v-if="poster.type == PosterTypeImage.IMG">
-      <div class="w-full">
-        <Carousel
-          v-if="poster.source.length > 1"
-          :autoplay-interval="3000"
-          circular
-          class="left rounded-lg"
-          container-class="relative"
-          :next-button-props="{ class: 'absolute right-0', style: { zIndex: 100 } }"
-          :num-scroll="1"
-          :num-visible="1"
-          :prev-button-props="{ class: 'absolute left-0', style: { zIndex: 100 } }"
-          :show-indicators="false"
-          :value="poster.source"
-        >
-          <template #item="slotProps">
-            <Image :alt="poster.name" class="w-full" image-class="w-full rounded-lg" preview :src="slotProps.data" />
-          </template>
-        </Carousel>
-        <Image
-          v-else
-          :alt="poster.name"
-          class="w-full"
-          image-class="w-full rounded-lg"
-          preview
-          :src="poster.source[0]"
-        />
-      </div>
+    <div v-if="poster.type === PosterType.IMG">
+      <Image :alt="poster.name" class="w-full" image-class="w-full rounded-lg" preview :src="mediaUrl" />
     </div>
-    <div v-else-if="poster.type === PosterTypeExternal.EXTERN">
-      <a :href="poster.source[0]" target="_blank">
+    <div v-else-if="poster.type === PosterType.VIDEO">
+      <video class="w-full rounded-lg" controls muted>
+        <source :src="mediaUrl" />
+      </video>
+    </div>
+    <div v-else-if="poster.type === PosterType.EXTERN">
+      <a :href="mediaUrl" target="_blank">
         <div
           class="hover:brightness-50 transition duration-200 w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
         >
           {{ capitalize(poster.type) }}
         </div>
       </a>
+    </div>
+    <div v-else-if="poster.type === PosterType.PHOTO">
+      <div
+        class="w-full flex flex-col justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
+      >
+        <i class="pi pi-images text-2xl" />
+        <span>{{ poster.albums?.length ?? 0 }} album(s)</span>
+      </div>
     </div>
     <div v-else>
       <div class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast">
@@ -50,23 +37,26 @@
       </div>
       <div class="text-sm mt-2 italic opacity-50">
         <i class="pi pi-clock" />
-        {{ poster.timeout }} seconds
+        {{ poster.defaultTimeout }} seconds
       </div>
     </div>
   </AppBox>
 </template>
 
 <script setup lang="ts">
-import { type Poster, PosterTypeExternal, PosterTypeImage } from '@/api';
+import { computed } from 'vue';
+import { type LocalPosterResponse, PosterType } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
+
+const props = defineProps<{
+  poster: LocalPosterResponse;
+}>();
+
+const mediaUrl = computed(() => props.poster.file?.location ?? props.poster.uri ?? '');
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
-
-defineProps<{
-  poster: Poster;
-}>();
 </script>
 
 <style scoped></style>
