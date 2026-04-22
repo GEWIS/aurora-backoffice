@@ -4,12 +4,15 @@ import {
   createPoster,
   deletePoster,
   type ExternalPosterRequest,
+  forceUpdatePosters,
   getAllPosters,
-  getPosterBorrelMode, getStaticPosterHandlerState,
+  getPosterBorrelMode,
+  getStaticPosterHandlerState,
   hideStaticPoster,
   type LocalPosterResponse,
   type MediaPosterRequest,
-  type PhotoPosterRequest, PosterType,
+  type PhotoPosterRequest,
+  PosterType,
   setPosterBorrelMode,
   setStaticPosterClock,
   showStaticPoster,
@@ -72,6 +75,16 @@ export const usePosterStore = defineStore('poster', {
         this.posters = res.data;
       }
       if (updateLoading) this.loading = false;
+    },
+    /**
+     * Reload the posters, also forces refresh on the screens.
+     */
+    async reloadPosters() {
+      this.loading = true;
+      await forceUpdatePosters();
+
+      await this.fetchPosters(false);
+      this.loading = false;
     },
     /**
      * Create a new poster not based on a file.
