@@ -51,13 +51,7 @@
 
       <div v-else-if="type === 'file'" class="flex flex-col gap-2">
         <label>File</label>
-        <input
-          ref="fileSelector"
-          accept="image/*,video/*"
-          hidden
-          type="file"
-          @change="handleFileSelect"
-        />
+        <input ref="fileSelector" accept="image/*,video/*" hidden type="file" @change="handleFileSelect" />
         <div class="flex flex-row gap-2 items-center">
           <Button
             icon="pi pi-upload"
@@ -148,13 +142,7 @@
 
       <div class="flex flex-row justify-end gap-2 mt-2">
         <Button label="Cancel" severity="secondary" type="button" @click="visible = false" />
-        <Button
-          :disabled="loading"
-          label="Create"
-          :loading="loading"
-          severity="success"
-          type="submit"
-        />
+        <Button :disabled="loading" label="Create" :loading="loading" severity="success" type="submit" />
       </div>
     </form>
   </Dialog>
@@ -268,9 +256,7 @@ const onSubmit = async () => {
   if (type.value === 'file') {
     if (!file.value) return;
     loading.value = true;
-    const mediaType = file.value.type.startsWith('video/')
-      ? PosterTypeVideo.VIDEO
-      : PosterTypeImage.IMG;
+    const mediaType = file.value.type.startsWith('video/') ? PosterTypeVideo.VIDEO : PosterTypeImage.IMG;
     const params: MediaPosterRequest = { ...buildBase(), type: mediaType };
     await store.createPosterMedia(params, file.value);
   } else if (type.value === PosterTypeExternal.EXTERN) {

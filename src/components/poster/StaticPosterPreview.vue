@@ -23,9 +23,7 @@
     </a>
   </div>
   <div v-else :class="previewClass">
-    <div
-      class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast"
-    >
+    <div class="w-full flex justify-center items-center rounded-lg aspect-video bg-surface-300 text-primary-contrast">
       {{ capitalize(poster.type) }}
     </div>
   </div>
@@ -46,9 +44,7 @@ const getUrl = (poster: LocalPosterResponse) => {
   return poster.file?.location ?? poster.uri ?? '';
 };
 
-const getPosterType = (
-  poster: LocalPosterResponse,
-): 'image' | 'video' | 'external' | 'placeholder' => {
+const getPosterType = (poster: LocalPosterResponse): 'image' | 'video' | 'external' | 'placeholder' => {
   switch (poster.type) {
     case PosterType.IMG:
       return 'image';

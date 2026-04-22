@@ -1,7 +1,8 @@
 <template>
-  <div class="h-full flex flex-row align-items-center justify-content-center gap-1">
-    Borrel mode
+  <div class="flex flex-row items-center justify-center gap-2">
+    <label for="poster-borrel-mode-switch">Borrel mode</label>
     <ToggleSwitch
+      id="poster-borrel-mode-switch"
       :disabled="store.loading"
       :model-value="store.carousel.borrelModeActive"
       @change="store.setBorrelMode!(!store.carousel.borrelModeActive)"

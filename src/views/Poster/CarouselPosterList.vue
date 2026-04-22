@@ -20,7 +20,7 @@
 import PosterOperations from '@/components/poster/PosterOperations.vue';
 import PosterCard from '@/components/poster/PosterCard.vue';
 import AppContainer from '@/layout/AppContainer.vue';
-import {usePosterStore} from "@/stores/poster/poster.store";
+import { usePosterStore } from '@/stores/poster/poster.store';
 
 const posterStore = usePosterStore();
 void posterStore.init();
