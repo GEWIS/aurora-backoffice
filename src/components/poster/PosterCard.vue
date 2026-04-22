@@ -40,6 +40,11 @@
         {{ poster.defaultTimeout }} seconds
       </div>
     </div>
+    <div class="flex flex-row gap-2 mt-3">
+      <PosterButtonDelete :poster="poster" />
+      <Button class="flex-1" icon="pi pi-pencil" severity="secondary" />
+      <StaticPosterButtonShow :disabled="poster.type === PosterType.PHOTO" :poster="poster" />
+    </div>
   </AppBox>
 </template>
 
@@ -47,6 +52,8 @@
 import { computed } from 'vue';
 import { type LocalPosterResponse, PosterType } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
+import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
+import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 
 const props = defineProps<{
   poster: LocalPosterResponse;

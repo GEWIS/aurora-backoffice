@@ -1,5 +1,13 @@
 <template>
-  <Button class="flex-1" icon="pi pi-eye" label="Show" :loading="loading" severity="success" @click="handleShow" />
+  <Button
+    class="flex-1"
+    :disabled="disabled"
+    icon="pi pi-eye"
+    label="Show"
+    :loading="loading"
+    severity="success"
+    @click="handleShow"
+  />
 </template>
 
 <script setup lang="ts">
@@ -10,9 +18,13 @@ import { usePosterStore } from '@/stores/poster/poster.store';
 const store = usePosterStore();
 
 const loading = ref<boolean>(false);
-const props = defineProps<{
-  poster: LocalPosterResponse;
-}>();
+const props = withDefaults(
+  defineProps<{
+    poster: LocalPosterResponse;
+    disabled?: boolean;
+  }>(),
+  { disabled: false },
+);
 
 const handleShow = () => {
   loading.value = true;

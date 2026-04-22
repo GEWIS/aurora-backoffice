@@ -67,6 +67,11 @@ const router = createRouter({
               component: () => import('@/views/Poster/StaticPosterView.vue'),
               name: 'staticPoster',
             },
+            {
+              path: 'posters',
+              component: () => import('@/views/Poster/PosterView.vue'),
+              name: 'posters',
+            },
           ],
           meta: {
             security: {

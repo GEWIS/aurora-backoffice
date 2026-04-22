@@ -82,8 +82,6 @@ export const usePosterStore = defineStore('poster', {
     async reloadPosters() {
       this.loading = true;
       await forceUpdatePosters();
-
-      await this.fetchPosters(false);
       this.loading = false;
     },
     /**

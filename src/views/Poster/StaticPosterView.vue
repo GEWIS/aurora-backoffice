@@ -19,7 +19,7 @@
             <div class="flex flex-col gap-4">
               <StaticPosterPreview class="w-full" :poster="poster" />
               <div class="flex flex-row gap-2">
-                <StaticPosterButtonDelete :poster="poster" />
+                <PosterButtonDelete :poster="poster" />
                 <StaticPosterButtonShow :poster="poster" />
               </div>
             </div>
@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import AppContainer from '@/layout/AppContainer.vue';
-import StaticPosterButtonDelete from '@/components/poster/StaticPosterButtonDelete.vue';
+import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 import StaticPosterUploadDialog from '@/components/poster/StaticPosterUploadDialog.vue';
 import StaticPosterClockToggle from '@/components/poster/StaticPosterClockToggle.vue';
