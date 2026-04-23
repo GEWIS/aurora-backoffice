@@ -16,6 +16,7 @@ import {
   setPosterBorrelMode,
   setStaticPosterClock,
   showStaticPoster,
+  togglePosterEnable,
   updatePoster,
   type UpdatePosterRequest,
 } from '@/api';
@@ -198,6 +199,21 @@ export const usePosterStore = defineStore('poster', {
       const res = await setPosterBorrelMode({ body: { enabled } });
       if (res.response.ok) {
         this.carousel.borrelModeActive = enabled;
+      }
+    },
+    /**
+     * Set the given posters enabledField.
+     * @param id The id of the poster.
+     * @param enabled Whether the poster should be disabled or enabled.
+     */
+    async togglePoster(id: number, enabled: boolean) {
+      const res = await togglePosterEnable({
+        path: { id },
+        body: { enabled },
+      });
+      if (res.response.ok && res.data) {
+        const index = this.posters.findIndex((p) => p.id === res.data.id);
+        this.posters.splice(index, 1, res.data);
       }
     },
   },
