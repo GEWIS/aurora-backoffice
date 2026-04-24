@@ -3,7 +3,6 @@
     class="flex-1"
     :disabled="disabled"
     icon="pi pi-eye"
-    label="Show"
     :loading="loading"
     severity="success"
     @click="handleShow"

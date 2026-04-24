@@ -13,7 +13,10 @@
         <div v-else-if="filteredPosters.length === 0" class="text-center italic opacity-70 py-8">
           No posters match “{{ search.trim() }}”
         </div>
-        <div v-else class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pb-5">
+        <div
+          v-else
+          class="grid auto-rows-fr gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 pb-5"
+        >
           <div v-for="poster in filteredPosters" :key="poster.name">
             <PosterCard :poster="poster" />
           </div>
