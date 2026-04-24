@@ -1,15 +1,22 @@
 <template>
-  <Image
-    v-if="getPosterType(poster) === 'image'"
-    :alt="poster.file?.name ?? getUrl(poster)"
-    :class="previewClass"
-    image-class="w-full rounded-lg"
-    :src="getUrl(poster)"
-    :title="poster.file?.name ?? getUrl(poster)"
-  />
-  <video v-else-if="getPosterType(poster) === 'video'" :class="previewClass" controls muted>
-    <source :src="getUrl(poster)" />
-  </video>
+  <div v-if="getPosterType(poster) === 'image'" :class="previewClass">
+    <div class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300">
+      <Image
+        :alt="poster.file?.name ?? getUrl(poster)"
+        class="w-full h-full"
+        image-class="w-full h-full object-cover"
+        :src="getUrl(poster)"
+        :title="poster.file?.name ?? getUrl(poster)"
+      />
+    </div>
+  </div>
+  <div v-else-if="getPosterType(poster) === 'video'" :class="previewClass">
+    <div class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300">
+      <video class="w-full h-full object-cover" controls muted>
+        <source :src="getUrl(poster)" />
+      </video>
+    </div>
+  </div>
   <div v-else-if="getPosterType(poster) === 'external'" :class="previewClass">
     <a :href="getUrl(poster)" target="_blank">
       <div
@@ -60,4 +67,10 @@ const getPosterType = (poster: LocalPosterResponse): 'image' | 'video' | 'extern
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(.p-image > img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
