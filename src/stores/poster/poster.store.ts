@@ -109,7 +109,8 @@ export const usePosterStore = defineStore('poster', {
           body: { file },
         });
         if (res2.response.ok && res2.data) {
-          this.posters.push(res.data);
+          const index = this.posters.findIndex((p) => p.id === res2.data.id);
+          this.posters.splice(index, 1, res2.data);
         } else {
           await this.deletePoster(res.data.id);
           //TODO; this should report back that the creation failed.

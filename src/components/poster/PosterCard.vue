@@ -14,7 +14,7 @@
         v-else-if="poster.type === PosterType.VIDEO"
         class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300"
       >
-        <video class="w-full h-full object-cover" controls muted>
+        <video v-if="mediaUrl" :key="mediaUrl" class="w-full h-full object-cover" controls muted>
           <source :src="mediaUrl" />
         </video>
       </div>
