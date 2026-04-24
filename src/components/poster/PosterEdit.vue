@@ -57,16 +57,21 @@
         <div class="flex flex-col gap-2 flex-1">
           <label for="poster-edit-color">Accent color</label>
           <div class="flex flex-row gap-2 items-center">
-            <ColorPicker id="poster-edit-color" v-model="accentColor" />
-            <span v-if="accentColor" class="text-sm opacity-75">#{{ accentColor }}</span>
+            <ColorPicker id="poster-edit-color" v-model="accentColorInput" />
+            <InputText
+              v-model="accentColorInput"
+              class="w-28"
+              maxlength="7"
+              placeholder="ff0000"
+            />
             <Button
-              v-if="accentColor"
-              icon="pi pi-times"
+              v-if="accentColor !== originalAccentColor"
+              icon="pi pi-refresh"
               severity="secondary"
               size="small"
               text
               type="button"
-              @click="accentColor = ''"
+              @click="accentColor = originalAccentColor"
             />
           </div>
         </div>
@@ -90,16 +95,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import DatePicker from 'primevue/datepicker';
 import { FooterSize, type LocalPosterResponse, type UpdatePosterRequest } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
+import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 const props = defineProps<{
   poster: LocalPosterResponse;
 }>();
 
 const store = usePosterStore();
+const settingsStore = useServerSettingsStore();
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -110,8 +117,20 @@ const label = ref<string>('');
 const defaultTimeout = ref<number>(15);
 const footerSize = ref<FooterSize>(FooterSize.FULL);
 const accentColor = ref<string>('');
+const originalAccentColor = ref<string>('');
 const expirationDate = ref<Date | null>(null);
 const borrelMode = ref<boolean>(false);
+
+const defaultAccentColor = computed(() =>
+  (settingsStore.serverSettings?.['Poster.DefaultProgressBarColor'] ?? '').replace(/^#/, '').toLowerCase(),
+);
+
+const accentColorInput = computed({
+  get: () => accentColor.value || defaultAccentColor.value,
+  set: (v: string) => {
+    accentColor.value = v.replace(/^#/, '').toLowerCase();
+  },
+});
 
 const footerSizeOptions = [
   { label: 'Full', value: FooterSize.FULL },
@@ -127,7 +146,9 @@ const open = () => {
   label.value = props.poster.label ?? '';
   defaultTimeout.value = props.poster.defaultTimeout;
   footerSize.value = props.poster.footerSize;
-  accentColor.value = props.poster.accentColor ?? '';
+  const normalizedAccent = (props.poster.accentColor ?? '').replace(/^#/, '').toLowerCase();
+  accentColor.value = normalizedAccent;
+  originalAccentColor.value = normalizedAccent;
   expirationDate.value = props.poster.expirationDate ? new Date(props.poster.expirationDate) : null;
   borrelMode.value = props.poster.borrelMode;
   visible.value = true;

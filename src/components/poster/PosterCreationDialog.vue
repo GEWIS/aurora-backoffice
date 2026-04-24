@@ -115,8 +115,13 @@
           <div class="flex flex-col gap-2 flex-1">
             <label for="poster-color">Accent color</label>
             <div class="flex flex-row gap-2 items-center">
-              <ColorPicker id="poster-color" v-model="accentColor" />
-              <span v-if="accentColor" class="text-sm opacity-75">#{{ accentColor }}</span>
+              <ColorPicker id="poster-color" v-model="accentColorInput" />
+              <InputText
+                v-model="accentColorInput"
+                class="w-28"
+                maxlength="7"
+                placeholder="ff0000"
+              />
               <Button
                 v-if="accentColor"
                 icon="pi pi-times"
@@ -163,10 +168,12 @@ import {
   PosterTypeVideo,
 } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
+import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 type CreatableType = 'file' | PosterTypeExternal.EXTERN | PosterTypePhoto.PHOTO;
 
 const store = usePosterStore();
+const settingsStore = useServerSettingsStore();
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -185,6 +192,17 @@ const footerSize = ref<FooterSize>(FooterSize.FULL);
 const defaultTimeout = ref<number>(15);
 const borrelMode = ref<boolean>(false);
 const fileSelector = ref<HTMLInputElement | null>(null);
+
+const defaultAccentColor = computed(() =>
+  (settingsStore.serverSettings?.['Poster.DefaultProgressBarColor'] ?? '').replace(/^#/, '').toLowerCase(),
+);
+
+const accentColorInput = computed({
+  get: () => accentColor.value || defaultAccentColor.value,
+  set: (v: string) => {
+    accentColor.value = v.replace(/^#/, '').toLowerCase();
+  },
+});
 
 const typeOptions = [
   { label: 'File', value: 'file' as const },
