@@ -57,7 +57,7 @@
 
     <div class="mt-auto flex flex-row items-center gap-2">
       <PosterButtonDelete :poster="poster" />
-      <Button class="flex-1" icon="pi pi-pencil" severity="secondary" />
+      <PosterEdit :poster="poster" />
       <StaticPosterButtonShow :disabled="poster.type === PosterType.PHOTO" :poster="poster" />
     </div>
   </AppBox>
@@ -68,6 +68,7 @@ import { computed } from 'vue';
 import { type LocalPosterResponse, PosterType } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
 import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
+import PosterEdit from '@/components/poster/PosterEdit.vue';
 import PosterStatusIndicator from '@/components/poster/PosterStatusIndicator.vue';
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 
