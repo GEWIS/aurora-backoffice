@@ -23,9 +23,10 @@ const isExpired = computed(() => {
   return !!d && new Date(d).getTime() < Date.now();
 });
 
-const status = computed<'live' | 'expired' | 'disabled'>(() => {
+const status = computed<'live' | 'borrel' | 'expired' | 'disabled'>(() => {
   if (!props.poster.enabled) return 'disabled';
   if (isExpired.value) return 'expired';
+  if (props.poster.borrelMode) return 'borrel';
   return 'live';
 });
 
@@ -33,6 +34,7 @@ const colorClass = computed(
   () =>
     ({
       live: 'bg-green-500 hover:bg-green-400',
+      borrel: 'bg-amber-600 hover:bg-amber-500',
       expired: 'bg-gray-400 hover:bg-gray-300',
       disabled: 'bg-red-500 hover:bg-red-400',
     })[status.value],
@@ -42,6 +44,7 @@ const tooltip = computed(
   () =>
     ({
       live: 'Enabled',
+      borrel: 'Borrel only',
       expired: 'Expired',
       disabled: 'Disabled',
     })[status.value],
