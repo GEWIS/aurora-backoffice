@@ -6,7 +6,7 @@
       @click="
         async () => {
           refreshLoading = true;
-          await store.fetchPosters();
+          await store.reloadPosters();
           refreshLoading = false;
         }
       "

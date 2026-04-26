@@ -116,12 +116,7 @@
             <label for="poster-color">Accent color</label>
             <div class="flex flex-row gap-2 items-center">
               <ColorPicker id="poster-color" v-model="accentColorInput" />
-              <InputText
-                v-model="accentColorInput"
-                class="w-28"
-                maxlength="7"
-                placeholder="ff0000"
-              />
+              <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
               <Button
                 v-if="accentColor"
                 icon="pi pi-times"

@@ -84,7 +84,6 @@ const capitalize = (text: string) => {
 </script>
 
 <style scoped>
-
 :deep(.p-image > img) {
   width: 100%;
   height: 100%;

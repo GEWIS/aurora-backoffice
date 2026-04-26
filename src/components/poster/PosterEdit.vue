@@ -18,12 +18,7 @@
 
       <div class="flex flex-col gap-2">
         <label for="poster-edit-name">Name</label>
-        <InputText
-          id="poster-edit-name"
-          v-model="name"
-          :invalid="submitted && !name.trim()"
-          placeholder="My poster"
-        />
+        <InputText id="poster-edit-name" v-model="name" :invalid="submitted && !name.trim()" placeholder="My poster" />
         <Message v-if="submitted && !name.trim()" severity="error" size="small" variant="simple">
           Name is required
         </Message>
@@ -58,12 +53,7 @@
           <label for="poster-edit-color">Accent color</label>
           <div class="flex flex-row gap-2 items-center">
             <ColorPicker id="poster-edit-color" v-model="accentColorInput" />
-            <InputText
-              v-model="accentColorInput"
-              class="w-28"
-              maxlength="7"
-              placeholder="ff0000"
-            />
+            <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
             <Button
               v-if="accentColor !== originalAccentColor"
               icon="pi pi-refresh"

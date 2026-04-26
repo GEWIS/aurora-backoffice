@@ -1,6 +1,5 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-    <!-- Posters -->
     <div class="lg:col-span-3 order-2 lg:order-1">
       <AppContainer icon="pi-image" title="Posters">
         <template #header>
@@ -24,9 +23,8 @@
       </AppContainer>
     </div>
 
-    <!-- Active static poster -->
     <div class="lg:col-span-1 order-1 lg:order-2">
-      <AppContainer icon="pi-image" title="Active static poster">
+      <AppContainer icon="pi-image" title="Static Poster">
         <div class="flex flex-col gap-2">
           <StaticPosterPreview v-if="activeStaticPoster" class="w-full" :poster="activeStaticPoster" />
           <div
