@@ -45,8 +45,6 @@ const model = computed<MenuItem[]>(() => {
     showPosters && {
       label: 'Screens',
       items: [
-        { label: 'Poster Carousel', icon: 'pi pi-fw pi-image', to: '/poster/carousel' },
-        { label: 'Static Posters', icon: 'pi pi-fw pi-image', to: '/poster/static' },
         { label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/posters' },
       ],
     },
