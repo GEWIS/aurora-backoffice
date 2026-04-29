@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <div class="flex flex-row items-center gap-3">
+        <div v-if="store.carousel.borrelModePresent" class="flex flex-row items-center gap-3">
           <ToggleSwitch v-model="borrelMode" input-id="poster-borrel" />
           <label class="cursor-pointer" for="poster-borrel">Only show during Borrel mode</label>
         </div>
