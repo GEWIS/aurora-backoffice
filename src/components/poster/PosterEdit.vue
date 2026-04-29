@@ -48,22 +48,27 @@
         </div>
       </div>
 
+      <div class="flex flex-col gap-2">
+        <label for="poster-edit-color">Accent color</label>
+        <div class="flex flex-row gap-2 items-center">
+          <ColorPicker id="poster-edit-color" v-model="accentColorInput" />
+          <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
+          <Button
+            v-if="accentColor !== originalAccentColor"
+            icon="pi pi-refresh"
+            severity="secondary"
+            size="small"
+            text
+            type="button"
+            @click="accentColor = originalAccentColor"
+          />
+        </div>
+      </div>
+
       <div class="flex flex-row gap-4">
         <div class="flex flex-col gap-2 flex-1">
-          <label for="poster-edit-color">Accent color</label>
-          <div class="flex flex-row gap-2 items-center">
-            <ColorPicker id="poster-edit-color" v-model="accentColorInput" />
-            <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
-            <Button
-              v-if="accentColor !== originalAccentColor"
-              icon="pi pi-refresh"
-              severity="secondary"
-              size="small"
-              text
-              type="button"
-              @click="accentColor = originalAccentColor"
-            />
-          </div>
+          <label for="poster-edit-start">Starts at</label>
+          <DatePicker id="poster-edit-start" v-model="startDate" show-icon show-time />
         </div>
         <div class="flex flex-col gap-2 flex-1">
           <label for="poster-edit-expiration">Expires at</label>
@@ -108,6 +113,7 @@ const defaultTimeout = ref<number>(15);
 const footerSize = ref<FooterSize>(FooterSize.FULL);
 const accentColor = ref<string>('');
 const originalAccentColor = ref<string>('');
+const startDate = ref<Date | null>(null);
 const expirationDate = ref<Date | null>(null);
 const borrelMode = ref<boolean>(false);
 
@@ -139,6 +145,7 @@ const open = () => {
   const normalizedAccent = (props.poster.accentColor ?? '').replace(/^#/, '').toLowerCase();
   accentColor.value = normalizedAccent;
   originalAccentColor.value = normalizedAccent;
+  startDate.value = props.poster.startDate ? new Date(props.poster.startDate) : null;
   expirationDate.value = props.poster.expirationDate ? new Date(props.poster.expirationDate) : null;
   borrelMode.value = props.poster.borrelMode;
   visible.value = true;
@@ -151,6 +158,7 @@ const buildParams = (): UpdatePosterRequest => ({
   defaultTimeout: defaultTimeout.value,
   borrelMode: borrelMode.value,
   ...(accentColor.value && { accentColor: accentColor.value }),
+  ...(startDate.value && { startDate: startDate.value.toISOString() }),
   ...(expirationDate.value && { expirationDate: expirationDate.value.toISOString() }),
 });
 

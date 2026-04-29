@@ -111,22 +111,27 @@
           </div>
         </div>
 
+        <div class="flex flex-col gap-2">
+          <label for="poster-color">Accent color</label>
+          <div class="flex flex-row gap-2 items-center">
+            <ColorPicker id="poster-color" v-model="accentColorInput" />
+            <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
+            <Button
+              v-if="accentColor"
+              icon="pi pi-times"
+              severity="secondary"
+              size="small"
+              text
+              type="button"
+              @click="accentColor = ''"
+            />
+          </div>
+        </div>
+
         <div class="flex flex-row gap-4">
           <div class="flex flex-col gap-2 flex-1">
-            <label for="poster-color">Accent color</label>
-            <div class="flex flex-row gap-2 items-center">
-              <ColorPicker id="poster-color" v-model="accentColorInput" />
-              <InputText v-model="accentColorInput" class="w-28" maxlength="7" placeholder="ff0000" />
-              <Button
-                v-if="accentColor"
-                icon="pi pi-times"
-                severity="secondary"
-                size="small"
-                text
-                type="button"
-                @click="accentColor = ''"
-              />
-            </div>
+            <label for="poster-start">Starts at</label>
+            <DatePicker id="poster-start" v-model="startDate" show-icon show-time />
           </div>
           <div class="flex flex-col gap-2 flex-1">
             <label for="poster-expiration">Expires at</label>
@@ -182,6 +187,7 @@ const file = ref<File | null>(null);
 const albums = ref<string[]>([]);
 const albumError = ref<boolean>(false);
 const accentColor = ref<string>('');
+const startDate = ref<Date | null>(null);
 const expirationDate = ref<Date | null>(null);
 const footerSize = ref<FooterSize>(FooterSize.FULL);
 const defaultTimeout = ref<number>(15);
@@ -235,6 +241,7 @@ const reset = () => {
   albums.value = [];
   albumError.value = false;
   accentColor.value = '';
+  startDate.value = null;
   expirationDate.value = null;
   footerSize.value = FooterSize.FULL;
   defaultTimeout.value = 15;
@@ -256,6 +263,7 @@ const buildBase = () => ({
   name: name.value.trim(),
   ...(label.value && { label: label.value }),
   ...(accentColor.value && { accentColor: accentColor.value }),
+  ...(startDate.value && { startDate: startDate.value.toISOString() }),
   ...(expirationDate.value && { expirationDate: expirationDate.value.toISOString() }),
   footerSize: footerSize.value,
   defaultTimeout: defaultTimeout.value,
