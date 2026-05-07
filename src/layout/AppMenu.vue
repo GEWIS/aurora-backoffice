@@ -44,9 +44,7 @@ const model = computed<MenuItem[]>(() => {
     },
     showPosters && {
       label: 'Screens',
-      items: [
-        { label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/posters' },
-      ],
+      items: [{ label: 'Posters', icon: 'pi pi-fw pi-image', to: '/poster/posters' }],
     },
     {
       label: 'Lights',
