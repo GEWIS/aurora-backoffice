@@ -19,7 +19,7 @@
         </Message>
       </div>
 
-      <div class="flex flex-col gap-2">
+      <div v-if="poster.type !== PosterType.PHOTO" class="flex flex-col gap-2">
         <label for="poster-edit-label">Label (optional)</label>
         <InputText id="poster-edit-label" v-model="label" placeholder="Poster Title" />
       </div>
@@ -173,7 +173,7 @@ const onAlbumAdd = () => {
 
 const buildParams = (): UpdatePosterRequest => ({
   name: name.value.trim(),
-  label: label.value,
+  ...(props.poster.type !== PosterType.PHOTO && { label: label.value }),
   footerSize: footerSize.value,
   defaultTimeout: defaultTimeout.value,
   borrelMode: borrelMode.value,

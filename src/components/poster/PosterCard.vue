@@ -46,7 +46,11 @@
       <div class="font-bold truncate" :title="poster.name">
         {{ poster.name }}
       </div>
-      <div class="min-h-[1.25rem] text-sm truncate" :class="poster.label ? 'opacity-70' : 'opacity-40 italic'">
+      <div
+        v-if="poster.type !== PosterType.PHOTO"
+        class="min-h-[1.25rem] text-sm truncate"
+        :class="poster.label ? 'opacity-70' : 'opacity-40 italic'"
+      >
         {{ poster.label || '(no title)' }}
       </div>
       <div class="text-xs italic opacity-50">
