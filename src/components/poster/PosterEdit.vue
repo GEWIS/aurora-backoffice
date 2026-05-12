@@ -11,11 +11,6 @@
     @update:visible="(v) => (visible = v)"
   >
     <form class="flex flex-col gap-4 w-[32rem] max-w-full" @submit.prevent="onSubmit">
-      <div class="flex flex-row items-center gap-2 text-sm opacity-75">
-        <span>Type:</span>
-        <span class="font-medium">{{ capitalize(poster.type) }}</span>
-      </div>
-
       <div class="flex flex-col gap-2">
         <label for="poster-edit-name">Name</label>
         <InputText id="poster-edit-name" v-model="name" :invalid="submitted && !name.trim()" placeholder="My poster" />
@@ -27,6 +22,24 @@
       <div class="flex flex-col gap-2">
         <label for="poster-edit-label">Label (optional)</label>
         <InputText id="poster-edit-label" v-model="label" placeholder="Poster Title" />
+      </div>
+
+      <div v-if="poster.type === PosterType.PHOTO" class="flex flex-col gap-2">
+        <label for="poster-edit-albums">Album IDs</label>
+        <InputChips
+          id="poster-edit-albums"
+          v-model="albums"
+          :invalid="submitted && albums.length === 0"
+          :placeholder="albums.length === 0 ? 'Type an ID and press Enter' : ''"
+          separator=","
+          @add="onAlbumAdd"
+        />
+        <Message v-if="submitted && albums.length === 0" severity="error" size="small" variant="simple">
+          Please add at least one album ID
+        </Message>
+        <Message v-else-if="albumError" severity="error" size="small" variant="simple">
+          Album IDs must be numeric
+        </Message>
       </div>
 
       <Divider />
@@ -92,7 +105,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import DatePicker from 'primevue/datepicker';
-import { FooterSize, type LocalPosterResponse, type UpdatePosterRequest } from '@/api';
+import InputChips from 'primevue/inputchips';
+import { FooterSize, type LocalPosterResponse, PosterType, type UpdatePosterRequest } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
 
@@ -109,6 +123,8 @@ const submitted = ref<boolean>(false);
 
 const name = ref<string>('');
 const label = ref<string>('');
+const albums = ref<string[]>([]);
+const albumError = ref<boolean>(false);
 const defaultTimeout = ref<number>(15);
 const footerSize = ref<FooterSize>(FooterSize.FULL);
 const accentColor = ref<string>('');
@@ -134,12 +150,12 @@ const footerSizeOptions = [
   { label: 'Hidden', value: FooterSize.HIDDEN },
 ];
 
-const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
-
 const open = () => {
   submitted.value = false;
   name.value = props.poster.name;
   label.value = props.poster.label ?? '';
+  albums.value = (props.poster.albums ?? []).map(String);
+  albumError.value = false;
   defaultTimeout.value = props.poster.defaultTimeout;
   footerSize.value = props.poster.footerSize;
   const normalizedAccent = (props.poster.accentColor ?? '').replace(/^#/, '').toLowerCase();
@@ -151,6 +167,10 @@ const open = () => {
   visible.value = true;
 };
 
+const onAlbumAdd = () => {
+  albumError.value = albums.value.some((v) => !/^\d+$/.test(v.trim()));
+};
+
 const buildParams = (): UpdatePosterRequest => ({
   name: name.value.trim(),
   label: label.value,
@@ -160,11 +180,19 @@ const buildParams = (): UpdatePosterRequest => ({
   ...(accentColor.value && { accentColor: accentColor.value }),
   ...(startDate.value && { startDate: startDate.value.toISOString() }),
   ...(expirationDate.value && { expirationDate: expirationDate.value.toISOString() }),
+  ...(props.poster.type === PosterType.PHOTO && {
+    albums: albums.value.map((v) => Number(v.trim())),
+  }),
 });
 
 const onSubmit = async () => {
   submitted.value = true;
   if (!name.value.trim()) return;
+
+  if (props.poster.type === PosterType.PHOTO) {
+    onAlbumAdd();
+    if (albums.value.length === 0 || albumError.value) return;
+  }
 
   loading.value = true;
   await store.updatePoster(props.poster.id, buildParams());
