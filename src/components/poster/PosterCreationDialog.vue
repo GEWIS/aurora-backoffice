@@ -253,6 +253,16 @@ const handleFileSelect = (event: Event) => {
   const picked = target.files?.[0] ?? null;
   file.value = picked;
   if (picked && !name.value) name.value = picked.name;
+  if (picked?.type.startsWith('video/')) {
+    const url = URL.createObjectURL(picked);
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => {
+      if (isFinite(video.duration)) defaultTimeout.value = Math.round(video.duration);
+      URL.revokeObjectURL(url);
+    };
+    video.src = url;
+  }
 };
 
 const onAlbumAdd = () => {
