@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type LocalPosterResponse, PosterType } from '@/api';
+import { type PosterResponse, PosterType } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
 import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
 import PosterEdit from '@/components/poster/PosterEdit.vue';
@@ -77,7 +77,7 @@ import PosterStatusIndicator from '@/components/poster/PosterStatusIndicator.vue
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: PosterResponse;
 }>();
 
 const mediaUrl = computed(() => props.poster.file?.location ?? props.poster.uri ?? '');

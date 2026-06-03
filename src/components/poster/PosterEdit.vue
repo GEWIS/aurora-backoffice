@@ -106,12 +106,12 @@
 import { computed, ref } from 'vue';
 import DatePicker from 'primevue/datepicker';
 import InputChips from 'primevue/inputchips';
-import { FooterSize, type LocalPosterResponse, PosterType, type UpdatePosterRequest } from '@/api';
+import { FooterSize, type PosterResponse, PosterType, type UpdatePosterRequest } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: PosterResponse;
 }>();
 
 const store = usePosterStore();

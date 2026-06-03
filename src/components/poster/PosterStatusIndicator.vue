@@ -9,11 +9,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type LocalPosterResponse } from '@/api';
+import { type PosterResponse } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: PosterResponse;
 }>();
 
 const store = usePosterStore();

@@ -38,20 +38,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type LocalPosterResponse, PosterType } from '@/api';
+import { type PosterResponse, PosterType } from '@/api';
 
 const props = defineProps<{
-  poster: LocalPosterResponse;
+  poster: PosterResponse;
   class?: string | undefined;
 }>();
 
 const previewClass = computed(() => props.class);
 
-const getUrl = (poster: LocalPosterResponse) => {
+const getUrl = (poster: PosterResponse) => {
   return poster.file?.location ?? poster.uri ?? '';
 };
 
-const getPosterType = (poster: LocalPosterResponse): 'image' | 'video' | 'external' | 'placeholder' => {
+const getPosterType = (poster: PosterResponse): 'image' | 'video' | 'external' | 'placeholder' => {
   switch (poster.type) {
     case PosterType.IMG:
       return 'image';

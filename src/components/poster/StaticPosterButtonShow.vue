@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { LocalPosterResponse } from '@/api';
+import type { PosterResponse } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
 
 const store = usePosterStore();
@@ -19,7 +19,7 @@ const store = usePosterStore();
 const loading = ref<boolean>(false);
 const props = withDefaults(
   defineProps<{
-    poster: LocalPosterResponse;
+    poster: PosterResponse;
     disabled?: boolean;
   }>(),
   { disabled: false },

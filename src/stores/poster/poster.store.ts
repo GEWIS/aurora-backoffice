@@ -9,7 +9,7 @@ import {
   getPosterBorrelMode,
   getStaticPosterHandlerState,
   hideStaticPoster,
-  type LocalPosterResponse,
+  type PosterResponse,
   type MediaPosterRequest,
   type PhotoPosterRequest,
   PosterType,
@@ -22,7 +22,7 @@ import {
 } from '@/api';
 
 interface PosterStore {
-  posters: LocalPosterResponse[];
+  posters: PosterResponse[];
   loading: boolean;
   initialized: boolean;
   static: {
