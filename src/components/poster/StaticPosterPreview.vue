@@ -1,21 +1,10 @@
 <template>
-  <div v-if="getPosterType(poster) === 'image'" :class="previewClass">
-    <div class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300">
-      <Image
-        :alt="poster.file?.name ?? getUrl(poster)"
-        class="w-full h-full"
-        image-class="w-full h-full object-cover"
-        :src="getUrl(poster)"
-        :title="poster.file?.name ?? getUrl(poster)"
-      />
-    </div>
-  </div>
-  <div v-else-if="getPosterType(poster) === 'video'" :class="previewClass">
-    <div class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300">
-      <video class="w-full h-full object-cover" controls muted>
-        <source :src="getUrl(poster)" />
-      </video>
-    </div>
+  <div v-if="getPosterType(poster) === 'image' || getPosterType(poster) === 'video'" :class="previewClass">
+    <PosterMediaGallery
+      :files="poster.files"
+      :is-video="getPosterType(poster) === 'video'"
+      :name="poster.name"
+    />
   </div>
   <div v-else-if="getPosterType(poster) === 'external'" :class="previewClass">
     <a :href="getUrl(poster)" target="_blank">
@@ -39,6 +28,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type PosterResponse, PosterType } from '@/api';
+import PosterMediaGallery from '@/components/poster/PosterMediaGallery.vue';
 
 const props = defineProps<{
   poster: PosterResponse;
@@ -48,7 +38,7 @@ const props = defineProps<{
 const previewClass = computed(() => props.class);
 
 const getUrl = (poster: PosterResponse) => {
-  return poster.file?.location ?? poster.uri ?? '';
+  return poster.files?.[0]?.location ?? poster.uri ?? '';
 };
 
 const getPosterType = (poster: PosterResponse): 'image' | 'video' | 'external' | 'placeholder' => {
@@ -66,11 +56,3 @@ const getPosterType = (poster: PosterResponse): 'image' | 'video' | 'external' |
 
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 </script>
-
-<style scoped>
-:deep(.p-image > img) {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>

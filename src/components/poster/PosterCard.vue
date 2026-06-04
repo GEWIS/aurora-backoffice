@@ -1,23 +1,12 @@
 <template>
   <AppBox class="h-full flex flex-col gap-3">
     <div class="relative">
-      <div v-if="poster.type === PosterType.IMG" class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300">
-        <Image
-          :alt="poster.name"
-          class="w-full h-full"
-          image-class="w-full h-full object-cover"
-          preview
-          :src="mediaUrl"
-        />
-      </div>
-      <div
-        v-else-if="poster.type === PosterType.VIDEO"
-        class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300"
-      >
-        <video v-if="mediaUrl" :key="mediaUrl" class="w-full h-full object-cover" controls muted>
-          <source :src="mediaUrl" />
-        </video>
-      </div>
+      <PosterMediaGallery
+        v-if="poster.type === PosterType.IMG || poster.type === PosterType.VIDEO"
+        :files="poster.files"
+        :is-video="poster.type === PosterType.VIDEO"
+        :name="poster.name"
+      />
       <a
         v-else-if="poster.type === PosterType.EXTERN"
         class="w-full aspect-video rounded-lg overflow-hidden bg-surface-300 text-primary-contrast flex justify-center items-center hover:brightness-50 transition duration-200"
@@ -73,6 +62,7 @@ import { type PosterResponse, PosterType } from '@/api';
 import AppBox from '@/layout/AppBox.vue';
 import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
 import PosterEdit from '@/components/poster/PosterEdit.vue';
+import PosterMediaGallery from '@/components/poster/PosterMediaGallery.vue';
 import PosterStatusIndicator from '@/components/poster/PosterStatusIndicator.vue';
 import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.vue';
 
@@ -80,17 +70,9 @@ const props = defineProps<{
   poster: PosterResponse;
 }>();
 
-const mediaUrl = computed(() => props.poster.file?.location ?? props.poster.uri ?? '');
+const mediaUrl = computed(() => props.poster.files?.[0]?.location ?? props.poster.uri ?? '');
 
 const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 </script>
-
-<style scoped>
-:deep(.p-image > img) {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>
