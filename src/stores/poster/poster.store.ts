@@ -96,25 +96,33 @@ export const usePosterStore = defineStore('poster', {
       }
     },
     /**
-     * Create a new file poster and attach the given file to it.
+     * Create a new file poster and attach the given files to it. Each file is
+     * appended in turn, so an image poster can carry multiple images.
      * @param params
-     * @param file
+     * @param files
      */
-    async createPosterMedia(params: MediaPosterRequest, file: Blob) {
+    async createPosterMedia(params: MediaPosterRequest, files: Blob[]) {
       const res = await createPoster({ body: params });
-      if (res.response.ok && res.data) {
-        this.posters.push(res.data);
-        const res2 = await attachMedia({
-          path: { id: res.data.id },
-          body: { file },
-        });
-        if (res2.response.ok && res2.data) {
-          const index = this.posters.findIndex((p) => p.id === res2.data.id);
-          this.posters.splice(index, 1, res2.data);
+      if (!res.response.ok || !res.data) return;
+
+      this.posters.push(res.data);
+      const id = res.data.id;
+
+      let updated: PosterResponse | undefined;
+      for (const file of files) {
+        const attachRes = await attachMedia({ path: { id }, body: { file } });
+        if (attachRes.response.ok && attachRes.data) {
+          updated = attachRes.data;
         } else {
-          await this.deletePoster(res.data.id);
+          await this.deletePoster(id);
           //TODO; this should report back that the creation failed.
+          return;
         }
+      }
+
+      if (updated) {
+        const index = this.posters.findIndex((p) => p.id === id);
+        this.posters.splice(index, 1, updated);
       }
     },
     /**

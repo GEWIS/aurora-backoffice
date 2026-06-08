@@ -50,21 +50,36 @@
       </div>
 
       <div v-else-if="type === 'file'" class="flex flex-col gap-2">
-        <label>File</label>
-        <input ref="fileSelector" accept="image/*,video/*" hidden type="file" @change="handleFileSelect" />
+        <label>Files</label>
+        <input ref="fileSelector" accept="image/*,video/*" hidden multiple type="file" @change="handleFileSelect" />
         <div class="flex flex-row gap-2 items-center">
           <Button
             icon="pi pi-upload"
-            label="Choose file"
+            label="Add files"
             severity="secondary"
             type="button"
             @click="fileSelector?.click()"
           />
-          <span v-if="file" class="text-sm opacity-75 truncate">{{ file.name }}</span>
-          <span v-else class="text-sm opacity-50 italic">No file chosen</span>
+          <span v-if="!files.length" class="text-sm opacity-50 italic">No files chosen</span>
         </div>
-        <Message v-if="submitted && !file" severity="error" size="small" variant="simple">
-          Please choose a file
+        <ul v-if="files.length" class="flex flex-col gap-1 m-0 p-0 list-none">
+          <li v-for="(f, i) in files" :key="i" class="flex flex-row gap-2 items-center text-sm">
+            <span class="truncate flex-1 opacity-75">{{ f.name }}</span>
+            <Button
+              icon="pi pi-times"
+              severity="secondary"
+              size="small"
+              text
+              type="button"
+              @click="removeFile(i)"
+            />
+          </li>
+        </ul>
+        <Message v-if="submitted && !files.length" severity="error" size="small" variant="simple">
+          Please choose at least one file
+        </Message>
+        <Message v-else-if="mixedMedia" severity="error" size="small" variant="simple">
+          A poster can't mix images and videos. Please select only images or only videos.
         </Message>
       </div>
 
@@ -183,7 +198,7 @@ const type = ref<CreatableType | null>(null);
 const name = ref<string>('');
 const label = ref<string>('');
 const uri = ref<string>('');
-const file = ref<File | null>(null);
+const files = ref<File[]>([]);
 const albums = ref<string[]>([]);
 const albumError = ref<boolean>(false);
 const accentColor = ref<string>('');
@@ -226,6 +241,11 @@ const uriValid = computed(() => {
   }
 });
 
+const mixedMedia = computed(() => {
+  const kinds = new Set(files.value.map((f) => (f.type.startsWith('video/') ? 'video' : 'image')));
+  return kinds.size > 1;
+});
+
 const open = () => {
   reset();
   visible.value = true;
@@ -237,7 +257,7 @@ const reset = () => {
   name.value = '';
   label.value = '';
   uri.value = '';
-  file.value = null;
+  files.value = [];
   albums.value = [];
   albumError.value = false;
   accentColor.value = '';
@@ -250,11 +270,17 @@ const reset = () => {
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  const picked = target.files?.[0] ?? null;
-  file.value = picked;
-  if (picked && !name.value) name.value = picked.name;
-  if (picked?.type.startsWith('video/')) {
-    const url = URL.createObjectURL(picked);
+  const picked = Array.from(target.files ?? []);
+  // Reset the input so picking the same file again still fires a change event.
+  target.value = '';
+  if (picked.length === 0) return;
+
+  files.value = [...files.value, ...picked];
+  if (!name.value) name.value = picked[0].name;
+
+  // Auto-fill the timeout from the video duration only when a single video is selected.
+  if (files.value.length === 1 && picked[0].type.startsWith('video/')) {
+    const url = URL.createObjectURL(picked[0]);
     const video = document.createElement('video');
     video.preload = 'metadata';
     video.onloadedmetadata = () => {
@@ -263,6 +289,10 @@ const handleFileSelect = (event: Event) => {
     };
     video.src = url;
   }
+};
+
+const removeFile = (index: number) => {
+  files.value.splice(index, 1);
 };
 
 const onAlbumAdd = () => {
@@ -285,11 +315,13 @@ const onSubmit = async () => {
   if (!type.value || !name.value.trim()) return;
 
   if (type.value === 'file') {
-    if (!file.value) return;
+    if (!files.value.length || mixedMedia.value) return;
     loading.value = true;
-    const mediaType = file.value.type.startsWith('video/') ? PosterTypeVideo.VIDEO : PosterTypeImage.IMG;
+    const mediaType = files.value[0].type.startsWith('video/')
+      ? PosterTypeVideo.VIDEO
+      : PosterTypeImage.IMG;
     const params: MediaPosterRequest = { ...buildBase(), type: mediaType };
-    await store.createPosterMedia(params, file.value);
+    await store.createPosterMedia(params, files.value);
   } else if (type.value === PosterTypeExternal.EXTERN) {
     if (!uriValid.value) return;
     loading.value = true;
