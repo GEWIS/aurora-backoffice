@@ -23,7 +23,7 @@
       </AppContainer>
     </div>
 
-    <div class="lg:col-span-1 order-1 lg:order-2">
+    <div class="lg:col-span-1 order-1 lg:order-2 flex flex-col gap-4">
       <AppContainer icon="pi-image" title="Static Poster">
         <div class="flex flex-col gap-2">
           <StaticPosterPreview v-if="activeStaticPoster" class="w-full" :poster="activeStaticPoster" />
@@ -45,6 +45,10 @@
           </div>
         </div>
       </AppContainer>
+
+      <AppContainer icon="pi-bars" title="Carousel Order">
+        <PosterCarouselOrder />
+      </AppContainer>
     </div>
   </div>
 </template>
@@ -58,6 +62,7 @@ import PosterOperations from '@/components/poster/PosterOperations.vue';
 import StaticPosterPreview from '@/components/poster/StaticPosterPreview.vue';
 import StaticPosterButtonClear from '@/components/poster/StaticPosterButtonClear.vue';
 import StaticPosterClockToggle from '@/components/poster/StaticPosterClockToggle.vue';
+import PosterCarouselOrder from '@/components/poster/PosterCarouselOrder.vue';
 
 const posterStore = usePosterStore();
 void posterStore.init();

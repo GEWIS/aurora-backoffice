@@ -1,5 +1,5 @@
 <template>
-  <Button class="flex-1" icon="pi pi-pencil" severity="warn" @click="open" />
+  <Button class="flex-1" :disabled="disabled" icon="pi pi-pencil" severity="warn" @click="open" />
   <Dialog
     closable
     close-on-escape
@@ -112,6 +112,7 @@ import { useServerSettingsStore } from '@/stores/server-settings.store';
 
 const props = defineProps<{
   poster: PosterResponse;
+  disabled?: boolean;
 }>();
 
 const store = usePosterStore();

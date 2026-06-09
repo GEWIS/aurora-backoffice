@@ -6,6 +6,7 @@ import {
   type ExternalPosterRequest,
   forceUpdatePosters,
   getAllPosters,
+  getCarouselOrder,
   getPosterBorrelMode,
   getStaticPosterHandlerState,
   hideStaticPoster,
@@ -13,6 +14,7 @@ import {
   type MediaPosterRequest,
   type PhotoPosterRequest,
   PosterType,
+  setCarouselOrder,
   setPosterBorrelMode,
   setStaticPosterClock,
   showStaticPoster,
@@ -23,6 +25,7 @@ import {
 
 interface PosterStore {
   posters: PosterResponse[];
+  carouselOrder: number[];
   loading: boolean;
   initialized: boolean;
   static: {
@@ -38,6 +41,7 @@ interface PosterStore {
 export const usePosterStore = defineStore('poster', {
   state: (): PosterStore => ({
     posters: [],
+    carouselOrder: [],
     loading: true,
     initialized: false,
     static: {
@@ -60,7 +64,12 @@ export const usePosterStore = defineStore('poster', {
       if (this.initialized) return;
 
       this.loading = true;
-      await Promise.all([this.fetchPosters(false), this.fetchStaticPosterState(), this.fetchBorrelMode()]);
+      await Promise.all([
+        this.fetchPosters(false),
+        this.fetchCarouselOrder(),
+        this.fetchStaticPosterState(),
+        this.fetchBorrelMode(),
+      ]);
       this.loading = false;
 
       this.initialized = true;
@@ -84,6 +93,25 @@ export const usePosterStore = defineStore('poster', {
       this.loading = true;
       await forceUpdatePosters();
       this.loading = false;
+    },
+    /**
+     * Load the saved carousel poster order from the server.
+     */
+    async fetchCarouselOrder() {
+      const res = await getCarouselOrder();
+      if (res.response.ok && res.data) {
+        this.carouselOrder = res.data;
+      }
+    },
+    /**
+     * Store a new carousel poster order.
+     * @param orderedIds The poster ids in the desired display order.
+     */
+    async setPosterOrder(orderedIds: number[]) {
+      const res = await setCarouselOrder({ body: { posterIds: orderedIds } });
+      if (res.response.ok) {
+        this.carouselOrder = orderedIds;
+      }
     },
     /**
      * Create a new poster not based on a file.

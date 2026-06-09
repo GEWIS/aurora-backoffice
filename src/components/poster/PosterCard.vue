@@ -49,8 +49,12 @@
     </div>
 
     <div class="mt-auto flex flex-row items-center gap-2">
-      <PosterButtonDelete :poster="poster" />
-      <PosterEdit :poster="poster" />
+      <span v-tooltip.top="poster.trello ? 'Managed via Trello' : undefined" class="flex-1 flex">
+        <PosterButtonDelete :disabled="poster.trello" :poster="poster" />
+      </span>
+      <span v-tooltip.top="poster.trello ? 'Managed via Trello' : undefined" class="flex-1 flex">
+        <PosterEdit :disabled="poster.trello" :poster="poster" />
+      </span>
       <StaticPosterButtonShow :disabled="poster.type === PosterType.PHOTO" :poster="poster" />
     </div>
   </AppBox>
