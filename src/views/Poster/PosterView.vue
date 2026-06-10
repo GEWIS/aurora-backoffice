@@ -5,12 +5,32 @@
         <template #header>
           <PosterOperations />
         </template>
-        <InputText v-model="search" class="w-full mb-4" placeholder="Search posters by name…" />
+        <div class="flex flex-col sm:flex-row gap-2 mb-4">
+          <InputText v-model="search" class="w-full" placeholder="Search posters by name…" />
+          <MultiSelect
+            v-model="selectedTypes"
+            class="w-full sm:w-72"
+            :max-selected-labels="2"
+            :options="typeOptions"
+            placeholder="All types"
+            show-clear
+          />
+          <MultiSelect
+            v-model="selectedStatuses"
+            class="w-full sm:w-72"
+            :max-selected-labels="2"
+            option-label="label"
+            option-value="value"
+            :options="statusOptions"
+            placeholder="All statuses"
+            show-clear
+          />
+        </div>
         <div v-if="posterStore.loading">
           <Spinner />
         </div>
         <div v-else-if="filteredPosters.length === 0" class="text-center italic opacity-70 py-8">
-          No posters match “{{ search.trim() }}”
+          No posters match the current filters
         </div>
         <div
           v-else
@@ -55,6 +75,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import type { PosterType } from '@/api';
+import { getPosterStatus, posterStatusLabels, type PosterStatus } from '@/utils/posterUtils';
 import AppContainer from '@/layout/AppContainer.vue';
 import { usePosterStore } from '@/stores/poster/poster.store';
 import PosterCard from '@/components/poster/PosterCard.vue';
@@ -72,10 +94,24 @@ const activeStaticPoster = computed(
 );
 
 const search = ref('');
+const selectedTypes = ref<PosterType[] | null>([]);
+const selectedStatuses = ref<PosterStatus[] | null>([]);
+
+const typeOptions = computed(() => [...new Set(posterStore.posters.map((p) => p.type))].sort());
+
+const statusOptions = Object.entries(posterStatusLabels).map(([value, label]) => ({
+  label,
+  value,
+}));
+
 const filteredPosters = computed(() => {
   const q = search.value.trim().toLowerCase();
-  if (!q) return posterStore.posters;
-  return posterStore.posters.filter((p) => p.name.toLowerCase().includes(q));
+  return posterStore.posters.filter(
+    (p) =>
+      (!q || p.name.toLowerCase().includes(q)) &&
+      (!selectedTypes.value?.length || selectedTypes.value.includes(p.type)) &&
+      (!selectedStatuses.value?.length || selectedStatuses.value.includes(getPosterStatus(p))),
+  );
 });
 </script>
 

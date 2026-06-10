@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type PosterResponse } from '@/api';
+import { getPosterStatus, type PosterStatus } from '@/utils/posterUtils';
 import { usePosterStore } from '@/stores/poster/poster.store';
 import { useAuthStore } from '@/stores/auth.store';
 
@@ -26,23 +27,7 @@ const store = usePosterStore();
 const authStore = useAuthStore();
 const isPrivileged = computed(() => authStore.isInSecurityGroup('poster', 'privileged'));
 
-const isExpired = computed(() => {
-  const d = props.poster.expirationDate;
-  return !!d && new Date(d).getTime() < Date.now();
-});
-
-const isScheduled = computed(() => {
-  const d = props.poster.startDate;
-  return !!d && new Date(d).getTime() > Date.now();
-});
-
-const status = computed<'live' | 'borrel' | 'expired' | 'scheduled' | 'disabled'>(() => {
-  if (!props.poster.enabled) return 'disabled';
-  if (isExpired.value) return 'expired';
-  if (isScheduled.value) return 'scheduled';
-  if (props.poster.borrelMode) return 'borrel';
-  return 'live';
-});
+const status = computed<PosterStatus>(() => getPosterStatus(props.poster));
 
 const colorClass = computed(() => {
   const base = {
