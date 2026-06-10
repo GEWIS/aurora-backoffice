@@ -57,7 +57,7 @@ const buildOrdered = () => {
   const byId = new Map(store.posters.map((p) => [p.id, p]));
   const ordered: PosterResponse[] = [];
   const seen = new Set<number>();
-  for (const id of store.carouselOrder) {
+  for (const id of store.carousel.carouselOrder) {
     const poster = byId.get(id);
     if (poster && !isDateIneligible(poster)) {
       ordered.push(poster);
@@ -70,7 +70,7 @@ const buildOrdered = () => {
   orderedPosters.value = ordered;
 };
 
-watch(() => [store.posters, store.carouselOrder], buildOrdered, { immediate: true, deep: true });
+watch(() => [store.posters, store.carousel.carouselOrder], buildOrdered, { immediate: true, deep: true });
 
 const onDragStart = (index: number) => {
   dragIndex.value = index;

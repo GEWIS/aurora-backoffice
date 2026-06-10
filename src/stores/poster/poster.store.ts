@@ -25,7 +25,6 @@ import {
 
 interface PosterStore {
   posters: PosterResponse[];
-  carouselOrder: number[];
   loading: boolean;
   initialized: boolean;
   static: {
@@ -35,13 +34,13 @@ interface PosterStore {
   carousel: {
     borrelModePresent: boolean;
     borrelModeActive: boolean;
+    carouselOrder: number[];
   };
 }
 
 export const usePosterStore = defineStore('poster', {
   state: (): PosterStore => ({
     posters: [],
-    carouselOrder: [],
     loading: true,
     initialized: false,
     static: {
@@ -51,6 +50,7 @@ export const usePosterStore = defineStore('poster', {
     carousel: {
       borrelModePresent: false,
       borrelModeActive: false,
+      carouselOrder: [],
     },
   }),
   getters: {
@@ -90,9 +90,7 @@ export const usePosterStore = defineStore('poster', {
      * Reload the posters, also forces refresh on the screens.
      */
     async reloadPosters() {
-      this.loading = true;
       await forceUpdatePosters();
-      this.loading = false;
     },
     /**
      * Load the saved carousel poster order from the server.
@@ -100,7 +98,7 @@ export const usePosterStore = defineStore('poster', {
     async fetchCarouselOrder() {
       const res = await getCarouselOrder();
       if (res.response.ok && res.data) {
-        this.carouselOrder = res.data;
+        this.carousel.carouselOrder = res.data;
       }
     },
     /**
@@ -110,7 +108,7 @@ export const usePosterStore = defineStore('poster', {
     async setPosterOrder(orderedIds: number[]) {
       const res = await setCarouselOrder({ body: { posterIds: orderedIds } });
       if (res.response.ok) {
-        this.carouselOrder = orderedIds;
+        this.carousel.carouselOrder = orderedIds;
       }
     },
     /**
