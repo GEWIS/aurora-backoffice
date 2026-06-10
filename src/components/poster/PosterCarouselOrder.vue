@@ -1,14 +1,17 @@
 <template>
-  <div v-if="orderedPosters.length === 0" class="text-center italic opacity-70 py-4">
-    No posters to order
-  </div>
+  <div v-if="orderedPosters.length === 0" class="text-center italic opacity-70 py-4">No posters to order</div>
   <ul v-else class="flex flex-col gap-1">
     <li
       v-for="(poster, index) in orderedPosters"
       :key="poster.id"
-      class="flex items-center gap-2 w-full px-2 py-2 rounded cursor-move select-none border border-surface"
-      :class="{ 'opacity-50': dragIndex === index, 'opacity-40 grayscale': isPosterInactive(poster) }"
-      draggable="true"
+      class="flex items-center gap-2 w-full px-2 py-2 rounded select-none border border-surface"
+      :class="{
+        'cursor-move': isPrivileged,
+        'cursor-default': !isPrivileged,
+        'opacity-50': dragIndex === index,
+        'opacity-40 grayscale': isPosterInactive(poster),
+      }"
+      :draggable="isPrivileged"
       @dragend="onDragEnd"
       @dragenter.prevent="onDragEnter(index)"
       @dragover.prevent
@@ -25,11 +28,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { type PosterResponse } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
+import { useAuthStore } from '@/stores/auth.store';
 
 const store = usePosterStore();
+const authStore = useAuthStore();
+const isPrivileged = computed(() => authStore.isInSecurityGroup('poster', 'privileged'));
 
 const isPosterInactive = (poster: PosterResponse): boolean => {
   if (!poster.enabled) return true;
@@ -79,6 +85,7 @@ const onDragEnter = (index: number) => {
 };
 
 const onDrop = () => {
+  if (!isPrivileged.value) return;
   void store.setPosterOrder(orderedPosters.value.map((p) => p.id));
   dragIndex.value = null;
 };

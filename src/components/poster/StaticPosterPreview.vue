@@ -1,10 +1,6 @@
 <template>
   <div v-if="getPosterType(poster) === 'image' || getPosterType(poster) === 'video'" :class="previewClass">
-    <PosterMediaGallery
-      :files="poster.files"
-      :is-video="getPosterType(poster) === 'video'"
-      :name="poster.name"
-    />
+    <PosterMediaGallery :files="poster.files" :is-video="getPosterType(poster) === 'video'" :name="poster.name" />
   </div>
   <div v-else-if="getPosterType(poster) === 'external'" :class="previewClass">
     <a :href="getUrl(poster)" target="_blank">

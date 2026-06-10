@@ -50,12 +50,12 @@
 
     <div class="mt-auto flex flex-row items-center gap-2">
       <span v-tooltip.top="poster.trello ? 'Managed via Trello' : undefined" class="flex-1 flex">
-        <PosterButtonDelete :disabled="poster.trello" :poster="poster" />
+        <PosterButtonDelete :disabled="poster.trello || !isPrivileged" :poster="poster" />
       </span>
       <span v-tooltip.top="poster.trello ? 'Managed via Trello' : undefined" class="flex-1 flex">
-        <PosterEdit :disabled="poster.trello" :poster="poster" />
+        <PosterEdit :disabled="poster.trello || !isPrivileged" :poster="poster" />
       </span>
-      <StaticPosterButtonShow :disabled="poster.type === PosterType.PHOTO" :poster="poster" />
+      <StaticPosterButtonShow :disabled="poster.type === PosterType.PHOTO || !isPrivileged" :poster="poster" />
     </div>
   </AppBox>
 </template>
@@ -63,6 +63,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type PosterResponse, PosterType } from '@/api';
+import { useAuthStore } from '@/stores/auth.store';
 import AppBox from '@/layout/AppBox.vue';
 import PosterButtonDelete from '@/components/poster/PosterButtonDelete.vue';
 import PosterEdit from '@/components/poster/PosterEdit.vue';
@@ -73,6 +74,9 @@ import StaticPosterButtonShow from '@/components/poster/StaticPosterButtonShow.v
 const props = defineProps<{
   poster: PosterResponse;
 }>();
+
+const authStore = useAuthStore();
+const isPrivileged = computed(() => authStore.isInSecurityGroup('poster', 'privileged'));
 
 const mediaUrl = computed(() => props.poster.files?.[0]?.location ?? props.poster.uri ?? '');
 

@@ -1,5 +1,5 @@
 <template>
-  <Button icon="pi pi-plus" label="Add poster" @click="open" />
+  <Button :disabled="!isPrivileged" icon="pi pi-plus" label="Add poster" @click="open" />
   <Dialog
     closable
     close-on-escape
@@ -65,14 +65,7 @@
         <ul v-if="files.length" class="flex flex-col gap-1 m-0 p-0 list-none">
           <li v-for="(f, i) in files" :key="i" class="flex flex-row gap-2 items-center text-sm">
             <span class="truncate flex-1 opacity-75">{{ f.name }}</span>
-            <Button
-              icon="pi pi-times"
-              severity="secondary"
-              size="small"
-              text
-              type="button"
-              @click="removeFile(i)"
-            />
+            <Button icon="pi pi-times" severity="secondary" size="small" text type="button" @click="removeFile(i)" />
           </li>
         </ul>
         <Message v-if="submitted && !files.length" severity="error" size="small" variant="simple">
@@ -184,11 +177,14 @@ import {
 } from '@/api';
 import { usePosterStore } from '@/stores/poster/poster.store';
 import { useServerSettingsStore } from '@/stores/server-settings.store';
+import { useAuthStore } from '@/stores/auth.store';
 
 type CreatableType = 'file' | PosterTypeExternal.EXTERN | PosterTypePhoto.PHOTO;
 
 const store = usePosterStore();
 const settingsStore = useServerSettingsStore();
+const authStore = useAuthStore();
+const isPrivileged = computed(() => authStore.isInSecurityGroup('poster', 'privileged'));
 
 const visible = ref<boolean>(false);
 const loading = ref<boolean>(false);
@@ -317,9 +313,7 @@ const onSubmit = async () => {
   if (type.value === 'file') {
     if (!files.value.length || mixedMedia.value) return;
     loading.value = true;
-    const mediaType = files.value[0].type.startsWith('video/')
-      ? PosterTypeVideo.VIDEO
-      : PosterTypeImage.IMG;
+    const mediaType = files.value[0].type.startsWith('video/') ? PosterTypeVideo.VIDEO : PosterTypeImage.IMG;
     const params: MediaPosterRequest = { ...buildBase(), type: mediaType };
     await store.createPosterMedia(params, files.value);
   } else if (type.value === PosterTypeExternal.EXTERN) {

@@ -47,12 +47,7 @@
           <i class="pi pi-times text-xl" />
         </template>
         <template #item="{ item }">
-          <img
-            v-if="!isVideo"
-            :alt="name"
-            class="max-h-screen max-w-full object-contain"
-            :src="item.location"
-          />
+          <img v-if="!isVideo" :alt="name" class="max-h-screen max-w-full object-contain" :src="item.location" />
           <video v-else :key="item.location" class="max-h-screen max-w-full object-contain" controls>
             <source :src="item.location" />
           </video>
