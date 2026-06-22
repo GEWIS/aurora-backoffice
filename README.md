@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> **This repository has been archived as of June 21, 2026.** The aurora-backoffice codebase has has migrated to the [aurora monorepo](https://github.com/GEWIS/aurora). All future development and issues should be directed there.
+
 # Aurora Backoffice
 This repository contains the management interface of the Aurora software suite.
 The backoffice is primarily responsible for sending commands to the [core](https://github.com/gewis/aurora-core) over HTTP.
